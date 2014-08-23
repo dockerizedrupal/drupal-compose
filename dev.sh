@@ -19,24 +19,26 @@ done
 for option in "${@}"; do
   case "${option}" in
     install)
+      SCRIPT_PATH=$(realpath -s $0)
+
       sudo apt-get install -y curl
 
       curl -sSL https://get.docker.io/ubuntu/ | sudo bash
 
       if [ "${OPTIONS_BUILD}" -eq 1 ]; then
-        sudo docker build -t ${IMAGE} .
+        sudo docker build -t ${IMAGE} $(basedir ${SCRIPT_PATH})
       else
         sudo docker pull ${IMAGE}
       fi
 
       sudo apt-get install -y realpath
 
-      sudo cp $(realpath -s $0) /usr/local/bin/dev
+      sudo cp ${SCRIPT_PATH} /usr/local/bin/dev
       ;;
     update)
       sudo docker rmi ${IMAGE}
 
-      CONTEXT=$(mktemp  -d)
+      CONTEXT=$(mktemp -d)
 
       git clone git@git.simpledrupalcloud.com:viljaste/dev.git $CONTEXT
 
