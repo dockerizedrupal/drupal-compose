@@ -39,6 +39,10 @@ update() {
   fi
 }
 
+init() {
+  sudo docker run --rm -i -t -v $(pwd):/context ${IMAGE} init
+}
+
 for option in "${@}"; do
   case "${option}" in
     -b|--build)
@@ -56,7 +60,7 @@ for option in "${@}"; do
       update
       ;;
     init)
-      sudo docker run --rm -i -t -v $(pwd):/project ${IMAGE} init
+      init
       ;;
     start)
 
