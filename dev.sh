@@ -9,7 +9,7 @@ SCRIPT_PATH=$(realpath -s $0)
 
 OPTIONS_BUILD=0
 
-install () {
+install() {
   sudo apt-get install -y curl
 
   curl -sSL https://get.docker.io/ubuntu/ | sudo bash
@@ -23,6 +23,20 @@ install () {
   sudo apt-get install -y realpath
 
   sudo cp ${SCRIPT_PATH} /usr/local/bin/dev
+}
+
+update() {
+  sudo docker rmi ${IMAGE}
+
+  CONTEXT=$(mktemp -d)
+
+  git clone git@git.simpledrupalcloud.com:viljaste/dev.git $CONTEXT
+
+  if [ "${OPTIONS_BUILD}" -eq 1 ]; then
+    $CONTEXT/dev.sh -b install
+  else
+    $CONTEXT/dev.sh install
+  fi
 }
 
 for option in "${@}"; do
@@ -39,17 +53,7 @@ for option in "${@}"; do
       install
       ;;
     update)
-      sudo docker rmi ${IMAGE}
-
-      CONTEXT=$(mktemp -d)
-
-      git clone git@git.simpledrupalcloud.com:viljaste/dev.git $CONTEXT
-
-      if [ "${OPTIONS_BUILD}" -eq 1 ]; then
-        $CONTEXT/dev.sh -b install
-      else
-        $CONTEXT/dev.sh install
-      fi
+      update
       ;;
     init)
       sudo docker run --rm -i -t -v $(pwd):/project ${IMAGE} init
