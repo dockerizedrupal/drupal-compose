@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
 case "$1" in
+  init)
+
+    ;;
   get)
     case "$2" in
       database)
