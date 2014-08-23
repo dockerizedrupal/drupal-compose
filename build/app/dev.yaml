@@ -1,0 +1,13 @@
+---
+dev-master:
+  user: root
+  host: dev-master.simpledrupalcloud.com
+  drupal_path: /var/www/arendus/project_1
+install: |
+  echo "install"
+update: |
+  echo "update"
+start: |
+  echo "start"
+stop: |
+  echo "stop"
