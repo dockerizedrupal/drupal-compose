@@ -43,6 +43,14 @@ init() {
   sudo docker run --rm -i -t -v $(pwd):/context ${IMAGE} init
 }
 
+start() {
+  echo "start"
+}
+
+stop() {
+  echo "stop"
+}
+
 for option in "${@}"; do
   case "${option}" in
     -b|--build)
@@ -63,10 +71,10 @@ for option in "${@}"; do
       init
       ;;
     start)
-
+      start
       ;;
     stop)
-
+      stop
       ;;
     get)
       case "$2" in
