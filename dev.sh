@@ -5,22 +5,22 @@ SSH_HOSTNAME=dev-master.simpledrupalcloud.com
 SSH_PRIVATE_KEY=$(cat ~/.ssh/id_rsa)
 
 IMAGE=docker-registry.simpledrupalcloud.com/dev
-SCRIPT_PATH=$(realpath -s $0)
 
 OPTIONS_BUILD=0
 
 install() {
   sudo apt-get install -y curl
+  sudo apt-get install -y realpath
 
   curl -sSL https://get.docker.io/ubuntu/ | sudo bash
+
+  SCRIPT_PATH=$(realpath -s $0)
 
   if [ "${OPTIONS_BUILD}" -eq 1 ]; then
     sudo docker build -t ${IMAGE} $(dirname ${SCRIPT_PATH})
   else
     sudo docker pull ${IMAGE}
   fi
-
-  sudo apt-get install -y realpath
 
   sudo cp ${SCRIPT_PATH} /usr/local/bin/dev
 }
