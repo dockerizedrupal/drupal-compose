@@ -14,15 +14,15 @@ install() {
 
   curl -sSL https://get.docker.io/ubuntu/ | sudo bash
 
-  SCRIPT_PATH=$(realpath -s $0)
+  SCRIPT=$(realpath -s $0)
 
   if [ "${OPTIONS_BUILD}" -eq 1 ]; then
-    sudo docker build -t ${IMAGE} $(dirname ${SCRIPT_PATH})
+    sudo docker build -t ${IMAGE} $(dirname ${SCRIPT})
   else
     sudo docker pull ${IMAGE}
   fi
 
-  sudo cp ${SCRIPT_PATH} /usr/local/bin/dev
+  sudo cp ${SCRIPT} /usr/local/bin/dev
 }
 
 update() {
