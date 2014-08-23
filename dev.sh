@@ -41,9 +41,9 @@ for option in "${@}"; do
       git clone git@git.simpledrupalcloud.com:viljaste/dev.git $CONTEXT
 
       if [ "${OPTIONS_BUILD}" -eq 1 ]; then
-        $CONTEXT/node.sh -b install
+        $CONTEXT/dev.sh -b install
       else
-        $CONTEXT/node.sh install
+        $CONTEXT/dev.sh install
       fi
       ;;
     init)
