@@ -9,7 +9,7 @@ SCRIPT_PATH=$(realpath -s $0)
 
 OPTIONS_BUILD=0
 
-install() {
+install () {
   sudo apt-get install -y curl
 
   curl -sSL https://get.docker.io/ubuntu/ | sudo bash
@@ -23,10 +23,6 @@ install() {
   sudo apt-get install -y realpath
 
   sudo cp ${SCRIPT_PATH} /usr/local/bin/dev
-}
-
-update() {
-
 }
 
 for option in "${@}"; do
