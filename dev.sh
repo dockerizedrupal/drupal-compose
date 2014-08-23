@@ -26,7 +26,7 @@ for option in "${@}"; do
       curl -sSL https://get.docker.io/ubuntu/ | sudo bash
 
       if [ "${OPTIONS_BUILD}" -eq 1 ]; then
-        sudo docker build -t ${IMAGE} $(basedir ${SCRIPT_PATH})
+        sudo docker build -t ${IMAGE} $(dirname ${SCRIPT_PATH})
       else
         sudo docker pull ${IMAGE}
       fi
