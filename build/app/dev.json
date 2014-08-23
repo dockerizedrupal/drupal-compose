@@ -3,6 +3,8 @@
     "user": "root",
     "host": "dev-master.simpledrupalcloud.com"
   },
+  "install": "",
+  "update": "",
   "start": "",
   "stop": ""
 }
