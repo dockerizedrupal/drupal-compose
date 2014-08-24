@@ -6,7 +6,7 @@ node default {
   }
 
   file { '/app':
-    ensure => present,
+    ensure => directory,
     source => '/tmp/build/app'
   }
 
