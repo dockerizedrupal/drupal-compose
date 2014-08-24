@@ -7,6 +7,7 @@ case "$1" in
     node /app/dev.js init /context
 
     echo 2
+    echo 5
     ;;
   get)
     case "$2" in
