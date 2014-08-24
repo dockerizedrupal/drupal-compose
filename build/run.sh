@@ -5,10 +5,10 @@ case "$1" in
     cp /app/dev.yaml /context/dev.yaml
     ;;
   start)
-    echo $(/app/dev.js start /context)
+    echo "$(/app/dev.js start /context)"
     ;;
   stop)
-    echo $(/app/dev.js stop /context)
+    echo "$(/app/dev.js stop /context)"
     ;;
   get)
     case "$2" in
