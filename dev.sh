@@ -35,6 +35,7 @@ for option in "${@}"; do
       sudo cp ${SCRIPT} /usr/local/bin/dev
       ;;
     update)
+      sudo docker pull simpledrupalcloud/node
       sudo docker rmi ${IMAGE}
 
       CONTEXT=$(mktemp -d)
