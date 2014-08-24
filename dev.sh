@@ -55,12 +55,12 @@ remove() {
 }
 
 clean() {
-  if [ $(docker ps -a -q) ]; then
+  if [ -z $(docker ps -a -q) ]; then
     sudo docker stop $(docker ps -a -q)
     sudo docker rm $(docker ps -a -q)
   fi
 
-  if [ $(docker images -q) ]; then
+  if [ -z $(docker images -q) ]; then
     sudo docker rmi $(docker images -q)
   fi
 }
