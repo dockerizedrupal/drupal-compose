@@ -12,6 +12,10 @@ install() {
   SCRIPT=$(realpath -s $0)
 
   if [ "${SCRIPT}" = "/usr/local/bin/dev" ]; then
+    cat << EOF
+      dev is already installed on this machine.
+    EOF
+
     exit
   fi
 
