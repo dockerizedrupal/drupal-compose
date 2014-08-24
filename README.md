@@ -11,6 +11,22 @@ Init
 
     dev init
 
+### Default dev.yaml
+
+    ---
+    dev-master:
+      user: root
+      host: dev-master.simpledrupalcloud.com
+      drupal_path: /var/www/arendus/project_1
+    install: |
+      #  install commands
+    update: |
+      # update commands
+    start: |
+      # start commands
+    stop: |
+      # stop commands
+
 Start
 -----
 
