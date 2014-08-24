@@ -8,6 +8,50 @@ IMAGE=docker-registry.simpledrupalcloud.com/dev
 
 OPTIONS_BUILD=0
 
+install() {
+  sudo apt-get install -y curl
+  sudo apt-get install -y realpath
+
+  curl -sSL https://get.docker.io/ubuntu/ | sudo bash
+
+  SCRIPT=$(realpath -s $0)
+
+  if [ "${OPTIONS_BUILD}" -eq 1 ]; then
+    sudo docker build -t ${IMAGE} $(dirname ${SCRIPT})
+  else
+    sudo docker pull ${IMAGE}
+  fi
+
+  sudo cp ${SCRIPT} /usr/local/bin/dev
+}
+
+update() {
+  sudo docker pull simpledrupalcloud/node
+  sudo docker rmi -f ${IMAGE}
+
+  CONTEXT=$(mktemp -d)
+
+  git clone git@git.simpledrupalcloud.com:viljaste/dev.git $CONTEXT
+
+  if [ "${OPTIONS_BUILD}" -eq 1 ]; then
+    $CONTEXT/dev.sh -b install
+  else
+    $CONTEXT/dev.sh install
+  fi
+}
+
+remove() {
+  sudo docker rmi -f ${IMAGE}
+
+  sudo rm /usr/local/bin/dev
+}
+
+clean() {
+  sudo docker stop $(docker ps -a -q)
+  sudo docker rm $(docker ps -a -q)
+  sudo docker rmi $(docker images -q)
+}
+
 for option in "${@}"; do
   case "${option}" in
     -b|--build)
@@ -19,44 +63,16 @@ done
 for option in "${@}"; do
   case "${option}" in
     install)
-      sudo apt-get install -y curl
-      sudo apt-get install -y realpath
-
-      curl -sSL https://get.docker.io/ubuntu/ | sudo bash
-
-      SCRIPT=$(realpath -s $0)
-
-      if [ "${OPTIONS_BUILD}" -eq 1 ]; then
-        sudo docker build -t ${IMAGE} $(dirname ${SCRIPT})
-      else
-        sudo docker pull ${IMAGE}
-      fi
-
-      sudo cp ${SCRIPT} /usr/local/bin/dev
+      install
       ;;
     update)
-      sudo docker pull simpledrupalcloud/node
-      sudo docker rmi -f ${IMAGE}
-
-      CONTEXT=$(mktemp -d)
-
-      git clone git@git.simpledrupalcloud.com:viljaste/dev.git $CONTEXT
-
-      if [ "${OPTIONS_BUILD}" -eq 1 ]; then
-        $CONTEXT/dev.sh -b install
-      else
-        $CONTEXT/dev.sh install
-      fi
+      update
       ;;
     remove)
-      sudo docker rmi -f ${IMAGE}
-
-      sudo rm /usr/local/bin/dev
+      remove
       ;;
     clean)
-      sudo docker stop $(docker ps -a -q)
-      sudo docker rm $(docker ps -a -q)
-      sudo docker rmi $(docker images -q)
+      clean
       ;;
     init)
       sudo docker run --rm -i -t -v $(pwd):/context ${IMAGE} init
