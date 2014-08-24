@@ -4,10 +4,10 @@ dev-master:
   host: dev-master.simpledrupalcloud.com
   drupal_path: /var/www/arendus/project_1
 install: |
-  echo "install"
+  #  install commands
 update: |
-  echo "update"
+  # update commands
 start: |
-  echo "start"
+  # start commands
 stop: |
-  echo "stop"
+  # stop commands
