@@ -74,11 +74,11 @@ init() {
 }
 
 start() {
-  exec $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} start)
+  eval $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} start)
 }
 
 stop() {
-  exec $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} stop)
+  eval $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} stop)
 }
 
 for option in "${@}"; do
