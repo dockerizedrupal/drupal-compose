@@ -6,7 +6,7 @@ var program = require('commander');
 program
   .command('init')
   .action(function(context) {
-    fs.createReadStream('./dev.yaml').pipe(fs.createWriteStream(context + '/dev.yaml'));
+    fs.createReadStream('/app/dev.yaml').pipe(fs.createWriteStream(context + '/dev.yaml'));
   });
 
 program.parse(process.argv);
