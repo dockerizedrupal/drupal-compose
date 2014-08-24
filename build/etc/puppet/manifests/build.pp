@@ -11,13 +11,13 @@ node default {
     source => '/tmp/build/app'
   }
 
-  file { '/app/dev.js':
-    ensure => present,
-    mode => 755,
+  exec { '/bin/bash -c "cd /app && npm install"':
     require => File['/app']
   }
 
-  exec { '/bin/bash -c "cd /app && npm install"':
+  file { '/app/dev.js':
+    ensure => present,
+    mode => 755,
     require => File['/app']
   }
 }
