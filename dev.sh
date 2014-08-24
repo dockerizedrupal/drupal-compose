@@ -36,7 +36,7 @@ for option in "${@}"; do
       ;;
     update)
       sudo docker pull simpledrupalcloud/node
-      sudo docker rmi ${IMAGE}
+      sudo docker rmi -f ${IMAGE}
 
       CONTEXT=$(mktemp -d)
 
@@ -49,9 +49,14 @@ for option in "${@}"; do
       fi
       ;;
     remove)
-      sudo docker rmi ${IMAGE}
+      sudo docker rmi -f ${IMAGE}
 
       sudo rm /usr/local/bin/dev
+      ;;
+    clean)
+      sudo docker stop $(docker ps -a -q)
+      sudo docker rm $(docker ps -a -q)
+      sudo docker rmi $(docker images -q)
       ;;
     init)
       sudo docker run --rm -i -t -v $(pwd):/context ${IMAGE} init
