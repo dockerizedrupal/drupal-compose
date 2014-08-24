@@ -73,12 +73,12 @@ init() {
   sudo docker run --rm -i -t -v $(pwd):/context ${IMAGE} init
 }
 
-start() {
-  eval $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} start)
+up() {
+  eval $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} up)
 }
 
-stop() {
-  eval $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} stop)
+destroy() {
+  eval $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} destroy)
 }
 
 for option in "${@}"; do
@@ -106,11 +106,11 @@ for option in "${@}"; do
     init)
       init
       ;;
-    start)
-      start
+    up)
+      up
       ;;
-    stop)
-      stop
+    destroy)
+      destroy
       ;;
   esac
 done

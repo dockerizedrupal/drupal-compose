@@ -3,12 +3,7 @@ dev-master:
   user: root
   host: dev-master.simpledrupalcloud.com
   drupal_path: /var/www/arendus/project_1
-install: |
-  sudo docker run --name dev_apache2 -i -t -v $(pwd):/context -d simpledrupalcloud/apache2
-update: |
-  # sudo docker pull simpledrupalcloud/apache2
-start: |
-  # sudo rm project_1
-  # sudo docker run -t project_1 -v $(pwd):/context -d simpledrupalcloud/apache2
-stop: |
-  # sudo docker stop project_1
+up: |
+  echo "up"
+destroy: |
+  echo "destroy"

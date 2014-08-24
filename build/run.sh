@@ -4,11 +4,11 @@ case "$1" in
   init)
     cp /app/dev.yaml /context/dev.yaml
     ;;
-  start)
-    printf "$(/app/dev.js start /context)"
+  up)
+    printf "$(/app/dev.js up /context)"
     ;;
-  stop)
-    printf "$(/app/dev.js stop /context)"
+  destroy)
+    printf "$(/app/dev.js destroy /context)"
     ;;
   get)
     case "$2" in
