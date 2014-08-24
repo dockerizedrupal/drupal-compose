@@ -11,6 +11,11 @@ Update
 
     dev update
 
+Update and build the dependent images
+-------------------------------------
+
+    dev -b update
+
 Remove
 ------
 
