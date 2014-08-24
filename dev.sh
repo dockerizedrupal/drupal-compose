@@ -35,7 +35,6 @@ EOF
 }
 
 update() {
-  sudo docker pull simpledrupalcloud/node
   sudo docker rmi -f ${IMAGE}
 
   CONTEXT=$(mktemp -d)
@@ -56,9 +55,14 @@ remove() {
 }
 
 clean() {
-  sudo docker stop $(docker ps -a -q)
-  sudo docker rm $(docker ps -a -q)
-  sudo docker rmi $(docker images -q)
+  if [ $(docker ps -a -q) ]; then
+    sudo docker stop $(docker ps -a -q)
+    sudo docker rm $(docker ps -a -q)
+  fi
+
+  if [ $(docker images -q) ]; then
+    sudo docker rmi $(docker images -q)
+  fi
 }
 
 init() {
