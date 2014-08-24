@@ -54,14 +54,18 @@ remove() {
   sudo rm /usr/local/bin/dev
 }
 
-clean() {
-  if [ -n $(docker ps -a -q) ]; then
-    sudo docker stop $(docker ps -a -q)
-    sudo docker rm $(docker ps -a -q)
+clean()
+  CONTAINERS=$(docker ps -a -q)
+
+  if [ -n "${CONTAINERS}" ]; then
+    sudo docker stop ${CONTAINERS}
+    sudo docker rm ${CONTAINERS}
   fi
 
-  if [ -n $(docker images -q) ]; then
-    sudo docker rmi $(docker images -q)
+  IMAGES=$(docker images -q)
+
+  if [ -n "${IMAGES}" ]; then
+    sudo docker rmi ${IMAGES}
   fi
 }
 
