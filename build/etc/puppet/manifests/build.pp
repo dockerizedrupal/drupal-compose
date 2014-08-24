@@ -1,6 +1,6 @@
 node default {
   file { '/run.sh':
-    ensure => present,
+    ensure => file,
     source => '/tmp/build/run.sh',
     mode => 755
   }
