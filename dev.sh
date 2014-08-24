@@ -47,6 +47,11 @@ for option in "${@}"; do
         $CONTEXT/dev.sh install
       fi
       ;;
+    remove)
+      sudo docker rmi ${IMAGE}
+
+      sudo rm /usr/local/bin/dev
+      ;;
     init)
       sudo docker run --rm -i -t -v $(pwd):/context ${IMAGE} init
       ;;
