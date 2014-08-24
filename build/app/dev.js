@@ -5,19 +5,15 @@ var program = require('commander');
 var YAML = require('yamljs');
 
 program
-  .command('start')
+  .command('up')
   .action(function(context) {
-    yaml = YAML.load(context + '/dev.yaml');
-
-    process.stdout.write(yaml.start);
+    process.stdout.write(YAML.load(context + '/dev.yaml').up);
   });
 
 program
-  .command('stop')
+  .command('destroy')
   .action(function(context) {
-    yaml = YAML.load(context + '/dev.yaml');
-
-    process.stdout.write(yaml.stop);
+    process.stdout.write(YAML.load(context + '/dev.yaml').destroy);
   });
 
 program.parse(process.argv);
