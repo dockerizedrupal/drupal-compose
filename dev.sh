@@ -9,15 +9,16 @@ IMAGE=docker-registry.simpledrupalcloud.com/dev
 OPTIONS_BUILD=0
 
 install() {
+  SCRIPT=$(realpath -s $0)
+
+  if [ "${SCRIPT}" -eq "/usr/local/bin/dev" ]; then
+    exit
+  fi
+
   sudo apt-get install -y curl
   sudo apt-get install -y realpath
 
   curl -sSL https://get.docker.io/ubuntu/ | sudo bash
-
-  echo $0
-  echo "!!!"
-
-  SCRIPT=$(realpath -s $0)
 
   if [ "${OPTIONS_BUILD}" -eq 1 ]; then
     sudo docker build -t ${IMAGE} $(dirname ${SCRIPT})
