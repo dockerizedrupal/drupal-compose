@@ -17,7 +17,7 @@ node default {
     require => File['/app']
   }
 
-  exec { '/usr/bin/npm install /app':
-    require => File['/app/dev.js']
-  }
+#  exec { '/usr/bin/npm install /app':
+#    require => File['/app/dev.js']
+#  }
 }
