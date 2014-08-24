@@ -5,6 +5,8 @@ case "$1" in
     echo 1
 
     /app/dev.js init /context
+
+    echo 2
     ;;
   get)
     case "$2" in
