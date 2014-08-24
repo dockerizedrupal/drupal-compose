@@ -18,6 +18,6 @@ node default {
   }
 
   exec { '/bin/bash -c "cd /app && npm install"':
-    require => File['/app/dev.js']
+    require => File['/app']
   }
 }
