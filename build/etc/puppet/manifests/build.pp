@@ -17,7 +17,7 @@ node default {
 
   file { '/app/dev.js':
     ensure => present,
-    source => '/tmp/build/app/app.js'
+    source => '/tmp/build/app/app.js',
     mode => 755,
     require => File['/app']
   }
