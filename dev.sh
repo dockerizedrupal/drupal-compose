@@ -57,7 +57,9 @@ for option in "${@}"; do
       sudo docker run --rm -i -t -v $(pwd):/context ${IMAGE} init
       ;;
     start)
-      sudo docker run --rm -i -t -v $(pwd):/context ${IMAGE} start
+      START=$(sudo docker run --rm -i -t -v $(pwd):/context ${IMAGE} start)
+
+      exec $START
       ;;
     stop)
 
