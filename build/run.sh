@@ -5,7 +5,7 @@ case "$1" in
     cp /app/dev.yaml /context/dev.yaml
     ;;
   start)
-    /app/dev.js start /context
+    echo /app/dev.js start /context
     ;;
   get)
     case "$2" in
