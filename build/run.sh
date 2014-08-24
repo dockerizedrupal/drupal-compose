@@ -4,6 +4,8 @@ case "$1" in
   init)
     echo 1
 
+    node --version
+
     node /app/dev.js init /context
 
     echo 2
