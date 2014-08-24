@@ -16,7 +16,6 @@ node default {
   }
 
   file { '/app/dev.js':
-    ensure => present,
     mode => 755,
     require => File['/app']
   }
