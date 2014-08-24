@@ -14,6 +14,8 @@ install() {
 
   curl -sSL https://get.docker.io/ubuntu/ | sudo bash
 
+  echo $0
+
   SCRIPT=$(realpath -s $0)
 
   if [ "${OPTIONS_BUILD}" -eq 1 ]; then
