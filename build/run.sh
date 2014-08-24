@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-ls /app -la
-
 case "$1" in
   init)
     /app/dev.js init /context
