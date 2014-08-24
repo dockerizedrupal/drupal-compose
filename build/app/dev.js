@@ -12,4 +12,12 @@ program
     process.stdout.write(yaml.start);
   });
 
+program
+  .command('stop')
+  .action(function(context) {
+    yaml = YAML.load(context + '/dev.yaml');
+
+    process.stdout.write(yaml.stop);
+  });
+
 program.parse(process.argv);
