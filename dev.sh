@@ -15,6 +15,7 @@ install() {
   curl -sSL https://get.docker.io/ubuntu/ | sudo bash
 
   echo $0
+  echo "!!!"
 
   SCRIPT=$(realpath -s $0)
 
