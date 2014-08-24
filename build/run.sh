@@ -2,6 +2,8 @@
 
 case "$1" in
   init)
+    echo 1
+
     /app/dev.js init /context
     ;;
   get)
