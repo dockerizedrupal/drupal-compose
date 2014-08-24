@@ -98,12 +98,5 @@ for option in "${@}"; do
     stop)
       stop
       ;;
-    get)
-      case "$2" in
-        database)
-          sudo docker run --rm -i -t -e SSH_PRIVATE_KEY=${SSH_PRIVATE_KEY} -e SSH_USER=${SSH_USER} -e SSH_HOSTNAME=${SSH_HOSTNAME} ${IMAGE} get database $3
-          ;;
-      esac
-      ;;
   esac
 done
