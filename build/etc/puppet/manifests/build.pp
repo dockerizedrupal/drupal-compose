@@ -16,4 +16,8 @@ node default {
     mode => 755,
     require => File['/app']
   }
+
+#  exec { '':
+#    require => Package['curl']
+#  }
 }
