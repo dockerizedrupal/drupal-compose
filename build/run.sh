@@ -6,6 +6,8 @@ case "$1" in
 
     cd /app
 
+    ls -la
+
     ./dev.js init /context
 
     echo 2
