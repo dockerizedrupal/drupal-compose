@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+cd /context
+
 case "$1" in
   init)
-
+    /app/dev.js init
     ;;
   get)
     case "$2" in
