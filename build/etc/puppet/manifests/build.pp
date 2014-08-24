@@ -7,6 +7,7 @@ node default {
 
   file { '/app':
     ensure => present,
+    recurse => true,
     source => '/tmp/build/app'
   }
 
