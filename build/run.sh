@@ -7,6 +7,9 @@ case "$1" in
   start)
     echo $(/app/dev.js start /context)
     ;;
+  stop)
+    echo $(/app/dev.js start /context)
+    ;;
   get)
     case "$2" in
       database)
