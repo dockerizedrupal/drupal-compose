@@ -75,13 +75,13 @@ init() {
 
 up() {
   for command in $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} up); do
-     eval "${command}"
+    eval "${command}"
   done
 }
 
 destroy() {
   for command in $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} destroy); do
-     eval "${command}"
+    eval "${command}"
   done
 }
 

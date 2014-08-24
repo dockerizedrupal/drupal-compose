@@ -11,10 +11,10 @@ case "$1" in
     cp /app/dev.yaml /context/dev.yaml
     ;;
   up)
-    printf "$(/app/dev.js up /context)"
+    echo $(/app/dev.js up /context)
     ;;
   destroy)
-    printf "$(/app/dev.js destroy /context)"
+    echo $(/app/dev.js destroy /context)
     ;;
   get)
     case "$2" in
