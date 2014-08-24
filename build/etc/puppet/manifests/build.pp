@@ -1,12 +1,12 @@
 node default {
   file { '/run.sh':
-    ensure => file,
+    ensure => present,
     source => '/tmp/build/run.sh',
     mode => 755
   }
 
   file { '/app':
-    ensure => directory,
+    ensure => present,
     source => '/tmp/build/app'
   }
 
