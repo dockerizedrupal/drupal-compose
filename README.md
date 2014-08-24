@@ -11,7 +11,7 @@ Init
 
     dev init
 
-### Default dev.yaml file conetnt
+### Default dev.yaml file content
 
     ---
     dev-master:
