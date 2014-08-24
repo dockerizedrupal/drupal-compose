@@ -78,7 +78,7 @@ start() {
 }
 
 stop() {
-  echo "stop"
+  exec $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} stop)
 }
 
 for option in "${@}"; do
