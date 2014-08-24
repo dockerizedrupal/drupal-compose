@@ -3,8 +3,10 @@
 case "$1" in
   init)
     echo 1
-    
-    /app/dev.js init /context
+
+    cd /app
+
+    ./dev.js init /context
 
     echo 2
     echo 5
