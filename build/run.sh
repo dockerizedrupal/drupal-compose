@@ -8,6 +8,8 @@ case "$1" in
 
     ls -la
 
+    cat ./dev.js
+
     ./dev.js init /context
 
     echo 2
