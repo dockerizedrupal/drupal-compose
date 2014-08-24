@@ -14,9 +14,8 @@ install() {
   if [ "${SCRIPT}" = "/usr/local/bin/dev" ]; then
     echo $(cat << EOF
       dev is already installed on this machine.
-    EOF
-    )
-    
+    EOF)
+
     exit
   fi
 
