@@ -8,49 +8,6 @@ IMAGE=docker-registry.simpledrupalcloud.com/dev
 
 OPTIONS_BUILD=0
 
-install() {
-  sudo apt-get install -y curl
-  sudo apt-get install -y realpath
-
-  curl -sSL https://get.docker.io/ubuntu/ | sudo bash
-
-  SCRIPT=$(realpath -s $0)
-
-  if [ "${OPTIONS_BUILD}" -eq 1 ]; then
-    sudo docker build -t ${IMAGE} $(dirname ${SCRIPT})
-  else
-    sudo docker pull ${IMAGE}
-  fi
-
-  sudo cp ${SCRIPT} /usr/local/bin/dev
-}
-
-update() {
-  sudo docker rmi ${IMAGE}
-
-  CONTEXT=$(mktemp -d)
-
-  git clone git@git.simpledrupalcloud.com:viljaste/dev.git $CONTEXT
-
-  if [ "${OPTIONS_BUILD}" -eq 1 ]; then
-    $CONTEXT/dev.sh -b install
-  else
-    $CONTEXT/dev.sh install
-  fi
-}
-
-init() {
-  sudo docker run --rm -i -t -v $(pwd):/context ${IMAGE} init
-}
-
-start() {
-  echo "start"
-}
-
-stop() {
-  echo "stop"
-}
-
 for option in "${@}"; do
   case "${option}" in
     -b|--build)
@@ -62,19 +19,42 @@ done
 for option in "${@}"; do
   case "${option}" in
     install)
-      install
+      sudo apt-get install -y curl
+      sudo apt-get install -y realpath
+
+      curl -sSL https://get.docker.io/ubuntu/ | sudo bash
+
+      SCRIPT=$(realpath -s $0)
+
+      if [ "${OPTIONS_BUILD}" -eq 1 ]; then
+        sudo docker build -t ${IMAGE} $(dirname ${SCRIPT})
+      else
+        sudo docker pull ${IMAGE}
+      fi
+
+      sudo cp ${SCRIPT} /usr/local/bin/dev
       ;;
     update)
-      update
+      sudo docker rmi ${IMAGE}
+
+      CONTEXT=$(mktemp -d)
+
+      git clone git@git.simpledrupalcloud.com:viljaste/dev.git $CONTEXT
+
+      if [ "${OPTIONS_BUILD}" -eq 1 ]; then
+        $CONTEXT/dev.sh -b install
+      else
+        $CONTEXT/dev.sh install
+      fi
       ;;
     init)
-      init
+      sudo docker run --rm -i -t -v $(pwd):/context ${IMAGE} init
       ;;
     start)
-      start
+
       ;;
     stop)
-      stop
+
       ;;
     get)
       case "$2" in
