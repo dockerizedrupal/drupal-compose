@@ -2,6 +2,12 @@
 
 case "$1" in
   init)
+    if [ -f "/context/dev.yaml" ]; then
+      echo "dev.yaml file already exists"
+
+      exit
+    fi
+
     cp /app/dev.yaml /context/dev.yaml
     ;;
   up)
