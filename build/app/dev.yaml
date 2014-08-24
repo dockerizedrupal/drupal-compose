@@ -4,10 +4,11 @@ dev-master:
   host: dev-master.simpledrupalcloud.com
   drupal_path: /var/www/arendus/project_1
 install: |
-  #  install commands
+  # sudo docker run -t project_1 -v $(pwd):/context -d simpledrupalcloud/apache2
 update: |
-  # update commands
+  # sudo docker pull simpledrupalcloud/apache2
 start: |
-  # start commands
+  # sudo rm project_1
+  # sudo docker run -t project_1 -v $(pwd):/context -d simpledrupalcloud/apache2
 stop: |
-  # stop commands
+  # sudo docker stop project_1

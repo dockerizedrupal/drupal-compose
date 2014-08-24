@@ -3,6 +3,7 @@
   "author": "Jürgen Viljaste <viljaste@simpledrupalcloud.com>",
   "private": true,
   "dependencies": {
-    "commander": "^2.3.0"
+    "commander": "^2.3.0",
+    "yamljs": "^0.1.5"
   }
 }

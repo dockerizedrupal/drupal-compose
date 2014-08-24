@@ -2,11 +2,14 @@
 
 var fs = require('fs');
 var program = require('commander');
+var YAML = require('yamljs');
 
-//program
-//  .command('init')
-//  .action(function(context) {
-//
-//  });
-//
-//program.parse(process.argv);
+program
+  .command('start')
+  .action(function(context) {
+    yaml = YAML.load(context + '/dev.yaml');
+
+    process.stdout.write(yaml.start);
+  });
+
+program.parse(process.argv);

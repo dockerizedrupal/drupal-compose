@@ -4,6 +4,9 @@ case "$1" in
   init)
     cp /app/dev.yaml /context/dev.yaml
     ;;
+  start)
+    /app/dev.js start /context
+    ;;
   get)
     case "$2" in
       database)
