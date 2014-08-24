@@ -52,6 +52,18 @@ clean() {
   sudo docker rmi $(docker images -q)
 }
 
+init() {
+  sudo docker run --rm -i -t -v $(pwd):/context ${IMAGE} init
+}
+
+start() {
+  exec $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} start)
+}
+
+stop() {
+  echo "stop"
+}
+
 for option in "${@}"; do
   case "${option}" in
     -b|--build)
@@ -75,13 +87,13 @@ for option in "${@}"; do
       clean
       ;;
     init)
-      sudo docker run --rm -i -t -v $(pwd):/context ${IMAGE} init
+      init
       ;;
     start)
-      exec $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} start)
+      start
       ;;
     stop)
-
+      stop
       ;;
     get)
       case "$2" in
