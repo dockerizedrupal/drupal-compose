@@ -14,7 +14,7 @@ install() {
   if [ "${SCRIPT}" = "/usr/local/bin/dev" ]; then
     read -d '' String << EOF
       dev is already installed on this machine.
-    EOF
+EOF
 
     exit
   fi
