@@ -5,15 +5,15 @@ case "$1" in
     cp /app/dev.yaml /context/dev.yaml
     ;;
   start)
-    echo "$(/app/dev.js start /context)"
+    printf $(/app/dev.js start /context)
     ;;
   stop)
-    echo "$(/app/dev.js stop /context)"
+    printf $(/app/dev.js stop /context)
     ;;
   get)
     case "$2" in
       database)
-        echo ${SSH_PRIVATE_KEY} | ssh -i /dev/stdin ${SSH_USER}@${SSH_HOSTNAME} dev-master get database $3
+        printf ${SSH_PRIVATE_KEY} | ssh -i /dev/stdin ${SSH_USER}@${SSH_HOSTNAME} dev-master get database $3
         ;;
     esac
     ;;

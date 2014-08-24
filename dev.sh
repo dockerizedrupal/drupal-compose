@@ -74,7 +74,7 @@ init() {
 }
 
 start() {
-  $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} start)
+  exec $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} start)
 }
 
 stop() {
