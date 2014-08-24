@@ -11,7 +11,7 @@ OPTIONS_BUILD=0
 install() {
   SCRIPT=$(realpath -s $0)
 
-  if [ "${SCRIPT}" -eq "/usr/local/bin/dev" ]; then
+  if [ "${SCRIPT}" = "/usr/local/bin/dev" ]; then
     exit
   fi
 
