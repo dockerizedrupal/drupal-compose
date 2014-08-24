@@ -3,12 +3,8 @@
 case "$1" in
   init)
     echo 1
-
-    which npm
-
-    node --version
-
-    node /app/dev.js init /context
+    
+    /app/dev.js init /context
 
     echo 2
     echo 5
