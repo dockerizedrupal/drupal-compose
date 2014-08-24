@@ -54,7 +54,7 @@ remove() {
   sudo rm /usr/local/bin/dev
 }
 
-clean()
+clean() {
   CONTAINERS=$(docker ps -a -q)
 
   if [ -n "${CONTAINERS}" ]; then
