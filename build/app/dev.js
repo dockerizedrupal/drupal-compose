@@ -1,3 +1,12 @@
 #!/usr/bin/env node
 
-process.stdout.write(d + '\n');
+var fs = require('fs');
+var program = require('commander');
+
+program
+  .command('init')
+  .action(function() {
+    fs.createReadStream('./dev.yaml').pipe(fs.createWriteStream('/context/dev.yaml'));
+  });
+
+program.parse(process.argv);
