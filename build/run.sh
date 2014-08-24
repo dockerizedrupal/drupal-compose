@@ -2,7 +2,7 @@
 
 case "$1" in
   init)
-    /app/dev.js init /context
+    cp /app/dev.yaml /context/dev.yaml
     ;;
   get)
     case "$2" in
