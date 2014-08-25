@@ -83,7 +83,7 @@ up() {
 
 destroy() {
   IFS=$'\n'
-  
+
   for command in $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} destroy); do
     eval "${command}"
   done
