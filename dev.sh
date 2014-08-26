@@ -81,6 +81,10 @@ up() {
   done
 }
 
+down() {
+  echo 1
+}
+
 destroy() {
   IFS=$'\n'
 
@@ -117,8 +121,38 @@ for option in "${@}"; do
     up)
       up
       ;;
+    down)
+      down
+      ;;
     destroy)
       destroy
       ;;
+    git)
+      git
+      ;;
   esac
 done
+
+#git() {
+#  sudo docker run --rm -t -i -v $(pwd):/src -v ~/.gitconfig:/root/.gitconfig -v ~/.ssh:/root/.ssh simpledrupalcloud/git "${@}"
+#}
+#
+#svn() {
+#  sudo docker run --rm -t -i -v $(pwd):/src -v ~/.subversion:/root/.subversion simpledrupalcloud/svn "${@}"
+#}
+#
+#drush() {
+#  sudo docker run --rm -t -i -v $(pwd):/src simpledrupalcloud/drush "${@}"
+#}
+#
+#case "$1" in
+#  git)
+#    git "${@:2}"
+#    ;;
+#  svn)
+#    svn "${@:2}"
+#    ;;
+#  drush)
+#    drush "${@:2}"
+#    ;;
+#esac

@@ -1,4 +1,6 @@
 ---
+svn: https://arendus.fenomen.ee/svn/dev-project-1/trunk
+git: git@git.fenomen.ee:fenomen/dev-project-1.git
 dev-master:
   user: root
   host: dev-master.simpledrupalcloud.com
