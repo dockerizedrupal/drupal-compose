@@ -10,5 +10,5 @@ RUN chmod +x /tmp/build/build.sh
 RUN /tmp/build/build.sh
 RUN rm -rf /tmp/*
 
-#ENTRYPOINT ["/run.sh"]
+# ENTRYPOINT ["/run.sh"]
 CMD ["/run.sh"]
