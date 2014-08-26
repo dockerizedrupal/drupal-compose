@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+cd /src
+
 case "$1" in
   init)
     if [ -f "/context/dev.yaml" ]; then
@@ -11,10 +13,13 @@ case "$1" in
     cp /app/dev.yaml /context/dev.yaml
     ;;
   up)
-    printf "$(/app/dev.js up /context)"
+    printf "$(/app/dev.js up /src)"
+    ;;
+  down)
+    printf "$(/app/dev.js down /src)"
     ;;
   destroy)
-    printf "$(/app/dev.js destroy /context)"
+    printf "$(/app/dev.js destroy /src)"
     ;;
   get)
     case "$2" in

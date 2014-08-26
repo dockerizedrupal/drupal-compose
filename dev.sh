@@ -70,13 +70,13 @@ clean() {
 }
 
 init() {
-  sudo docker run --rm -i -t -v $(pwd):/context ${IMAGE} init
+  sudo docker run --rm -i -t -v $(pwd):/src ${IMAGE} init
 }
 
 up() {
   IFS=$'\n'
 
-  for command in $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} up); do
+  for command in $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} up); do
     eval "${command}"
   done
 }
@@ -88,7 +88,7 @@ down() {
 destroy() {
   IFS=$'\n'
 
-  for command in $(sudo docker run --rm -a stdout -i -t -v $(pwd):/context ${IMAGE} destroy); do
+  for command in $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} destroy); do
     eval "${command}"
   done
 }
