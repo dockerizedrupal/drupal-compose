@@ -4,13 +4,13 @@ cd /src
 
 case "$1" in
   init)
-    if [ -f "/context/dev.yaml" ]; then
+    if [ -f "/src/dev.yaml" ]; then
       echo "dev.yaml file already exists"
 
       exit
     fi
 
-    cp /app/dev.yaml /context/dev.yaml
+    cp /app/dev.yaml /src/dev.yaml
     ;;
   up)
     printf "$(/app/dev.js up /src)"
