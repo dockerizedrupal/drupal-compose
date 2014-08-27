@@ -11,7 +11,7 @@ Usage
 
 ### dev init
 
-Creates a simple YAML file (dev.yaml) into the working directory
+Creates a simple YAML file (dev.yaml) into the working directory if it doesn't already exist.
 
 ### dev up
 
