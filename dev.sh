@@ -150,6 +150,12 @@ destroy() {
 #}
 
 case "${1}" in
+  install)
+    install
+    ;;
+  update)
+    update
+    ;;
   init)
     init
     ;;
@@ -162,4 +168,10 @@ case "${1}" in
   destroy)
     destroy
     ;;
+#  local)
+#    local
+#    ;;
+#  remote)
+#    local
+#    ;;
 esac
