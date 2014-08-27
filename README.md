@@ -11,6 +11,8 @@ Usage
 
 ### dev init
 
+Creates a simple YAML file (dev.yaml) into the working directory
+
 ### dev up
 
 ### dev down
