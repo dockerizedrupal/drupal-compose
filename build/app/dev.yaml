@@ -1,10 +1,10 @@
 ---
-svn: https://arendus.fenomen.ee/svn/dev-project-1/trunk
-git: git@git.fenomen.ee:fenomen/dev-project-1.git
 dev-master:
-  user: root
-  host: dev-master.simpledrupalcloud.com
-  drupal_path: /var/www/arendus/project_1
+  ssh:
+    user: root
+    hostname: dev-master.simpledrupalcloud.com
+  drupal:
+    path: /var/www/project_1
 dev:
   up: |
     echo "up"
