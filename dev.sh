@@ -81,27 +81,6 @@ update() {
   $CONTEXT/dev.sh install
 }
 
-remove() {
-  sudo docker rmi -f ${IMAGE}
-
-  sudo rm /usr/local/bin/dev
-}
-
-clean() {
-  CONTAINERS=$(docker ps -a -q)
-
-  if [ -n "${CONTAINERS}" ]; then
-    sudo docker stop ${CONTAINERS}
-    sudo docker rm ${CONTAINERS}
-  fi
-
-  IMAGES=$(docker images -q)
-
-  if [ -n "${IMAGES}" ]; then
-    sudo docker rmi ${IMAGES}
-  fi
-}
-
 init() {
   sudo docker run --rm -i -t -v $(pwd):/src ${IMAGE} init
 }
