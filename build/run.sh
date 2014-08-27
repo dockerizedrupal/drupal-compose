@@ -17,12 +17,30 @@ case "${1}" in
     cp /app/dev.yaml /src/dev.yaml
     ;;
   up)
+    if [ ! -f dev.yaml ]; then
+      echo "Unable to find dev.yaml file from your working directory"
+
+      exit
+    fi
+
     printf "$(/app/dev.js up /src)"
     ;;
   down)
+    if [ ! -f dev.yaml ]; then
+      echo "Unable to find dev.yaml file from your working directory"
+
+      exit
+    fi
+
     printf "$(/app/dev.js down /src)"
     ;;
   destroy)
+    if [ ! -f dev.yaml ]; then
+      echo "Unable to find dev.yaml file from your working directory"
+
+      exit
+    fi
+    
     printf "$(/app/dev.js destroy /src)"
     ;;
 esac
