@@ -40,7 +40,7 @@ case "${1}" in
 
       exit
     fi
-    
+
     printf "$(/app/dev.js destroy /src)"
     ;;
 esac

@@ -59,7 +59,7 @@ install() {
     cat << EOF
 dev is already installed on this machine.
 
-Type "dev update" to get the latest updates or "dev remove" to remove the command from this machine.
+Type "dev update" to get the latest updates.
 EOF
     exit
   fi
