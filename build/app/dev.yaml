@@ -5,9 +5,10 @@ dev-master:
   user: root
   host: dev-master.simpledrupalcloud.com
   drupal_path: /var/www/arendus/project_1
-up: |
-  echo "up"
-down: |
-  echo "down"
-destroy: |
-  echo "destroy"
+dev:
+  up: |
+    echo "up"
+  down: |
+    echo "down"
+  destroy: |
+    echo "destroy"
