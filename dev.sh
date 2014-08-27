@@ -51,9 +51,11 @@ IFS=$'\n'
 #done
 
 install() {
+  sudo apt-get install -y realpath
+
   SCRIPT=$(realpath -s $0)
 
-  if [ "${SCRIPT}" = "/usr/local/bin/dev" ]; then
+  if [ "${SCRIPT}" = /usr/local/bin/dev ]; then
     cat << EOF
 dev is already installed on this machine.
 
@@ -63,31 +65,20 @@ EOF
   fi
 
   sudo apt-get install -y curl
-  sudo apt-get install -y realpath
 
   curl -sSL https://get.docker.io/ubuntu/ | sudo bash
 
-  if [ "${OPTIONS_BUILD}" -eq 1 ]; then
-    sudo docker build -t ${IMAGE} $(dirname ${SCRIPT})
-  else
-    sudo docker pull ${IMAGE}
-  fi
+  sudo docker pull ${IMAGE}
 
   sudo cp ${SCRIPT} /usr/local/bin/dev
 }
 
 update() {
-  sudo docker rmi -f ${IMAGE}
-
   CONTEXT=$(mktemp -d)
 
   git clone git@git.simpledrupalcloud.com:viljaste/dev.git $CONTEXT
 
-  if [ "${OPTIONS_BUILD}" -eq 1 ]; then
-    $CONTEXT/dev.sh -b install
-  else
-    $CONTEXT/dev.sh install
-  fi
+  $CONTEXT/dev.sh install
 }
 
 remove() {
