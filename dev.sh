@@ -6,7 +6,49 @@ SSH_PRIVATE_KEY=$(cat ~/.ssh/id_rsa)
 
 IMAGE=docker-registry.simpledrupalcloud.com/dev
 
-OPTIONS_BUILD=0
+IFS=$'\n'
+
+#OPTIONS_BUILD=0
+
+#for option in "${@}"; do
+#  case "${option}" in
+#    -b|--build)
+#      OPTIONS_BUILD=1
+#      ;;
+#  esac
+#done
+
+#for option in "${@}"; do
+#  case "${option}" in
+#    install)
+#      install
+#      ;;
+#    update)
+#      update
+#      ;;
+#    remove)
+#      remove
+#      ;;
+#    clean)
+#      clean
+#      ;;
+#    init)
+#      init
+#      ;;
+#    up)
+#      up
+#      ;;
+#    down)
+#      down
+#      ;;
+#    destroy)
+#      destroy
+#      ;;
+#    git)
+#      git
+#      ;;
+#  esac
+#done
 
 install() {
   SCRIPT=$(realpath -s $0)
@@ -74,64 +116,22 @@ init() {
 }
 
 up() {
-  IFS=$'\n'
-
   for command in $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} up); do
     eval "${command}"
   done
 }
 
 down() {
-  echo 1
-}
-
-destroy() {
-  IFS=$'\n'
-
-  for command in $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} destroy); do
+  for command in $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} down); do
     eval "${command}"
   done
 }
 
-for option in "${@}"; do
-  case "${option}" in
-    -b|--build)
-      OPTIONS_BUILD=1
-      ;;
-  esac
-done
-
-for option in "${@}"; do
-  case "${option}" in
-    install)
-      install
-      ;;
-    update)
-      update
-      ;;
-    remove)
-      remove
-      ;;
-    clean)
-      clean
-      ;;
-    init)
-      init
-      ;;
-    up)
-      up
-      ;;
-    down)
-      down
-      ;;
-    destroy)
-      destroy
-      ;;
-    git)
-      git
-      ;;
-  esac
-done
+destroy() {
+  for command in $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} destroy); do
+    eval "${command}"
+  done
+}
 
 #git() {
 #  sudo docker run --rm -t -i -v $(pwd):/src -v ~/.gitconfig:/root/.gitconfig -v ~/.ssh:/root/.ssh simpledrupalcloud/git "${@}"
@@ -145,14 +145,21 @@ done
 #  sudo docker run --rm -t -i -v $(pwd):/src simpledrupalcloud/drush "${@}"
 #}
 #
-#case "$1" in
-#  git)
-#    git "${@:2}"
-#    ;;
-#  svn)
-#    svn "${@:2}"
-#    ;;
-#  drush)
-#    drush "${@:2}"
-#    ;;
-#esac
+#drupal_fix_permissions() {
+#
+#}
+
+case "${1}" in
+  init)
+    init
+    ;;
+  up)
+    up
+    ;;
+  down)
+    down
+    ;;
+  destroy)
+    destroy
+    ;;
+esac

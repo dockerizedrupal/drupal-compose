@@ -2,9 +2,13 @@
 
 cd /src
 
-case "$1" in
+if [ ! -d .dev ]; then
+  mkdir .dev
+fi
+
+case "${1}" in
   init)
-    if [ -f "/src/dev.yaml" ]; then
+    if [ -f dev.yaml ]; then
       echo "dev.yaml file already exists"
 
       exit
@@ -20,12 +24,5 @@ case "$1" in
     ;;
   destroy)
     printf "$(/app/dev.js destroy /src)"
-    ;;
-  get)
-    case "$2" in
-      database)
-        echo ${SSH_PRIVATE_KEY} | ssh -i /dev/stdin ${SSH_USER}@${SSH_HOSTNAME} dev-master get database $3
-        ;;
-    esac
     ;;
 esac
