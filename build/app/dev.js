@@ -12,6 +12,12 @@ program
   });
 
 program
+  .command('down')
+  .action(function() {
+    process.stdout.write(config.dev.down);
+  });
+
+program
   .command('destroy')
   .action(function() {
     process.stdout.write(config.dev.destroy);
