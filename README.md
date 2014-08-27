@@ -9,10 +9,10 @@ Install
 Usage
 -----
 
-###dev init
+### dev init
 
-###dev up
+### dev up
 
-###dev down
+### dev down
 
-###dev destroy
+### dev destroy
