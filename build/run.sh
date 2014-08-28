@@ -44,6 +44,12 @@ case "${1}" in
     printf "$(/app/dev.js yaml dev.destroy)"
     ;;
   yaml)
+    if [ ! -f dev.yaml ]; then
+      echo "Unable to find dev.yaml file from your working directory"
+
+      exit
+    fi
+
     printf $(/app/dev.js yaml "${@:2}")
     ;;
 esac

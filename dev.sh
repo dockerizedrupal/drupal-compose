@@ -146,7 +146,7 @@ case "${1}" in
     case "${2}" in
       master)
         SSH_USER=$(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml dev-master.ssh.user)
-        
+
         echo "${SSH_USER}"
         ;;
     esac
