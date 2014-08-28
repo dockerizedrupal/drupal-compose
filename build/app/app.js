@@ -22,4 +22,22 @@ program
     process.stdout.write(dotty.get(YAML.load('/src/dev.yaml'), 'dev.up'));
   });
 
+program
+  .command('down')
+  .action(function() {
+    process.stdout.write(dotty.get(YAML.load('/src/dev.yaml'), 'dev.down'));
+  });
+
+program
+  .command('destroy')
+  .action(function() {
+    process.stdout.write(dotty.get(YAML.load('/src/dev.yaml'), 'dev.destroy'));
+  });
+
+program
+  .command('environment')
+  .action(function(environment) {
+    process.stdout.write(dotty.get(YAML.load('/src/dev.yaml'), 'environments.' + environment));
+  });
+
 program.parse(process.argv);
