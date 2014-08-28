@@ -78,6 +78,10 @@ ssh() {
 }
 
 ssh_master() {
+  echo $(yaml_environments_master_ssh_user)
+  echo $(yaml_environments_master_ssh_hostname)
+  echo $(yaml_environments_master_drupal_path)
+
   ssh -t "$(yaml_environments_master_ssh_user)@$(yaml_environments_master_ssh_hostname)" "cd $(yaml_environments_master_drupal_path) && exec \$SHELL -l"
 }
 
