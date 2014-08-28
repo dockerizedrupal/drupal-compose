@@ -20,3 +20,5 @@ Runs commands defined
 ### dev down
 
 ### dev destroy
+
+### dev ssh master
