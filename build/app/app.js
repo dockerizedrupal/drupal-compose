@@ -40,7 +40,7 @@ program
     console.log(action);
     console.log(path);
 
-    process.stdout.write(dotty[action](YAML.load('/src/dev.yaml'), path));
+    //process.stdout.write(dotty[action](YAML.load('/src/dev.yaml'), path));
   });
 
 program.parse(process.argv);
