@@ -1,54 +1,8 @@
 #!/usr/bin/env bash
 
-SSH_USER=root
-SSH_HOSTNAME=dev-master.simpledrupalcloud.com
-SSH_PRIVATE_KEY=$(cat ~/.ssh/id_rsa)
-
 IMAGE=docker-registry.simpledrupalcloud.com/dev
 
 IFS=$'\n'
-
-#OPTIONS_BUILD=0
-
-#for option in "${@}"; do
-#  case "${option}" in
-#    -b|--build)
-#      OPTIONS_BUILD=1
-#      ;;
-#  esac
-#done
-
-#for option in "${@}"; do
-#  case "${option}" in
-#    install)
-#      install
-#      ;;
-#    update)
-#      update
-#      ;;
-#    remove)
-#      remove
-#      ;;
-#    clean)
-#      clean
-#      ;;
-#    init)
-#      init
-#      ;;
-#    up)
-#      up
-#      ;;
-#    down)
-#      down
-#      ;;
-#    destroy)
-#      destroy
-#      ;;
-#    git)
-#      git
-#      ;;
-#  esac
-#done
 
 install() {
   sudo apt-get install -y realpath
@@ -123,14 +77,14 @@ ssh_master() {
   ssh -t "$(yaml_dev_master_ssh_user)@$(yaml_dev_master_ssh_hostname)" "cd $(yaml_dev_master_drupal_path) && exec \$SHELL -l"
 }
 
-#git() {
-#  sudo docker run --rm -t -i -v $(pwd):/src -v ~/.gitconfig:/root/.gitconfig -v ~/.ssh:/root/.ssh simpledrupalcloud/git "${@}"
-#}
-#
-#svn() {
-#  sudo docker run --rm -t -i -v $(pwd):/src -v ~/.subversion:/root/.subversion simpledrupalcloud/svn "${@}"
-#}
-#
+git() {
+  sudo docker run --rm -t -i -v $(pwd):/src -v ~/.gitconfig:/root/.gitconfig -v ~/.ssh:/root/.ssh simpledrupalcloud/git "${@}"
+}
+
+svn() {
+  sudo docker run --rm -t -i -v $(pwd):/src -v ~/.subversion:/root/.subversion simpledrupalcloud/svn "${@}"
+}
+
 #drush() {
 #  sudo docker run --rm -t -i -v $(pwd):/src simpledrupalcloud/drush "${@}"
 #}
@@ -173,12 +127,15 @@ case "${1}" in
       database)
         echo "sync database"
         ;;
+      files)
+        echo "file"
+      ;;
     esac
     ;;
-  local)
-    local
-    ;;
-  remote)
-    local
-    ;;
+  git)
+    git "${@:1}"
+  ;;
+  svn)
+    svn "${@:1}"
+  ;;
 esac

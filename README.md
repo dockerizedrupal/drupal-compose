@@ -24,3 +24,7 @@ Creates a simple YAML file (dev.yaml) into the working directory if it doesn't a
 #### dev ssh master
 
 #### dev ssh *
+
+### dev git
+
+### dev svn
