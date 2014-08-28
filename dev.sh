@@ -44,7 +44,7 @@ up() {
 #    eval "${command}"
 #  done
 
-echo 1
+echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} up)
 }
 
 down() {
