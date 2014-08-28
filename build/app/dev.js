@@ -3,8 +3,8 @@
 var exec = require('child_process').exec;
 
 var program = require('commander');
-//var YAML = require('yamljs');
-//var jsonQuery = require('json-query');
+var YAML = require('yamljs');
+var jsonQuery = require('json-query');
 
 program
   .command('init')
@@ -14,6 +14,12 @@ program
         throw err;
       }
     });
+  });
+
+program
+  .command('up')
+  .action(function() {
+    process.stdout.write('up');
   });
 
 program.parse(process.argv);
