@@ -121,16 +121,17 @@ case "${1}" in
     destroy
     ;;
   ssh)
-    ENVIRONMENT=0
-
-    case "${2}" in
-      master)
-        ssh_master
-        ;;
-      *)
-        ssh "${@:2}"
-      ;;
-    esac
+    echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml environments)
+#    ENVIRONMENT=0
+#
+#    case "${2}" in
+#      master)
+#        ssh_master
+#        ;;
+#      *)
+#        ssh "${@:2}"
+#      ;;
+#    esac
     ;;
   sync)
     case "${2}" in
