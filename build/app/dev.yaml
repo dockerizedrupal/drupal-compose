@@ -8,10 +8,25 @@ environments:
         path: ~/.ssh/id_rsa
     drupal:
       path: /var/www/drupal
-dev:
-  up: |
-    echo "up"
-  down: |
-    echo "down"
-  destroy: |
-    echo "destroy"
+services:
+  ssh:
+    image: simpledrupalcloud/apache2
+    instances:
+      - ssh_1
+#  apache2:
+#    image: simpledrupalcloud/apache2
+#    requires:
+#      - php
+#      - mysql
+#    instances:
+#      - www_1
+#  php:
+#    image: simpledrupalcloud/php-fpm
+#    instances:
+#      - php_1
+#  mysql:
+#    image: simpledrupalcloud/mysql
+#    requires:
+#      - php
+#    instances:
+#      - db_1

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "commander": "^2.3.0",
+    "dockerode": "^2.0.3",
     "dotty": "0.0.2",
     "yamljs": "^0.1.5"
   }
