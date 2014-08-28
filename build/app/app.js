@@ -35,9 +35,9 @@ program
   });
 
 program
-  .command('environment')
-  .action(function(environment) {
-    process.stdout.write(dotty.get(YAML.load('/src/dev.yaml'), 'environments.' + environment));
+  .command('yaml')
+  .action(function(path) {
+    process.stdout.write(dotty.get(YAML.load('/src/dev.yaml'), path));
   });
 
 program.parse(process.argv);

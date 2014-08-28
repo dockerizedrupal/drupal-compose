@@ -59,32 +59,24 @@ destroy() {
   done
 }
 
-yaml_environments_master_ssh_user() {
-  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml environments.master.ssh.user)
+yaml_environment_ssh_user() {
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml environments."${1}".ssh.user)
 }
 
-yaml_environments_master_ssh_hostname() {
-  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml environments.master.ssh.hostname)
+yaml_environment_ssh_hostname() {
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml environments."${1}".ssh.hostname)
 }
 
-yaml_environments_master_drupal_path() {
-  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml environments.master.drupal.path)
-}
-
-yaml_environment_exists() {
-  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml environments["${1}"])
+yaml_environment_drupal_path() {
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml environments."${1}".drupal.path)
 }
 
 ssh() {
   sudo docker run --rm -t -i -v ~/.ssh:/root/.ssh simpledrupalcloud/ssh "${@}"
 }
 
-ssh_master() {
-  echo $(yaml_environments_master_ssh_user)
-  echo $(yaml_environments_master_ssh_hostname)
-  echo $(yaml_environments_master_drupal_path)
-
-  ssh -t "$(yaml_environments_master_ssh_user)@$(yaml_environments_master_ssh_hostname)" "cd $(yaml_environments_master_drupal_path) && exec \$SHELL -l"
+ssh_environment() {
+  ssh -t "$(yaml_environment_ssh_user ${1})@$(yaml_environment_ssh_hostname ${1})" "cd $(yaml_environment_drupal_path ${1}) && exec \$SHELL -l"
 }
 
 git() {
@@ -123,8 +115,9 @@ case "${1}" in
     destroy
     ;;
   ssh)
-    echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml environments)
 #    ENVIRONMENT=0
+
+    ssh_environment "${2}"
 #
 #    case "${2}" in
 #      master)
