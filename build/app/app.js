@@ -19,7 +19,11 @@ program
 program
   .command('up')
   .action(function() {
-    process.stdout.write(dotty.get(YAML.load('/src/dev.yaml'), 'up'));
+    var config = YAML.load('/src/dev.yaml');
+
+    console.log(config);
+
+    //process.stdout.write(dotty.get(YAML.load('/src/dev.yaml'), 'up'));
   });
 
 program.parse(process.argv);
