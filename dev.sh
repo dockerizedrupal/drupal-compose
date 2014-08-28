@@ -107,7 +107,7 @@ ssh() {
   sudo docker run --rm -t -i -v ~/.ssh:/root/.ssh simpledrupalcloud/ssh "${@}"
 }
 
-ssh_master {
+ssh_master() {
   SSH_USER=$(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml dev-master.ssh.user)
   SSH_HOSTNAME=$(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml dev-master.ssh.hostname)
   DRUPAL_PATH=$(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml dev-master.drupal.path)
@@ -160,7 +160,7 @@ case "${1}" in
   sync)
     case "${2}" in
       database)
-
+        echo "sync database"
         ;;
     esac
     ;;
