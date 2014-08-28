@@ -131,6 +131,8 @@ case "${1}" in
     destroy
     ;;
   ssh)
+    echo $(yaml_environment_exists "${2}")
+
     if [ $(yaml_environment_exists "${2}") = "true" ]; then
       ssh_environment "${2}"
     else
