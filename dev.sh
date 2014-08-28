@@ -163,6 +163,9 @@ case "${1}" in
       master)
         ssh_master
         ;;
+      *)
+        ssh "${@:2}"
+      ;;
     esac
     ;;
   sync)
