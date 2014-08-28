@@ -131,20 +131,11 @@ case "${1}" in
     destroy
     ;;
   ssh)
-#    ENVIRONMENT=0
-
-     echo $(yaml_environment_exists "${2}")
-
-#    ssh_environment "${2}"
-#
-#    case "${2}" in
-#      master)
-#        ssh_master
-#        ;;
-#      *)
-#        ssh "${@:2}"
-#      ;;
-#    esac
+    if [ $(yaml_environment_exists "${2}") = "true" ]; then
+      ssh_environment "${2}"
+    else
+      ssh "${@:2}"
+    fi
     ;;
   sync)
     case "${2}" in
