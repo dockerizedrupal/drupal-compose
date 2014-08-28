@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "commander": "^2.3.0",
-    "json-query": "^1.1.0",
+    "dotty": "0.0.2",
     "yamljs": "^0.1.5"
   }
 }

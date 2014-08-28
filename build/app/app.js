@@ -4,7 +4,7 @@ var exec = require('child_process').exec;
 
 var program = require('commander');
 var YAML = require('yamljs');
-var jsonQuery = require('json-query');
+var dotty = require('dotty');
 
 program
   .command('init')
@@ -19,9 +19,7 @@ program
 program
   .command('up')
   .action(function() {
-    process.stdout.write(jsonQuery('up', {
-      data: YAML.load('/src/dev.yaml')
-    }).value);
+    process.stdout.write(dotty.get(YAML.load('/src/dev.yaml'), 'up'));
   });
 
 program.parse(process.argv);
