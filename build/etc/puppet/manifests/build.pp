@@ -12,7 +12,7 @@ node default {
   }
 
   exec { 'bash -c "cd /app && npm install"':
-    cwd => ['/bin'],
+    path => ['/bin'],
     require => File['/app']
   }
 
