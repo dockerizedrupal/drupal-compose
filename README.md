@@ -15,8 +15,6 @@ Creates a simple YAML file (dev.yaml) into the working directory if it doesn't a
 
 ### dev up
 
-Runs commands defined
-
 ### dev down
 
 ### dev destroy
