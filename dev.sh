@@ -133,7 +133,9 @@ case "${1}" in
   ssh)
 #    ENVIRONMENT=0
 
-    ssh_environment "${2}"
+     echo $(yaml_environment_exists "${2}")
+
+    //ssh_environment "${2}"
 #
 #    case "${2}" in
 #      master)
