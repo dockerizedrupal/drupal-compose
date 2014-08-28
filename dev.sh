@@ -103,16 +103,24 @@ destroy() {
   done
 }
 
+yaml_dev_master_ssh_user() {
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml dev-master.ssh.user)
+}
+
+yaml_dev_master_ssh_hostname() {
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml dev-master.ssh.hostname)
+}
+
+yaml_dev_master_drupal_path() {
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml dev-master.drupal.path)
+}
+
 ssh() {
   sudo docker run --rm -t -i -v ~/.ssh:/root/.ssh simpledrupalcloud/ssh "${@}"
 }
 
 ssh_master() {
-  SSH_USER=$(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml dev-master.ssh.user)
-  SSH_HOSTNAME=$(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml dev-master.ssh.hostname)
-  DRUPAL_PATH=$(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml dev-master.drupal.path)
-
-  ssh -t "${SSH_USER}@${SSH_HOSTNAME}" "cd ${DRUPAL_PATH} && exec \$SHELL -l"
+  ssh -t "$(yaml_dev_master_ssh_user)@$(yaml_dev_master_ssh_hostname)" "cd $(yaml_dev_master_drupal_path) && exec \$SHELL -l"
 }
 
 #git() {
