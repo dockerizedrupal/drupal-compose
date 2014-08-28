@@ -40,9 +40,9 @@ init() {
 }
 
 up() {
-  for command in $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} up); do
-    eval "${command}"
-  done
+#  for command in $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} up); do
+#    eval "${command}"
+#  done
 }
 
 down() {
