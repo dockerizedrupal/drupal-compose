@@ -11,8 +11,8 @@ node default {
     source => '/tmp/build/app'
   }
 
-  exec { '/bin/bash -c "cd /app && npm install"':
-
+  exec { 'bash -c "cd /app && npm install"':
+    cwd => ['/bin'],
     require => File['/app']
   }
 

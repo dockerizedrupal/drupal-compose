@@ -1,10 +1,11 @@
 ---
-dev-master:
-  ssh:
-    user: root
-    hostname: dev-master.simpledrupalcloud.com
-  drupal:
-    path: /var/www/project_1
+environments:
+  master:
+    ssh:
+      user: root
+      hostname: dev-master.simpledrupalcloud.com
+    drupal:
+      path: /var/www/project_1
 dev:
   up: |
     echo "up"
