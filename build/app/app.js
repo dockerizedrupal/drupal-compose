@@ -36,8 +36,8 @@ program
 
 program
   .command('yaml')
-  .action(function(path) {
-    process.stdout.write(dotty.get(YAML.load('/src/dev.yaml'), path));
+  .action(function(action, path) {
+    process.stdout.write(dotty[action](YAML.load('/src/dev.yaml'), path));
   });
 
 program.parse(process.argv);

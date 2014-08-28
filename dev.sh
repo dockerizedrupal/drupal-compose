@@ -60,15 +60,31 @@ destroy() {
 }
 
 yaml_environment_ssh_user() {
-  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml environments."${1}".ssh.user)
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml get environments."${1}".ssh.user)
+}
+
+yaml_environment_ssh_user_exists() {
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml exists environments."${1}".ssh.user)
 }
 
 yaml_environment_ssh_hostname() {
-  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml environments."${1}".ssh.hostname)
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml get environments."${1}".ssh.hostname)
+}
+
+yaml_environment_ssh_hostname_exists() {
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml exists environments."${1}".ssh.hostname)
 }
 
 yaml_environment_drupal_path() {
-  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml environments."${1}".drupal.path)
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml get environments."${1}".drupal.path)
+}
+
+yaml_environment_drupal_path_exists() {
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml exists environments."${1}".drupal.path)
+}
+
+yaml_environment_exists() {
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml exists environments."${1}")
 }
 
 ssh() {
