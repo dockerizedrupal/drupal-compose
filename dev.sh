@@ -69,6 +69,10 @@ yaml_dev_master_drupal_path() {
   echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml dev-master.drupal.path)
 }
 
+yaml_environment_exists() {
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml environments["${1}"])
+}
+
 ssh() {
   sudo docker run --rm -t -i -v ~/.ssh:/root/.ssh simpledrupalcloud/ssh "${@}"
 }
@@ -113,6 +117,8 @@ case "${1}" in
     destroy
     ;;
   ssh)
+    ENVIRONMENT=0
+
     case "${2}" in
       master)
         ssh_master

@@ -4,8 +4,10 @@ environments:
     ssh:
       user: root
       hostname: dev-master.simpledrupalcloud.com
+      private_key:
+        path: ~/.ssh/id_rsa
     drupal:
-      path: /var/www/project_1
+      path: /var/www/drupal
 dev:
   up: |
     echo "up"
