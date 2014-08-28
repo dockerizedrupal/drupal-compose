@@ -1,0 +1,17 @@
+---
+environments:
+  master:
+    ssh:
+      user: viljaste
+      hostname: arendus.fenomen.ee
+      private_key:
+        path: ~/.ssh/id_rsa
+    drupal:
+      path: /var/www/arendus/ufc
+dev:
+  up: |
+    echo "up 2"
+  down: |
+    echo "down"
+  destroy: |
+    echo "destroy"
