@@ -103,6 +103,10 @@ destroy() {
   done
 }
 
+ssh() {
+  sudo docker run --rm -t -i -v ~/.ssh:/root/.ssh simpledrupalcloud/ssh "${@}"
+}
+
 #git() {
 #  sudo docker run --rm -t -i -v $(pwd):/src -v ~/.gitconfig:/root/.gitconfig -v ~/.ssh:/root/.ssh simpledrupalcloud/git "${@}"
 #}
@@ -138,10 +142,23 @@ case "${1}" in
   destroy)
     destroy
     ;;
-#  local)
-#    local
-#    ;;
-#  remote)
-#    local
-#    ;;
+  ssh)
+    case "${2}" in
+      master)
+        SSH_USER=$(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml dev-master.ssh.user)
+        
+        echo "${SSH_USER}"
+        ;;
+    esac
+    ;;
+  sync)
+
+
+    ;;
+  local)
+    local
+    ;;
+  remote)
+    local
+    ;;
 esac

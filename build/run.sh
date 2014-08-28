@@ -23,7 +23,7 @@ case "${1}" in
       exit
     fi
 
-    printf "$(/app/dev.js up /src)"
+    printf "$(/app/dev.js yaml dev.up)"
     ;;
   down)
     if [ ! -f dev.yaml ]; then
@@ -32,7 +32,7 @@ case "${1}" in
       exit
     fi
 
-    printf "$(/app/dev.js down /src)"
+    printf "$(/app/dev.js yaml dev.down)"
     ;;
   destroy)
     if [ ! -f dev.yaml ]; then
@@ -41,6 +41,9 @@ case "${1}" in
       exit
     fi
 
-    printf "$(/app/dev.js destroy /src)"
+    printf "$(/app/dev.js yaml dev.destroy)"
+    ;;
+  yaml)
+    printf $(/app/dev.js yaml "${@:2}")
     ;;
 esac

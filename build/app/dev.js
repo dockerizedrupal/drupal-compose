@@ -2,25 +2,12 @@
 
 var program = require('commander');
 var YAML = require('yamljs');
-
-var config = YAML.load('/src/dev.yaml');
-
-program
-  .command('up')
-  .action(function() {
-    process.stdout.write(config.dev.up);
-  });
+var dotty = require("dotty");
 
 program
-  .command('down')
-  .action(function() {
-    process.stdout.write(config.dev.down);
-  });
-
-program
-  .command('destroy')
-  .action(function() {
-    process.stdout.write(config.dev.destroy);
+  .command('yaml')
+  .action(function(path) {
+    process.stdout.write(dotty.get(YAML.load('/src/dev.yaml'), path));
   });
 
 program.parse(process.argv);
