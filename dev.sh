@@ -57,16 +57,16 @@ destroy() {
   done
 }
 
-yaml_dev_master_ssh_user() {
-  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml dev-master.ssh.user)
+yaml_environments_master_ssh_user() {
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml environments.master.ssh.user)
 }
 
-yaml_dev_master_ssh_hostname() {
-  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml dev-master.ssh.hostname)
+yaml_environments_master_ssh_hostname() {
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml environments.master.ssh.hostname)
 }
 
-yaml_dev_master_drupal_path() {
-  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml dev-master.drupal.path)
+yaml_environments_master_drupal_path() {
+  echo $(sudo docker run --rm -a stdout -i -t -v $(pwd):/src ${IMAGE} yaml environments.master.drupal.path)
 }
 
 yaml_environment_exists() {
@@ -78,7 +78,7 @@ ssh() {
 }
 
 ssh_master() {
-  ssh -t "$(yaml_dev_master_ssh_user)@$(yaml_dev_master_ssh_hostname)" "cd $(yaml_dev_master_drupal_path) && exec \$SHELL -l"
+  ssh -t "$(yaml_environments_master_ssh_user)@$(yaml_environments_master_ssh_hostname)" "cd $(yaml_environments_master_drupal_path) && exec \$SHELL -l"
 }
 
 git() {
