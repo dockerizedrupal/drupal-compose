@@ -9,7 +9,7 @@ program
   .action(function(query) {
     process.stdout.write(jsonQuery(query, {
       data: YAML.load('/src/dev.yaml')
-    }).value);
+    }));
   });
 
 program.parse(process.argv);
