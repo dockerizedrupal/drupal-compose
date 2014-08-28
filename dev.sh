@@ -88,7 +88,7 @@ yaml_environment_exists() {
 }
 
 ssh() {
-  sudo docker run --rm -t -i -v ~/.ssh:/root/.ssh simpledrupalcloud/ssh "${@}"
+  sudo docker run --rm -i -t -v ~/.ssh:/root/.ssh simpledrupalcloud/ssh "${@}"
 }
 
 ssh_environment() {
