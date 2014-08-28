@@ -50,6 +50,6 @@ case "${1}" in
       exit
     fi
 
-    printf $(/app/dev.js yaml "${@:2}")
+    printf "$(/app/dev.js yaml "${@:2}")"
     ;;
 esac
