@@ -19,27 +19,24 @@ program
 program
   .command('up')
   .action(function() {
-    process.stdout.write(dotty.get(YAML.load('/src/dev.yaml'), 'dev.up'));
+    console.log(dotty.get(YAML.load('/src/dev.yaml'), 'dev.up'));
   });
 
 program
   .command('down')
   .action(function() {
-    process.stdout.write(dotty.get(YAML.load('/src/dev.yaml'), 'dev.down'));
+    console.log(dotty.get(YAML.load('/src/dev.yaml'), 'dev.down'));
   });
 
 program
   .command('destroy')
   .action(function() {
-    process.stdout.write(dotty.get(YAML.load('/src/dev.yaml'), 'dev.destroy'));
+    console.log(dotty.get(YAML.load('/src/dev.yaml'), 'dev.destroy'));
   });
 
 program
   .command('yaml')
   .action(function(action, path) {
-    console.log(action);
-    console.log(path);
-
     console.log(dotty[action](YAML.load('/src/dev.yaml'), path));
   });
 
