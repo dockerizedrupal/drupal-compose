@@ -19,7 +19,9 @@ program
 program
   .command('up')
   .action(function() {
-    process.stdout.write('up');
+    process.stdout.write(jsonQuery('up', {
+      data: YAML.load('/src/dev.yaml')
+    }).value);
   });
 
 program.parse(process.argv);
