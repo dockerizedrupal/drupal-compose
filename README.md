@@ -15,16 +15,31 @@ Creates a simple YAML file (dev.yaml) into the working directory if it doesn't a
 
 ### dev up
 
-### dev down
-
 ### dev destroy
 
 ### dev ssh
 
-#### dev ssh master
+#### dev ssh [ENVIRONMENT]
 
 #### dev ssh *
+
+### dev sync files [ENVIRONMENT_FROM] [ENVIRONMENT_TO]
+
+### dev sync database [ENVIRONMENT_FROM] [ENVIRONMENT_TO]
 
 ### dev git
 
 ### dev svn
+
+### dev user
+
+#### dev user [USER] password
+
+### dev snippet
+
+#### dev snippet add [SNIPPET_NAME] < snippet.js
+
+#### dev snippet delete [SNIPPET_NAME]
+
+#### dev snippet [SNIPPET_NAME] [USER]
+

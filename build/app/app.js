@@ -1,59 +1,89 @@
 #!/usr/bin/env node
 
-var fs   = require('fs');
+var fs = require('fs');
 
 var program = require('commander');
-var Docker = require('dockerode');
 var YAML = require('yamljs');
 var dotty = require('dotty');
+var validator = require('validator');
+var stream = require('stream');
+var through2 = require('through2');
+var Jetty = require('jetty');
+var async = require('async');
 
-var socket = process.env.DOCKER_SOCKET || '/var/run/docker.sock';
+var Docker = require('./docker.js');
 
-if (!fs.statSync(socket).isSocket()) {
-  throw new Error("Are you sure the docker is running?");
-}
+var docker = new Docker('/var/run/docker.sock');
+
+docker.run('simpledrupalcloud/ssh', {}, function() {
+
+});
+
+var up = function() {
+
+};
+
+//var socket = process.env.DOCKER_SOCKET || '/var/run/docker.sock';
+//
+//if (!fs.statSync(socket).isSocket()) {
+//  throw new Error("Are you sure the docker is running?");
+//}
+//
+//var docker = new Docker({
+//  socketPath: socket
+//});
 
 var config = YAML.load('./dev.yaml');
 
 //console.log(config.services);
 
-function in_array(value, array) {
-  return array.indexOf(value) > -1;
-}
+//function in_array(value, array) {
+//  return array.indexOf(value) > -1;
+//}
+//
+//function dependencies(services) {
+//  var resolved = [];
+//
+//  (function resolve(service, resolved, seen) {
+//    seen.push(service);
+//
+//    if (typeof services[service] !== 'undefined' && typeof services[service].requires !== 'undefined') {
+//      for (var dependency in services[service].requires) {
+//        dependency = services[service].requires[dependency];
+//
+//        if (!in_array(dependency, resolved)) {
+//          if (in_array(dependency, seen)) {
+//            throw new Error('Circular reference detected: ' + service + ' -> ' + dependency);
+//          }
+//
+//          resolve(dependency, resolved, seen);
+//        }
+//      }
+//    }
+//
+//    resolved.push(service);
+//  })(Object.keys(services)[0], resolved, []);
+//
+//  return resolved;
+//}
 
-function dependencies(services) {
-  var resolved = [];
+//docker.version(function(err, data) {
+//
+//});
+//
+//docker.listImages(function(err, data) {
+//  if (err) {
+//    return err;
+//  }
+//
+//  console.log(data);
+//});
 
-  (function resolve(service, resolved, seen) {
-    seen.push(service);
+//pull('simpledrupalcloud/ssh', function() {
+//  console.log(1);
+//});
 
-    for (var dependency in services[service].requires) {
-      dependency = services[service].requires[dependency];
-
-      if (!in_array(dependency, resolved)) {
-        if (in_array(dependency, seen)) {
-          throw new Error('Circular reference detected: ' + service + ' -> ' + dependency);
-        }
-
-        resolve(dependency, resolved, seen);
-      }
-    }
-
-    resolved.push(service);
-  })('apache2', resolved, []);
-
-  return resolved;
-}
-
-var docker = new Docker({
-  socketPath: socket
-});
-
-docker.version(function(err, data) {
-
-});
-
-//docker.run('simpledrupalcloud/ssh', ['viljaste@arendus.fenomen.ee'], process.stdout, {
+//docker.run('simpledrupalcloud/ssh', [''], process.stdout, {
 //  Tty: true,
 //  Volumes: {
 //    '/root/.ssh': {}
@@ -81,29 +111,44 @@ docker.version(function(err, data) {
 program
   .command('up')
   .action(function() {
-    var resolved = dependencies(config.services);
-
-    for (var i in resolved) {
-      var service = resolved[i];
-
-      var data = config.services[service];
-
-      var image = data.image;
-
-      console.log(image);
-
-      for (var j in data.instances) {
-        var instance = data.instances[i];
-
-        console.log(instance);
-
-        docker.pull(image, function(err, stream) {
-          if (err) {
-            return err;
-          }
-
-          stream.pipe(process.stdout);
-        });
+//    var resolved = dependencies(config.services);
+//
+//    console.log(resolved);
+//
+//    for (var i in resolved) {
+//      var service = resolved[i];
+//
+//      var data = config.services[service];
+//
+//      var image = data.image;
+//
+//      image_exists(image, function(err) {
+//        if (err) {
+//
+//        }
+//      });
+//
+//      console.log(image);
+//
+//      for (var j in data.instances) {
+//        var instance = data.instances[i];
+//
+//        console.log(instance);
+//
+//        docker.pull(image, function(err, stream) {
+//          if (err) {
+//            return err;
+//          }
+//
+//          stream.pipe(through2(function(chunk, enc, callback) {
+//            chunk = JSON.parse(chunk);
+//
+//            this.push(chunk.status + '\n');
+//
+//            callback();
+//
+//          })).pipe(process.stdout);
+//        });
 
 //        docker.run(image, [], process.stdout, {
 //          Tty: true,
@@ -111,8 +156,8 @@ program
 //        }, function(err, data, container) {
 //          console.log(1);
 //        });
-      }
-    }
+//      }
+//    }
   });
 
 //program
