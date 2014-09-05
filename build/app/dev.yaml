@@ -9,20 +9,11 @@ environments:
     drupal:
       path: /var/www/drupal
 services:
-  apache2:
-    image: simpledrupalcloud/apache2
-    requires:
-      - php
-      - mysql
-    instances:
-      - www_1
+  apache:
+    image: simpledrupalcloud/apache:2.2.22
   php:
-    image: simpledrupalcloud/php-fpm
-    instances:
-      - php_1
-  mysql:
-    image: simpledrupalcloud/mysql
+    image: simpledrupalcloud/php:5.5.15
     requires:
-      - php
-    instances:
-      - db_1
+      - apache
+  mysql:
+    image: simpledrupalcloud/mysql:5.5.38

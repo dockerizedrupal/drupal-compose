@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-IMAGE=docker-registry.simpledrupalcloud.com/dev
+IMAGE=simpledrupalcloud/dev
 
 install() {
   sudo apt-get install -y realpath
@@ -26,11 +26,11 @@ EOF
 }
 
 update() {
-  CONTEXT=$(mktemp -d)
+  TMP=$(mktemp -d)
 
-  git clone git@git.simpledrupalcloud.com:viljaste/dev.git "${CONTEXT}"
+  git clone git@git.simpledrupalcloud.com:viljaste/dev.git "${TMP}"
 
-  ${CONTEXT}/dev.sh install
+  ${TMP}/dev.sh install
 }
 
 dev() {

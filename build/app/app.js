@@ -19,9 +19,9 @@ docker.run('simpledrupalcloud/ssh', {}, function() {
 
 });
 
-var up = function() {
-
-};
+//var up = function() {
+//
+//};
 
 //var socket = process.env.DOCKER_SOCKET || '/var/run/docker.sock';
 //
@@ -33,7 +33,7 @@ var up = function() {
 //  socketPath: socket
 //});
 
-var config = YAML.load('./dev.yaml');
+//var config = YAML.load('./dev.yaml');
 
 //console.log(config.services);
 
@@ -108,9 +108,9 @@ var config = YAML.load('./dev.yaml');
 //    });
 //  });
 
-program
-  .command('up')
-  .action(function() {
+//program
+//  .command('up')
+//    .action(function() {
 //    var resolved = dependencies(config.services);
 //
 //    console.log(resolved);
@@ -158,7 +158,7 @@ program
 //        });
 //      }
 //    }
-  });
+//  });
 
 //program
 //  .command('down')
@@ -178,4 +178,4 @@ program
 //    process.stdout.write(dotty[action](YAML.load('/src/dev.yaml'), path));
 //  });
 
-program.parse(process.argv);
+//program.parse(process.argv);

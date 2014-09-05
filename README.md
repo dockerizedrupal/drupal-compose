@@ -1,6 +1,11 @@
 dev
 ===
 
+Build the image yourself
+------------------------
+
+
+
 Install
 -------
 
@@ -43,3 +48,4 @@ Creates a simple YAML file (dev.yaml) into the working directory if it doesn't a
 
 #### dev snippet [SNIPPET_NAME] [USER]
 
+### dev
