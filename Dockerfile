@@ -1,6 +1,6 @@
 FROM simpledrupalcloud/node
 
-MAINTAINER Jürgen Viljaste <viljaste@simpledrupalcloud.com>
+MAINTAINER Simple Drupal Cloud <support@simpledrupalcloud.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -10,5 +10,4 @@ RUN chmod +x /tmp/build/build.sh
 RUN /tmp/build/build.sh
 RUN rm -rf /tmp/*
 
-# ENTRYPOINT ["/run.sh"]
-CMD ["/run.sh"]
+ENTRYPOINT ["/run.sh"]
