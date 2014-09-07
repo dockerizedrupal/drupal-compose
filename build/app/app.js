@@ -12,11 +12,11 @@ var configuration = new Configuration('./dev.yaml');
 
 configuration.dependencies.resolve();
 
-var docker = new Docker('/var/run/docker.sock');
-
-docker.run('simpledrupalcloud/ssh', {}, function() {
-
-});
+//var docker = new Docker('/var/run/docker.sock');
+//
+//docker.run('simpledrupalcloud/ssh', {}, function() {
+//
+//});
 
 //var up = function() {
 //
@@ -33,36 +33,6 @@ docker.run('simpledrupalcloud/ssh', {}, function() {
 //});
 
 //console.log(config.services);
-
-//function in_array(value, array) {
-//  return array.indexOf(value) > -1;
-//}
-//
-//function dependencies(services) {
-//  var resolved = [];
-//
-//  (function resolve(service, resolved, seen) {
-//    seen.push(service);
-//
-//    if (typeof services[service] !== 'undefined' && typeof services[service].requires !== 'undefined') {
-//      for (var dependency in services[service].requires) {
-//        dependency = services[service].requires[dependency];
-//
-//        if (!in_array(dependency, resolved)) {
-//          if (in_array(dependency, seen)) {
-//            throw new Error('Circular reference detected: ' + service + ' -> ' + dependency);
-//          }
-//
-//          resolve(dependency, resolved, seen);
-//        }
-//      }
-//    }
-//
-//    resolved.push(service);
-//  })(Object.keys(services)[0], resolved, []);
-//
-//  return resolved;
-//}
 
 //docker.version(function(err, data) {
 //
