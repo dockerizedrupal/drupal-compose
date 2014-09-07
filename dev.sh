@@ -327,6 +327,7 @@ EOF
   php5328_update
   php5328_update
   php5431_update
+  php5515_update
   mysql_update
 
   sudo cp "${SCRIPT}" /usr/local/bin/dev
