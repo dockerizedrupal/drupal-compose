@@ -318,6 +318,9 @@ EOF
   curl -sSL https://get.docker.io/ubuntu/ | sudo bash
 
   apache_update
+
+  cp ./php5-fcgi /var/apache-2.2.22/conf.d
+
   php5217_update
   php5328_update
   php5328_update
