@@ -330,7 +330,7 @@ EOF
 update() {
   TMP=$(mktemp -d)
 
-  git clone git@git.simpledrupalcloud.com:viljaste/dev.git "${TMP}"
+  git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${TMP}"
 
   "${TMP}"/dev.sh install
 }

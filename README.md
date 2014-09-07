@@ -1,22 +1,15 @@
 dev
 ===
 
-Build the image yourself
-------------------------
-
-
-
 Install
 -------
 
-    CONTEXT=$(mktemp -d) && sudo apt-get install -y git && git clone git@git.simpledrupalcloud.com:viljaste/dev.git $CONTEXT && $CONTEXT/dev.sh install
+    TMP=$(mktemp -d) && sudo apt-get install -y git && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${TMP}" && "${TMP}"/dev.sh install
 
 Usage
 -----
 
 ### dev init
-
-Creates a simple YAML file (dev.yaml) into the working directory if it doesn't already exist.
 
 ### dev up
 
@@ -47,5 +40,3 @@ Creates a simple YAML file (dev.yaml) into the working directory if it doesn't a
 #### dev snippet delete [SNIPPET_NAME]
 
 #### dev snippet [SNIPPET_NAME] [USER]
-
-### dev
