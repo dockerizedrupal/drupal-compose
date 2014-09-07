@@ -11,9 +11,29 @@ environments:
 services:
   apache:
     image: simpledrupalcloud/apache:2.2.22
-  php:
+    network: host
+    volumes:
+      - /apache-2.2.22/conf.d: /var/apache-2.2.22/conf.d
+      - /apache-2.2.22/data: /var/apache-2.2.22/data
+      - /apache-2.2.22/log: /var/apache-2.2.22/log
+  php5217:
+    image: simpledrupalcloud/php:5.2.17
+    requires:
+      - apache
+    network: host
+    volumes-from:
+      - apache
+  php5515:
     image: simpledrupalcloud/php:5.5.15
     requires:
       - apache
+    network: host
+    volumes-from:
+      - apache
   mysql:
     image: simpledrupalcloud/mysql:5.5.38
+    network: host
+    volumes:
+      - /mysql-5.5.38/conf.d: /var/mysql-5.5.38/conf.d
+      - /mysql-5.5.38/data: /var/mysql-5.5.38/data
+      - /mysql-5.5.38/log: /var/mysql-5.5.38/log
