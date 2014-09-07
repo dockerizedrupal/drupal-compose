@@ -10,7 +10,7 @@ var Docker = require('./docker.js');
 
 var configuration = new Configuration('./dev.yaml');
 
-configuration.dependencies.resolve();
+configuration.service('apache').dependencies.resolve();
 
 configuration.services();
 

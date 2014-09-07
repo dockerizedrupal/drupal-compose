@@ -18,14 +18,14 @@ services:
       - /apache-2.2.22/log: /var/apache-2.2.22/log
   php5217:
     image: simpledrupalcloud/php:5.2.17
-    requires:
+    dependencies:
       - apache
     network: host
     volumes-from:
       - apache
   php5515:
     image: simpledrupalcloud/php:5.5.15
-    requires:
+    dependencies:
       - apache
     network: host
     volumes-from:
