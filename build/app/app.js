@@ -12,6 +12,8 @@ var configuration = new Configuration('./dev.yaml');
 
 configuration.dependencies.resolve();
 
+configuration.services();
+
 //var docker = new Docker('/var/run/docker.sock');
 //
 //docker.run('simpledrupalcloud/ssh', {}, function() {
