@@ -4,12 +4,7 @@ var fs = require('fs');
 
 var program = require('commander');
 var YAML = require('yamljs');
-var dotty = require('dotty');
-var validator = require('validator');
-var stream = require('stream');
 var through2 = require('through2');
-var Jetty = require('jetty');
-var async = require('async');
 
 var Docker = require('./docker.js');
 
