@@ -302,7 +302,7 @@ mysql_destroy() {
 install() {
   sudo apt-get install -y realpath
 
-  SCRIPT=$(realpath -s $0)
+  SCRIPT=$(realpath -s "${0}")
 
   if [ "${SCRIPT}" = /usr/local/bin/dev ]; then
     cat << EOF
@@ -319,7 +319,9 @@ EOF
 
   apache_update
 
-  cp ./php5-fcgi /var/apache-2.2.22/conf.d
+  cp $(dirname "${0}")/php5-fcgi /var/apache-2.2.22/conf.d
+
+  apache_update
 
   php5217_update
   php5328_update
