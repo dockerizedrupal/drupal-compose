@@ -3,10 +3,14 @@
 var fs = require('fs');
 
 var program = require('commander');
-var YAML = require('yamljs');
 var through2 = require('through2');
 
+var Configuration = require('./configuration.js');
 var Docker = require('./docker.js');
+
+var configuration = new Configuration('./dev.yaml');
+
+configuration.dependencies.resolve();
 
 var docker = new Docker('/var/run/docker.sock');
 
@@ -27,8 +31,6 @@ docker.run('simpledrupalcloud/ssh', {}, function() {
 //var docker = new Docker({
 //  socketPath: socket
 //});
-
-//var config = YAML.load('./dev.yaml');
 
 //console.log(config.services);
 
