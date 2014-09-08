@@ -299,6 +299,20 @@ mysql_destroy() {
   mysql_rmi
 }
 
+phpmyadmin() {
+  TMP=$(mktemp -d)
+
+  sudo wget http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin/4.2.8/phpMyAdmin-4.2.8-english.zip -O "${TMP}/phpMyAdmin-4.2.8-english.zip"
+
+  sudo apt-get install -y unzip
+
+  sudo unzip "${TMP}/phpMyAdmin-4.2.8-english.zip" -d /var/www
+
+  sudo rm -rf /var/www/phpmyadmin
+
+  sudo mv /var/www/phpMyAdmin-4.2.8-english /var/www/phpmyadmin
+}
+
 install() {
   sudo apt-get install -y realpath
 
@@ -329,6 +343,12 @@ EOF
   php5431_update
   php5515_update
   mysql_update
+
+  phpmyadmin
+
+  sudo cp $(dirname "${0}")/config.inc.php /var/www/phpmyadmin
+
+  sudo chown www-data.www-data /var/www -R
 
   sudo cp "${SCRIPT}" /usr/local/bin/dev
 }
