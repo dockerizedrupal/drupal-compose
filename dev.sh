@@ -391,6 +391,7 @@ EOF
   docker_php5431_update
   docker_php5515_update
   docker_mysql_update
+  docker_mailcatcher_update
 
   phpmyadmin
 
@@ -416,6 +417,7 @@ start() {
   docker_php5431_start
   docker_php5515_start
   docker_mysql_start
+  docker_mailcatcher_start
 }
 
 restart() {
@@ -425,6 +427,7 @@ restart() {
   docker_php5431_restart
   docker_php5515_restart
   docker_mysql_restart
+  docker_mailcatcher_restart
 }
 
 destroy() {
@@ -434,6 +437,7 @@ destroy() {
   docker_php5431_destroy
   docker_php5515_destroy
   docker_mysql_destroy
+  docker_mailcatcher_destroy
 }
 
 case "${1}" in
