@@ -21,7 +21,7 @@ Restart services
 
     dev restart
 
-Destory services
+Destroy services
 ----------------
 
     dev destroy
