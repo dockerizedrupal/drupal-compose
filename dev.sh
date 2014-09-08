@@ -1,58 +1,106 @@
 #!/usr/bin/env bash
 
-apache_run() {
+docker_mailcatcher_run() {
+  sudo docker run \
+    --name mailcatcher \
+    --net host \
+    -d \
+    simpledrupalcloud/mailcatcher:0.5.12
+}
+
+docker_mailcatcher_stop() {
+  sudo docker stop mailcatcher
+}
+
+docker_mailcatcher_rm() {
+  docker_mailcatcher_stop
+
+  sudo docker rm mailcatcher
+}
+
+docker_mailcatcher_rmi() {
+  docker_mailcatcher_rm
+
+  sudo docker rmi simpledrupalcloud/mailcatcher:0.5.12
+}
+
+docker_mailcatcher_pull() {
+  sudo docker pull simpledrupalcloud/mailcatcher:0.5.12
+}
+
+docker_mailcatcher_update() {
+  docker_mailcatcher_rm
+  docker_mailcatcher_pull
+  docker_mailcatcher_run
+}
+
+docker_mailcatcher_start() {
+  docker_mailcatcher_rm
+  docker_mailcatcher_run
+}
+
+docker_mailcatcher_restart() {
+  docker_mailcatcher_rm
+  docker_mailcatcher_run
+}
+
+docker_mailcatcher_destroy() {
+  docker_mailcatcher_rmi
+}
+
+docker_apache_run() {
   sudo docker run \
     --name apache \
     --net host \
     -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
-    -v /var/www:/apache-2.2.22/data \
+    -v /apache-2.2.22/data:/apache-2.2.22/data \
     -v /var/apache-2.2.22/log:/apache-2.2.22/log \
     -e APACHE_SERVERNAME=example.com \
     -d \
     simpledrupalcloud/apache:2.2.22
 }
 
-apache_stop() {
+docker_apache_stop() {
   sudo docker stop apache
 }
 
-apache_rm() {
-  apache_stop
+docker_apache_rm() {
+  docker_apache_stop
 
   sudo docker rm apache
 }
 
-apache_rmi() {
-  apache_rm
+docker_apache_rmi() {
+  docker_apache_rm
 
   sudo docker rmi simpledrupalcloud/apache:2.2.22
 }
 
-apache_pull() {
+docker_apache_pull() {
   sudo docker pull simpledrupalcloud/apache:2.2.22
 }
 
-apache_update() {
-  apache_rm
-  apache_pull
-  apache_run
+docker_apache_update() {
+  docker_apache_rm
+  docker_apache_pull
+  docker_apache_run
 }
 
-apache_start() {
-  apache_rm
-  apache_run
+docker_apache_start() {
+  docker_apache_rm
+  docker_apache_run
 }
 
-apache_restart() {
-  apache_rm
-  apache_run
+docker_apache_restart() {
+  docker_apache_rm
+  docker_apache_run
 }
 
-apache_destroy() {
-  apache_rmi
+docker_apache_destroy() {
+  docker_apache_rmi
 }
 
-php5217_run() {
+docker_php5217_run() {
   sudo docker run \
     --name php5217 \
     --net host \
@@ -61,47 +109,47 @@ php5217_run() {
     simpledrupalcloud/php:5.2.17
 }
 
-php5217_stop() {
+docker_php5217_stop() {
   sudo docker stop php5217
 }
 
-php5217_rm() {
-  php5217_stop
+docker_php5217_rm() {
+  docker_php5217_stop
 
   sudo docker rm php5217
 }
 
-php5217_rmi() {
-  php5217_rm
+docker_php5217_rmi() {
+  docker_php5217_rm
 
   sudo docker rmi simpledrupalcloud/php:5.2.17
 }
 
-php5217_pull() {
+docker_php5217_pull() {
   sudo docker pull simpledrupalcloud/php:5.2.17
 }
 
-php5217_update() {
-  php5217_rm
-  php5217_pull
-  php5217_run
+docker_php5217_update() {
+  docker_php5217_rm
+  docker_php5217_pull
+  docker_php5217_run
 }
 
-php5217_start() {
-  php5217_rm
-  php5217_run
+docker_php5217_start() {
+  docker_php5217_rm
+  docker_php5217_run
 }
 
-php5217_restart() {
-  php5217_rm
-  php5217_run
+docker_php5217_restart() {
+  docker_php5217_rm
+  docker_php5217_run
 }
 
-php5217_destroy() {
-  php5217_rmi
+docker_php5217_destroy() {
+  docker_php5217_rmi
 }
 
-php5328_run() {
+docker_php5328_run() {
   sudo docker run \
     --name php5328 \
     --net host \
@@ -110,47 +158,47 @@ php5328_run() {
     simpledrupalcloud/php:5.3.28
 }
 
-php5328_stop() {
+docker_php5328_stop() {
   sudo docker stop php5328
 }
 
-php5328_rm() {
-  php5328_stop
+docker_php5328_rm() {
+  docker_php5328_stop
 
   sudo docker rm php5328
 }
 
-php5328_rmi() {
-  php5328_rm
+docker_php5328_rmi() {
+  docker_php5328_rm
 
   sudo docker rmi simpledrupalcloud/php:5.3.28
 }
 
-php5328_pull() {
+docker_php5328_pull() {
   sudo docker pull simpledrupalcloud/php:5.3.28
 }
 
-php5328_update() {
-  php5328_rm
-  php5328_pull
-  php5328_run
+docker_php5328_update() {
+  docker_php5328_rm
+  docker_php5328_pull
+  docker_php5328_run
 }
 
-php5328_start() {
-  php5328_rm
-  php5328_run
+docker_php5328_start() {
+  docker_php5328_rm
+  docker_php5328_run
 }
 
-php5328_restart() {
-  php5328_rm
-  php5328_run
+docker_php5328_restart() {
+  docker_php5328_rm
+  docker_php5328_run
 }
 
-php5328_destroy() {
-  php5328_rmi
+docker_php5328_destroy() {
+  docker_php5328_rmi
 }
 
-php5431_run() {
+docker_php5431_run() {
   sudo docker run \
     --name php5431 \
     --net host \
@@ -159,47 +207,47 @@ php5431_run() {
     simpledrupalcloud/php:5.4.31
 }
 
-php5431_stop() {
+docker_php5431_stop() {
   sudo docker stop php5431
 }
 
-php5431_rm() {
-  php5431_stop
+docker_php5431_rm() {
+  docker_php5431_stop
 
   sudo docker rm php5431
 }
 
-php5431_rmi() {
-  php5431_rm
+docker_php5431_rmi() {
+  docker_php5431_rm
 
   sudo docker rmi simpledrupalcloud/php:5.4.31
 }
 
-php5431_pull() {
+docker_php5431_pull() {
   sudo docker pull simpledrupalcloud/php:5.4.31
 }
 
-php5431_update() {
-  php5431_rm
-  php5431_pull
-  php5431_run
+docker_php5431_update() {
+  docker_php5431_rm
+  docker_php5431_pull
+  docker_php5431_run
 }
 
-php5431_start() {
-  php5431_rm
-  php5431_run
+docker_php5431_start() {
+  docker_php5431_rm
+  docker_php5431_run
 }
 
-php5431_restart() {
-  php5431_rm
-  php5431_run
+docker_php5431_restart() {
+  docker_php5431_rm
+  docker_php5431_run
 }
 
-php5431_destroy() {
-  php5431_rmi
+docker_php5431_destroy() {
+  docker_php5431_rmi
 }
 
-php5515_run() {
+docker_php5515_run() {
   sudo docker run \
     --name php5515 \
     --net host \
@@ -208,47 +256,47 @@ php5515_run() {
     simpledrupalcloud/php:5.5.15
 }
 
-php5515_stop() {
+docker_php5515_stop() {
   sudo docker stop php5515
 }
 
-php5515_rm() {
-  php5515_stop
+docker_php5515_rm() {
+  docker_php5515_stop
 
   sudo docker rm php5515
 }
 
-php5515_rmi() {
-  php5515_rm
+docker_php5515_rmi() {
+  docker_php5515_rm
 
   sudo docker rmi simpledrupalcloud/php:5.5.15
 }
 
-php5515_pull() {
+docker_php5515_pull() {
   sudo docker pull simpledrupalcloud/php:5.5.15
 }
 
-php5515_update() {
-  php5515_rm
-  php5515_pull
-  php5515_run
+docker_php5515_update() {
+  docker_php5515_rm
+  docker_php5515_pull
+  docker_php5515_run
 }
 
-php5515_start() {
-  php5515_rm
-  php5515_run
+docker_php5515_start() {
+  docker_php5515_rm
+  docker_php5515_run
 }
 
-php5515_restart() {
-  php5515_rm
-  php5515_run
+docker_php5515_restart() {
+  docker_php5515_rm
+  docker_php5515_run
 }
 
-php5515_destroy() {
-  php5515_rmi
+docker_php5515_destroy() {
+  docker_php5515_rmi
 }
 
-mysql_run() {
+docker_mysql_run() {
   sudo docker run \
     --name mysql \
     --net host \
@@ -259,44 +307,44 @@ mysql_run() {
     simpledrupalcloud/mysql:5.5.38
 }
 
-mysql_stop() {
+docker_mysql_stop() {
   sudo docker stop mysql
 }
 
-mysql_rm() {
-  mysql_stop
+docker_mysql_rm() {
+  docker_mysql_stop
 
   sudo docker rm mysql
 }
 
-mysql_rmi() {
-  mysql_rm
+docker_mysql_rmi() {
+  docker_mysql_rm
 
   sudo docker rmi simpledrupalcloud/mysql:5.5.38
 }
 
-mysql_pull() {
+docker_mysql_pull() {
   sudo docker pull simpledrupalcloud/mysql:5.5.38
 }
 
-mysql_update() {
-  mysql_rm
-  mysql_pull
-  mysql_run
+docker_mysql_update() {
+  docker_mysql_rm
+  docker_mysql_pull
+  docker_mysql_run
 }
 
-mysql_start() {
-  mysql_rm
-  mysql_run
+docker_mysql_start() {
+  docker_mysql_rm
+  docker_mysql_run
 }
 
-mysql_restart() {
-  mysql_rm
-  mysql_run
+docker_mysql_restart() {
+  docker_mysql_rm
+  docker_mysql_run
 }
 
-mysql_destroy() {
-  mysql_rmi
+docker_mysql_destroy() {
+  docker_mysql_rmi
 }
 
 phpmyadmin() {
@@ -331,18 +379,18 @@ EOF
 
   curl -sSL https://get.docker.io/ubuntu/ | sudo bash
 
-  apache_update
+  docker_apache_update
 
   sudo cp $(dirname "${0}")/php5-fcgi /var/apache-2.2.22/conf.d
 
-  apache_update
+  docker_apache_update
 
-  php5217_update
-  php5328_update
-  php5328_update
-  php5431_update
-  php5515_update
-  mysql_update
+  docker_php5217_update
+  docker_php5328_update
+  docker_php5328_update
+  docker_php5431_update
+  docker_php5515_update
+  docker_mysql_update
 
   phpmyadmin
 
@@ -362,30 +410,30 @@ update() {
 }
 
 start() {
-  apache_start
-  php5217_start
-  php5328_start
-  php5431_start
-  php5515_start
-  mysql_start
+  docker_apache_start
+  docker_php5217_start
+  docker_php5328_start
+  docker_php5431_start
+  docker_php5515_start
+  docker_mysql_start
 }
 
 restart() {
-  apache_restart
-  php5217_restart
-  php5328_restart
-  php5431_restart
-  php5515_restart
-  mysql_restart
+  docker_apache_restart
+  docker_php5217_restart
+  docker_php5328_restart
+  docker_php5431_restart
+  docker_php5515_restart
+  docker_mysql_restart
 }
 
 destroy() {
-  apache_destroy
-  php5217_destroy
-  php5328_destroy
-  php5431_destroy
-  php5515_destroy
-  mysql_destroy
+  docker_apache_destroy
+  docker_php5217_destroy
+  docker_php5328_destroy
+  docker_php5431_destroy
+  docker_php5515_destroy
+  docker_mysql_destroy
 }
 
 case "${1}" in
@@ -399,7 +447,7 @@ case "${1}" in
     start
     ;;
   restart)
-    restart
+    restart "${2}"
     ;;
   destroy)
     destroy
