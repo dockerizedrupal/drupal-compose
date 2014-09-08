@@ -319,7 +319,7 @@ EOF
 
   apache_update
 
-  cp $(dirname "${0}")/php5-fcgi /var/apache-2.2.22/conf.d
+  sudo cp $(dirname "${0}")/php5-fcgi /var/apache-2.2.22/conf.d
 
   apache_update
 
