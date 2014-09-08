@@ -354,11 +354,11 @@ phpmyadmin() {
 
   sudo apt-get install -y unzip
 
-  sudo unzip "${TMP}/phpMyAdmin-4.2.8-english.zip" -d /var/www
+  sudo unzip "${TMP}/phpMyAdmin-4.2.8-english.zip" -d /apache-2.2.22/data
 
-  sudo rm -rf /var/www/phpmyadmin
+  sudo rm -rf /apache-2.2.22/data/phpmyadmin
 
-  sudo mv /var/www/phpMyAdmin-4.2.8-english /var/www/phpmyadmin
+  sudo mv /apache-2.2.22/data/phpMyAdmin-4.2.8-english /apache-2.2.22/data/phpmyadmin
 }
 
 install() {
@@ -394,9 +394,9 @@ EOF
 
   phpmyadmin
 
-  sudo cp $(dirname "${0}")/config.inc.php /var/www/phpmyadmin
+  sudo cp $(dirname "${0}")/config.inc.php /apache-2.2.22/data/phpmyadmin
 
-  sudo chown www-data.www-data /var/www -R
+  sudo chown www-data.www-data /apache-2.2.22/data -R
 
   sudo cp "${SCRIPT}" /usr/local/bin/dev
 }
