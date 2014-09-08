@@ -5,7 +5,7 @@ apache_run() {
     --name apache \
     --net host \
     -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
-    -v /var/apache-2.2.22/data:/apache-2.2.22/data \
+    -v /var/www:/apache-2.2.22/data \
     -v /var/apache-2.2.22/log:/apache-2.2.22/log \
     -e APACHE_SERVERNAME=example.com \
     -d \
