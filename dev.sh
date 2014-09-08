@@ -53,7 +53,7 @@ docker_apache_run() {
     --name apache \
     --net host \
     -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
-    -v /apache-2.2.22/data:/apache-2.2.22/data \
+    -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -v /var/apache-2.2.22/log:/apache-2.2.22/log \
     -e APACHE_SERVERNAME=example.com \
     -d \
@@ -354,11 +354,11 @@ phpmyadmin() {
 
   sudo apt-get install -y unzip
 
-  sudo unzip "${TMP}/phpMyAdmin-4.2.8-english.zip" -d /apache-2.2.22/data
+  sudo unzip "${TMP}/phpMyAdmin-4.2.8-english.zip" -d /var/apache-2.2.22/data
 
-  sudo rm -rf /apache-2.2.22/data/phpmyadmin
+  sudo rm -rf /var/apache-2.2.22/data/phpmyadmin
 
-  sudo mv /apache-2.2.22/data/phpMyAdmin-4.2.8-english /apache-2.2.22/data/phpmyadmin
+  sudo mv /var/apache-2.2.22/data/phpMyAdmin-4.2.8-english /var/apache-2.2.22/data/phpmyadmin
 }
 
 install() {
@@ -394,9 +394,9 @@ EOF
 
   phpmyadmin
 
-  sudo cp $(dirname "${0}")/config.inc.php /apache-2.2.22/data/phpmyadmin
+  sudo cp $(dirname "${0}")/config.inc.php /var/apache-2.2.22/data/phpmyadmin
 
-  sudo chown www-data.www-data /apache-2.2.22/data -R
+  sudo chown www-data.www-data /var/apache-2.2.22/data -R
 
   sudo cp "${SCRIPT}" /usr/local/bin/dev
 }
