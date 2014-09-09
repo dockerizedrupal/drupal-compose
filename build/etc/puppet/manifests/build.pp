@@ -1,10 +1,12 @@
-node default {
-  file { '/run.sh':
-    ensure => present,
-    source => '/tmp/build/run.sh',
-    mode => 755
+class packages {
+  package {[
+      'build-essential'
+    ]:
+    ensure => present
   }
+}
 
+class dev {
   file { '/app':
     ensure => present,
     recurse => true,
@@ -20,5 +22,23 @@ node default {
     source => '/tmp/build/app/app.js',
     mode => 755,
     require => File['/app']
+  }
+}
+
+node default {
+  file { '/run.sh':
+    ensure => present,
+    source => '/tmp/build/run.sh',
+    mode => 755
+  }
+
+  include packages
+  include dev
+
+  Class['packages'] -> Class['dev']
+
+  exec { 'apt-get update':
+    path => ['/usr/bin'],
+    before => Class['packages']
   }
 }

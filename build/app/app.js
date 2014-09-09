@@ -3,16 +3,19 @@
 var fs = require('fs');
 
 var program = require('commander');
-var through2 = require('through2');
 
-var Configuration = require('./configuration.js');
-var Docker = require('./docker.js');
+var config = require('./config.js');
 
-var configuration = new Configuration('./dev.yaml');
+//var through2 = require('through2');
 
-configuration.service('apache').dependencies.resolve();
+//var Configuration = require('./configuration.js');
+//var Docker = require('./docker.js');
 
-configuration.services();
+//var configuration = new Configuration('./dev.yaml');
+//
+//configuration.service('apache').dependencies.resolve();
+//
+//configuration.services();
 
 //var docker = new Docker('/var/run/docker.sock');
 //
@@ -147,4 +150,19 @@ configuration.services();
 //    process.stdout.write(dotty[action](YAML.load('/src/dev.yaml'), path));
 //  });
 
-//program.parse(process.argv);
+program
+  .command('config')
+  .action(function(action, key, value) {
+    switch (action) {
+      case 'get':
+        console.log(config.get(key));
+
+        break;
+      case 'set':
+        config.set(key, value);
+
+        break;
+    }
+  });
+
+program.parse(process.argv);

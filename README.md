@@ -40,3 +40,14 @@ Destroy all services
 --------------------
 
     dev destroy
+
+Config
+------
+
+### Store
+
+    dev config set [KEY] [VALUE]
+
+### Retrive
+
+    dev config get [KEY]

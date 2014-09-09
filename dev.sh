@@ -4,6 +4,7 @@ docker_redis2814_run() {
   sudo docker run \
     --name redis2814 \
     --net host \
+    -v /var/redis-2.8.14/data:/redis-2.8.14/data \
     -d \
     simpledrupalcloud/redis:2.8.14
 }
@@ -538,10 +539,10 @@ case "${1}" in
   config)
     case "${2}" in
       get)
-        sudo docker --rm -i -t
+        sudo docker --rm -i -t simpledrupalcloud/dev config get "${3}"
       ;;
       set)
-
+        sudo docker --rm -i -t simpledrupalcloud/dev config set "${3}" "${4}"
       ;;
     esac
     ;;
