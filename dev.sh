@@ -1,5 +1,53 @@
 #!/usr/bin/env bash
 
+docker_redis2814_run() {
+  sudo docker run \
+    --name redis2814 \
+    --net host \
+    -d \
+    simpledrupalcloud/redis:2.8.14
+}
+
+docker_redis2814_stop() {
+  sudo docker stop redis2814
+}
+
+docker_redis2814_rm() {
+  docker_redis2814_stop
+
+  sudo docker rm redis2814
+}
+
+docker_redis2814_rmi() {
+  docker_redis2814_rm
+
+  sudo docker rmi simpledrupalcloud/redis:2.8.14
+}
+
+docker_redis2814_pull() {
+  sudo docker pull simpledrupalcloud/redis:2.8.14
+}
+
+docker_redis2814_update() {
+  docker_redis2814_rm
+  docker_redis2814_pull
+  docker_redis2814_run
+}
+
+docker_redis2814_start() {
+  docker_redis2814_rm
+  docker_redis2814_run
+}
+
+docker_redis2814_restart() {
+  docker_redis2814_rm
+  docker_redis2814_run
+}
+
+docker_redis2814_destroy() {
+  docker_redis2814_rmi
+}
+
 docker_mailcatcher0512_run() {
   sudo docker run \
     --name mailcatcher0512 \
@@ -379,6 +427,7 @@ EOF
 
   curl -sSL https://get.docker.io/ubuntu/ | sudo bash
 
+  docker_redis2814_update
   docker_apache2222_update
 
   sudo cp $(dirname "${0}")/php5-fcgi /var/apache-2.2.22/conf.d
@@ -411,6 +460,7 @@ update() {
 }
 
 start() {
+  docker_redis2814_start
   docker_apache2222_start
   docker_php5217_start
   docker_php5328_start
@@ -422,6 +472,9 @@ start() {
 
 restart() {
   case "${0}" in
+    redis)
+      docker_redis2814_restart
+      ;;
     apache)
       docker_apache2222_restart
       ;;
@@ -438,6 +491,7 @@ restart() {
       docker_mailcatcher0512_restart
       ;;
     *)
+      docker_redis2814_restart
       docker_apache2222_restart
       docker_php5217_restart
       docker_php5328_restart
@@ -450,6 +504,7 @@ restart() {
 }
 
 destroy() {
+  docker_redis2814_destroy
   docker_apache2222_destroy
   docker_php5217_destroy
   docker_php5328_destroy
