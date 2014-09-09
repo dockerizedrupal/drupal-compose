@@ -427,6 +427,11 @@ EOF
 
   curl -sSL https://get.docker.io/ubuntu/ | sudo bash
 
+  sudo docker stop apache
+  sudo docker rm apache
+  sudo docker stop mysql
+  sudo docker rm mysql
+
   docker_redis2814_update
   docker_apache2222_update
 
