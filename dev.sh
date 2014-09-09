@@ -1,56 +1,56 @@
 #!/usr/bin/env bash
 
-docker_mailcatcher_run() {
+docker_mailcatcher0512_run() {
   sudo docker run \
-    --name mailcatcher \
+    --name mailcatcher0512 \
     --net host \
     -d \
     simpledrupalcloud/mailcatcher:0.5.12
 }
 
-docker_mailcatcher_stop() {
-  sudo docker stop mailcatcher
+docker_mailcatcher0512_stop() {
+  sudo docker stop mailcatcher0512
 }
 
-docker_mailcatcher_rm() {
-  docker_mailcatcher_stop
+docker_mailcatcher0512_rm() {
+  docker_mailcatcher0512_stop
 
-  sudo docker rm mailcatcher
+  sudo docker rm mailcatcher0512
 }
 
-docker_mailcatcher_rmi() {
-  docker_mailcatcher_rm
+docker_mailcatcher0512_rmi() {
+  docker_mailcatcher0512_rm
 
   sudo docker rmi simpledrupalcloud/mailcatcher:0.5.12
 }
 
-docker_mailcatcher_pull() {
+docker_mailcatcher0512_pull() {
   sudo docker pull simpledrupalcloud/mailcatcher:0.5.12
 }
 
-docker_mailcatcher_update() {
-  docker_mailcatcher_rm
-  docker_mailcatcher_pull
-  docker_mailcatcher_run
+docker_mailcatcher0512_update() {
+  docker_mailcatcher0512_rm
+  docker_mailcatcher0512_pull
+  docker_mailcatcher0512_run
 }
 
-docker_mailcatcher_start() {
-  docker_mailcatcher_rm
-  docker_mailcatcher_run
+docker_mailcatcher0512_start() {
+  docker_mailcatcher0512_rm
+  docker_mailcatcher0512_run
 }
 
-docker_mailcatcher_restart() {
-  docker_mailcatcher_rm
-  docker_mailcatcher_run
+docker_mailcatcher0512_restart() {
+  docker_mailcatcher0512_rm
+  docker_mailcatcher0512_run
 }
 
-docker_mailcatcher_destroy() {
-  docker_mailcatcher_rmi
+docker_mailcatcher0512_destroy() {
+  docker_mailcatcher0512_rmi
 }
 
-docker_apache_run() {
+docker_apache2222_run() {
   sudo docker run \
-    --name apache \
+    --name apache2222 \
     --net host \
     -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
@@ -60,44 +60,44 @@ docker_apache_run() {
     simpledrupalcloud/apache:2.2.22
 }
 
-docker_apache_stop() {
-  sudo docker stop apache
+docker_apache2222_stop() {
+  sudo docker stop apache2222
 }
 
-docker_apache_rm() {
-  docker_apache_stop
+docker_apache2222_rm() {
+  docker_apache2222_stop
 
-  sudo docker rm apache
+  sudo docker rm apache2222
 }
 
-docker_apache_rmi() {
-  docker_apache_rm
+docker_apache2222_rmi() {
+  docker_apache2222_rm
 
   sudo docker rmi simpledrupalcloud/apache:2.2.22
 }
 
-docker_apache_pull() {
+docker_apache2222_pull() {
   sudo docker pull simpledrupalcloud/apache:2.2.22
 }
 
-docker_apache_update() {
-  docker_apache_rm
-  docker_apache_pull
-  docker_apache_run
+docker_apache2222_update() {
+  docker_apache2222_rm
+  docker_apache2222_pull
+  docker_apache2222_run
 }
 
-docker_apache_start() {
-  docker_apache_rm
-  docker_apache_run
+docker_apache2222_start() {
+  docker_apache2222_rm
+  docker_apache2222_run
 }
 
-docker_apache_restart() {
-  docker_apache_rm
-  docker_apache_run
+docker_apache2222_restart() {
+  docker_apache2222_rm
+  docker_apache2222_run
 }
 
-docker_apache_destroy() {
-  docker_apache_rmi
+docker_apache2222_destroy() {
+  docker_apache2222_rmi
 }
 
 docker_php5217_run() {
@@ -296,9 +296,9 @@ docker_php5515_destroy() {
   docker_php5515_rmi
 }
 
-docker_mysql_run() {
+docker_mysql5538_run() {
   sudo docker run \
-    --name mysql \
+    --name mysql5538 \
     --net host \
     -v /var/mysql-5.5.38/conf.d:/mysql-5.5.38/conf.d \
     -v /var/mysql-5.5.38/data:/mysql-5.5.38/data \
@@ -307,44 +307,44 @@ docker_mysql_run() {
     simpledrupalcloud/mysql:5.5.38
 }
 
-docker_mysql_stop() {
-  sudo docker stop mysql
+docker_mysql5538_stop() {
+  sudo docker stop mysql5538
 }
 
-docker_mysql_rm() {
-  docker_mysql_stop
+docker_mysql5538_rm() {
+  docker_mysql5538_stop
 
-  sudo docker rm mysql
+  sudo docker rm mysql5538
 }
 
-docker_mysql_rmi() {
-  docker_mysql_rm
+docker_mysql5538_rmi() {
+  docker_mysql5538_rm
 
   sudo docker rmi simpledrupalcloud/mysql:5.5.38
 }
 
-docker_mysql_pull() {
+docker_mysql5538_pull() {
   sudo docker pull simpledrupalcloud/mysql:5.5.38
 }
 
-docker_mysql_update() {
-  docker_mysql_rm
-  docker_mysql_pull
-  docker_mysql_run
+docker_mysql5538_update() {
+  docker_mysql5538_rm
+  docker_mysql5538_pull
+  docker_mysql5538_run
 }
 
-docker_mysql_start() {
-  docker_mysql_rm
-  docker_mysql_run
+docker_mysql5538_start() {
+  docker_mysql5538_rm
+  docker_mysql5538_run
 }
 
-docker_mysql_restart() {
-  docker_mysql_rm
-  docker_mysql_run
+docker_mysql5538_restart() {
+  docker_mysql5538_rm
+  docker_mysql5538_run
 }
 
-docker_mysql_destroy() {
-  docker_mysql_rmi
+docker_mysql5538_destroy() {
+  docker_mysql5538_rmi
 }
 
 phpmyadmin() {
@@ -379,19 +379,19 @@ EOF
 
   curl -sSL https://get.docker.io/ubuntu/ | sudo bash
 
-  docker_apache_update
+  docker_apache2222_update
 
   sudo cp $(dirname "${0}")/php5-fcgi /var/apache-2.2.22/conf.d
 
-  docker_apache_update
+  docker_apache2222_update
 
   docker_php5217_update
   docker_php5328_update
   docker_php5328_update
   docker_php5431_update
   docker_php5515_update
-  docker_mysql_update
-  docker_mailcatcher_update
+  docker_mysql5538_update
+  docker_mailcatcher0512_update
 
   phpmyadmin
 
@@ -411,33 +411,52 @@ update() {
 }
 
 start() {
-  docker_apache_start
+  docker_apache2222_start
   docker_php5217_start
   docker_php5328_start
   docker_php5431_start
   docker_php5515_start
-  docker_mysql_start
-  docker_mailcatcher_start
+  docker_mysql5538_start
+  docker_mailcatcher0512_start
 }
 
 restart() {
-  docker_apache_restart
-  docker_php5217_restart
-  docker_php5328_restart
-  docker_php5431_restart
-  docker_php5515_restart
-  docker_mysql_restart
-  docker_mailcatcher_restart
+  case "${0}" in
+    apache)
+      docker_apache2222_restart
+      ;;
+    php)
+      docker_php5217_restart
+      docker_php5328_restart
+      docker_php5431_restart
+      docker_php5515_restart
+      ;;
+    mysql)
+      docker_mysql5538_restart
+      ;;
+    mailcatcher)
+      docker_mailcatcher0512_restart
+      ;;
+    *)
+      docker_apache2222_restart
+      docker_php5217_restart
+      docker_php5328_restart
+      docker_php5431_restart
+      docker_php5515_restart
+      docker_mysql5538_restart
+      docker_mailcatcher0512_restart
+      ;;
+  esac
 }
 
 destroy() {
-  docker_apache_destroy
+  docker_apache2222_destroy
   docker_php5217_destroy
   docker_php5328_destroy
   docker_php5431_destroy
   docker_php5515_destroy
-  docker_mysql_destroy
-  docker_mailcatcher_destroy
+  docker_mysql5538_destroy
+  docker_mailcatcher0512_destroy
 }
 
 case "${1}" in
