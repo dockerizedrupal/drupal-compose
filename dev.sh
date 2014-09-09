@@ -451,7 +451,7 @@ EOF
 
   sudo cp $(dirname "${0}")/config.inc.php /var/apache-2.2.22/data/phpmyadmin
 
-  sudo chown www-data.www-data /var/apache-2.2.22/data -R
+  sudo chown www-data.www-data /var/apache-2.2.22/data/phpmyadmin -R
 
   sudo cp "${SCRIPT}" /usr/local/bin/dev
 }
@@ -534,5 +534,15 @@ case "${1}" in
     ;;
   destroy)
     destroy
+    ;;
+  config)
+    case "${2}" in
+      get)
+        sudo docker --rm -i -t
+      ;;
+      set)
+
+      ;;
+    esac
     ;;
 esac
