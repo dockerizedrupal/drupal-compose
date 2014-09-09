@@ -104,7 +104,7 @@ docker_php5217_run() {
   sudo docker run \
     --name php5217 \
     --net host \
-    --volumes-from apache \
+    --volumes-from apache2222 \
     -d \
     simpledrupalcloud/php:5.2.17
 }
@@ -153,7 +153,7 @@ docker_php5328_run() {
   sudo docker run \
     --name php5328 \
     --net host \
-    --volumes-from apache \
+    --volumes-from apache2222 \
     -d \
     simpledrupalcloud/php:5.3.28
 }
@@ -202,7 +202,7 @@ docker_php5431_run() {
   sudo docker run \
     --name php5431 \
     --net host \
-    --volumes-from apache \
+    --volumes-from apache2222 \
     -d \
     simpledrupalcloud/php:5.4.31
 }
@@ -251,7 +251,7 @@ docker_php5515_run() {
   sudo docker run \
     --name php5515 \
     --net host \
-    --volumes-from apache \
+    --volumes-from apache2222 \
     -d \
     simpledrupalcloud/php:5.5.15
 }
