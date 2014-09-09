@@ -471,7 +471,7 @@ start() {
 }
 
 restart() {
-  case "${0}" in
+  case "${1}" in
     redis)
       docker_redis2814_restart
       ;;
