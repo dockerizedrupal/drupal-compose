@@ -558,11 +558,11 @@ destroy() {
 }
 
 config_get() {
-  echo $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config get "${1}")
+  echo -n $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config get "${1}")
 }
 
 config_set() {
-  sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config set "${1}" "${2}"
+  echo $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config set "${1}" "${2}")
 }
 
 case "${1}" in
@@ -584,10 +584,10 @@ case "${1}" in
   config)
     case "${2}" in
       get)
-        echo $(config_get "${3}")
+        echo -n $(config_get "${3}")
       ;;
       set)
-        config_set "${3}" "${4}"
+        echo $(config_set "${3}" "${4}")
       ;;
     esac
     ;;
