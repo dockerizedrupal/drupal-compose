@@ -555,7 +555,6 @@ destroy() {
   docker_mailcatcher0512_destroy
 }
 
-
 config_get() {
   echo $(sudo docker run --rm -i -t -a stdout simpledrupalcloud/dev config get "${1}")
 }
