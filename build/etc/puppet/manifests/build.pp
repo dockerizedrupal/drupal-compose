@@ -17,7 +17,7 @@ class dev {
     source => '/tmp/build/app'
   }
 
-  exec { '/bin/bash -l -c "cd /app && npm install"':
+  exec { '/bin/bash -c "cd /app && npm install"':
     require => File['/app']
   }
 
