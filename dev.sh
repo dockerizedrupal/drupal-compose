@@ -556,11 +556,11 @@ destroy() {
 }
 
 config_get() {
-  echo $(sudo docker run --rm -i -t -a stdout simpledrupalcloud/dev config get "${1}")
+  echo $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config get "${1}")
 }
 
 config_set() {
-  sudo docker run --rm -i -t -a stdout simpledrupalcloud/dev config set "${1}" "${2}"
+  sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config set "${1}" "${2}"
 }
 
 case "${1}" in
