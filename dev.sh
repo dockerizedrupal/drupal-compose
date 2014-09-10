@@ -1,5 +1,34 @@
 #!/usr/bin/env bash
 
+docker_dev_stop() {
+  sudo docker stop dev
+}
+
+docker_dev_rm() {
+  docker_dev_stop
+
+  sudo docker rm dev
+}
+
+docker_dev_rmi() {
+  docker_dev_rm
+
+  sudo docker rmi simpledrupalcloud/dev
+}
+
+docker_dev_pull() {
+  sudo docker pull simpledrupalcloud/dev
+}
+
+docker_dev_update() {
+  docker_dev_rm
+  docker_dev_pull
+}
+
+docker_dev_destroy() {
+  docker_dev_rmi
+}
+
 docker_config_run() {
   sudo docker run \
     --name config \
@@ -437,6 +466,7 @@ EOF
   sudo docker stop mysql
   sudo docker rm mysql
 
+  docker_dev_update
   docker_config_update
   docker_apache2222_update
 
@@ -514,6 +544,7 @@ restart() {
 }
 
 destroy() {
+  docker_dev_destroy
   docker_config_destroy
   docker_apache2222_destroy
   docker_php5217_destroy
