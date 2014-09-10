@@ -1,5 +1,4 @@
 var redis = require('redis');
-var synchronize = require('synchronize');
 
 function Config() {
 

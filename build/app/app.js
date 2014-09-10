@@ -6,8 +6,6 @@ var program = require('commander');
 
 var Config = require('./config.js');
 
-var config = new Config();
-
 //var through2 = require('through2');
 
 //var Configuration = require('./configuration.js');
@@ -153,14 +151,17 @@ var config = new Config();
 //  });
 
 program
-  .command('config [get|set] [key] [value]', 'install one or more packages');
-
-program
   .command('config')
   .action(function(action, key, value) {
+    var config = new Config();
+
     switch (action) {
       case 'get':
         config.get(key, function(err, reply) {
+          if (err) {
+            return process.stdout.write(err);
+          }
+          
           process.stdout.write(reply);
         });
 
@@ -168,10 +169,10 @@ program
       case 'set':
         config.set(key, value, function(err, reply) {
           if (err) {
-            throw err;
+            return process.stdout.write(err);
           }
 
-          console.log('set ' + reply);
+          process.stdout.write(reply);
         });
 
         break;
