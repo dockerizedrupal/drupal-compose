@@ -7,6 +7,10 @@ class packages {
 }
 
 class dev {
+  exec { 'mkdir /src':
+    path => ['/bin']
+  }
+
   file { '/app':
     ensure => present,
     recurse => true,
