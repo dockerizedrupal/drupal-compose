@@ -587,7 +587,7 @@ case "${1}" in
         echo $(config_get "${3}")
       ;;
       set)
-        config_get "${3}" "${4}"
+        config_set "${3}" "${4}"
       ;;
     esac
     ;;
