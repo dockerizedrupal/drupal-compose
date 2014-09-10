@@ -4,7 +4,9 @@ var fs = require('fs');
 
 var program = require('commander');
 
-var config = require('./config.js');
+var Config = require('./config.js');
+
+var config = new Config();
 
 //var through2 = require('through2');
 
@@ -151,15 +153,26 @@ var config = require('./config.js');
 //  });
 
 program
+  .command('config [get|set] [key] [value]', 'install one or more packages');
+
+program
   .command('config')
   .action(function(action, key, value) {
     switch (action) {
       case 'get':
-        console.log(config.get(key));
+        config.get(key, function(err, reply) {
+          process.stdout.write(reply);
+        });
 
         break;
       case 'set':
-        config.set(key, value);
+        config.set(key, value, function(err, reply) {
+          if (err) {
+            throw err;
+          }
+
+          console.log('set ' + reply);
+        });
 
         break;
     }

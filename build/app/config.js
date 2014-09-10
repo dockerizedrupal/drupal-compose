@@ -5,22 +5,24 @@ function Config() {
 
 }
 
-Config.prototype.get = function(key) {
+Config.prototype.get = function(key, callback) {
   var client = redis.createClient();
 
-  var value = synchronize.await(client.get(key, synchronize.defer()));
+  client.get(key, function(err, reply) {
+    callback(err, reply.toString());
 
-  client.quit();
-
-  return value;
+    client.quit();
+  });
 };
 
-Config.prototype.set = function(key, value) {
+Config.prototype.set = function(key, value, callback) {
   var client = redis.createClient();
 
-  client.set(key, value);
+  client.set(key, value, function(err, reply) {
+    callback(err, reply.toString());
 
-  client.quit();
+    client.quit();
+  });
 };
 
 module.exports = Config;

@@ -1,52 +1,52 @@
 #!/usr/bin/env bash
 
-docker_redis2814_run() {
+docker_config_run() {
   sudo docker run \
-    --name redis2814 \
+    --name config \
     --net host \
     -v /var/redis-2.8.14/data:/redis-2.8.14/data \
     -d \
     simpledrupalcloud/redis:2.8.14
 }
 
-docker_redis2814_stop() {
-  sudo docker stop redis2814
+docker_config_stop() {
+  sudo docker stop config
 }
 
-docker_redis2814_rm() {
-  docker_redis2814_stop
+docker_config_rm() {
+  docker_config_stop
 
-  sudo docker rm redis2814
+  sudo docker rm config
 }
 
-docker_redis2814_rmi() {
-  docker_redis2814_rm
+docker_config_rmi() {
+  docker_config_rm
 
   sudo docker rmi simpledrupalcloud/redis:2.8.14
 }
 
-docker_redis2814_pull() {
+docker_config_pull() {
   sudo docker pull simpledrupalcloud/redis:2.8.14
 }
 
-docker_redis2814_update() {
-  docker_redis2814_rm
-  docker_redis2814_pull
-  docker_redis2814_run
+docker_config_update() {
+  docker_config_rm
+  docker_config_pull
+  docker_config_run
 }
 
-docker_redis2814_start() {
-  docker_redis2814_rm
-  docker_redis2814_run
+docker_config_start() {
+  docker_config_rm
+  docker_config_run
 }
 
-docker_redis2814_restart() {
-  docker_redis2814_rm
-  docker_redis2814_run
+docker_config_restart() {
+  docker_config_rm
+  docker_config_run
 }
 
-docker_redis2814_destroy() {
-  docker_redis2814_rmi
+docker_config_destroy() {
+  docker_config_rmi
 }
 
 docker_mailcatcher0512_run() {
@@ -424,16 +424,20 @@ EOF
     exit
   fi
 
-  sudo apt-get install -y curl
+  if [ ! -f /usr/local/bin/dev ]; then
+    sudo apt-get install -y curl
 
-  curl -sSL https://get.docker.io/ubuntu/ | sudo bash
+    curl -sSL https://get.docker.io/ubuntu/ | sudo bash
+  fi
 
+  sudo docker stop redis2814
+  sudo docker rm redis2814
   sudo docker stop apache
   sudo docker rm apache
   sudo docker stop mysql
   sudo docker rm mysql
 
-  docker_redis2814_update
+  docker_config_update
   docker_apache2222_update
 
   sudo cp $(dirname "${0}")/php5-fcgi /var/apache-2.2.22/conf.d
@@ -466,7 +470,7 @@ update() {
 }
 
 start() {
-  docker_redis2814_start
+  docker_config_start
   docker_apache2222_start
   docker_php5217_start
   docker_php5328_start
@@ -479,7 +483,7 @@ start() {
 restart() {
   case "${1}" in
     redis)
-      docker_redis2814_restart
+      docker_config_restart
       ;;
     apache)
       docker_apache2222_restart
@@ -497,7 +501,7 @@ restart() {
       docker_mailcatcher0512_restart
       ;;
     *)
-      docker_redis2814_restart
+      docker_config_restart
       docker_apache2222_restart
       docker_php5217_restart
       docker_php5328_restart
@@ -510,7 +514,7 @@ restart() {
 }
 
 destroy() {
-  docker_redis2814_destroy
+  docker_config_destroy
   docker_apache2222_destroy
   docker_php5217_destroy
   docker_php5328_destroy
@@ -518,6 +522,15 @@ destroy() {
   docker_php5515_destroy
   docker_mysql5538_destroy
   docker_mailcatcher0512_destroy
+}
+
+
+config_get() {
+  echo $(sudo docker --rm -i -t -a stdout simpledrupalcloud/dev config get "${1}")
+}
+
+config_set() {
+  sudo docker --rm -i -t -a stdout simpledrupalcloud/dev config set "${1}" "${2}"
 }
 
 case "${1}" in
@@ -539,10 +552,10 @@ case "${1}" in
   config)
     case "${2}" in
       get)
-        sudo docker --rm -i -t simpledrupalcloud/dev config get "${3}"
+        echo $(config_get "${3}")
       ;;
       set)
-        sudo docker --rm -i -t simpledrupalcloud/dev config set "${3}" "${4}"
+        config_get "${3}" "${4}"
       ;;
     esac
     ;;
