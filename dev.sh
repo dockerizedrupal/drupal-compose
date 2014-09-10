@@ -440,7 +440,9 @@ phpmyadmin() {
 }
 
 install() {
-  sudo apt-get install -y realpath
+  if [ ! -f /usr/local/bin/dev ]; then
+    sudo apt-get install -y realpath
+  fi
 
   SCRIPT=$(realpath -s "${0}")
 
