@@ -2,7 +2,7 @@
 
 cd /src
 
-/app/app.js "${@}"
+printf $(/app/app.js "${@}")
 
 #if [ ! -d .dev ]; then
 #  mkdir .dev

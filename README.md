@@ -11,21 +11,22 @@ Update the tool itself and all of the installed services
 
     dev update
 
-Start all services
+Service management
 ------------------
+
+### Start all services
 
     dev start
 
-Restart all running services
-----------------------------
+### Restart all running services
 
     dev restart
 
-### Restart individual services
+#### Restart individual services
 
     dev restart [SERVICE NAME]
 
-#### Installed services
+##### Installed services
 
   - redis 2.8.14
   - mailcatcher 0.5.12
@@ -36,13 +37,12 @@ Restart all running services
   - php 5.5.15
   - mysql 5.5.38
 
-Destroy all services
---------------------
+### Destroy all services
 
     dev destroy
 
-Config
-------
+Configuration management
+-------------------------
 
 ### Store
 
