@@ -127,13 +127,15 @@ docker_mailcatcher0512_destroy() {
 }
 
 docker_apache2222_run() {
+  APACHE_SERVERNAME=$(config_get APACHE_SERVERNAME)
+
   sudo docker run \
     --name apache2222 \
     --net host \
     -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -v /var/apache-2.2.22/log:/apache-2.2.22/log \
-    -e APACHE_SERVERNAME=example.com \
+    -e APACHE_SERVERNAME="${APACHE_SERVERNAME}" \
     -d \
     simpledrupalcloud/apache:2.2.22
 }
