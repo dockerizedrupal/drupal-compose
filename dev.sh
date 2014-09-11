@@ -71,7 +71,17 @@ container() {
       sudo docker rm "${CONTAINER}" >> "${LOG}" 2>&1
     ;;
     destory)
-      echo "destory..."
+      if $(exists "${CONTAINER}"); then
+        if $(running "${CONTAINER}"); then
+          sudo docker stop "${CONTAINER}" >> "${LOG}" 2>&1
+        fi
+
+        sudo docker rm "${CONTAINER}" >> "${LOG}" 2>&1
+      fi
+
+      echo "Destroying container: ${CONTAINER}"
+      
+      sudo docker rmi simpledrupalcloud/redis:2.8.14
     ;;
   esac
 }
