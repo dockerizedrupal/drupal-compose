@@ -5,7 +5,17 @@ container() {
 
   echo "${CONTAINER}"
 
-  state_running() {
+  exists() {
+    RETURN=1
+
+    if [ $(sudo docker inspect test 2> /dev/null) == "[]" ]; then
+      RETURN=0
+    fi
+
+    return "${RETURN}"
+  }
+
+  running() {
     RETURN=0
 
     if [ $(sudo docker inspect --format="{{ .State.Running }}" "${1}" 2> /dev/null) == "true" ]; then
@@ -26,13 +36,18 @@ container() {
     start)
       echo "start..."
 
-      if [ $(state_running "${CONTAINER}") ]; then
-        echo "Container is already running"
+      if [ $(exists "${CONTAINER}") ]; then
+        echo "exists..."
 
-        exit 1
+        if [ $(running "${CONTAINER}") ]; then
+          echo "Container is already running"
+
+          exit 1
+        fi
+
+        sudo docker rm "${CONTAINER}"
       fi
 
-      sudo docker rm "${CONTAINER}"
       sudo docker run --name "${CONTAINER}" --net host -v /var/redis-2.8.14/data:/redis-2.8.14/data -d simpledrupalcloud/redis:2.8.14
     ;;
     restart)
@@ -44,7 +59,7 @@ container() {
     stop)
       echo "stop..."
 
-      if [ $(state_running "${CONTAINER}") ]; then
+      if [ $(running "${CONTAINER}") ]; then
         echo "Container is not running"
 
         exit 1
