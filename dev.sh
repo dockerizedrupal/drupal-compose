@@ -81,7 +81,7 @@ container() {
 
       echo "Destroying container: ${CONTAINER}"
 
-      sudo docker rmi simpledrupalcloud/redis:2.8.14
+      sudo docker rmi simpledrupalcloud/redis:2.8.14 >> "${LOG}" 2>&1
     ;;
   esac
 }
