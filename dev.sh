@@ -89,19 +89,19 @@ container() {
       if $(running "${CONTAINER}"); then
         echo "Stopping container: ${CONTAINER}"
 
-        sudo docker stop "${CONTAINER}"
+        sudo docker stop "${CONTAINER}" > >(log) 2> >(log_error)
       fi
 
       echo "Destroying container: ${CONTAINER}"
 
-      sudo docker rm "${CONTAINER}"
+      sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
     ;;
   esac
 }
 
 config() {
   SERVICE="Configuration manager"
-  CONTAINER=config
+  CONTAINER=redis2814
   IMAGE=simpledrupalcloud/redis:2.8.14
 
   exists() {
