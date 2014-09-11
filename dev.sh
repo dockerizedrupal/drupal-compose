@@ -3,8 +3,6 @@
 container() {
   CONTAINER="${2}"
 
-  echo "${CONTAINER}"
-
   exists() {
     RETURN=0
 
