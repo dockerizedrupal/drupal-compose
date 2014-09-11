@@ -62,8 +62,8 @@ config() {
         "${IMAGE}" >> "${LOG}" 2>&1
     ;;
     restart)
-      container stop "${CONTAINER}"
-      container start "${CONTAINER}"
+      config stop "${CONTAINER}"
+      config start "${CONTAINER}"
     ;;
     stop)
       if ! $(exists "${CONTAINER}") || ! $(running "${CONTAINER}"); then
