@@ -38,7 +38,7 @@ container() {
     stop)
       echo "stop..."
 
-      if [ -z $(state_running "${CONTAINER}") ]; then
+      if [ ! $(state_running "${CONTAINER}") ]; then
         echo "Container is not running"
 
         exit 1
