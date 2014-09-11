@@ -6,7 +6,7 @@ container() {
   echo "${CONTAINER}"
 
   state_running() {
-    echo $(sudo "${1}" 2> /dev/null)
+    echo $(sudo docker inspect --format="{{ .State.Running }}" "${1}" 2> /dev/null)
   }
 
   case "${1}" in
@@ -38,7 +38,7 @@ container() {
     stop)
       echo "stop..."
 
-      if [ ! $(state_running "${CONTAINER}") ]; then
+      if [ -z $(state_running "${CONTAINER}") ]; then
         echo "Container is not running"
 
         exit 1
