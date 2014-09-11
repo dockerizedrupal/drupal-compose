@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
-LOG=/var/log/dev.log
+LOG=/var/log/dev
 
-container() {
-  CONTAINER="${2}"
+config() {
+  CONTAINER=config
+  IMAGE=simpledrupalcloud/redis:2.8.14
+  LOG="${LOG}/${CONTAINER}.log"
 
   exists() {
     RETURN=0
@@ -37,7 +39,7 @@ container() {
 
       echo "Updating container: ${CONTAINER}"
 
-      sudo docker pull simpledrupalcloud/redis:2.8.14 >> "${LOG}" 2>&1
+      sudo docker pull "${IMAGE}" >> "${LOG}" 2>&1
     ;;
     start)
       if $(exists "${CONTAINER}"); then
@@ -52,7 +54,12 @@ container() {
 
       echo "Starting container: ${CONTAINER}"
 
-      sudo docker run --name "${CONTAINER}" --net host -v /var/redis-2.8.14/data:/redis-2.8.14/data -d simpledrupalcloud/redis:2.8.14 >> "${LOG}" 2>&1
+      sudo docker run \
+        --name "${CONTAINER}" \
+        --net host \
+        -v /var/redis-2.8.14/data:/redis-2.8.14/data \
+        -d \
+        "${IMAGE}" >> "${LOG}" 2>&1
     ;;
     restart)
       container stop "${CONTAINER}"
@@ -71,6 +78,12 @@ container() {
       sudo docker rm "${CONTAINER}" >> "${LOG}" 2>&1
     ;;
     destroy)
+      if ! $(exists "${IMAGE}"); then
+        echo "Image doesn't exist: ${IMAGE}"
+
+        exit 1
+      fi
+
       if $(exists "${CONTAINER}"); then
         if $(running "${CONTAINER}"); then
           sudo docker stop "${CONTAINER}" >> "${LOG}" 2>&1
@@ -81,63 +94,16 @@ container() {
 
       echo "Destroying container: ${CONTAINER}"
 
-      sudo docker rmi simpledrupalcloud/redis:2.8.14 >> "${LOG}" 2>&1
+      sudo docker rmi "${IMAGE}" >> "${LOG}" 2>&1
+    ;;
+    get)
+      echo -n $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config get "${2}")
+    ;;
+    set)
+      echo $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config set "${2}" "${3}")
     ;;
   esac
 }
-
-#config() {
-#  CONTAINER=config
-#
-#  case "${1}" in
-#    update)
-#      sudo docker stop config
-#      sudo docker rm config
-#      sudo docker pull simpledrupalcloud/redis:2.8.14
-#
-#      container update
-#    ;;
-#    start)
-#      if [ -z $(docker_container_state_running "${CONTAINER}") ]; then
-#        echo "Container is already running"
-#
-#        exit 1
-#      fi
-#
-#      sudo docker rm "${CONTAINER}"
-#
-#      sudo docker run \
-#        --name config \
-#        --net host \
-#        -v /var/redis-2.8.14/data:/redis-2.8.14/data \
-#        -d \
-#        simpledrupalcloud/redis:2.8.14
-#    ;;
-#    restart)
-#      config stop
-#      config start
-#    ;;
-#    stop)
-#      if [ ! -z $(docker_container_state_running "${CONTAINER}") ]; then
-#        echo "Container is not running"
-#
-#        exit 1
-#      fi
-#
-#      sudo docker stop "${CONTAINER}"
-#      sudo docker rm "${CONTAINER}"
-#    ;;
-#    destory)
-#
-#    ;;
-#    get)
-#      echo -n $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config get "${2}")
-#    ;;
-#    set)
-#      echo $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config set "${2}" "${3}")
-#    ;;
-#  esac
-#}
 
 ## Docker
 #
@@ -605,6 +571,8 @@ container() {
 #}
 
 install() {
+  sudo mkdir -p "${LOG}"
+
   if [ ! -f /usr/local/bin/dev ]; then
     sudo apt-get install -y realpath
   fi
@@ -751,7 +719,7 @@ case "${1}" in
 #      ;;
 #    esac
 #    ;;
-  container)
-    container "${2}" "${3}"
+  config)
+    config "${@:2}"
   ;;
 esac
