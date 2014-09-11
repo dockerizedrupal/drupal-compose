@@ -558,29 +558,29 @@ container() {
 #
 #  sudo mv /var/apache-2.2.22/data/phpMyAdmin-4.2.8-english /var/apache-2.2.22/data/phpmyadmin
 #}
-#
-#install() {
-#  if [ ! -f /usr/local/bin/dev ]; then
-#    sudo apt-get install -y realpath
-#  fi
-#
-#  SCRIPT=$(realpath -s "${0}")
-#
-#  if [ "${SCRIPT}" = /usr/local/bin/dev ]; then
-#    cat << EOF
-#dev is already installed on this machine.
-#
-#Type "dev update" to get the latest updates.
-#EOF
-#    exit
-#  fi
-#
-#  if [ ! -f /usr/local/bin/dev ]; then
-#    sudo apt-get install -y curl
-#
-#    curl -sSL https://get.docker.io/ubuntu/ | sudo bash
-#  fi
-#
+
+install() {
+  if [ ! -f /usr/local/bin/dev ]; then
+    sudo apt-get install -y realpath
+  fi
+
+  SCRIPT=$(realpath -s "${0}")
+
+  if [ "${SCRIPT}" = /usr/local/bin/dev ]; then
+    cat << EOF
+dev is already installed on this machine.
+
+Type "dev update" to get the latest updates.
+EOF
+    exit
+  fi
+
+  if [ ! -f /usr/local/bin/dev ]; then
+    sudo apt-get install -y curl
+
+    curl -sSL https://get.docker.io/ubuntu/ | sudo bash
+  fi
+
 #  sudo docker stop redis2814
 #  sudo docker rm redis2814
 #  sudo docker stop apache
@@ -609,18 +609,18 @@ container() {
 #  sudo cp $(dirname "${0}")/config.inc.php /var/apache-2.2.22/data/phpmyadmin
 #
 #  sudo chown www-data.www-data /var/apache-2.2.22/data/phpmyadmin -R
-#
-#  sudo cp "${SCRIPT}" /usr/local/bin/dev
-#}
-#
-#update() {
-#  TMP=$(mktemp -d)
-#
-#  git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${TMP}"
-#
-#  "${TMP}"/dev.sh install
-#}
-#
+
+  sudo cp "${SCRIPT}" /usr/local/bin/dev
+}
+
+update() {
+  TMP=$(mktemp -d)
+
+  git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${TMP}"
+
+  "${TMP}"/dev.sh install
+}
+
 #start() {
 #  docker_config_start
 #  docker_apache2222_start
