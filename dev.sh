@@ -20,7 +20,7 @@ docker_pull() {
   sudo docker pull "${1}"
 }
 
-docker_container_running() {
+docker_container_state_running() {
   echo $(sudo docker inspect --format="{{ .State.Running }}" "${1}" 2> /dev/null)
 }
 
@@ -110,7 +110,7 @@ config() {
       sudo docker pull simpledrupalcloud/redis:2.8.14
     ;;
     start)
-      if [ -z $(docker_container_running config) ]; then
+      if [ -z $(docker_container_state_running config) ]; then
         echo "Container is already running"
 
         exit 1
