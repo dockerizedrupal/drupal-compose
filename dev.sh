@@ -32,8 +32,8 @@ container() {
     restart)
       echo "restart..."
 
-      config stop
-      config start
+      config stop "${CONTAINER}"
+      config start "${CONTAINER}"
     ;;
     stop)
       echo "stop..."
