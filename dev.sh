@@ -48,7 +48,7 @@ container() {
 
       echo "Starting container: ${CONTAINER}"
 
-      sudo docker run --name "${CONTAINER}" --net host -v /var/redis-2.8.14/data:/redis-2.8.14/data -d simpledrupalcloud/redis:2.8.14
+      sudo docker run --name "${CONTAINER}" --net host -v /var/redis-2.8.14/data:/redis-2.8.14/data -d simpledrupalcloud/redis:2.8.14 > /dev/null 2>&1
     ;;
     restart)
       container stop "${CONTAINER}"
@@ -63,7 +63,7 @@ container() {
 
       echo "Stopping container: ${CONTAINER}"
 
-      sudo docker stop "${CONTAINER}"
+      sudo docker stop "${CONTAINER}" > /dev/null 2>&1
       sudo docker rm "${CONTAINER}"
     ;;
     destory)
