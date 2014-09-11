@@ -3,6 +3,8 @@
 container() {
   CONTAINER="${2}"
 
+  echo "${CONTAINER}"
+
   state_running() {
     echo $(sudo docker inspect --format="{{ .State.Running }}" "${1}" 2> /dev/null)
   }
