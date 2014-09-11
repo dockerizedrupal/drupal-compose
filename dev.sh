@@ -20,7 +20,7 @@ container() {
     start)
       echo "start..."
 
-      if [ -n $(state_running "${CONTAINER}") ]; then
+      if [ $(state_running "${CONTAINER}") == "true" ]; then
         echo "Container is already running"
 
         exit 1
@@ -38,7 +38,7 @@ container() {
     stop)
       echo "stop..."
 
-      if [ -z $(state_running "${CONTAINER}") ]; then
+      if [ $(state_running "${CONTAINER}") == "false" ]; then
         echo "Container is not running"
 
         exit 1
