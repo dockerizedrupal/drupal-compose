@@ -103,6 +103,8 @@ docker_config_destroy() {
 }
 
 config() {
+  CONTAINER=config
+
   case "${1}" in
     update)
       sudo docker stop config
@@ -110,11 +112,13 @@ config() {
       sudo docker pull simpledrupalcloud/redis:2.8.14
     ;;
     start)
-      if [ -z $(docker_container_state_running config) ]; then
+      if [ -z $(docker_container_state_running "${CONTAINER}") ]; then
         echo "Container is already running"
 
         exit 1
       fi
+
+      sudo docker rm "${CONTAINER}"
 
       sudo docker run \
         --name config \
@@ -124,13 +128,18 @@ config() {
         simpledrupalcloud/redis:2.8.14
     ;;
     restart)
-      sudo docker stop config
-      sudo docker rm config
-
+      config stop
       config start
     ;;
     stop)
+      if [ ! -z $(docker_container_state_running "${CONTAINER}") ]; then
+        echo "Container is not running"
 
+        exit 1
+      fi
+
+      sudo docker stop "${CONTAINER}"
+      sudo docker rm "${CONTAINER}"
     ;;
     destory)
 
@@ -648,6 +657,9 @@ case "${1}" in
       ;;
       set)
         echo $(config set "${3}" "${4}")
+      ;;
+      *)
+        echo $(config "${3}")
       ;;
     esac
     ;;
