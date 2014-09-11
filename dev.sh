@@ -11,11 +11,15 @@ container() {
 
   case "${1}" in
     update)
+      echo "update..."
+
       sudo docker stop config
       sudo docker rm config
       sudo docker pull simpledrupalcloud/redis:2.8.14
     ;;
     start)
+      echo "start..."
+
       if [ -z $(state_running "${CONTAINER}") ]; then
         echo "Container is already running"
 
@@ -26,10 +30,14 @@ container() {
       sudo docker run --name "${CONTAINER}" --net host -v /var/redis-2.8.14/data:/redis-2.8.14/data -d simpledrupalcloud/redis:2.8.14
     ;;
     restart)
+      echo "restart..."
+
       config stop
       config start
     ;;
     stop)
+      echo "stop..."
+
       if [ ! -z $(state_running "${CONTAINER}") ]; then
         echo "Container is not running"
 
@@ -40,7 +48,7 @@ container() {
       sudo docker rm "${CONTAINER}"
     ;;
     destory)
-
+      echo "destory..."
     ;;
   esac
 }
