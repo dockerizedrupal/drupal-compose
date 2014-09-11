@@ -20,7 +20,9 @@ docker_pull() {
   sudo docker pull "${1}"
 }
 
-
+docker_container_running() {
+  echo $(sudo docker inspect --format="{{ .State.Running }}" "${1}" 2> /dev/null)
+}
 
 docker_dev_stop() {
   sudo docker stop dev
@@ -100,12 +102,46 @@ docker_config_destroy() {
   docker_config_rmi
 }
 
-config_get() {
-  echo -n $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config get "${1}")
-}
+config() {
+  case "${1}" in
+    update)
+      sudo docker stop config
+      sudo docker rm config
+      sudo docker pull simpledrupalcloud/redis:2.8.14
+    ;;
+    start)
+      if [ -z $(docker_container_running config) ]; then
+        echo "Container is already running"
 
-config_set() {
-  echo $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config set "${1}" "${2}")
+        exit 1
+      fi
+
+      sudo docker run \
+        --name config \
+        --net host \
+        -v /var/redis-2.8.14/data:/redis-2.8.14/data \
+        -d \
+        simpledrupalcloud/redis:2.8.14
+    ;;
+    restart)
+      sudo docker stop config
+      sudo docker rm config
+
+      config start
+    ;;
+    stop)
+
+    ;;
+    destory)
+
+    ;;
+    get)
+      echo -n $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config get "${2}")
+    ;;
+    set)
+      echo $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config set "${2}" "${3}")
+    ;;
+  esac
 }
 
 docker_mailcatcher0512_run() {
@@ -608,10 +644,10 @@ case "${1}" in
   config)
     case "${2}" in
       get)
-        echo -n $(config_get "${3}")
+        echo -n $(config get "${3}")
       ;;
       set)
-        echo $(config_set "${3}" "${4}")
+        echo $(config set "${3}" "${4}")
       ;;
     esac
     ;;
