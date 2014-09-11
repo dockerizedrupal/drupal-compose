@@ -27,10 +27,10 @@ container() {
     update)
       if $(exists "${CONTAINER}"); then
         if $(running "${CONTAINER}"); then
-          sudo docker stop "${CONTAINER}"
+          sudo docker stop "${CONTAINER}" > /dev/null 2>&1
         fi
 
-        sudo docker rm "${CONTAINER}"
+        sudo docker rm "${CONTAINER}" > /dev/null 2>&1
       fi
 
       sudo docker pull simpledrupalcloud/redis:2.8.14
@@ -43,7 +43,7 @@ container() {
           exit 1
         fi
 
-        sudo docker rm "${CONTAINER}"
+        sudo docker rm "${CONTAINER}" > /dev/null 2>&1
       fi
 
       echo "Starting container: ${CONTAINER}"
@@ -64,7 +64,7 @@ container() {
       echo "Stopping container: ${CONTAINER}"
 
       sudo docker stop "${CONTAINER}" > /dev/null 2>&1
-      sudo docker rm "${CONTAINER}"
+      sudo docker rm "${CONTAINER}" > /dev/null 2>&1
     ;;
     destory)
       echo "destory..."
