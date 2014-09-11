@@ -143,7 +143,15 @@ config() {
     up)
       echo "Starting service: ${SERVICE}"
 
-      container "${CONTAINER}" destroy
+      if $(exists "${CONTAINER}"); then
+        if $(running "${CONTAINER}"); then
+          echo "Container is already running"
+
+          exit 1
+        fi
+
+        sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
+      fi
 
       echo "Starting container: ${CONTAINER}"
 
