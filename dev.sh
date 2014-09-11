@@ -33,7 +33,7 @@ image() {
     update)
       echo "Updating image: ${IMAGE}"
 
-      sudo docker pull "${IMAGE}"
+      sudo docker pull "${IMAGE}" > >(log) 2> >(log_error)
     ;;
     destroy)
       if ! $(exists "${IMAGE}"); then
@@ -50,7 +50,7 @@ image() {
 
       echo "Destroying image: ${IMAGE}"
 
-      sudo docker rmi "${IMAGE}"
+      sudo docker rmi "${IMAGE}" > >(log) 2> >(log_error)
     ;;
   esac
 }
