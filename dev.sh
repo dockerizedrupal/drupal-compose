@@ -8,7 +8,7 @@ container() {
   exists() {
     RETURN=1
 
-    if [ $(sudo docker inspect test 2> /dev/null) == "[]" ]; then
+    if [ $(sudo docker inspect "${1}" 2> /dev/null) == "[]" ]; then
       RETURN=0
     fi
 
@@ -56,7 +56,7 @@ container() {
       config stop "${CONTAINER}"
       config start "${CONTAINER}"
     ;;
-    stop)
+    stop)lo
       echo "stop..."
 
       if [ $(running "${CONTAINER}") ]; then
