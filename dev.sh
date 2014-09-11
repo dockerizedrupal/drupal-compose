@@ -83,7 +83,7 @@ container() {
       if ! $(exists "${CONTAINER}"); then
         echo "No such container: ${CONTAINER}"
 
-        exit 1
+        return
       fi
 
       if $(running "${CONTAINER}"); then
