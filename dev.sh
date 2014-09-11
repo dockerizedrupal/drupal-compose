@@ -134,24 +134,11 @@ config() {
   }
 
   case "${1}" in
-    update)
-      echo "Updating service: "${SERVICE}""
-
-      container "${CONTAINER}" destroy
-      image "${IMAGE}" update
-    ;;
     up)
       echo "Starting service: ${SERVICE}"
 
-      if $(exists "${CONTAINER}"); then
-        if $(running "${CONTAINER}"); then
-          echo "Container is already running"
-
-          exit 1
-        fi
-
-        sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
-      fi
+      container "${CONTAINER}" destroy
+      image "${IMAGE}" update
 
       echo "Starting container: ${CONTAINER}"
 
@@ -160,7 +147,7 @@ config() {
     destroy)
       echo "Destroying service: ${SERVICE}"
 
-      container "${CONTAINER}" destroy
+      image "${IMAGE}" destroy
     ;;
     get)
       echo -n $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config get "${2}")
