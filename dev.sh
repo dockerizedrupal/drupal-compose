@@ -36,10 +36,10 @@ container() {
     start)
       echo "start..."
 
-      if [ $(exists "${CONTAINER}") ]; then
+      if $(exists "${CONTAINER}"); then
         echo "exists..."
 
-        if [ $(running "${CONTAINER}") ]; then
+        if $(running "${CONTAINER}"); then
           echo "Container is already running"
 
           exit 1
@@ -59,7 +59,7 @@ container() {
     stop)lo
       echo "stop..."
 
-      if [ $(running "${CONTAINER}") ]; then
+      if $(running "${CONTAINER}"); then
         echo "Container is not running"
 
         exit 1
