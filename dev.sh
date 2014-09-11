@@ -8,7 +8,7 @@ container() {
   exists() {
     RETURN=1
 
-    if [ $(sudo docker inspect "${1}" 2> /dev/null) == "[]" ]; then
+    if [ "$(sudo docker inspect "${1}" 2> /dev/null)" == "[]" ]; then
       RETURN=0
     fi
 
@@ -18,7 +18,7 @@ container() {
   running() {
     RETURN=0
 
-    if [ $(sudo docker inspect --format="{{ .State.Running }}" "${1}" 2> /dev/null) == "true" ]; then
+    if [ "$(sudo docker inspect --format="{{ .State.Running }}" "${1}" 2> /dev/null)" == "true" ]; then
       RETURN=1
     fi
 
