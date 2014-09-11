@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+LOG=/var/log/dev.log
+
 container() {
   CONTAINER="${2}"
 
@@ -27,13 +29,15 @@ container() {
     update)
       if $(exists "${CONTAINER}"); then
         if $(running "${CONTAINER}"); then
-          sudo docker stop "${CONTAINER}" > /dev/null 2>&1
+          sudo docker stop "${CONTAINER}" 2>&1 | tee "${LOG}"
         fi
 
-        sudo docker rm "${CONTAINER}" > /dev/null 2>&1
+        sudo docker rm "${CONTAINER}" 2>&1 | tee "${LOG}"
       fi
 
-      sudo docker pull simpledrupalcloud/redis:2.8.14
+      echo "Updating container: ${CONTAINER}"
+
+      sudo docker pull simpledrupalcloud/redis:2.8.14 2>&1 | tee "${LOG}"
     ;;
     start)
       if $(exists "${CONTAINER}"); then
@@ -43,12 +47,12 @@ container() {
           exit 1
         fi
 
-        sudo docker rm "${CONTAINER}" > /dev/null 2>&1
+        sudo docker rm "${CONTAINER}" 2>&1 | tee "${LOG}"
       fi
 
       echo "Starting container: ${CONTAINER}"
 
-      sudo docker run --name "${CONTAINER}" --net host -v /var/redis-2.8.14/data:/redis-2.8.14/data -d simpledrupalcloud/redis:2.8.14 > /dev/null 2>&1
+      sudo docker run --name "${CONTAINER}" --net host -v /var/redis-2.8.14/data:/redis-2.8.14/data -d simpledrupalcloud/redis:2.8.14 2>&1 | tee "${LOG}"
     ;;
     restart)
       container stop "${CONTAINER}"
@@ -63,14 +67,67 @@ container() {
 
       echo "Stopping container: ${CONTAINER}"
 
-      sudo docker stop "${CONTAINER}" > /dev/null 2>&1
-      sudo docker rm "${CONTAINER}" > /dev/null 2>&1
+      sudo docker stop "${CONTAINER}" 2>&1 | tee "${LOG}"
+      sudo docker rm "${CONTAINER}" 2>&1 | tee "${LOG}"
     ;;
     destory)
       echo "destory..."
     ;;
   esac
 }
+
+#config() {
+#  CONTAINER=config
+#
+#  case "${1}" in
+#    update)
+#      sudo docker stop config
+#      sudo docker rm config
+#      sudo docker pull simpledrupalcloud/redis:2.8.14
+#
+#      container update
+#    ;;
+#    start)
+#      if [ -z $(docker_container_state_running "${CONTAINER}") ]; then
+#        echo "Container is already running"
+#
+#        exit 1
+#      fi
+#
+#      sudo docker rm "${CONTAINER}"
+#
+#      sudo docker run \
+#        --name config \
+#        --net host \
+#        -v /var/redis-2.8.14/data:/redis-2.8.14/data \
+#        -d \
+#        simpledrupalcloud/redis:2.8.14
+#    ;;
+#    restart)
+#      config stop
+#      config start
+#    ;;
+#    stop)
+#      if [ ! -z $(docker_container_state_running "${CONTAINER}") ]; then
+#        echo "Container is not running"
+#
+#        exit 1
+#      fi
+#
+#      sudo docker stop "${CONTAINER}"
+#      sudo docker rm "${CONTAINER}"
+#    ;;
+#    destory)
+#
+#    ;;
+#    get)
+#      echo -n $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config get "${2}")
+#    ;;
+#    set)
+#      echo $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config set "${2}" "${3}")
+#    ;;
+#  esac
+#}
 
 ## Docker
 #
@@ -172,57 +229,6 @@ container() {
 #
 #docker_config_destroy() {
 #  docker_config_rmi
-#}
-#
-#config() {
-#  CONTAINER=config
-#
-#  case "${1}" in
-#    update)
-#      sudo docker stop config
-#      sudo docker rm config
-#      sudo docker pull simpledrupalcloud/redis:2.8.14
-#    ;;
-#    start)
-#      if [ -z $(docker_container_state_running "${CONTAINER}") ]; then
-#        echo "Container is already running"
-#
-#        exit 1
-#      fi
-#
-#      sudo docker rm "${CONTAINER}"
-#
-#      sudo docker run \
-#        --name config \
-#        --net host \
-#        -v /var/redis-2.8.14/data:/redis-2.8.14/data \
-#        -d \
-#        simpledrupalcloud/redis:2.8.14
-#    ;;
-#    restart)
-#      config stop
-#      config start
-#    ;;
-#    stop)
-#      if [ ! -z $(docker_container_state_running "${CONTAINER}") ]; then
-#        echo "Container is not running"
-#
-#        exit 1
-#      fi
-#
-#      sudo docker stop "${CONTAINER}"
-#      sudo docker rm "${CONTAINER}"
-#    ;;
-#    destory)
-#
-#    ;;
-#    get)
-#      echo -n $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config get "${2}")
-#    ;;
-#    set)
-#      echo $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config set "${2}" "${3}")
-#    ;;
-#  esac
 #}
 #
 #docker_mailcatcher0512_run() {
