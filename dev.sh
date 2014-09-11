@@ -56,7 +56,7 @@ container() {
       config stop "${CONTAINER}"
       config start "${CONTAINER}"
     ;;
-    stop)lo
+    stop)
       echo "stop..."
 
       if $(running "${CONTAINER}"); then
