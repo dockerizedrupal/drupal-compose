@@ -11,6 +11,21 @@ Update the tool itself and all of the installed services
 
     dev update
 
+Services
+--------
+
+### Redis
+
+Redis database is used internally by `dev` to store environment specific configuration variables
+
+### MailCatcher
+
+### Apache HTTP server
+
+### PHP
+
+### MySQL
+
 Service management
 ------------------
 
@@ -43,6 +58,8 @@ Service management
 
 Configuration management
 -------------------------
+
+Configuration management is backed by Redis database service
 
 ### Store
 

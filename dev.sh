@@ -1,5 +1,27 @@
 #!/usr/bin/env bash
 
+# Docker
+
+docker_stop() {
+  sudo docker stop "${1}"
+}
+
+docker_rm() {
+  docker_stop "${1}"
+
+  sudo docker rm "${1}"
+}
+
+docker_rmi() {
+  sudo docker rmi "${1}"
+}
+
+docker_pull() {
+  sudo docker pull "${1}"
+}
+
+
+
 docker_dev_stop() {
   sudo docker stop dev
 }
@@ -76,6 +98,14 @@ docker_config_restart() {
 
 docker_config_destroy() {
   docker_config_rmi
+}
+
+config_get() {
+  echo -n $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config get "${1}")
+}
+
+config_set() {
+  echo $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config set "${1}" "${2}")
 }
 
 docker_mailcatcher0512_run() {
@@ -516,7 +546,7 @@ start() {
 
 restart() {
   case "${1}" in
-    redis)
+    config)
       docker_config_restart
       ;;
     apache)
@@ -557,14 +587,6 @@ destroy() {
   docker_php5515_destroy
   docker_mysql5538_destroy
   docker_mailcatcher0512_destroy
-}
-
-config_get() {
-  echo -n $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config get "${1}")
-}
-
-config_set() {
-  echo $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config set "${1}" "${2}")
 }
 
 case "${1}" in
