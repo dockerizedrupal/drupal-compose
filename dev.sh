@@ -6,7 +6,13 @@ container() {
   echo "${CONTAINER}"
 
   state_running() {
-    echo $(sudo docker inspect --format="{{ .State.Running }}" "${1}" 2> /dev/null)
+    RETURN=0
+
+    if [ $(sudo docker inspect --format="{{ .State.Running }}" "${1}" 2> /dev/null) == "true" ]; then
+      RETURN=1
+    fi
+
+    return "${RETURN}"
   }
 
   case "${1}" in
@@ -20,7 +26,7 @@ container() {
     start)
       echo "start..."
 
-      if [ $(state_running "${CONTAINER}") == "true" ]; then
+      if [ $(state_running "${CONTAINER}") ]; then
         echo "Container is already running"
 
         exit 1
@@ -38,7 +44,7 @@ container() {
     stop)
       echo "stop..."
 
-      if [ $(state_running "${CONTAINER}") == "false" ]; then
+      if [ $(state_running "${CONTAINER}") ]; then
         echo "Container is not running"
 
         exit 1
