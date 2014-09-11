@@ -1,11 +1,62 @@
 #!/usr/bin/env bash
 
-LOG=/var/log/dev
+LOG_DIR=/var/log/dev
+LOG="${LOG_DIR}/dev.log"
+LOG_ERROR="${LOG_DIR}/error.log"
 
-config() {
-  CONTAINER=config
-  IMAGE=simpledrupalcloud/redis:2.8.14
-  LOG="${LOG}/${CONTAINER}.log"
+log() {
+  while read DATA; do
+    echo "[$(date +"%D %T")] ${DATA}" >> "${LOG}"
+  done
+}
+
+log_error() {
+  while read DATA; do
+    echo "[$(date +"%D %T")] ${DATA}" >> "${LOG_ERROR}"
+  done
+}
+
+image() {
+  IMAGE="${1}"
+
+  exists() {
+    RETURN=0
+
+    if [ "$(sudo docker inspect "${1}" 2> /dev/null)" == "[]" ]; then
+      RETURN=1
+    fi
+
+    return "${RETURN}"
+  }
+
+  case "${2}" in
+    update)
+      echo "Updating image: ${IMAGE}"
+
+      sudo docker pull "${IMAGE}"
+    ;;
+    destroy)
+      if ! $(exists "${IMAGE}"); then
+        echo "No such image: ${IMAGE}"
+
+        exit 1
+      fi
+
+      for CONTAINER in "$(sudo docker ps -aq)"; do
+        if [ "$(sudo docker inspect -f "{{ .Config.Image }}" "${CONTAINER}")" == "${IMAGE}" ]; then
+          container "${CONTAINER}" destroy
+        fi
+      done
+
+      echo "Destroying image: ${IMAGE}"
+
+      sudo docker rmi "${IMAGE}"
+    ;;
+  esac
+}
+
+container() {
+  CONTAINER="${1}"
 
   exists() {
     RETURN=0
@@ -20,28 +71,78 @@ config() {
   running() {
     RETURN=1
 
-    if [ "$(sudo docker inspect --format="{{ .State.Running }}" "${1}" 2> /dev/null)" == "true" ]; then
+    if [ "$(sudo docker inspect -f "{{ .State.Running }}" "${1}" 2> /dev/null)" == "true" ]; then
       RETURN=0
     fi
 
     return "${RETURN}"
   }
 
-  case "${1}" in
-    update)
-      if $(exists "${CONTAINER}"); then
-        if $(running "${CONTAINER}"); then
-          sudo docker stop "${CONTAINER}" >> "${LOG}" 2>&1
-        fi
+  case "${2}" in
+    destroy)
+      if ! $(exists "${CONTAINER}"); then
+        echo "No such container: ${CONTAINER}"
 
-        sudo docker rm "${CONTAINER}" >> "${LOG}" 2>&1
+        exit 1
       fi
 
-      echo "Updating container: ${CONTAINER}"
+      if $(running "${CONTAINER}"); then
+        echo "Stopping container: ${CONTAINER}"
 
-      sudo docker pull "${IMAGE}" >> "${LOG}" 2>&1
+        sudo docker stop "${CONTAINER}"
+      fi
+
+      echo "Destroying container: ${CONTAINER}"
+
+      sudo docker rm "${CONTAINER}"
     ;;
-    start)
+  esac
+}
+
+config() {
+  SERVICE="Configuration manager"
+  CONTAINER=config
+  IMAGE=simpledrupalcloud/redis:2.8.14
+
+  exists() {
+    RETURN=0
+
+    if [ "$(sudo docker inspect "${1}" 2> /dev/null)" == "[]" ]; then
+      RETURN=1
+    fi
+
+    return "${RETURN}"
+  }
+
+  running() {
+    RETURN=1
+
+    if [ "$(sudo docker inspect -f "{{ .State.Running }}" "${1}" 2> /dev/null)" == "true" ]; then
+      RETURN=0
+    fi
+
+    return "${RETURN}"
+  }
+
+  run() {
+    sudo docker run \
+      --name "${CONTAINER}" \
+      --net host \
+      -v /var/redis-2.8.14/data:/redis-2.8.14/data \
+      -d \
+      "${IMAGE}"
+  }
+
+  case "${1}" in
+    update)
+      echo "Updating container: "${CONTAINER}""
+
+      container "${CONTAINER}" destroy
+      image "${IMAGE}" update
+    ;;
+    up)
+      echo "Starting service: ${SERVICE}"
+
       if $(exists "${CONTAINER}"); then
         if $(running "${CONTAINER}"); then
           echo "Container is already running"
@@ -49,52 +150,17 @@ config() {
           exit 1
         fi
 
-        sudo docker rm "${CONTAINER}" >> "${LOG}" 2>&1
+        sudo docker rm "${CONTAINER}"
       fi
 
       echo "Starting container: ${CONTAINER}"
 
-      sudo docker run \
-        --name "${CONTAINER}" \
-        --net host \
-        -v /var/redis-2.8.14/data:/redis-2.8.14/data \
-        -d \
-        "${IMAGE}" >> "${LOG}" 2>&1
-    ;;
-    restart)
-      config stop "${CONTAINER}"
-      config start "${CONTAINER}"
-    ;;
-    stop)
-      if ! $(exists "${CONTAINER}") || ! $(running "${CONTAINER}"); then
-        echo "Container is not running"
-
-        exit 1
-      fi
-
-      echo "Stopping container: ${CONTAINER}"
-
-      sudo docker stop "${CONTAINER}" >> "${LOG}" 2>&1
-      sudo docker rm "${CONTAINER}" >> "${LOG}" 2>&1
+      run
     ;;
     destroy)
-      if ! $(exists "${IMAGE}"); then
-        echo "Image doesn't exist: ${IMAGE}"
+      echo "Destroying service: ${SERVICE}"
 
-        exit 1
-      fi
-
-      if $(exists "${CONTAINER}"); then
-        if $(running "${CONTAINER}"); then
-          sudo docker stop "${CONTAINER}" >> "${LOG}" 2>&1
-        fi
-
-        sudo docker rm "${CONTAINER}" >> "${LOG}" 2>&1
-      fi
-
-      echo "Destroying container: ${CONTAINER}"
-
-      sudo docker rmi "${IMAGE}" >> "${LOG}" 2>&1
+      container "${CONTAINER}" destroy
     ;;
     get)
       echo -n $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config get "${2}")
@@ -571,7 +637,7 @@ config() {
 #}
 
 install() {
-  sudo mkdir -p "${LOG}"
+  sudo mkdir -p "${LOG_DIR}"
 
   if [ ! -f /usr/local/bin/dev ]; then
     sudo apt-get install -y realpath
