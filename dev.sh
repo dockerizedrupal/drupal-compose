@@ -46,6 +46,8 @@ container() {
         sudo docker rm "${CONTAINER}"
       fi
 
+      echo "Starting container: ${CONTAINER}"
+
       sudo docker run --name "${CONTAINER}" --net host -v /var/redis-2.8.14/data:/redis-2.8.14/data -d simpledrupalcloud/redis:2.8.14
     ;;
     restart)
@@ -58,6 +60,8 @@ container() {
 
         exit 1
       fi
+
+      echo "Stopping container: ${CONTAINER}"
 
       sudo docker stop "${CONTAINER}"
       sudo docker rm "${CONTAINER}"
