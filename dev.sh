@@ -55,7 +55,7 @@ container() {
     stop)
       echo "stop..."
 
-      if ! $(exists "${CONTAINER}") || $(running "${CONTAINER}"); then
+      if ! $(exists "${CONTAINER}") || ! $(running "${CONTAINER}"); then
         echo "Container is not running"
 
         exit 1
