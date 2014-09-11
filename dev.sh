@@ -135,7 +135,7 @@ config() {
 
   case "${1}" in
     update)
-      echo "Updating container: "${CONTAINER}""
+      echo "Updating service: "${SERVICE}""
 
       container "${CONTAINER}" destroy
       image "${IMAGE}" update
