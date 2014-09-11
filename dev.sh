@@ -27,10 +27,14 @@ container() {
 
   case "${1}" in
     update)
-      echo "update..."
+      if $(exists "${CONTAINER}"); then
+        if $(running "${CONTAINER}"); then
+          sudo docker stop "${CONTAINER}"
+        fi
 
-      sudo docker stop config
-      sudo docker rm config
+        sudo docker rm "${CONTAINER}"
+      fi
+
       sudo docker pull simpledrupalcloud/redis:2.8.14
     ;;
     start)
@@ -47,14 +51,10 @@ container() {
       sudo docker run --name "${CONTAINER}" --net host -v /var/redis-2.8.14/data:/redis-2.8.14/data -d simpledrupalcloud/redis:2.8.14
     ;;
     restart)
-      echo "restart..."
-
       container stop "${CONTAINER}"
       container start "${CONTAINER}"
     ;;
     stop)
-      echo "stop..."
-
       if ! $(exists "${CONTAINER}") || ! $(running "${CONTAINER}"); then
         echo "Container is not running"
 
