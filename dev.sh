@@ -70,7 +70,7 @@ container() {
       sudo docker stop "${CONTAINER}" >> "${LOG}" 2>&1
       sudo docker rm "${CONTAINER}" >> "${LOG}" 2>&1
     ;;
-    destory)
+    destroy)
       if $(exists "${CONTAINER}"); then
         if $(running "${CONTAINER}"); then
           sudo docker stop "${CONTAINER}" >> "${LOG}" 2>&1
@@ -80,7 +80,7 @@ container() {
       fi
 
       echo "Destroying container: ${CONTAINER}"
-      
+
       sudo docker rmi simpledrupalcloud/redis:2.8.14
     ;;
   esac
