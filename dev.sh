@@ -34,11 +34,7 @@ container() {
       sudo docker pull simpledrupalcloud/redis:2.8.14
     ;;
     start)
-      echo "start..."
-
       if $(exists "${CONTAINER}"); then
-        echo "exists..."
-
         if $(running "${CONTAINER}"); then
           echo "Container is already running"
 
@@ -53,13 +49,13 @@ container() {
     restart)
       echo "restart..."
 
-      config stop "${CONTAINER}"
-      config start "${CONTAINER}"
+      container stop "${CONTAINER}"
+      container start "${CONTAINER}"
     ;;
     stop)
       echo "stop..."
 
-      if $(running "${CONTAINER}"); then
+      if ! $(exists "${CONTAINER}") || $(running "${CONTAINER}"); then
         echo "Container is not running"
 
         exit 1
