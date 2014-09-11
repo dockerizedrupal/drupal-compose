@@ -6,20 +6,20 @@ container() {
   echo "${CONTAINER}"
 
   exists() {
-    RETURN=1
+    RETURN=0
 
     if [ "$(sudo docker inspect "${1}" 2> /dev/null)" == "[]" ]; then
-      RETURN=0
+      RETURN=1
     fi
 
     return "${RETURN}"
   }
 
   running() {
-    RETURN=0
+    RETURN=1
 
     if [ "$(sudo docker inspect --format="{{ .State.Running }}" "${1}" 2> /dev/null)" == "true" ]; then
-      RETURN=1
+      RETURN=0
     fi
 
     return "${RETURN}"
