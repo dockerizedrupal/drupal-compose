@@ -717,6 +717,6 @@ case "${1}" in
 #    esac
 #    ;;
   container)
-    echo $(container "${2}")
+    echo $(container "${2}" "${3}")
   ;;
 esac
