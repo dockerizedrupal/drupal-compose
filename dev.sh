@@ -4,9 +4,6 @@ LOG_DIR=/var/log/dev
 LOG="${LOG_DIR}/dev.log"
 LOG_ERROR="${LOG_DIR}/error.log"
 
-DEBUG_MESSAGE=""
-DEBUG_PAD=""
-
 log() {
   while read DATA; do
     echo "[$(date +"%D %T")] ${DATA}" >> "${LOG}"
@@ -19,27 +16,16 @@ log_error() {
   done
 }
 
-debug() {
-  DEBUG_MESSAGE="${DEBUG_MESSAGE}\nDEBUG: ${DEBUG_PAD}FUNCTION: ${1}, ARGS ${2}"
-  DEBUG_PAD="${DEBUG_PAD} "
-}
-
 image() {
-  debug "${FUNCNAME}" "${@}"
-
   IMAGE="${1}"
 
   case "${2}" in
     pull)
-      debug "${FUNCNAME}" "${@}"
-
       echo "Pulling image: ${IMAGE}"
 
       sudo docker pull "${IMAGE}" > >(log) 2> >(log_error)
     ;;
     destroy)
-      debug "${FUNCNAME}" "${@}"
-
       if ! $(image exists "${IMAGE}"); then
         echo "No such image: ${IMAGE}"
 
@@ -57,8 +43,6 @@ image() {
       sudo docker rmi "${IMAGE}" > >(log) 2> >(log_error)
     ;;
     exists)
-      debug "${FUNCNAME}" "${@}"
-
       RETURN=0
 
       if [ "$(sudo docker inspect "${IMAGE}" 2> /dev/null)" == "[]" ]; then
@@ -71,14 +55,10 @@ image() {
 }
 
 container() {
-  debug "${FUNCNAME}" "${@}"
-
   CONTAINER="$(sudo docker inspect -f "{{ .Name }}" "${1}" 2> /dev/null | cut -d "/" -f 2)"
 
   case "${2}" in
     destroy)
-      debug "${FUNCNAME}" "${@}"
-
       if ! $(container exists "${CONTAINER}"); then
         echo "No such container: ${CONTAINER}"
 
@@ -96,8 +76,6 @@ container() {
       sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
     ;;
     exists)
-      debug "${FUNCNAME}" "${@}"
-
       RETURN=0
 
       if [ "$(sudo docker inspect "${CONTAINER}" 2> /dev/null)" == "[]" ]; then
@@ -107,8 +85,6 @@ container() {
       return "${RETURN}"
     ;;
     running)
-      debug "${FUNCNAME}" "${@}"
-
       RETURN=1
 
       if [ "$(sudo docker inspect -f "{{ .State.Running }}" "${CONTAINER}" 2> /dev/null)" == "true" ]; then
@@ -118,23 +94,17 @@ container() {
       return "${RETURN}"
     ;;
     name)
-      debug "${FUNCNAME}" "${@}"
-
       echo "$(sudo docker inspect -f "{{ .Name }}" "${CONTAINER}" 2> /dev/null | cut -d "/" -f 2)"
     ;;
   esac
 }
 
 config() {
-  debug "${FUNCNAME}" "${@}"
-
   SERVICE="Configuration manager"
   CONTAINER=redis2814
   IMAGE=simpledrupalcloud/redis:2.8.14
 
   exists() {
-    debug "${FUNCNAME}" "${@}"
-
     RETURN=0
 
     if [ "$(sudo docker inspect "${1}" 2> /dev/null)" == "[]" ]; then
@@ -145,8 +115,6 @@ config() {
   }
 
   running() {
-    debug "${FUNCNAME}" "${@}"
-
     RETURN=1
 
     if [ "$(sudo docker inspect -f "{{ .State.Running }}" "${1}" 2> /dev/null)" == "true" ]; then
@@ -157,8 +125,6 @@ config() {
   }
 
   run() {
-    debug "${FUNCNAME}" "${@}"
-
     sudo docker run \
       --name "${CONTAINER}" \
       --net host \
@@ -169,8 +135,6 @@ config() {
 
   case "${1}" in
     up)
-      debug "${FUNCNAME}" "${@}"
-
       echo "Starting service: ${SERVICE}"
 
       if $(exists "${CONTAINER}"); then
@@ -184,43 +148,29 @@ config() {
       run > >(log) 2> >(log_error)
     ;;
     destroy)
-      debug "${FUNCNAME}" "${@}"
-
       echo "Destroying service: ${SERVICE}"
 
       image "${IMAGE}" destroy
     ;;
     get)
-      debug "${FUNCNAME}" "${@}"
-
       echo -n "$(dev config get "${2}")"
     ;;
     set)
-      debug "${FUNCNAME}" "${@}"
-
       dev config set "${2}" "${3}"
     ;;
   esac
 }
 
 dev() {
-  debug "${FUNCNAME}" "${@}"
-
   IMAGE=simpledrupalcloud/dev
 
   case "${1}" in
     config)
-      debug "${FUNCNAME}" "${@}"
-
       case "${2}" in
         get)
-          debug "${FUNCNAME}" "${@}"
-
           echo -n "$(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config get "${3}" 2> >(log_error))"
         ;;
         set)
-          debug "${FUNCNAME}" "${@}"
-
           sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${3}" "${4}" > >(log) 2> >(log_error)
         ;;
       esac
@@ -820,12 +770,8 @@ case "${1}" in
 #    esac
 #    ;;
   config)
-    debug "config"
-
     case "${2}" in
       get)
-        debug "get"
-
         echo -n "$(config get "${@:3}")"
       ;;
       *)
@@ -836,20 +782,12 @@ case "${1}" in
     esac
   ;;
   dev)
-    debug "dev"
-
     dev "${@:2}"
   ;;
   image)
-    debug "image"
-
     image "${@:2}"
   ;;
   container)
-    debug "container"
-
     container "${@:2}"
   ;;
 esac
-
-echo -e "${DEBUG_MESSAGE}"
