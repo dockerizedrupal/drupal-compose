@@ -784,12 +784,12 @@ case "${1}" in
       get)
         debug "config get"
 
-        echo -n "$(config "${@:3}")"
+        echo -n "$(config "${@:2}")"
       ;;
       *)
         debug "config *"
 
-        config "${@:3}"
+        config "${@:2}"
       ;;
     esac
   ;;
