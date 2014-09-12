@@ -4,10 +4,6 @@
   "private": true,
   "dependencies": {
     "commander": "^2.3.0",
-    "dockerode": "^2.0.3",
-    "dotty": "0.0.2",
-    "redis": "^0.12.1",
-    "through2": "^0.6.1",
-    "yamljs": "^0.1.5"
+    "redis": "^0.12.1"
   }
 }
