@@ -796,16 +796,16 @@ case "${1}" in
   dev)
     debug "dev"
 
-    dev "${@:2}"
+    dev "${@:1}"
   ;;
   image)
     debug "image"
 
-    image "${@:2}"
+    image "${@:1}"
   ;;
   container)
     debug "container"
 
-    container "${@:2}"
+    container "${@:1}"
   ;;
 esac
