@@ -153,37 +153,31 @@ config() {
       image "${IMAGE}" destroy
     ;;
     get)
-      echo -n $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config get "${2}")
+      echo -n $(dev config get "${2}")
     ;;
     set)
-      echo $(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev config set "${2}" "${3}")
+      echo $(dev config set "${2}" "${3}")
     ;;
   esac
 }
 
-## Docker
-#
-#docker_stop() {
-#  sudo docker stop "${1}"
-#}
-#
-#docker_rm() {
-#  docker_stop "${1}"
-#
-#  sudo docker rm "${1}"
-#}
-#
-#docker_rmi() {
-#  sudo docker rmi "${1}"
-#}
-#
-#docker_pull() {
-#  sudo docker pull "${1}"
-#}
-#
-#docker_container_state_running() {
-#  echo $(sudo docker inspect --format="{{ .State.Running }}" "${1}" 2> /dev/null)
-#}
+dev() {
+  IMAGE=simpledrupalcloud/dev
+
+  case "${1}" in
+    config)
+    case "${2}" in
+      get)
+        echo -n $(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config get "${2}")
+      ;;
+      set)
+        echo $(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${2}" "${3}" > >(log) 2> >(log_error))
+      ;;
+    esac
+    ;;
+  esac
+}
+
 #
 #docker_dev_stop() {
 #  sudo docker stop dev
