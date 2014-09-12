@@ -34,10 +34,10 @@ image() {
       sudo docker pull "${IMAGE}" > >(log) 2> >(log_error)
     ;;
     destroy)
-      if ! $(image exists "${IMAGE}"); then
+      if ! $(image "${IMAGE}" exists); then
         output_error "No such image: ${IMAGE}"
 
-        exit 1
+        return 1
       fi
 
       for CONTAINER_ID in $(sudo docker ps -aq); do
@@ -67,13 +67,13 @@ container() {
 
   case "${2}" in
     destroy)
-      if ! $(container exists "${CONTAINER}"); then
+      if ! $(container "${CONTAINER}" exists); then
         output_error "No such container: ${CONTAINER}"
 
         return 1
       fi
 
-      if $(container running "${CONTAINER}"); then
+      if $(container "${CONTAINER}" running); then
         output "Stopping container: ${CONTAINER}"
 
         sudo docker stop "${CONTAINER}" > >(log) 2> >(log_error)
@@ -125,7 +125,7 @@ config() {
     up)
       output "Starting service: ${SERVICE}"
 
-      if $(container exists "${CONTAINER}"); then
+      if $(container "${CONTAINER}" exists); then
         container "${CONTAINER}" destroy
       fi
 
