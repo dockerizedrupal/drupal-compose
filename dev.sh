@@ -25,7 +25,7 @@ output_error() {
 }
 
 image() {
-  IMAGE="${1}"
+  local IMAGE="${1}"
 
   case "${2}" in
     pull)
@@ -63,7 +63,7 @@ image() {
 }
 
 container() {
-  CONTAINER="$(sudo docker inspect -f "{{ .Name }}" "${1}" 2> /dev/null | cut -d "/" -f 2)"
+  local CONTAINER="$(sudo docker inspect -f "{{ .Name }}" "${1}" 2> /dev/null | cut -d "/" -f 2)"
 
   case "${2}" in
     destroy)
@@ -108,9 +108,9 @@ container() {
 }
 
 config() {
-  SERVICE="Configuration manager"
-  CONTAINER=redis2814
-  IMAGE=simpledrupalcloud/redis:2.8.14
+  local SERVICE="Configuration manager"
+  local CONTAINER=redis2814
+  local IMAGE=simpledrupalcloud/redis:2.8.14
 
   run() {
     sudo docker run \
@@ -150,7 +150,7 @@ config() {
 }
 
 dev() {
-  IMAGE=simpledrupalcloud/dev
+  local IMAGE=simpledrupalcloud/dev
 
   case "${1}" in
     config)
