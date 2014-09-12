@@ -19,16 +19,6 @@ log_error() {
 image() {
   IMAGE="${1}"
 
-  exists() {
-    RETURN=0
-
-    if [ "$(sudo docker inspect "${1}" 2> /dev/null)" == "[]" ]; then
-      RETURN=1
-    fi
-
-    return "${RETURN}"
-  }
-
   case "${2}" in
     pull)
       echo "Pulling image: ${IMAGE}"
@@ -36,7 +26,7 @@ image() {
       sudo docker pull "${IMAGE}" > >(log) 2> >(log_error)
     ;;
     destroy)
-      if ! $(exists "${IMAGE}"); then
+      if ! $(image exists "${IMAGE}"); then
         echo "No such image: ${IMAGE}"
 
         exit 1
@@ -52,41 +42,30 @@ image() {
 
       sudo docker rmi "${IMAGE}" > >(log) 2> >(log_error)
     ;;
+    exists)
+      RETURN=0
+
+      if [ "$(sudo docker inspect "${IMAGE}" 2> /dev/null)" == "[]" ]; then
+        RETURN=1
+      fi
+
+      return "${RETURN}"
+    ;;
   esac
 }
 
 container() {
   CONTAINER="${1}"
 
-  exists() {
-    RETURN=0
-
-    if [ "$(sudo docker inspect "${1}" 2> /dev/null)" == "[]" ]; then
-      RETURN=1
-    fi
-
-    return "${RETURN}"
-  }
-
-  running() {
-    RETURN=1
-
-    if [ "$(sudo docker inspect -f "{{ .State.Running }}" "${1}" 2> /dev/null)" == "true" ]; then
-      RETURN=0
-    fi
-
-    return "${RETURN}"
-  }
-
   case "${2}" in
     destroy)
-      if ! $(exists "${CONTAINER}"); then
+      if ! $(container exists "${CONTAINER}"); then
         echo "No such container: ${CONTAINER}"
 
         return
       fi
 
-      if $(running "${CONTAINER}"); then
+      if $(container running "${CONTAINER}"); then
         echo "Stopping container: ${CONTAINER}"
 
         sudo docker stop "${CONTAINER}" > >(log) 2> >(log_error)
@@ -95,6 +74,24 @@ container() {
       echo "Destroying container: ${CONTAINER}"
 
       sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
+    ;;
+    exists)
+      RETURN=0
+
+      if [ "$(sudo docker inspect "${CONTAINER}" 2> /dev/null)" == "[]" ]; then
+        RETURN=1
+      fi
+
+      return "${RETURN}"
+    ;;
+    running)
+      RETURN=1
+
+      if [ "$(sudo docker inspect -f "{{ .State.Running }}" "${CONTAINER}" 2> /dev/null)" == "true" ]; then
+        RETURN=0
+      fi
+
+      return "${RETURN}"
     ;;
   esac
 }
