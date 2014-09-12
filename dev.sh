@@ -772,4 +772,10 @@ case "${1}" in
   config)
     config "${@:2}"
   ;;
+  image)
+    image "${@:2}"
+  ;;
+  container)
+    container "${@:2}"
+  ;;
 esac
