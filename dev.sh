@@ -19,6 +19,8 @@ log_error() {
 image() {
   IMAGE="${1}"
 
+  echo ${IMAGE}"
+
   exists() {
     RETURN=0
 
@@ -43,6 +45,8 @@ image() {
       fi
 
       for CONTAINER in "$(sudo docker ps -aq)"; do
+        echo "${CONTAINER}"
+
         if [ "$(sudo docker inspect -f "{{ .Config.Image }}" "${CONTAINER}" 2> /dev/null)" == "${IMAGE}" ]; then
           container "${CONTAINER}" destroy
         fi
