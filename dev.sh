@@ -16,20 +16,28 @@ log_error() {
   done
 }
 
+output() {
+  OUTPUT="$(tput setaf 2)"
+  OUTPUT="${OUTPUT}${1}"
+  OUTPUT="${OUTPUT}$(tput sgr 0)"
+
+  echo "${OUTPUT}"
+}
+
 image() {
   IMAGE="${1}"
 
   case "${2}" in
     pull)
-      echo "Pulling image: ${IMAGE}"
+      output "Pulling image: ${IMAGE}"
 
       sudo docker pull "${IMAGE}" > >(log) 2> >(log_error)
     ;;
     destroy)
       if ! $(image exists "${IMAGE}"); then
-        echo "No such image: ${IMAGE}"
+        output "No such image: ${IMAGE}"
 
-        exit 1
+        return 1
       fi
 
       for CONTAINER_ID in $(sudo docker ps -aq); do
@@ -38,7 +46,7 @@ image() {
         fi
       done
 
-      echo "Destroying image: ${IMAGE}"
+      output "Destroying image: ${IMAGE}"
 
       sudo docker rmi "${IMAGE}" > >(log) 2> >(log_error)
     ;;
@@ -60,18 +68,18 @@ container() {
   case "${2}" in
     destroy)
       if ! $(container exists "${CONTAINER}"); then
-        echo "No such container: ${CONTAINER}"
+        output "No such container: ${CONTAINER}"
 
-        return
+        return 1
       fi
 
       if $(container running "${CONTAINER}"); then
-        echo "Stopping container: ${CONTAINER}"
+        output "Stopping container: ${CONTAINER}"
 
         sudo docker stop "${CONTAINER}" > >(log) 2> >(log_error)
       fi
 
-      echo "Destroying container: ${CONTAINER}"
+      output "Destroying container: ${CONTAINER}"
 
       sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
     ;;
@@ -135,7 +143,7 @@ config() {
 
   case "${1}" in
     up)
-      echo "Starting service: ${SERVICE}"
+      output "Starting service: ${SERVICE}"
 
       if $(exists "${CONTAINER}"); then
         container "${CONTAINER}" destroy
@@ -143,12 +151,12 @@ config() {
 
       image "${IMAGE}" pull
 
-      echo "Starting container: ${CONTAINER}"
+      output "Starting container: ${CONTAINER}"
 
       run > >(log) 2> >(log_error)
     ;;
     destroy)
-      echo "Destroying service: ${SERVICE}"
+      output "Destroying service: ${SERVICE}"
 
       image "${IMAGE}" destroy
     ;;
