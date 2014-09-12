@@ -16,6 +16,12 @@ log_error() {
   done
 }
 
+debug() {
+  if ${DEBUG}; then
+    echo "${1}"
+  fi
+}
+
 image() {
   IMAGE="${1}"
 
@@ -770,6 +776,8 @@ case "${1}" in
 #    esac
 #    ;;
   config)
+    debug "config"
+
     case "${2}" in
       get)
         echo -n "$(config "${@:3}")"
