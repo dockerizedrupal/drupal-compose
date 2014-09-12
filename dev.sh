@@ -55,7 +55,7 @@ image() {
 }
 
 container() {
-  CONTAINER="${1}"
+  CONTAINER="$(sudo docker inspect -f "{{ .Name }}" "${1}" 2> /dev/null | cut -d "/" -f 2)"
 
   case "${2}" in
     destroy)
@@ -92,6 +92,9 @@ container() {
       fi
 
       return "${RETURN}"
+    ;;
+    name)
+      echo "$(sudo docker inspect -f "{{ .Name }}" "${CONTAINER}" 2> /dev/null | cut -d "/" -f 2)"
     ;;
   esac
 }
