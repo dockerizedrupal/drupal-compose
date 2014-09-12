@@ -17,11 +17,11 @@ log_error() {
 }
 
 output() {
-  OUTPUT="$(tput setaf 2)"
-  OUTPUT="${OUTPUT}${1}"
-  OUTPUT="${OUTPUT}$(tput sgr 0)"
+  echo "$(tput setaf 2)${1}$(tput sgr 0)"
+}
 
-  echo "${OUTPUT}"
+output_error() {
+  echo "$(tput setaf 1)${1}$(tput sgr 0)"
 }
 
 image() {
