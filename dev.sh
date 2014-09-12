@@ -153,7 +153,7 @@ config() {
       image "${IMAGE}" destroy
     ;;
     get)
-      echo "$(dev config get "${2}")"
+      echo -n "$(dev config get "${2}")"
     ;;
     set)
       dev config set "${2}" "${3}"
@@ -168,9 +168,7 @@ dev() {
     config)
       case "${2}" in
         get)
-          IFS=" "
-
-          printf %s "$(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config get "${3}" 2> >(log_error))"
+          echo -n "$(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config get "${3}" 2> >(log_error))"
         ;;
         set)
           sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${3}" "${4}" > >(log) 2> >(log_error)
@@ -772,7 +770,14 @@ case "${1}" in
 #    esac
 #    ;;
   config)
-    config "${@:2}"
+    case "${2}" in
+      get)
+        echo -n "$(config "${@:3}")"
+      ;;
+      *)
+        config "${@:3}"
+      ;;
+    esac
   ;;
   dev)
     dev "${@:2}"
