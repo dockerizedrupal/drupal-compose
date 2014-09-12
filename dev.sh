@@ -31,11 +31,15 @@ image() {
 
   case "${2}" in
     pull)
+      debug "pull"
+
       echo "Pulling image: ${IMAGE}"
 
       sudo docker pull "${IMAGE}" > >(log) 2> >(log_error)
     ;;
     destroy)
+      debug "destroy"
+
       if ! $(image exists "${IMAGE}"); then
         echo "No such image: ${IMAGE}"
 
@@ -53,6 +57,8 @@ image() {
       sudo docker rmi "${IMAGE}" > >(log) 2> >(log_error)
     ;;
     exists)
+      debug "exists"
+
       RETURN=0
 
       if [ "$(sudo docker inspect "${IMAGE}" 2> /dev/null)" == "[]" ]; then
@@ -71,6 +77,8 @@ container() {
 
   case "${2}" in
     destroy)
+      debug "destroy"
+
       if ! $(container exists "${CONTAINER}"); then
         echo "No such container: ${CONTAINER}"
 
@@ -88,6 +96,8 @@ container() {
       sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
     ;;
     exists)
+      debug "exists"
+
       RETURN=0
 
       if [ "$(sudo docker inspect "${CONTAINER}" 2> /dev/null)" == "[]" ]; then
@@ -97,6 +107,8 @@ container() {
       return "${RETURN}"
     ;;
     running)
+      debug "running"
+
       RETURN=1
 
       if [ "$(sudo docker inspect -f "{{ .State.Running }}" "${CONTAINER}" 2> /dev/null)" == "true" ]; then
@@ -106,6 +118,8 @@ container() {
       return "${RETURN}"
     ;;
     name)
+      debug "name"
+
       echo "$(sudo docker inspect -f "{{ .Name }}" "${CONTAINER}" 2> /dev/null | cut -d "/" -f 2)"
     ;;
   esac
@@ -119,6 +133,8 @@ config() {
   IMAGE=simpledrupalcloud/redis:2.8.14
 
   exists() {
+    debug "exists"
+
     RETURN=0
 
     if [ "$(sudo docker inspect "${1}" 2> /dev/null)" == "[]" ]; then
@@ -129,6 +145,8 @@ config() {
   }
 
   running() {
+    debug "running"
+
     RETURN=1
 
     if [ "$(sudo docker inspect -f "{{ .State.Running }}" "${1}" 2> /dev/null)" == "true" ]; then
@@ -139,6 +157,8 @@ config() {
   }
 
   run() {
+    debug "run"
+
     sudo docker run \
       --name "${CONTAINER}" \
       --net host \
@@ -149,6 +169,8 @@ config() {
 
   case "${1}" in
     up)
+      debug "up"
+
       echo "Starting service: ${SERVICE}"
 
       if $(exists "${CONTAINER}"); then
@@ -162,14 +184,20 @@ config() {
       run > >(log) 2> >(log_error)
     ;;
     destroy)
+      debug "destroy"
+
       echo "Destroying service: ${SERVICE}"
 
       image "${IMAGE}" destroy
     ;;
     get)
+      debug "get"
+
       echo -n "$(dev config get "${2}")"
     ;;
     set)
+      debug "set"
+
       dev config set "${2}" "${3}"
     ;;
   esac
@@ -182,11 +210,17 @@ dev() {
 
   case "${1}" in
     config)
+      debug "config"
+
       case "${2}" in
         get)
+          debug "get"
+
           echo -n "$(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config get "${3}" 2> >(log_error))"
         ;;
         set)
+          debug "set"
+          
           sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${3}" "${4}" > >(log) 2> >(log_error)
         ;;
       esac
