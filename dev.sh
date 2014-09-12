@@ -780,9 +780,13 @@ case "${1}" in
 
     case "${2}" in
       get)
+        debug "config get"
+
         echo -n "$(config "${@:3}")"
       ;;
       *)
+        debug "config *"
+        
         config "${@:3}"
       ;;
     esac
