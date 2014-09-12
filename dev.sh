@@ -30,8 +30,8 @@ image() {
   }
 
   case "${2}" in
-    update)
-      echo "Updating image: ${IMAGE}"
+    pull)
+      echo "Pulling image: ${IMAGE}"
 
       sudo docker pull "${IMAGE}" > >(log) 2> >(log_error)
     ;;
@@ -137,7 +137,10 @@ config() {
     up)
       echo "Starting service: ${SERVICE}"
 
-      container "${CONTAINER}" destroy
+      if $(exists "${CONTAINER}"); then
+        container "${CONTAINER}" destroy
+      fi
+
       image "${IMAGE}" update
 
       echo "Starting container: ${CONTAINER}"
