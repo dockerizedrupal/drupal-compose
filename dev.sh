@@ -171,7 +171,7 @@ dev() {
         echo -n $(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config get "${2}")
       ;;
       set)
-        echo $(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${2}" "${3}" > >(log) 2> >(log_error))
+        sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${2}" "${3}" > >(log) 2> >(log_error)
       ;;
     esac
     ;;
