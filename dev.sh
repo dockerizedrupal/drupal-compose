@@ -772,6 +772,9 @@ case "${1}" in
   config)
     config "${@:2}"
   ;;
+  dev)
+    dev "${@:2}"
+  ;;
   image)
     image "${@:2}"
   ;;
