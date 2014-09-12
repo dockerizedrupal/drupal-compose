@@ -153,7 +153,7 @@ config() {
       image "${IMAGE}" destroy
     ;;
     get)
-      echo -n $(dev config get "${2}")
+      echo -n "$(dev config get "${2}")"
     ;;
     set)
       dev config set "${2}" "${3}"
@@ -168,7 +168,7 @@ dev() {
     config)
       case "${2}" in
         get)
-          echo -n $(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config get "${3}" 2> >(log_error))
+          echo -n "$(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config get "${3}" 2> >(log_error))"
         ;;
         set)
           sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${3}" "${4}" > >(log) 2> >(log_error)
