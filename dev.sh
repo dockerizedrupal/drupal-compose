@@ -37,7 +37,7 @@ image() {
       if ! $(image exists "${IMAGE}"); then
         output_error "No such image: ${IMAGE}"
 
-        return 1
+        exit 1
       fi
 
       for CONTAINER_ID in $(sudo docker ps -aq); do
