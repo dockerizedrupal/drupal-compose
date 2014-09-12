@@ -175,7 +175,7 @@ config() {
 
 dev() {
   debug "FUNCTION: dev, ARGS: ${@}"
-  
+
   IMAGE=simpledrupalcloud/dev
 
   case "${1}" in
@@ -790,7 +790,7 @@ case "${1}" in
       get)
         debug "config get"
 
-        echo -n "$(config "${@:2}")"
+        echo -n "$(config get "${@:3}")"
       ;;
       *)
         debug "config *"
@@ -802,16 +802,16 @@ case "${1}" in
   dev)
     debug "dev"
 
-    dev "${@:1}"
+    dev "${@:2}"
   ;;
   image)
     debug "image"
 
-    image "${@:1}"
+    image "${@:2}"
   ;;
   container)
     debug "container"
 
-    container "${@:1}"
+    container "${@:2}"
   ;;
 esac
