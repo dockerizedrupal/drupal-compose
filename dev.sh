@@ -23,6 +23,8 @@ debug() {
 }
 
 image() {
+  debug "FUNCTION: image, ARGS: ${@}"
+
   IMAGE="${1}"
 
   case "${2}" in
@@ -61,6 +63,8 @@ image() {
 }
 
 container() {
+  debug "FUNCTION: container, ARGS: ${@}"
+
   CONTAINER="$(sudo docker inspect -f "{{ .Name }}" "${1}" 2> /dev/null | cut -d "/" -f 2)"
 
   case "${2}" in
@@ -170,6 +174,8 @@ config() {
 }
 
 dev() {
+  debug "FUNCTION: dev, ARGS: ${@}"
+  
   IMAGE=simpledrupalcloud/dev
 
   case "${1}" in
