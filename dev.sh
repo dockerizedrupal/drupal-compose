@@ -18,7 +18,7 @@ log_error() {
 
 debug() {
   if ${DEBUG}; then
-    echo "${1}"
+    echo "Debug: ${1}"
   fi
 }
 
