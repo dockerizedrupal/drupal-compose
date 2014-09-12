@@ -775,8 +775,6 @@ case "${1}" in
         echo -n "$(config get "${@:3}")"
       ;;
       *)
-        debug "config *"
-
         config "${@:2}"
       ;;
     esac
