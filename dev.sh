@@ -156,7 +156,7 @@ config() {
       echo -n $(dev config get "${2}")
     ;;
     set)
-      echo $(dev config set "${2}" "${3}")
+      dev config set "${2}" "${3}"
     ;;
   esac
 }
