@@ -99,6 +99,23 @@ container() {
   esac
 }
 
+dev() {
+  IMAGE=simpledrupalcloud/dev
+
+  case "${1}" in
+    config)
+      case "${2}" in
+        get)
+          echo "$(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config get "${3}" 2> >(log_error))"
+        ;;
+        set)
+          sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${3}" "${4}" > >(log) 2> >(log_error)
+        ;;
+      esac
+    ;;
+  esac
+}
+
 config() {
   SERVICE="Configuration manager"
   CONTAINER=redis2814
@@ -157,23 +174,6 @@ config() {
     ;;
     set)
       dev config set "${2}" "${3}"
-    ;;
-  esac
-}
-
-dev() {
-  IMAGE=simpledrupalcloud/dev
-
-  case "${1}" in
-    config)
-      case "${2}" in
-        get)
-          echo "$(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config get "${3}" 2> >(log_error))"
-        ;;
-        set)
-          sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${3}" "${4}" > >(log) 2> >(log_error)
-        ;;
-      esac
     ;;
   esac
 }
