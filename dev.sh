@@ -20,7 +20,7 @@ log_error() {
 }
 
 debug() {
-  DEBUG_MESSAGE="${DEBUG_PAD}${1}\n"
+  DEBUG_MESSAGE="DEBUG: ${DEBUG_PAD}${1}\n"
   DEBUG_PAD="${DEBUG_PAD} "
 }
 
@@ -790,7 +790,7 @@ case "${1}" in
 
     case "${2}" in
       get)
-        debug "config get"
+        debug "get"
 
         echo -n "$(config get "${@:3}")"
       ;;
