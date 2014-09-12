@@ -157,7 +157,7 @@ program
       case 'get':
         config.get(key, function(err, reply) {
           if (err) {
-            return process.stdout.write(err);
+            return console.error(err);
           }
           
           process.stdout.write(reply);
@@ -167,10 +167,10 @@ program
       case 'set':
         config.set(key, value, function(err, reply) {
           if (err) {
-            return process.stdout.write(err);
+            return console.error(err);
           }
 
-          process.stdout.write(reply);
+          console.log(reply);
         });
 
         break;
