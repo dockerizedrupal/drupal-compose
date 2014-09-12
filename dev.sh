@@ -852,4 +852,4 @@ case "${1}" in
   ;;
 esac
 
-echo "${DEBUG_MESSAGE}"
+echo -e "${DEBUG_MESSAGE}"
