@@ -19,7 +19,7 @@ log_error() {
 image() {
   IMAGE="${1}"
 
-  echo ${IMAGE}"
+  echo "${IMAGE}"
 
   exists() {
     RETURN=0
