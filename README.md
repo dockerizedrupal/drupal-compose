@@ -1,6 +1,8 @@
 dev
 ===
 
+All-in-one powertool
+
 Install
 -------
 
@@ -72,3 +74,35 @@ Redis data store is used internally by `dev` to store environment specific confi
 #### Retrive
 
     dev config get [KEY]
+
+Debugging
+---------
+
+Commands that are used internally by `dev` and shouldn't be called directly
+
+### Download or update a Docker image
+
+    dev image [NAME] pull
+
+### Destroy a Docker image and all the containers that are an instance of it
+
+    dev image [NAME] destroy
+
+### Destroy a Docker container
+
+    dev container [NAME|ID] destroy
+
+### Check if a container exists
+
+    dev container [NAME|ID] exists
+
+### Check if a container is running
+
+    dev container [NAME|ID] running
+
+### Always get a containers' name
+
+    dev container [NAME|ID] name
+
+    dev dev config get [KEY]
+    dev dev config set [KEY] [VALUE]
