@@ -21,7 +21,7 @@ output() {
 }
 
 output_error() {
-  echo "$(tput setaf 1)${1}$(tput sgr 0)"
+  >&2 echo "$(tput setaf 1)${1}$(tput sgr 0)"
 }
 
 image() {
@@ -35,7 +35,7 @@ image() {
     ;;
     destroy)
       if ! $(image exists "${IMAGE}"); then
-        output "No such image: ${IMAGE}"
+        output_error "No such image: ${IMAGE}"
 
         return 1
       fi
@@ -68,7 +68,7 @@ container() {
   case "${2}" in
     destroy)
       if ! $(container exists "${CONTAINER}"); then
-        output "No such container: ${CONTAINER}"
+        output_error "No such container: ${CONTAINER}"
 
         return 1
       fi
@@ -112,26 +112,6 @@ config() {
   CONTAINER=redis2814
   IMAGE=simpledrupalcloud/redis:2.8.14
 
-  exists() {
-    RETURN=0
-
-    if [ "$(sudo docker inspect "${1}" 2> /dev/null)" == "[]" ]; then
-      RETURN=1
-    fi
-
-    return "${RETURN}"
-  }
-
-  running() {
-    RETURN=1
-
-    if [ "$(sudo docker inspect -f "{{ .State.Running }}" "${1}" 2> /dev/null)" == "true" ]; then
-      RETURN=0
-    fi
-
-    return "${RETURN}"
-  }
-
   run() {
     sudo docker run \
       --name "${CONTAINER}" \
@@ -145,7 +125,7 @@ config() {
     up)
       output "Starting service: ${SERVICE}"
 
-      if $(exists "${CONTAINER}"); then
+      if $(container exists "${CONTAINER}"); then
         container "${CONTAINER}" destroy
       fi
 
