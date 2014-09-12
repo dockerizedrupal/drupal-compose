@@ -106,6 +106,8 @@ container() {
 }
 
 config() {
+  debug "FUNCTION: config, ARGS: ${@}"
+
   SERVICE="Configuration manager"
   CONTAINER=redis2814
   IMAGE=simpledrupalcloud/redis:2.8.14
@@ -786,18 +788,24 @@ case "${1}" in
       ;;
       *)
         debug "config *"
-        
+
         config "${@:3}"
       ;;
     esac
   ;;
   dev)
+    debug "dev"
+
     dev "${@:2}"
   ;;
   image)
+    debug "image"
+
     image "${@:2}"
   ;;
   container)
+    debug "container"
+
     container "${@:2}"
   ;;
 esac
