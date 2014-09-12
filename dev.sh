@@ -20,7 +20,7 @@ log_error() {
 }
 
 debug() {
-  DEBUG_MESSAGE="DEBUG: ${DEBUG_PAD}${1}\n"
+  DEBUG_MESSAGE="${DEBUG_MESSAGE}DEBUG: ${DEBUG_PAD}${1}\n"
   DEBUG_PAD="${DEBUG_PAD} "
 }
 
@@ -220,7 +220,7 @@ dev() {
         ;;
         set)
           debug "set"
-          
+
           sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${3}" "${4}" > >(log) 2> >(log_error)
         ;;
       esac
