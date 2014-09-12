@@ -20,25 +20,25 @@ log_error() {
 }
 
 debug() {
-  DEBUG_MESSAGE="${DEBUG_MESSAGE}DEBUG: ${DEBUG_PAD}${1}\n"
+  DEBUG_MESSAGE="${DEBUG_MESSAGE}\nDEBUG: ${DEBUG_PAD}FUNCTION: ${1}, ARGS ${2}"
   DEBUG_PAD="${DEBUG_PAD} "
 }
 
 image() {
-  debug "FUNCTION: image, ARGS: ${@}"
+  debug "${FUNCNAME}" "${@}"
 
   IMAGE="${1}"
 
   case "${2}" in
     pull)
-      debug "pull"
+      debug "${FUNCNAME}" "${@}"
 
       echo "Pulling image: ${IMAGE}"
 
       sudo docker pull "${IMAGE}" > >(log) 2> >(log_error)
     ;;
     destroy)
-      debug "destroy"
+      debug "${FUNCNAME}" "${@}"
 
       if ! $(image exists "${IMAGE}"); then
         echo "No such image: ${IMAGE}"
@@ -57,7 +57,7 @@ image() {
       sudo docker rmi "${IMAGE}" > >(log) 2> >(log_error)
     ;;
     exists)
-      debug "exists"
+      debug "${FUNCNAME}" "${@}"
 
       RETURN=0
 
@@ -71,13 +71,13 @@ image() {
 }
 
 container() {
-  debug "FUNCTION: container, ARGS: ${@}"
+  debug "${FUNCNAME}" "${@}"
 
   CONTAINER="$(sudo docker inspect -f "{{ .Name }}" "${1}" 2> /dev/null | cut -d "/" -f 2)"
 
   case "${2}" in
     destroy)
-      debug "destroy"
+      debug "${FUNCNAME}" "${@}"
 
       if ! $(container exists "${CONTAINER}"); then
         echo "No such container: ${CONTAINER}"
@@ -96,7 +96,7 @@ container() {
       sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
     ;;
     exists)
-      debug "exists"
+      debug "${FUNCNAME}" "${@}"
 
       RETURN=0
 
@@ -107,7 +107,7 @@ container() {
       return "${RETURN}"
     ;;
     running)
-      debug "running"
+      debug "${FUNCNAME}" "${@}"
 
       RETURN=1
 
@@ -118,7 +118,7 @@ container() {
       return "${RETURN}"
     ;;
     name)
-      debug "name"
+      debug "${FUNCNAME}" "${@}"
 
       echo "$(sudo docker inspect -f "{{ .Name }}" "${CONTAINER}" 2> /dev/null | cut -d "/" -f 2)"
     ;;
@@ -126,14 +126,14 @@ container() {
 }
 
 config() {
-  debug "FUNCTION: config, ARGS: ${@}"
+  debug "${FUNCNAME}" "${@}"
 
   SERVICE="Configuration manager"
   CONTAINER=redis2814
   IMAGE=simpledrupalcloud/redis:2.8.14
 
   exists() {
-    debug "exists"
+    debug "${FUNCNAME}" "${@}"
 
     RETURN=0
 
@@ -145,7 +145,7 @@ config() {
   }
 
   running() {
-    debug "running"
+    debug "${FUNCNAME}" "${@}"
 
     RETURN=1
 
@@ -157,7 +157,7 @@ config() {
   }
 
   run() {
-    debug "run"
+    debug "${FUNCNAME}" "${@}"
 
     sudo docker run \
       --name "${CONTAINER}" \
@@ -169,7 +169,7 @@ config() {
 
   case "${1}" in
     up)
-      debug "up"
+      debug "${FUNCNAME}" "${@}"
 
       echo "Starting service: ${SERVICE}"
 
@@ -184,19 +184,19 @@ config() {
       run > >(log) 2> >(log_error)
     ;;
     destroy)
-      debug "destroy"
+      debug "${FUNCNAME}" "${@}"
 
       echo "Destroying service: ${SERVICE}"
 
       image "${IMAGE}" destroy
     ;;
     get)
-      debug "get"
+      debug "${FUNCNAME}" "${@}"
 
       echo -n "$(dev config get "${2}")"
     ;;
     set)
-      debug "set"
+      debug "${FUNCNAME}" "${@}"
 
       dev config set "${2}" "${3}"
     ;;
@@ -204,22 +204,22 @@ config() {
 }
 
 dev() {
-  debug "FUNCTION: dev, ARGS: ${@}"
+  debug "${FUNCNAME}" "${@}"
 
   IMAGE=simpledrupalcloud/dev
 
   case "${1}" in
     config)
-      debug "config"
+      debug "${FUNCNAME}" "${@}"
 
       case "${2}" in
         get)
-          debug "get"
+          debug "${FUNCNAME}" "${@}"
 
           echo -n "$(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config get "${3}" 2> >(log_error))"
         ;;
         set)
-          debug "set"
+          debug "${FUNCNAME}" "${@}"
 
           sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${3}" "${4}" > >(log) 2> >(log_error)
         ;;
