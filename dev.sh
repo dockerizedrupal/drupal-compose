@@ -141,7 +141,7 @@ config() {
         container "${CONTAINER}" destroy
       fi
 
-      image "${IMAGE}" update
+      image "${IMAGE}" pull
 
       echo "Starting container: ${CONTAINER}"
 

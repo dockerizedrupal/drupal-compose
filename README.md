@@ -11,12 +11,8 @@ Update the tool itself and all of the installed services
 
     dev update
 
-Services
---------
-
-### Redis
-
-Redis database is used internally by `dev` to store environment specific configuration variables
+Containers
+----------
 
 ### MailCatcher
 
@@ -56,15 +52,23 @@ Service management
 
     dev destroy
 
-Configuration management
--------------------------
+Services
+--------
 
-Configuration management is backed by Redis database service
+### Configuration management
 
-### Store
+Configuration management is backed by Redis data store container
+
+#### Containers
+
+##### Redis
+
+Redis data store is used internally by `dev` to store environment specific configuration variables
+
+#### Store
 
     dev config set [KEY] [VALUE]
 
-### Retrive
+#### Retrive
 
     dev config get [KEY]
