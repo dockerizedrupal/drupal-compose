@@ -166,14 +166,14 @@ dev() {
 
   case "${1}" in
     config)
-    case "${2}" in
-      get)
-        echo -n $(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config get "${2}")
-      ;;
-      set)
-        sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${2}" "${3}" > >(log) 2> >(log_error)
-      ;;
-    esac
+      case "${2}" in
+        get)
+          echo -n $(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config get "${2}")
+        ;;
+        set)
+          sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${2}" "${3}" > >(log) 2> >(log_error)
+        ;;
+      esac
     ;;
   esac
 }
