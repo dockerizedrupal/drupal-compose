@@ -43,7 +43,7 @@ image() {
       fi
 
       for CONTAINER in "$(sudo docker ps -aq)"; do
-        if [ "$(sudo docker inspect -f "{{ .Config.Image }}" "${CONTAINER}")" == "${IMAGE}" ]; then
+        if [ "$(sudo docker inspect -f "{{ .Config.Image }}" "${CONTAINER}"  2> /dev/null)" == "${IMAGE}" ]; then
           container "${CONTAINER}" destroy
         fi
       done
