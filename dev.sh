@@ -4,6 +4,9 @@ LOG_DIR=/var/log/dev
 LOG="${LOG_DIR}/dev.log"
 LOG_ERROR="${LOG_DIR}/error.log"
 
+DEBUG_MESSAGE=""
+DEBUG_PAD=""
+
 log() {
   while read DATA; do
     echo "[$(date +"%D %T")] ${DATA}" >> "${LOG}"
@@ -17,9 +20,8 @@ log_error() {
 }
 
 debug() {
-  if ${DEBUG}; then
-    echo "Debug: ${1}"
-  fi
+  DEBUG_MESSAGE="${DEBUG_PAD}${1}\n"
+  DEBUG_PAD="${DEBUG_PAD} "
 }
 
 image() {
@@ -815,3 +817,5 @@ case "${1}" in
     container "${@:2}"
   ;;
 esac
+
+echo "${DEBUG_MESSAGE}"
