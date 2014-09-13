@@ -47,7 +47,7 @@ image_exists() {
 }
 
 image_pull() {
-  output_debug "config_start, \${@}: ${@}"
+  output_debug "image_pull, \${@}: ${@}"
 
   local IMAGE="${1}"
 
@@ -59,7 +59,7 @@ image_pull() {
 }
 
 image() {
-  output_debug "config_start, \${@}: ${@}"
+  output_debug "image, \${@}: ${@}"
 
   local IMAGE="${1}"
 
@@ -116,7 +116,7 @@ container_name() {
 }
 
 container_start() {
-  output_debug "config_start, \${@}: ${@}"
+  output_debug "container_start, \${@}: ${@}"
 
   local IMAGE="${1}"
   local CONTAINER="$(container_name "${2}")"
@@ -138,7 +138,7 @@ container_start() {
 }
 
 container() {
-  output_debug "config_start, \${@}: ${@}"
+  output_debug "container, \${@}: ${@}"
 
   local CONTAINER="$(container_name "${1}")"
 
