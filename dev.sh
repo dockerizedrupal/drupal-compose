@@ -87,7 +87,7 @@ image_destroy() {
 image() {
   output_debug "image, \${@}: ${*}"
 
-  if [ "${1}" == "-h|--help" ]; then
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
 dev image [NAME] pull
 dev image [NAME] destroy
