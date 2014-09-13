@@ -285,7 +285,10 @@ EOF
       echo -n "$(dev config get "${2}")"
     ;;
     set)
-      dev config set "${2}" "${3}"
+      local KEY="${2}"
+      local VALUE="${3}"
+
+      dev config set "${KEY}" "${VALUE}"
     ;;
     *)
       output_error "dev: Unknown command. See 'dev config --help'"
@@ -302,14 +305,17 @@ dev() {
 
   case "${1}" in
     config)
-      output_debug "dev, config, \${IMAGE}: ${IMAGE}"
-
       case "${2}" in
         get)
-          echo -n "$(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config get "${3}" 2> >(log_error))"
+          local KEY="${3}"
+
+          echo -n "$(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config get "${KEY}" 2> >(log_error))"
         ;;
         set)
-          sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${3}" "${4}" > >(log) 2> >(log_error)
+          local KEY="${3}"
+          local VALUE="${4}"
+
+          sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${KEY}" "${VALUE}" > >(log) 2> >(log_error)
         ;;
       esac
     ;;
