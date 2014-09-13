@@ -47,7 +47,7 @@ image_exists() {
 }
 
 image_pull() {
-  output_debug "image_pull, \${1}: ${1}"
+  output_debug "config_start, \${@}: ${@}"
 
   local IMAGE="${1}"
 
@@ -59,8 +59,7 @@ image_pull() {
 }
 
 image() {
-  output_debug "image, \${1}: ${1}"
-  output_debug "image, \${2}: ${2}"
+  output_debug "config_start, \${@}: ${@}"
 
   local IMAGE="${1}"
 
@@ -117,8 +116,7 @@ container_name() {
 }
 
 container_start() {
-  output_debug "container_start, \${1}: ${1}"
-  output_debug "container_start, \${2}: ${2}"
+  output_debug "config_start, \${@}: ${@}"
 
   local IMAGE="${1}"
   local CONTAINER="$(container_name "${2}")"
@@ -140,7 +138,7 @@ container_start() {
 }
 
 container() {
-  output_debug "container, \${1}: ${1}"
+  output_debug "config_start, \${@}: ${@}"
 
   local CONTAINER="$(container_name "${1}")"
 
@@ -179,6 +177,8 @@ container() {
 }
 
 config_start() {
+  output_debug "config_start, \${@}: ${@}"
+
   local CONTAINER="${1}"
   local IMAGE="${2}"
 
@@ -194,6 +194,8 @@ config_start() {
 }
 
 config() {
+  output_debug "image, \${@}: ${@}"
+
   local SERVICE="Configuration manager"
   local CONTAINER=redis2814
   local IMAGE=simpledrupalcloud/redis:2.8.14
