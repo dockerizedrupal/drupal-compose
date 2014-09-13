@@ -67,12 +67,12 @@ image() {
 
   case "${2}" in
     pull)
-      output_debug "image, pull, \${IMAGE}: ${IMAGE}"
+      output_debug "image, \${2}: ${2}, \${IMAGE}: ${IMAGE}"
 
       image_pull "${IMAGE}"
     ;;
     destroy)
-      output_debug "image, destroy, \${IMAGE}: ${IMAGE}"
+      output_debug "image, \${2}: ${2}, \${IMAGE}: ${IMAGE}"
 
       if ! $(image_exists "${IMAGE}"); then
         output_error "No such image: ${IMAGE}"
@@ -82,7 +82,7 @@ image() {
 
       for ID in $(sudo docker ps -aq); do
         if [ "$(sudo docker inspect -f "{{ .Config.Image }}" "${ID}" 2> /dev/null)" == "${IMAGE}" ]; then
-          output_debug "image, destroy, \${IMAGE}: ${IMAGE}, \${ID}: ${ID}"
+          output_debug "image, \${2}: ${2}, \${IMAGE}: ${IMAGE}, \${ID}: ${ID}"
 
           container "${ID}" destroy
         fi
