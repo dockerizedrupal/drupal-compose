@@ -109,6 +109,29 @@ container_name() {
   echo "$(sudo docker inspect -f "{{ .Name }}" "${1}" 2> /dev/null | cut -d "/" -f 2)"
 }
 
+container_start() {
+  output_debug "container_start, \${1}: ${1}"
+  output_debug "container_start, \${2}: ${2}"
+
+  local IMAGE="${1}"
+  local CONTAINER="$(container_name "${2}")"
+
+  output_debug "container_start, \${IMAGE}: ${IMAGE}"
+  output_debug "container_start, \${CONTAINER}: ${CONTAINER}"
+
+  if $(container_exists "${CONTAINER}"); then
+    container "${CONTAINER}" destroy
+  fi
+
+  image "${IMAGE}" pull
+
+  output "Starting container: ${CONTAINER}"
+
+  output_debug "container, start, \${3}: ${3}"
+
+  eval "${3} ${CONTAINER} ${IMAGE}"
+}
+
 container() {
   output_debug "container, \${1}: ${1}"
 
@@ -118,23 +141,13 @@ container() {
 
   case "${2}" in
     start)
-      output_debug "container, start, \${CONTAINER}: ${CONTAINER}"
+      local IMAGE="${3}"
 
-      local IMAGE="${4}"
+      output_debug "container, destroy, \${IMAGE}: ${IMAGE}"
+      output_debug "container, destroy, \${CONTAINER}: ${CONTAINER}"
+      output_debug "container, destroy, \${4}: ${4}"
 
-      output_debug "container, start, \${IMAGE}: ${IMAGE}"
-
-      if $(container_exists "${CONTAINER}"); then
-        container "${CONTAINER}" destroy
-      fi
-
-      image "${IMAGE}" pull
-
-      output "Starting container: ${CONTAINER}"
-
-      output_debug "container, start, \${4}: ${4}"
-
-      eval "${4} ${CONTAINER} ${IMAGE}"
+      container_start "${IMAGE}" "${CONTAINER}" "${4}"
     ;;
     destroy)
       output_debug "container, destroy, \${CONTAINER}: ${CONTAINER}"
