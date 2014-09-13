@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
+LOG_DIR=/var/log/dev
+LOG="${LOG_DIR}/dev.log"
+LOG_ERROR="${LOG_DIR}/error.log"
+
 if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
-    cat << EOF
+  cat << EOF
 dev install
 dev update
 dev config up
@@ -10,18 +14,14 @@ dev config get [KEY]
 dev config set [KEY] [VALUE]
 dev dev config get [KEY]
 dev dev config set [KEY] [VALUE]
-dev image [NAME] pull
-dev image [NAME] destroy
+dev image [IMAGE] pull
+dev image [IMAGE] destroy
 dev container [CONTAINER] start [IMAGE]
 dev container [CONTAINER] destroy
 EOF
 
   exit 1
 fi
-
-LOG_DIR=/var/log/dev
-LOG="${LOG_DIR}/dev.log"
-LOG_ERROR="${LOG_DIR}/error.log"
 
 log() {
   while read DATA; do
@@ -183,6 +183,15 @@ container_start() {
 container() {
   output_debug "container, \${@}: ${*}"
 
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev container [CONTAINER] start
+dev container [CONTAINER] destroy
+EOF
+
+    exit 1
+  fi
+
   local CONTAINER="${1}"
 
   output_debug "container, \${CONTAINER}: ${CONTAINER}"
@@ -213,6 +222,11 @@ container() {
       output "Destroying container: ${CONTAINER}"
 
       sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
+    ;;
+    *)
+      output_error "Unknown command. See 'dev container --help'"
+
+      exit 1
     ;;
   esac
 }
