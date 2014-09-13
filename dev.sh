@@ -429,8 +429,8 @@ EOF
   esac
 }
 
-php5217_start() {
-  output_debug "FUNCTION: php5217_start ARGS: ${*}"
+php52_start() {
+  output_debug "FUNCTION: php52_start ARGS: ${*}"
 
   local CONTAINER="${1}"
   local IMAGE="${2}"
@@ -443,8 +443,45 @@ php5217_start() {
     "${IMAGE}" > >(log) 2> >(log_error)
 }
 
-php5328_start() {
-  output_debug "FUNCTION: php5328_start ARGS: ${*}"
+php52() {
+  local SERVICE="PHP"
+  local CONTAINER=php52
+  local IMAGE=simpledrupalcloud/php:5.2.17
+
+  output_debug "FUNCTION: php52 ARGS: ${*}"
+
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev php52 up
+dev php52 destroy
+EOF
+
+    exit 1
+  fi
+
+  local ACTION="${1}"
+
+  case "${ACTION}" in
+    up)
+      output "Starting service: ${SERVICE}"
+
+      container "${CONTAINER}" start "${IMAGE}"
+    ;;
+    destroy)
+      output "Destroying service: ${SERVICE}"
+
+      image "${IMAGE}" destroy
+    ;;
+    *)
+      output_error "dev: Unknown command. See 'dev php52 --help'"
+
+      exit 1
+    ;;
+  esac
+}
+
+php53_start() {
+  output_debug "FUNCTION: php53_start ARGS: ${*}"
 
   local CONTAINER="${1}"
   local IMAGE="${2}"
@@ -457,8 +494,45 @@ php5328_start() {
     "${IMAGE}" > >(log) 2> >(log_error)
 }
 
-php5431_start() {
-  output_debug "FUNCTION: php5431_start ARGS: ${*}"
+php53() {
+  local SERVICE="PHP"
+  local CONTAINER=php53
+  local IMAGE=simpledrupalcloud/php:5.3.28
+
+  output_debug "FUNCTION: php53 ARGS: ${*}"
+
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev php53 up
+dev php53 destroy
+EOF
+
+    exit 1
+  fi
+
+  local ACTION="${1}"
+
+  case "${ACTION}" in
+    up)
+      output "Starting service: ${SERVICE}"
+
+      container "${CONTAINER}" start "${IMAGE}"
+    ;;
+    destroy)
+      output "Destroying service: ${SERVICE}"
+
+      image "${IMAGE}" destroy
+    ;;
+    *)
+      output_error "dev: Unknown command. See 'dev php53 --help'"
+
+      exit 1
+    ;;
+  esac
+}
+
+php54_start() {
+  output_debug "FUNCTION: php54_start ARGS: ${*}"
 
   local CONTAINER="${1}"
   local IMAGE="${2}"
@@ -471,8 +545,45 @@ php5431_start() {
     "${IMAGE}" > >(log) 2> >(log_error)
 }
 
-php5515_start() {
-  output_debug "FUNCTION: php5515_start ARGS: ${*}"
+php54() {
+  local SERVICE="PHP"
+  local CONTAINER=php54
+  local IMAGE=simpledrupalcloud/php:5.4.31
+
+  output_debug "FUNCTION: php54 ARGS: ${*}"
+
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev php54 up
+dev php54 destroy
+EOF
+
+    exit 1
+  fi
+
+  local ACTION="${1}"
+
+  case "${ACTION}" in
+    up)
+      output "Starting service: ${SERVICE}"
+
+      container "${CONTAINER}" start "${IMAGE}"
+    ;;
+    destroy)
+      output "Destroying service: ${SERVICE}"
+
+      image "${IMAGE}" destroy
+    ;;
+    *)
+      output_error "dev: Unknown command. See 'dev php54 --help'"
+
+      exit 1
+    ;;
+  esac
+}
+
+php55_start() {
+  output_debug "FUNCTION: php55_start ARGS: ${*}"
 
   local CONTAINER="${1}"
   local IMAGE="${2}"
@@ -483,19 +594,46 @@ php5515_start() {
     --volumes-from apache \
     -d \
     "${IMAGE}" > >(log) 2> >(log_error)
+}
+
+php55() {
+  local SERVICE="PHP"
+  local CONTAINER=php55
+  local IMAGE=simpledrupalcloud/php:5.5.15
+
+  output_debug "FUNCTION: php55 ARGS: ${*}"
+
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev php55 up
+dev php55 destroy
+EOF
+
+    exit 1
+  fi
+
+  local ACTION="${1}"
+
+  case "${ACTION}" in
+    up)
+      output "Starting service: ${SERVICE}"
+
+      container "${CONTAINER}" start "${IMAGE}"
+    ;;
+    destroy)
+      output "Destroying service: ${SERVICE}"
+
+      image "${IMAGE}" destroy
+    ;;
+    *)
+      output_error "dev: Unknown command. See 'dev php55 --help'"
+
+      exit 1
+    ;;
+  esac
 }
 
 php() {
-  local SERVICE="PHP-FPM"
-  local CONTAINER_1=php5217
-  local CONTAINER_2=php5328
-  local CONTAINER_3=php5431
-  local CONTAINER_4=php5515
-  local IMAGE_1=simpledrupalcloud/php:5.2.17
-  local IMAGE_2=simpledrupalcloud/php:5.3.28
-  local IMAGE_3=simpledrupalcloud/php:5.4.31
-  local IMAGE_4=simpledrupalcloud/php:5.5.15
-
   output_debug "FUNCTION: php ARGS: ${*}"
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
@@ -511,20 +649,16 @@ EOF
 
   case "${ACTION}" in
     up)
-      output "Starting service: ${SERVICE}"
-
-      container "${CONTAINER_1}" start "${IMAGE_1}"
-      container "${CONTAINER_2}" start "${IMAGE_2}"
-      container "${CONTAINER_3}" start "${IMAGE_3}"
-      container "${CONTAINER_4}" start "${IMAGE_4}"
+      php52 up
+      php53 up
+      php54 up
+      php55 up
     ;;
     destroy)
-      output "Destroying service: ${SERVICE}"
-
-      image "${IMAGE_1}" destroy
-      image "${IMAGE_2}" destroy
-      image "${IMAGE_3}" destroy
-      image "${IMAGE_4}" destroy
+      php52 destroy
+      php53 destroy
+      php54 destroy
+      php55 destroy
     ;;
     *)
       output_error "dev: Unknown command. See 'dev php --help'"
@@ -706,6 +840,18 @@ case "${1}" in
   ;;
   mysql)
     mysql "${@:2}"
+  ;;
+  php52)
+    php52 "${@:2}"
+  ;;
+  php53)
+    php53 "${@:2}"
+  ;;
+  php54)
+    php54 "${@:2}"
+  ;;
+  php55)
+    php55 "${@:2}"
   ;;
   php)
     php "${@:2}"
