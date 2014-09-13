@@ -282,7 +282,9 @@ EOF
       image "${IMAGE}" destroy
     ;;
     get)
-      echo -n "$(dev config get "${2}")"
+      local KEY="${2}"
+
+      echo -n "$(dev config get "${KEY}")"
     ;;
     set)
       local KEY="${2}"
