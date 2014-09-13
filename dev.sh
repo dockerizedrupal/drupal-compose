@@ -152,7 +152,7 @@ config() {
       --net host \
       -v /var/redis-2.8.14/data:/redis-2.8.14/data \
       -d \
-      "${IMAGE}"
+      "${IMAGE}" > >(log) 2> >(log_error)
   }
 
   case "${1}" in
@@ -171,7 +171,7 @@ config() {
 
       output "Starting container: ${CONTAINER}"
 
-      run > >(log) 2> >(log_error)
+      run
     ;;
     destroy)
       output_debug "config, destroy, \${SERVICE}: ${SERVICE}"
