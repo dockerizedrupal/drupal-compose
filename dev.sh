@@ -31,11 +31,9 @@ output_error() {
 }
 
 output_debug() {
-  if [ ! ${DEBUG} ]; then
-    return 1
+  if [ "${DEBUG}" == "1" ]; then
+    output "${1}" 3
   fi
-
-  output "${1}" 3
 }
 
 image_exists() {
