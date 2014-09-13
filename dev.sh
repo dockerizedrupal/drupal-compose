@@ -40,9 +40,9 @@ image() {
         return 1
       fi
 
-      for CONTAINER_ID in $(sudo docker ps -aq); do
-        if [ "$(sudo docker inspect -f "{{ .Config.Image }}" "${CONTAINER_ID}" 2> /dev/null)" == "${IMAGE}" ]; then
-          container "${CONTAINER_ID}" destroy
+      for ID in $(sudo docker ps -aq); do
+        if [ "$(sudo docker inspect -f "{{ .Config.Image }}" "${ID}" 2> /dev/null)" == "${IMAGE}" ]; then
+          container "${ID}" destroy
         fi
       done
 
@@ -126,6 +126,7 @@ config() {
       output "Starting service: ${SERVICE}"
 
       if $(container "${CONTAINER}" exists); then
+        echo "test ${CONTAINER}"
         container "${CONTAINER}" destroy
       fi
 
