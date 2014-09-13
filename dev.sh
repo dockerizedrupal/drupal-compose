@@ -162,6 +162,8 @@ container() {
         return 1
       fi
 
+      CONTAINER=$(container_name "${CONTAINER}")
+
       if $(container_running "${CONTAINER}"); then
         output "Stopping container: ${CONTAINER}"
 
