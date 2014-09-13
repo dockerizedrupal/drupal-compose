@@ -47,7 +47,7 @@ image_exists() {
 }
 
 image_pull() {
-  output_debug "image_pull, \${@}: ${@}"
+  output_debug "image_pull, \${@}: ${*}"
 
   local IMAGE="${1}"
 
@@ -59,7 +59,7 @@ image_pull() {
 }
 
 image() {
-  output_debug "image, \${@}: ${@}"
+  output_debug "image, \${@}: ${*}"
 
   local IMAGE="${1}"
 
@@ -116,7 +116,7 @@ container_name() {
 }
 
 container_start() {
-  output_debug "container_start, \${@}: ${@}"
+  output_debug "container_start, \${@}: ${*}"
 
   local IMAGE="${1}"
   local CONTAINER="$(container_name "${2}")"
@@ -177,7 +177,7 @@ container() {
 }
 
 config_start() {
-  output_debug "config_start, \${@}: ${@}"
+  output_debug "config_start, \${@}: ${*}"
 
   local CONTAINER="${1}"
   local IMAGE="${2}"
@@ -194,7 +194,7 @@ config_start() {
 }
 
 config() {
-  output_debug "config, \${@}: ${@}"
+  output_debug "config, \${@}: ${*}"
 
   local SERVICE="Configuration manager"
   local CONTAINER=redis2814
