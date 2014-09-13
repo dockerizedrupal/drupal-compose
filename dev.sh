@@ -128,6 +128,7 @@ container_name() {
 container_start() {
   output_debug "container_start, \${@}: ${*}"
 
+  local IMAGE="${1}"
   local CONTAINER="${2}"
   local CALLBACK="${CONTAINER}_start"
 
@@ -155,7 +156,9 @@ container() {
 
   case "${2}" in
     start)
-      container_start "${CONTAINER}"
+      local IMAGE="${3}"
+
+      container_start "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       output_debug "container, destroy, \${CONTAINER}: ${CONTAINER}"
@@ -213,7 +216,7 @@ config() {
     up)
       output "Starting service: ${SERVICE}"
 
-      container "${CONTAINER}" start
+      container "${CONTAINER}" start "${IMAGE}"
     ;;
     destroy)
       output "Destroying service: ${SERVICE}"
