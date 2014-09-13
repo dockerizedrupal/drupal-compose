@@ -58,6 +58,32 @@ image_pull() {
   sudo docker pull "${IMAGE}" > >(log) 2> >(log_error)
 }
 
+image_destroy() {
+  output_debug "image_destroy, \${@}: ${*}"
+
+  local IMAGE="${1}"
+
+  output_debug "image_destroy, \${IMAGE}: ${IMAGE}"
+
+  if ! $(image_exists "${IMAGE}"); then
+    output_error "No such image: ${IMAGE}"
+
+    return 1
+  fi
+
+  for ID in $(sudo docker ps -aq); do
+    if [ "$(sudo docker inspect -f "{{ .Config.Image }}" "${ID}" 2> /dev/null)" == "${IMAGE}" ]; then
+      output_debug "image, \${ID}: ${ID}"
+
+      container "${ID}" destroy
+    fi
+  done
+
+  output "Destroying image: ${IMAGE}"
+
+  sudo docker rmi "${IMAGE}" > >(log) 2> >(log_error)
+}
+
 image() {
   output_debug "image, \${@}: ${*}"
 
@@ -70,23 +96,7 @@ image() {
       image_pull "${IMAGE}"
     ;;
     destroy)
-      if ! $(image_exists "${IMAGE}"); then
-        output_error "No such image: ${IMAGE}"
-
-        return 1
-      fi
-
-      for ID in $(sudo docker ps -aq); do
-        if [ "$(sudo docker inspect -f "{{ .Config.Image }}" "${ID}" 2> /dev/null)" == "${IMAGE}" ]; then
-          output_debug "image, \${ID}: ${ID}"
-
-          container "${ID}" destroy
-        fi
-      done
-
-      output "Destroying image: ${IMAGE}"
-
-      sudo docker rmi "${IMAGE}" > >(log) 2> >(log_error)
+      image_destroy "${IMAGE}"
     ;;
   esac
 }
@@ -118,12 +128,12 @@ container_name() {
 container_start() {
   output_debug "container_start, \${@}: ${*}"
 
-  local IMAGE="${1}"
   local CONTAINER="${2}"
-  local CALLBACK="${3}"
+  local CALLBACK="${CONTAINER}_start"
 
   output_debug "container_start, \${IMAGE}: ${IMAGE}"
   output_debug "container_start, \${CONTAINER}: ${CONTAINER}"
+  output_debug "container_start, \${CALLBACK}: ${CALLBACK}"
 
   if $(container_exists "${CONTAINER}"); then
     container "${CONTAINER}" destroy
@@ -132,8 +142,6 @@ container_start() {
   image "${IMAGE}" pull
 
   output "Starting container: ${CONTAINER}"
-
-  output_debug "container, start, \${3}: ${3}"
 
   eval "${CALLBACK} ${CONTAINER} ${IMAGE}"
 }
@@ -147,11 +155,7 @@ container() {
 
   case "${2}" in
     start)
-      local IMAGE="${3}"
-
-      output_debug "container, start, \${IMAGE}: ${IMAGE}"
-
-      container_start "${IMAGE}" "${CONTAINER}" "${4}"
+      container_start "${CONTAINER}"
     ;;
     destroy)
       output_debug "container, destroy, \${CONTAINER}: ${CONTAINER}"
@@ -177,11 +181,11 @@ container() {
   esac
 }
 
-config_start() {
-  output_debug "config_start, \${@}: ${*}"
+redis2814_start() {
+  output_debug "redis2814_start, \${@}: ${*}"
 
   local CONTAINER="${1}"
-  local IMAGE="${2}"
+  local IMAGE=simpledrupalcloud/redis:2.8.14
 
   output_debug "config_start, \${CONTAINER}: ${CONTAINER}"
   output_debug "config_start, \${IMAGE}: ${IMAGE}"
@@ -209,7 +213,7 @@ config() {
     up)
       output "Starting service: ${SERVICE}"
 
-      container "${CONTAINER}" "start" "${IMAGE}" "config_start"
+      container "${CONTAINER}" start
     ;;
     destroy)
       output "Destroying service: ${SERVICE}"
