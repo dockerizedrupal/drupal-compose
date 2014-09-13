@@ -229,6 +229,9 @@ config() {
     set)
       dev config set "${2}" "${3}"
     ;;
+    *)
+      output_error "Unknown command"
+    ;;
   esac
 }
 
