@@ -232,13 +232,13 @@ EOF
 }
 
 redis2814_start() {
+  local IMAGE=simpledrupalcloud/redis:2.8.14
+
   output_debug "redis2814_start, \${@}: ${*}"
 
   local CONTAINER="${1}"
-  local IMAGE=simpledrupalcloud/redis:2.8.14
 
   output_debug "config_start, \${CONTAINER}: ${CONTAINER}"
-  output_debug "config_start, \${IMAGE}: ${IMAGE}"
 
   sudo docker run \
     --name "${CONTAINER}" \
@@ -249,6 +249,10 @@ redis2814_start() {
 }
 
 config() {
+  local SERVICE="Configuration manager"
+  local CONTAINER=redis2814
+  local IMAGE=simpledrupalcloud/redis:2.8.14
+
   output_debug "config, \${@}: ${*}"
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
@@ -262,15 +266,9 @@ EOF
     exit 1
   fi
 
-  local SERVICE="Configuration manager"
-  local CONTAINER=redis2814
-  local IMAGE=simpledrupalcloud/redis:2.8.14
+  local ACTION="${1}"
 
-  output_debug "config, \${SERVICE}: ${SERVICE}"
-  output_debug "config, \${CONTAINER}: ${CONTAINER}"
-  output_debug "config, \${IMAGE}: ${IMAGE}"
-
-  case "${1}" in
+  case "${ACTION}" in
     up)
       output "Starting service: ${SERVICE}"
 
@@ -303,9 +301,20 @@ EOF
 dev() {
   local IMAGE=simpledrupalcloud/dev
 
-  output_debug "dev, \${IMAGE}: ${IMAGE}"
+  output_debug "dev, \${@}: ${*}"
 
-  case "${1}" in
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev dev config get [KEY]
+dev dev config set [KEY] [VALUE]
+EOF
+
+    exit 1
+  fi
+
+  local ACTION="${1}"
+
+  case "${ACTION}" in
     config)
       case "${2}" in
         get)
@@ -319,6 +328,10 @@ dev() {
 
           sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${KEY}" "${VALUE}" > >(log) 2> >(log_error)
         ;;
+        *)
+          output_error "dev: Unknown command. See 'dev dev --help'"
+
+          exit 1
       esac
     ;;
   esac
