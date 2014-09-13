@@ -17,11 +17,21 @@ log_error() {
 }
 
 output() {
-  echo "$(tput setaf 2)${1}$(tput sgr 0)"
+  local COLOR="${1}"
+
+  if [ -z "${COLOR}" ]; then
+    COLOR=2
+  fi
+
+  echo "$(tput setaf ${COLOR})${1}$(tput sgr 0)"
 }
 
 output_error() {
-  >&2 echo "$(tput setaf 1)${1}$(tput sgr 0)"
+  >&2 output 1
+}
+
+output_debug() {
+  output 3
 }
 
 image() {
