@@ -148,9 +148,7 @@ container() {
     start)
       local IMAGE="${3}"
 
-      output_debug "container, destroy, \${IMAGE}: ${IMAGE}"
-      output_debug "container, destroy, \${CONTAINER}: ${CONTAINER}"
-      output_debug "container, destroy, \${4}: ${4}"
+      output_debug "container, start, \${IMAGE}: ${IMAGE}"
 
       container_start "${IMAGE}" "${CONTAINER}" "${4}"
     ;;
