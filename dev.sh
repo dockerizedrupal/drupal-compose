@@ -98,6 +98,19 @@ image() {
     destroy)
       image_destroy "${IMAGE}"
     ;;
+    -h|--help)
+      cat << EOF
+  dev image [NAME] pull
+  dev image [NAME] destroy
+  EOF
+
+      exit 1
+    ;;
+    *)
+      output_error "Unknown command. See 'dev image --help'"
+
+      exit 1
+    ;;
   esac
 }
 
@@ -236,9 +249,13 @@ dev config destroy
 dev config get [KEY]
 dev config set [KEY] [VALUE]
 EOF
+
+      exit 1
     ;;
     *)
       output_error "Unknown command. See 'dev config --help'"
+
+      exit 1
     ;;
   esac
 }
@@ -889,8 +906,12 @@ dev image [NAME] destroy
 dev container [CONTAINER] start [IMAGE]
 dev container [CONTAINER] destroy
 EOF
+
+    exit 1
   ;;
   *)
     output_error "Unknown command. See 'dev --help'"
+
+    exit 1
   ;;
 esac
