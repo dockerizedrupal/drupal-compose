@@ -285,7 +285,6 @@ redis_start() {
 }
 
 redis() {
-  local SERVICE="Redis"
   local CONTAINER=redis
   local IMAGE=simpledrupalcloud/redis:2.8.14
 
@@ -306,13 +305,9 @@ EOF
 
   case "${ACTION}" in
     up)
-      output "Starting service: ${SERVICE}"
-
       container "${CONTAINER}" start "${IMAGE}"
     ;;
     destroy)
-      output "Destroying service: ${SERVICE}"
-
       image "${IMAGE}" destroy
     ;;
     get)
@@ -354,7 +349,6 @@ apache_start() {
 }
 
 apache() {
-  local SERVICE="Apache HTTP Server"
   local CONTAINER=apache
   local IMAGE=simpledrupalcloud/apache:2.2.22
 
@@ -373,13 +367,9 @@ EOF
 
   case "${ACTION}" in
     up)
-      output "Starting service: ${SERVICE}"
-
       container "${CONTAINER}" start "${IMAGE}"
     ;;
     destroy)
-      output "Destroying service: ${SERVICE}"
-
       image "${IMAGE}" destroy
     ;;
     *)
@@ -407,7 +397,6 @@ mysql_start() {
 }
 
 mysql() {
-  local SERVICE="MySQL"
   local CONTAINER=mysql
   local IMAGE=simpledrupalcloud/mysql:5.5.38
 
@@ -426,13 +415,9 @@ EOF
 
   case "${ACTION}" in
     up)
-      output "Starting service: ${SERVICE}"
-
       container "${CONTAINER}" start "${IMAGE}"
     ;;
     destroy)
-      output "Destroying service: ${SERVICE}"
-
       image "${IMAGE}" destroy
     ;;
     *)
@@ -458,7 +443,6 @@ php52_start() {
 }
 
 php52() {
-  local SERVICE="PHP"
   local CONTAINER=php52
   local IMAGE=simpledrupalcloud/php:5.2.17
 
@@ -477,13 +461,9 @@ EOF
 
   case "${ACTION}" in
     up)
-      output "Starting service: ${SERVICE}"
-
       container "${CONTAINER}" start "${IMAGE}"
     ;;
     destroy)
-      output "Destroying service: ${SERVICE}"
-
       image "${IMAGE}" destroy
     ;;
     *)
@@ -509,7 +489,6 @@ php53_start() {
 }
 
 php53() {
-  local SERVICE="PHP"
   local CONTAINER=php53
   local IMAGE=simpledrupalcloud/php:5.3.28
 
@@ -528,13 +507,9 @@ EOF
 
   case "${ACTION}" in
     up)
-      output "Starting service: ${SERVICE}"
-
       container "${CONTAINER}" start "${IMAGE}"
     ;;
     destroy)
-      output "Destroying service: ${SERVICE}"
-
       image "${IMAGE}" destroy
     ;;
     *)
@@ -560,7 +535,6 @@ php54_start() {
 }
 
 php54() {
-  local SERVICE="PHP"
   local CONTAINER=php54
   local IMAGE=simpledrupalcloud/php:5.4.31
 
@@ -579,13 +553,9 @@ EOF
 
   case "${ACTION}" in
     up)
-      output "Starting service: ${SERVICE}"
-
       container "${CONTAINER}" start "${IMAGE}"
     ;;
     destroy)
-      output "Destroying service: ${SERVICE}"
-
       image "${IMAGE}" destroy
     ;;
     *)
@@ -611,7 +581,6 @@ php55_start() {
 }
 
 php55() {
-  local SERVICE="PHP"
   local CONTAINER=php55
   local IMAGE=simpledrupalcloud/php:5.5.15
 
@@ -630,13 +599,9 @@ EOF
 
   case "${ACTION}" in
     up)
-      output "Starting service: ${SERVICE}"
-
       container "${CONTAINER}" start "${IMAGE}"
     ;;
     destroy)
-      output "Destroying service: ${SERVICE}"
-
       image "${IMAGE}" destroy
     ;;
     *)
@@ -696,7 +661,6 @@ mailcatcher_start() {
 }
 
 mailcatcher() {
-  local SERVICE="MailCatcher"
   local CONTAINER=mailcatcher
   local IMAGE=simpledrupalcloud/mailcatcher:0.5.12
 
@@ -715,13 +679,9 @@ EOF
 
   case "${ACTION}" in
     up)
-      output "Starting service: ${SERVICE}"
-
       container "${CONTAINER}" start "${IMAGE}"
     ;;
     destroy)
-      output "Destroying service: ${SERVICE}"
-
       image "${IMAGE}" destroy
     ;;
     *)
