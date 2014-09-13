@@ -122,6 +122,8 @@ container() {
 
       local IMAGE="${4}"
 
+      output_debug "container, start, \${IMAGE}: ${IMAGE}"
+
       if $(container_exists "${CONTAINER}"); then
         container "${CONTAINER}" destroy
       fi
@@ -129,6 +131,8 @@ container() {
       image "${IMAGE}" pull
 
       output "Starting container: ${CONTAINER}"
+
+      output_debug "container, start, \${4}: ${4}"
 
       "${4}"
     ;;
