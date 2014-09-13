@@ -35,22 +35,22 @@ output_debug() {
 }
 
 image() {
-  output_debug "image, \$\{1\}: ${1}"
+  output_debug "image, \${1}: ${1}"
 
   local IMAGE="${1}"
 
-  output_debug "image, \$\{IMAGE\}: ${IMAGE}"
+  output_debug "image, \${IMAGE}: ${IMAGE}"
 
   case "${2}" in
     pull)
-      output_debug "image, pull, \$\{IMAGE\}: ${IMAGE}"
+      output_debug "image, pull, \${IMAGE}: ${IMAGE}"
 
       output "Pulling image: ${IMAGE}"
 
       sudo docker pull "${IMAGE}" > >(log) 2> >(log_error)
     ;;
     destroy)
-      output_debug "image, destroy, \$\{IMAGE\}: ${IMAGE}"
+      output_debug "image, destroy, \${IMAGE}: ${IMAGE}"
 
       if ! $(image "${IMAGE}" exists); then
         output_error "No such image: ${IMAGE}"
@@ -83,15 +83,15 @@ image() {
 }
 
 container() {
-  output_debug "container, \$\{1\}: ${1}"
+  output_debug "container, \${1}: ${1}"
 
   local CONTAINER="$(sudo docker inspect -f "{{ .Name }}" "${1}" 2> /dev/null | cut -d "/" -f 2)"
 
-  output_debug "container, \$\{CONTAINER\}: ${CONTAINER}"
+  output_debug "container, \${CONTAINER}: ${CONTAINER}"
 
   case "${2}" in
     destroy)
-      output_debug "container, destroy, \$\{CONTAINER\}: ${CONTAINER}"
+      output_debug "container, destroy, \${CONTAINER}: ${CONTAINER}"
 
       if ! $(container "${CONTAINER}" exists); then
         output_error "No such container: ${CONTAINER}"
@@ -138,9 +138,9 @@ config() {
   local CONTAINER=redis2814
   local IMAGE=simpledrupalcloud/redis:2.8.14
 
-  output_debug "config, \$\{SERVICE\}: ${SERVICE}"
-  output_debug "config, \$\{CONTAINER\}: ${CONTAINER}"
-  output_debug "config, \$\{IMAGE\}: ${IMAGE}"
+  output_debug "config, \${SERVICE}: ${SERVICE}"
+  output_debug "config, \${CONTAINER}: ${CONTAINER}"
+  output_debug "config, \${IMAGE}: ${IMAGE}"
 
   run() {
     sudo docker run \
@@ -153,9 +153,9 @@ config() {
 
   case "${1}" in
     up)
-      output_debug "config, up, \$\{SERVICE\}: ${SERVICE}"
-      output_debug "config, up, \$\{CONTAINER\}: ${CONTAINER}"
-      output_debug "config, up, \$\{IMAGE\}: ${IMAGE}"
+      output_debug "config, up, \${SERVICE}: ${SERVICE}"
+      output_debug "config, up, \${CONTAINER}: ${CONTAINER}"
+      output_debug "config, up, \${IMAGE}: ${IMAGE}"
 
       output "Starting service: ${SERVICE}"
 
@@ -172,9 +172,9 @@ config() {
       run > >(log) 2> >(log_error)
     ;;
     destroy)
-      output_debug "config, destroy, \$\{SERVICE\}: ${SERVICE}"
-      output_debug "config, destroy, \$\{CONTAINER\}: ${CONTAINER}"
-      output_debug "config, destroy, \$\{IMAGE\}: ${IMAGE}"
+      output_debug "config, destroy, \${SERVICE}: ${SERVICE}"
+      output_debug "config, destroy, \${CONTAINER}: ${CONTAINER}"
+      output_debug "config, destroy, \${IMAGE}: ${IMAGE}"
 
       output "Destroying service: ${SERVICE}"
 
@@ -192,11 +192,11 @@ config() {
 dev() {
   local IMAGE=simpledrupalcloud/dev
 
-  output_debug "dev, \$\{IMAGE\}: ${IMAGE}"
+  output_debug "dev, \${IMAGE}: ${IMAGE}"
 
   case "${1}" in
     config)
-      output_debug "dev, config, \$\{IMAGE\}: ${IMAGE}"
+      output_debug "dev, config, \${IMAGE}: ${IMAGE}"
 
       case "${2}" in
         get)
