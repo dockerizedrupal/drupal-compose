@@ -162,6 +162,9 @@ config_start() {
   local CONTAINER="${1}"
   local IMAGE="${2}"
 
+  output_debug "config_start, \${CONTAINER}: ${CONTAINER}"
+  output_debug "config_start, \${IMAGE}: ${IMAGE}"
+
   sudo docker run \
     --name "${CONTAINER}" \
     --net host \
