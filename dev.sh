@@ -63,9 +63,11 @@ image() {
 }
 
 container() {
-  output_error "${1}"
+  output_error "container ${1}"
 
   local CONTAINER="$(sudo docker inspect -f "{{ .Name }}" "${1}" 2> /dev/null | cut -d "/" -f 2)"
+
+  output_error "container 2 ${CONTAINER}"
 
   case "${2}" in
     destroy)
@@ -128,8 +130,8 @@ config() {
       output "Starting service: ${SERVICE}"
 
       if $(container "${CONTAINER}" exists); then
-        output_error "${CONTAINER}"
-        
+        output_error "config ${CONTAINER}"
+
         container "${CONTAINER}" destroy
       fi
 
