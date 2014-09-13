@@ -164,8 +164,6 @@ config() {
       output "Starting service: ${SERVICE}"
 
       if $(container_exists "${CONTAINER}"); then
-        output_error "config ${CONTAINER}"
-
         container "${CONTAINER}" destroy
       fi
 
