@@ -100,9 +100,9 @@ image() {
     ;;
     -h|--help)
       cat << EOF
-  dev image [NAME] pull
-  dev image [NAME] destroy
-  EOF
+dev image [NAME] pull
+dev image [NAME] destroy
+EOF
 
       exit 1
     ;;
