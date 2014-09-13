@@ -208,7 +208,7 @@ config() {
     up)
       output "Starting service: ${SERVICE}"
 
-      container "${CONTAINER}" start "${IMAGE}" "config_start"
+      container "${CONTAINER}" "start" "${IMAGE}" "config_start"
     ;;
     destroy)
       output "Destroying service: ${SERVICE}"
