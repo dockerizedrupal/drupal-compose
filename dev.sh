@@ -326,10 +326,15 @@ apache_start() {
   local CONTAINER="${1}"
   local IMAGE="${2}"
 
+  local APACHE_SERVERNAME=example.com
+
   sudo docker run \
     --name "${CONTAINER}" \
     --net host \
-    -v /var/redis-2.8.14/data:/redis-2.8.14/data \
+    -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
+    -v /var/apache-2.2.22/data:/apache-2.2.22/data \
+    -v /var/apache-2.2.22/log:/apache-2.2.22/log \
+    -e APACHE_SERVERNAME="${APACHE_SERVERNAME}" \
     -d \
     "${IMAGE}" > >(log) 2> >(log_error)
 }
@@ -940,27 +945,11 @@ case "${1}" in
   update)
     update
     ;;
-#  start)
+#  up)
 #    start
-#    ;;
-#  restart)
-#    restart "${2}"
 #    ;;
 #  destroy)
 #    destroy
-#    ;;
-#  config)
-#    case "${2}" in
-#      get)
-#        echo -n $(config get "${3}")
-#      ;;
-#      set)
-#        echo $(config set "${3}" "${4}")
-#      ;;
-#      *)
-#        echo $(config "${3}")
-#      ;;
-#    esac
 #    ;;
   redis)
     case "${2}" in
