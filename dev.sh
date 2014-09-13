@@ -87,6 +87,15 @@ image_destroy() {
 image() {
   output_debug "image, \${@}: ${*}"
 
+  if [ "${1}" == "-h|--help" ]; then
+    cat << EOF
+dev image [NAME] pull
+dev image [NAME] destroy
+EOF
+
+    exit 1
+  fi
+
   local IMAGE="${1}"
 
   output_debug "image, \${IMAGE}: ${IMAGE}"
@@ -97,14 +106,6 @@ image() {
     ;;
     destroy)
       image_destroy "${IMAGE}"
-    ;;
-    -h|--help)
-      cat << EOF
-dev image [NAME] pull
-dev image [NAME] destroy
-EOF
-
-      exit 1
     ;;
     *)
       output_error "Unknown command. See 'dev image --help'"
