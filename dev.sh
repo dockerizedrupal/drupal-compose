@@ -66,7 +66,7 @@ image_exists() {
 }
 
 image_pull() {
-  output_debug "image_pull, \${@}: ${*}"
+  output_debug "FUNCTION: image_pull ARGS: ${*}"
 
   local IMAGE="${1}"
 
@@ -76,7 +76,7 @@ image_pull() {
 }
 
 image_destroy() {
-  output_debug "image_destroy, \${@}: ${*}"
+  output_debug "FUNCTION: image_pull ARGS: ${*}"
 
   local IMAGE="${1}"
 
@@ -98,7 +98,7 @@ image_destroy() {
 }
 
 image() {
-  output_debug "image, \${@}: ${*}"
+  output_debug "FUNCTION: image_pull ARGS: ${*}"
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
@@ -151,7 +151,7 @@ container_name() {
 }
 
 container_start() {
-  output_debug "container_start, \${@}: ${*}"
+  output_debug "FUNCTION: image_pull ARGS: ${*}"
 
   local IMAGE="${1}"
   local CONTAINER="${2}"
@@ -169,7 +169,7 @@ container_start() {
 }
 
 container() {
-  output_debug "container, \${@}: ${*}"
+  output_debug "FUNCTION: image_pull ARGS: ${*}"
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
@@ -218,7 +218,7 @@ EOF
 redis2814_start() {
   local IMAGE=simpledrupalcloud/redis:2.8.14
 
-  output_debug "redis2814_start, \${@}: ${*}"
+  output_debug "FUNCTION: image_pull ARGS: ${*}"
 
   local CONTAINER="${1}"
 
@@ -235,7 +235,7 @@ config() {
   local CONTAINER=redis2814
   local IMAGE=simpledrupalcloud/redis:2.8.14
 
-  output_debug "config, \${@}: ${*}"
+  output_debug "FUNCTION: image_pull ARGS: ${*}"
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
@@ -283,7 +283,7 @@ EOF
 dev() {
   local IMAGE=simpledrupalcloud/dev
 
-  output_debug "dev, \${@}: ${*}"
+  output_debug "FUNCTION: image_pull ARGS: ${*}"
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
