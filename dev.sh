@@ -19,8 +19,6 @@ log_error() {
 output() {
   local COLOR="${2}"
 
-  echo "${COLOR}"
-
   if [ -z "${COLOR}" ]; then
     COLOR=2
   fi
