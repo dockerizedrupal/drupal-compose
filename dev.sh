@@ -117,6 +117,19 @@ container() {
   output_debug "container, \${CONTAINER}: ${CONTAINER}"
 
   case "${2}" in
+    start)
+      output_debug "container, start, \${CONTAINER}: ${CONTAINER}"
+
+      if $(container_exists "${CONTAINER}"); then
+        container "${CONTAINER}" destroy
+      fi
+
+      image "${3}" pull
+
+      output "Starting container: ${CONTAINER}"
+
+      "${4}"
+    ;;
     destroy)
       output_debug "container, destroy, \${CONTAINER}: ${CONTAINER}"
 
