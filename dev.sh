@@ -46,6 +46,18 @@ image_exists() {
   return "${RETURN}"
 }
 
+image_pull() {
+  output_debug "image_pull, \${1}: ${1}"
+
+  local IMAGE="${1}"
+
+  output_debug "image_pull, \${IMAGE}: ${IMAGE}"
+
+  output "Pulling image: ${IMAGE}"
+
+  sudo docker pull "${IMAGE}" > >(log) 2> >(log_error)
+}
+
 image() {
   output_debug "image, \${1}: ${1}"
 
@@ -57,9 +69,7 @@ image() {
     pull)
       output_debug "image, pull, \${IMAGE}: ${IMAGE}"
 
-      output "Pulling image: ${IMAGE}"
-
-      sudo docker pull "${IMAGE}" > >(log) 2> >(log_error)
+      image_pull "${IMAGE}"
     ;;
     destroy)
       output_debug "image, destroy, \${IMAGE}: ${IMAGE}"
