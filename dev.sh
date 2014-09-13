@@ -73,11 +73,11 @@ image() {
 }
 
 container() {
-  output_error "container ${1}"
+  output_debug "container ${1}"
 
   local CONTAINER="$(sudo docker inspect -f "{{ .Name }}" "${1}" 2> /dev/null | cut -d "/" -f 2)"
 
-  output_error "container 2 ${CONTAINER}"
+  output_debug "container name ${CONTAINER}"
 
   case "${2}" in
     destroy)
