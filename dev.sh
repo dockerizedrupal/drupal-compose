@@ -1020,6 +1020,9 @@ case "${1}" in
   mysql)
     mysql "${@:2}"
   ;;
+  php)
+    php "${@:2}"
+  ;;
   dev)
     dev "${@:2}"
   ;;
