@@ -376,6 +376,59 @@ EOF
   esac
 }
 
+mysql_start() {
+  output_debug "FUNCTION: mysql_start ARGS: ${*}"
+
+  local CONTAINER="${1}"
+  local IMAGE="${2}"
+
+  sudo docker run \
+    --name "${CONTAINER}" \
+    --net host \
+    -v /var/mysql-5.5.38/conf.d:/mysql-5.5.38/conf.d \
+    -v /var/mysql-5.5.38/data:/mysql-5.5.38/data \
+    -v /var/mysql-5.5.38/log:/mysql-5.5.38/log \
+    -d \
+    "${IMAGE}" > >(log) 2> >(log_error)
+}
+
+mysql() {
+  local SERVICE="MySQL"
+  local CONTAINER=mysql
+  local IMAGE=simpledrupalcloud/mysql:5.5.38
+
+  output_debug "FUNCTION: mysql ARGS: ${*}"
+
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev mysql up
+dev mysql destroy
+EOF
+
+    exit 1
+  fi
+
+  local ACTION="${1}"
+
+  case "${ACTION}" in
+    up)
+      output "Starting service: ${SERVICE}"
+
+      container "${CONTAINER}" start "${IMAGE}"
+    ;;
+    destroy)
+      output "Destroying service: ${SERVICE}"
+
+      image "${IMAGE}" destroy
+    ;;
+    *)
+      output_error "dev: Unknown command. See 'dev mysql --help'"
+
+      exit 1
+    ;;
+  esac
+}
+
 #
 #docker_dev_stop() {
 #  sudo docker stop dev
@@ -501,60 +554,6 @@ EOF
 #
 #docker_mailcatcher0512_destroy() {
 #  docker_mailcatcher0512_rmi
-#}
-#
-#docker_apache2222_run() {
-#  APACHE_SERVERNAME=$(config_get APACHE_SERVERNAME)
-#
-#  sudo docker run \
-#    --name apache2222 \
-#    --net host \
-#    -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
-#    -v /var/apache-2.2.22/data:/apache-2.2.22/data \
-#    -v /var/apache-2.2.22/log:/apache-2.2.22/log \
-#    -e APACHE_SERVERNAME="${APACHE_SERVERNAME}" \
-#    -d \
-#    simpledrupalcloud/apache:2.2.22
-#}
-#
-#docker_apache2222_stop() {
-#  sudo docker stop apache2222
-#}
-#
-#docker_apache2222_rm() {
-#  docker_apache2222_stop
-#
-#  sudo docker rm apache2222
-#}
-#
-#docker_apache2222_rmi() {
-#  docker_apache2222_rm
-#
-#  sudo docker rmi simpledrupalcloud/apache:2.2.22
-#}
-#
-#docker_apache2222_pull() {
-#  sudo docker pull simpledrupalcloud/apache:2.2.22
-#}
-#
-#docker_apache2222_update() {
-#  docker_apache2222_rm
-#  docker_apache2222_pull
-#  docker_apache2222_run
-#}
-#
-#docker_apache2222_start() {
-#  docker_apache2222_rm
-#  docker_apache2222_run
-#}
-#
-#docker_apache2222_restart() {
-#  docker_apache2222_rm
-#  docker_apache2222_run
-#}
-#
-#docker_apache2222_destroy() {
-#  docker_apache2222_rmi
 #}
 #
 #docker_php5217_run() {
@@ -751,57 +750,6 @@ EOF
 #
 #docker_php5515_destroy() {
 #  docker_php5515_rmi
-#}
-#
-#docker_mysql5538_run() {
-#  sudo docker run \
-#    --name mysql5538 \
-#    --net host \
-#    -v /var/mysql-5.5.38/conf.d:/mysql-5.5.38/conf.d \
-#    -v /var/mysql-5.5.38/data:/mysql-5.5.38/data \
-#    -v /var/mysql-5.5.38/log:/mysql-5.5.38/log \
-#    -d \
-#    simpledrupalcloud/mysql:5.5.38
-#}
-#
-#docker_mysql5538_stop() {
-#  sudo docker stop mysql5538
-#}
-#
-#docker_mysql5538_rm() {
-#  docker_mysql5538_stop
-#
-#  sudo docker rm mysql5538
-#}
-#
-#docker_mysql5538_rmi() {
-#  docker_mysql5538_rm
-#
-#  sudo docker rmi simpledrupalcloud/mysql:5.5.38
-#}
-#
-#docker_mysql5538_pull() {
-#  sudo docker pull simpledrupalcloud/mysql:5.5.38
-#}
-#
-#docker_mysql5538_update() {
-#  docker_mysql5538_rm
-#  docker_mysql5538_pull
-#  docker_mysql5538_run
-#}
-#
-#docker_mysql5538_start() {
-#  docker_mysql5538_rm
-#  docker_mysql5538_run
-#}
-#
-#docker_mysql5538_restart() {
-#  docker_mysql5538_rm
-#  docker_mysql5538_run
-#}
-#
-#docker_mysql5538_destroy() {
-#  docker_mysql5538_rmi
 #}
 #
 #phpmyadmin() {
