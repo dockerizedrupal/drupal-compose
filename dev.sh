@@ -88,8 +88,6 @@ image_destroy() {
 
   for ID in $(sudo docker ps -aq); do
     if [ "$(sudo docker inspect -f "{{ .Config.Image }}" "${ID}" 2> /dev/null)" == "${IMAGE}" ]; then
-      output_debug "image, \${ID}: ${ID}"
-
       container "${ID}" destroy
     fi
   done
