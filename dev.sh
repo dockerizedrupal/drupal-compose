@@ -429,6 +429,111 @@ EOF
   esac
 }
 
+php5217_start() {
+  output_debug "FUNCTION: php5217_start ARGS: ${*}"
+
+  local CONTAINER="${1}"
+  local IMAGE="${2}"
+
+  sudo docker run \
+    --name "${CONTAINER}" \
+    --net host \
+    --volumes-from apache \
+    -d \
+    "${IMAGE}" > >(log) 2> >(log_error)
+}
+
+php5328_start() {
+  output_debug "FUNCTION: php5328_start ARGS: ${*}"
+
+  local CONTAINER="${1}"
+  local IMAGE="${2}"
+
+  sudo docker run \
+    --name "${CONTAINER}" \
+    --net host \
+    --volumes-from apache \
+    -d \
+    "${IMAGE}" > >(log) 2> >(log_error)
+}
+
+php5431_start() {
+  output_debug "FUNCTION: php5431_start ARGS: ${*}"
+
+  local CONTAINER="${1}"
+  local IMAGE="${2}"
+
+  sudo docker run \
+    --name "${CONTAINER}" \
+    --net host \
+    --volumes-from apache \
+    -d \
+    "${IMAGE}" > >(log) 2> >(log_error)
+}
+
+php5515_start() {
+  output_debug "FUNCTION: php5515_start ARGS: ${*}"
+
+  local CONTAINER="${1}"
+  local IMAGE="${2}"
+
+  sudo docker run \
+    --name "${CONTAINER}" \
+    --net host \
+    --volumes-from apache \
+    -d \
+    "${IMAGE}" > >(log) 2> >(log_error)
+}
+
+php() {
+  local SERVICE="PHP-FPM"
+  local CONTAINER_1=php5217
+  local CONTAINER_2=php5328
+  local CONTAINER_3=php5431
+  local CONTAINER_4=php5515
+  local IMAGE_1=simpledrupalcloud/php:5.2.17
+  local IMAGE_2=simpledrupalcloud/php:5.3.28
+  local IMAGE_3=simpledrupalcloud/php:5.4.31
+  local IMAGE_4=simpledrupalcloud/php:5.5.15
+
+  output_debug "FUNCTION: php ARGS: ${*}"
+
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev php up
+dev php destroy
+EOF
+
+    exit 1
+  fi
+
+  local ACTION="${1}"
+
+  case "${ACTION}" in
+    up)
+      output "Starting service: ${SERVICE}"
+
+      container "${CONTAINER_1}" start "${IMAGE_1}"
+      container "${CONTAINER_2}" start "${IMAGE_2}"
+      container "${CONTAINER_3}" start "${IMAGE_3}"
+      container "${CONTAINER_4}" start "${IMAGE_4}"
+    ;;
+    destroy)
+      output "Destroying service: ${SERVICE}"
+
+      image "${IMAGE_1}" destroy
+      image "${IMAGE_2}" destroy
+      image "${IMAGE_3}" destroy
+      image "${IMAGE_4}" destroy
+    ;;
+    *)
+      output_error "dev: Unknown command. See 'dev php --help'"
+
+      exit 1
+    ;;
+  esac
+}
+
 #
 #docker_dev_stop() {
 #  sudo docker stop dev
