@@ -534,329 +534,56 @@ EOF
   esac
 }
 
-#
-#docker_dev_stop() {
-#  sudo docker stop dev
-#}
-#
-#docker_dev_rm() {
-#  docker_dev_stop
-#
-#  sudo docker rm dev
-#}
-#
-#docker_dev_rmi() {
-#  docker_dev_rm
-#
-#  sudo docker rmi simpledrupalcloud/dev
-#}
-#
-#docker_dev_pull() {
-#  sudo docker pull simpledrupalcloud/dev
-#}
-#
-#docker_dev_update() {
-#  docker_dev_rm
-#  docker_dev_pull
-#}
-#
-#docker_dev_destroy() {
-#  docker_dev_rmi
-#}
-#
-#docker_config_run() {
-#  sudo docker run \
-#    --name config \
-#    --net host \
-#    -v /var/redis-2.8.14/data:/redis-2.8.14/data \
-#    -d \
-#    simpledrupalcloud/redis:2.8.14
-#}
-#
-#docker_config_stop() {
-#  sudo docker stop config
-#}
-#
-#docker_config_rm() {
-#  docker_config_stop
-#
-#  sudo docker rm config
-#}
-#
-#docker_config_rmi() {
-#  docker_config_rm
-#
-#  sudo docker rmi simpledrupalcloud/redis:2.8.14
-#}
-#
-#docker_config_pull() {
-#  sudo docker pull simpledrupalcloud/redis:2.8.14
-#}
-#
-#docker_config_update() {
-#  docker_config_rm
-#  docker_config_pull
-#  docker_config_run
-#}
-#
-#docker_config_start() {
-#  docker_config_rm
-#  docker_config_run
-#}
-#
-#docker_config_restart() {
-#  docker_config_rm
-#  docker_config_run
-#}
-#
-#docker_config_destroy() {
-#  docker_config_rmi
-#}
-#
-#docker_mailcatcher0512_run() {
-#  sudo docker run \
-#    --name mailcatcher0512 \
-#    --net host \
-#    -d \
-#    simpledrupalcloud/mailcatcher:0.5.12
-#}
-#
-#docker_mailcatcher0512_stop() {
-#  sudo docker stop mailcatcher0512
-#}
-#
-#docker_mailcatcher0512_rm() {
-#  docker_mailcatcher0512_stop
-#
-#  sudo docker rm mailcatcher0512
-#}
-#
-#docker_mailcatcher0512_rmi() {
-#  docker_mailcatcher0512_rm
-#
-#  sudo docker rmi simpledrupalcloud/mailcatcher:0.5.12
-#}
-#
-#docker_mailcatcher0512_pull() {
-#  sudo docker pull simpledrupalcloud/mailcatcher:0.5.12
-#}
-#
-#docker_mailcatcher0512_update() {
-#  docker_mailcatcher0512_rm
-#  docker_mailcatcher0512_pull
-#  docker_mailcatcher0512_run
-#}
-#
-#docker_mailcatcher0512_start() {
-#  docker_mailcatcher0512_rm
-#  docker_mailcatcher0512_run
-#}
-#
-#docker_mailcatcher0512_restart() {
-#  docker_mailcatcher0512_rm
-#  docker_mailcatcher0512_run
-#}
-#
-#docker_mailcatcher0512_destroy() {
-#  docker_mailcatcher0512_rmi
-#}
-#
-#docker_php5217_run() {
-#  sudo docker run \
-#    --name php5217 \
-#    --net host \
-#    --volumes-from apache2222 \
-#    -d \
-#    simpledrupalcloud/php:5.2.17
-#}
-#
-#docker_php5217_stop() {
-#  sudo docker stop php5217
-#}
-#
-#docker_php5217_rm() {
-#  docker_php5217_stop
-#
-#  sudo docker rm php5217
-#}
-#
-#docker_php5217_rmi() {
-#  docker_php5217_rm
-#
-#  sudo docker rmi simpledrupalcloud/php:5.2.17
-#}
-#
-#docker_php5217_pull() {
-#  sudo docker pull simpledrupalcloud/php:5.2.17
-#}
-#
-#docker_php5217_update() {
-#  docker_php5217_rm
-#  docker_php5217_pull
-#  docker_php5217_run
-#}
-#
-#docker_php5217_start() {
-#  docker_php5217_rm
-#  docker_php5217_run
-#}
-#
-#docker_php5217_restart() {
-#  docker_php5217_rm
-#  docker_php5217_run
-#}
-#
-#docker_php5217_destroy() {
-#  docker_php5217_rmi
-#}
-#
-#docker_php5328_run() {
-#  sudo docker run \
-#    --name php5328 \
-#    --net host \
-#    --volumes-from apache2222 \
-#    -d \
-#    simpledrupalcloud/php:5.3.28
-#}
-#
-#docker_php5328_stop() {
-#  sudo docker stop php5328
-#}
-#
-#docker_php5328_rm() {
-#  docker_php5328_stop
-#
-#  sudo docker rm php5328
-#}
-#
-#docker_php5328_rmi() {
-#  docker_php5328_rm
-#
-#  sudo docker rmi simpledrupalcloud/php:5.3.28
-#}
-#
-#docker_php5328_pull() {
-#  sudo docker pull simpledrupalcloud/php:5.3.28
-#}
-#
-#docker_php5328_update() {
-#  docker_php5328_rm
-#  docker_php5328_pull
-#  docker_php5328_run
-#}
-#
-#docker_php5328_start() {
-#  docker_php5328_rm
-#  docker_php5328_run
-#}
-#
-#docker_php5328_restart() {
-#  docker_php5328_rm
-#  docker_php5328_run
-#}
-#
-#docker_php5328_destroy() {
-#  docker_php5328_rmi
-#}
-#
-#docker_php5431_run() {
-#  sudo docker run \
-#    --name php5431 \
-#    --net host \
-#    --volumes-from apache2222 \
-#    -d \
-#    simpledrupalcloud/php:5.4.31
-#}
-#
-#docker_php5431_stop() {
-#  sudo docker stop php5431
-#}
-#
-#docker_php5431_rm() {
-#  docker_php5431_stop
-#
-#  sudo docker rm php5431
-#}
-#
-#docker_php5431_rmi() {
-#  docker_php5431_rm
-#
-#  sudo docker rmi simpledrupalcloud/php:5.4.31
-#}
-#
-#docker_php5431_pull() {
-#  sudo docker pull simpledrupalcloud/php:5.4.31
-#}
-#
-#docker_php5431_update() {
-#  docker_php5431_rm
-#  docker_php5431_pull
-#  docker_php5431_run
-#}
-#
-#docker_php5431_start() {
-#  docker_php5431_rm
-#  docker_php5431_run
-#}
-#
-#docker_php5431_restart() {
-#  docker_php5431_rm
-#  docker_php5431_run
-#}
-#
-#docker_php5431_destroy() {
-#  docker_php5431_rmi
-#}
-#
-#docker_php5515_run() {
-#  sudo docker run \
-#    --name php5515 \
-#    --net host \
-#    --volumes-from apache2222 \
-#    -d \
-#    simpledrupalcloud/php:5.5.15
-#}
-#
-#docker_php5515_stop() {
-#  sudo docker stop php5515
-#}
-#
-#docker_php5515_rm() {
-#  docker_php5515_stop
-#
-#  sudo docker rm php5515
-#}
-#
-#docker_php5515_rmi() {
-#  docker_php5515_rm
-#
-#  sudo docker rmi simpledrupalcloud/php:5.5.15
-#}
-#
-#docker_php5515_pull() {
-#  sudo docker pull simpledrupalcloud/php:5.5.15
-#}
-#
-#docker_php5515_update() {
-#  docker_php5515_rm
-#  docker_php5515_pull
-#  docker_php5515_run
-#}
-#
-#docker_php5515_start() {
-#  docker_php5515_rm
-#  docker_php5515_run
-#}
-#
-#docker_php5515_restart() {
-#  docker_php5515_rm
-#  docker_php5515_run
-#}
-#
-#docker_php5515_destroy() {
-#  docker_php5515_rmi
-#}
-#
+mailcatcher_start() {
+  output_debug "FUNCTION: mailcatcher_start ARGS: ${*}"
+
+  local CONTAINER="${1}"
+  local IMAGE="${2}"
+
+  sudo docker run \
+    --name "${CONTAINER}" \
+    --net host \
+    -d \
+    "${IMAGE}" > >(log) 2> >(log_error)
+}
+
+mailcatcher() {
+  local SERVICE="MailCatcher"
+  local CONTAINER=mailcatcher
+  local IMAGE=simpledrupalcloud/mailcatcher:0.5.12
+
+  output_debug "FUNCTION: mailcatcher ARGS: ${*}"
+
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev mailcatcher up
+dev mailcatcher destroy
+EOF
+
+    exit 1
+  fi
+
+  local ACTION="${1}"
+
+  case "${ACTION}" in
+    up)
+      output "Starting service: ${SERVICE}"
+
+      container "${CONTAINER}" start "${IMAGE}"
+    ;;
+    destroy)
+      output "Destroying service: ${SERVICE}"
+
+      image "${IMAGE}" destroy
+    ;;
+    *)
+      output_error "dev: Unknown command. See 'dev mailcatcher --help'"
+
+      exit 1
+    ;;
+  esac
+}
+
 #phpmyadmin() {
 #  TMP=$(mktemp -d)
 #
@@ -1022,6 +749,9 @@ case "${1}" in
   ;;
   php)
     php "${@:2}"
+  ;;
+  mailcatcher)
+    mailcatcher "${@:2}"
   ;;
   dev)
     dev "${@:2}"
