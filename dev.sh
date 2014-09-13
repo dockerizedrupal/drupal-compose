@@ -12,6 +12,8 @@ dev redis up
 dev redis destroy
 dev redis get [KEY]
 dev redis set [KEY] [VALUE]
+dev apache up
+dev apache destroy
 dev dev redis get [KEY]
 dev dev redis set [KEY] [VALUE]
 dev image [IMAGE] pull
@@ -312,6 +314,57 @@ EOF
     ;;
     *)
       output_error "dev: Unknown command. See 'dev redis --help'"
+
+      exit 1
+    ;;
+  esac
+}
+
+apache_start() {
+  output_debug "FUNCTION: apache_start ARGS: ${*}"
+
+  local CONTAINER="${1}"
+  local IMAGE="${2}"
+
+  sudo docker run \
+    --name "${CONTAINER}" \
+    --net host \
+    -v /var/redis-2.8.14/data:/redis-2.8.14/data \
+    -d \
+    "${IMAGE}" > >(log) 2> >(log_error)
+}
+
+apache() {
+  local SERVICE="Apache HTTP Server"
+  local CONTAINER=apache
+  local IMAGE=simpledrupalcloud/apache:2.2.22
+
+  output_debug "FUNCTION: apache ARGS: ${*}"
+
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev apache up
+dev apache destroy
+EOF
+
+    exit 1
+  fi
+
+  local ACTION="${1}"
+
+  case "${ACTION}" in
+    up)
+      output "Starting service: ${SERVICE}"
+
+      container "${CONTAINER}" start "${IMAGE}"
+    ;;
+    destroy)
+      output "Destroying service: ${SERVICE}"
+
+      image "${IMAGE}" destroy
+    ;;
+    *)
+      output_error "dev: Unknown command. See 'dev apache --help'"
 
       exit 1
     ;;
