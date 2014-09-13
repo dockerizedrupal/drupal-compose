@@ -206,19 +206,11 @@ config() {
 
   case "${1}" in
     up)
-      output_debug "config, up, \${SERVICE}: ${SERVICE}"
-      output_debug "config, up, \${CONTAINER}: ${CONTAINER}"
-      output_debug "config, up, \${IMAGE}: ${IMAGE}"
-
       output "Starting service: ${SERVICE}"
 
       container "${CONTAINER}" start "${IMAGE}" "config_start"
     ;;
     destroy)
-      output_debug "config, destroy, \${SERVICE}: ${SERVICE}"
-      output_debug "config, destroy, \${CONTAINER}: ${CONTAINER}"
-      output_debug "config, destroy, \${IMAGE}: ${IMAGE}"
-
       output "Destroying service: ${SERVICE}"
 
       image "${IMAGE}" destroy
