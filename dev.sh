@@ -662,61 +662,21 @@ update() {
   "${TMP}"/dev.sh install
 }
 
-#start() {
-#  docker_config_start
-#  docker_apache2222_start
-#  docker_php5217_start
-#  docker_php5328_start
-#  docker_php5431_start
-#  docker_php5515_start
-#  docker_mysql5538_start
-#  docker_mailcatcher0512_start
-#}
-#
-#restart() {
-#  case "${1}" in
-#    config)
-#      docker_config_restart
-#      ;;
-#    apache)
-#      docker_apache2222_restart
-#      ;;
-#    php)
-#      docker_php5217_restart
-#      docker_php5328_restart
-#      docker_php5431_restart
-#      docker_php5515_restart
-#      ;;
-#    mysql)
-#      docker_mysql5538_restart
-#      ;;
-#    mailcatcher)
-#      docker_mailcatcher0512_restart
-#      ;;
-#    *)
-#      docker_config_restart
-#      docker_apache2222_restart
-#      docker_php5217_restart
-#      docker_php5328_restart
-#      docker_php5431_restart
-#      docker_php5515_restart
-#      docker_mysql5538_restart
-#      docker_mailcatcher0512_restart
-#      ;;
-#  esac
-#}
-#
-#destroy() {
-#  docker_dev_destroy
-#  docker_config_destroy
-#  docker_apache2222_destroy
-#  docker_php5217_destroy
-#  docker_php5328_destroy
-#  docker_php5431_destroy
-#  docker_php5515_destroy
-#  docker_mysql5538_destroy
-#  docker_mailcatcher0512_destroy
-#}
+up() {
+  redis up
+  apache up
+  mysql up
+  php up
+  mailcatcher up
+}
+
+destroy() {
+  redis destroy
+  apache destroy
+  mysql destroy
+  php destroy
+  mailcatcher destroy
+}
 
 case "${1}" in
   install)
@@ -725,12 +685,12 @@ case "${1}" in
   update)
     update
     ;;
-#  up)
-#    start
-#    ;;
-#  destroy)
-#    destroy
-#    ;;
+  up)
+    up
+    ;;
+  destroy)
+    destroy
+    ;;
   redis)
     case "${2}" in
       get)
