@@ -230,7 +230,12 @@ config() {
       dev config set "${2}" "${3}"
     ;;
     -h|--help)
-      echo "dev config --help"
+      cat << EOF
+dev config up
+dev config destroy
+dev config get [KEY]
+dev config set [KEY] [VALUE]
+EOF
     ;;
     *)
       output_error "Unknown command. See 'dev config --help'"
