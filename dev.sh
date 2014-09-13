@@ -14,6 +14,20 @@ dev redis get [KEY]
 dev redis set [KEY] [VALUE]
 dev apache up
 dev apache destroy
+dev mysql up
+dev mysql destroy
+dev php up
+dev php destroy
+dev php52 up
+dev php52 destroy
+dev php53 up
+dev php53 destroy
+dev php54 up
+dev php54 destroy
+dev php55 up
+dev php55 destroy
+dev mailcatcher up
+dev mailcatcher destroy
 dev dev redis get [KEY]
 dev dev redis set [KEY] [VALUE]
 dev image [IMAGE] pull
@@ -841,6 +855,9 @@ case "${1}" in
   mysql)
     mysql "${@:2}"
   ;;
+  php)
+    php "${@:2}"
+  ;;
   php52)
     php52 "${@:2}"
   ;;
@@ -852,9 +869,6 @@ case "${1}" in
   ;;
   php55)
     php55 "${@:2}"
-  ;;
-  php)
-    php "${@:2}"
   ;;
   mailcatcher)
     mailcatcher "${@:2}"
