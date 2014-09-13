@@ -34,6 +34,16 @@ output_debug() {
   output "${1}" 3
 }
 
+image_exists() {
+  local RETURN=0
+
+  if [ "$(sudo docker inspect "${1}" 2> /dev/null)" == "[]" ]; then
+    RETURN=1
+  fi
+
+  return "${RETURN}"
+}
+
 image() {
   output_debug "image, \${1}: ${1}"
 
@@ -52,7 +62,7 @@ image() {
     destroy)
       output_debug "image, destroy, \${IMAGE}: ${IMAGE}"
 
-      if ! $(image "${IMAGE}" exists); then
+      if ! $(image_exists "${IMAGE}"); then
         output_error "No such image: ${IMAGE}"
 
         return 1
@@ -70,22 +80,37 @@ image() {
 
       sudo docker rmi "${IMAGE}" > >(log) 2> >(log_error)
     ;;
-    exists)
-      RETURN=0
-
-      if [ "$(sudo docker inspect "${IMAGE}" 2> /dev/null)" == "[]" ]; then
-        RETURN=1
-      fi
-
-      return "${RETURN}"
-    ;;
   esac
+}
+
+container_exists() {
+  local RETURN=0
+
+  if [ "$(sudo docker inspect "${1}" 2> /dev/null)" == "[]" ]; then
+    RETURN=1
+  fi
+
+  return "${RETURN}"
+}
+
+container_running() {
+  local RETURN=1
+
+  if [ "$(sudo docker inspect -f "{{ .State.Running }}" "${1}" 2> /dev/null)" == "true" ]; then
+    RETURN=0
+  fi
+
+  return "${RETURN}"
+}
+
+container_name() {
+  echo "$(sudo docker inspect -f "{{ .Name }}" "${1}" 2> /dev/null | cut -d "/" -f 2)"
 }
 
 container() {
   output_debug "container, \${1}: ${1}"
 
-  local CONTAINER="$(sudo docker inspect -f "{{ .Name }}" "${1}" 2> /dev/null | cut -d "/" -f 2)"
+  local CONTAINER="$(container_name "${1}")"
 
   output_debug "container, \${CONTAINER}: ${CONTAINER}"
 
@@ -93,13 +118,13 @@ container() {
     destroy)
       output_debug "container, destroy, \${CONTAINER}: ${CONTAINER}"
 
-      if ! $(container "${CONTAINER}" exists); then
+      if ! $(container_exists "${CONTAINER}"); then
         output_error "No such container: ${CONTAINER}"
 
         return 1
       fi
 
-      if $(container "${CONTAINER}" running); then
+      if $(container_running "${CONTAINER}"); then
         output "Stopping container: ${CONTAINER}"
 
         sudo docker stop "${CONTAINER}" > >(log) 2> >(log_error)
@@ -108,27 +133,6 @@ container() {
       output "Destroying container: ${CONTAINER}"
 
       sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
-    ;;
-    exists)
-      RETURN=0
-
-      if [ "$(sudo docker inspect "${CONTAINER}" 2> /dev/null)" == "[]" ]; then
-        RETURN=1
-      fi
-
-      return "${RETURN}"
-    ;;
-    running)
-      RETURN=1
-
-      if [ "$(sudo docker inspect -f "{{ .State.Running }}" "${CONTAINER}" 2> /dev/null)" == "true" ]; then
-        RETURN=0
-      fi
-
-      return "${RETURN}"
-    ;;
-    name)
-      echo "$(sudo docker inspect -f "{{ .Name }}" "${CONTAINER}" 2> /dev/null | cut -d "/" -f 2)"
     ;;
   esac
 }
@@ -159,7 +163,7 @@ config() {
 
       output "Starting service: ${SERVICE}"
 
-      if $(container "${CONTAINER}" exists); then
+      if $(container_exists "${CONTAINER}"); then
         output_error "config ${CONTAINER}"
 
         container "${CONTAINER}" destroy
