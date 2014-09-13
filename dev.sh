@@ -120,6 +120,7 @@ container_start() {
 
   local IMAGE="${1}"
   local CONTAINER="$(container_name "${2}")"
+  local CALLBACK="${3}"
 
   output_debug "container_start, \${IMAGE}: ${IMAGE}"
   output_debug "container_start, \${CONTAINER}: ${CONTAINER}"
@@ -134,7 +135,7 @@ container_start() {
 
   output_debug "container, start, \${3}: ${3}"
 
-  eval "${3} ${CONTAINER} ${IMAGE}"
+  ${CALLBACK} "${CONTAINER}" "${IMAGE}"
 }
 
 container() {
