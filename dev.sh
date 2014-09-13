@@ -120,11 +120,13 @@ container() {
     start)
       output_debug "container, start, \${CONTAINER}: ${CONTAINER}"
 
+      local IMAGE="${4}"
+
       if $(container_exists "${CONTAINER}"); then
         container "${CONTAINER}" destroy
       fi
 
-      image "${3}" pull
+      image "${IMAGE}" pull
 
       output "Starting container: ${CONTAINER}"
 
@@ -152,6 +154,18 @@ container() {
   esac
 }
 
+config_start() {
+  local CONTAINER="${1}"
+  local IMAGE="${2}"
+
+  sudo docker run \
+    --name "${CONTAINER}" \
+    --net host \
+    -v /var/redis-2.8.14/data:/redis-2.8.14/data \
+    -d \
+    "${IMAGE}" > >(log) 2> >(log_error)
+}
+
 config() {
   local SERVICE="Configuration manager"
   local CONTAINER=redis2814
@@ -161,15 +175,6 @@ config() {
   output_debug "config, \${CONTAINER}: ${CONTAINER}"
   output_debug "config, \${IMAGE}: ${IMAGE}"
 
-  run() {
-    sudo docker run \
-      --name "${CONTAINER}" \
-      --net host \
-      -v /var/redis-2.8.14/data:/redis-2.8.14/data \
-      -d \
-      "${IMAGE}" > >(log) 2> >(log_error)
-  }
-
   case "${1}" in
     up)
       output_debug "config, up, \${SERVICE}: ${SERVICE}"
@@ -178,15 +183,7 @@ config() {
 
       output "Starting service: ${SERVICE}"
 
-      if $(container_exists "${CONTAINER}"); then
-        container "${CONTAINER}" destroy
-      fi
-
-      image "${IMAGE}" pull
-
-      output "Starting container: ${CONTAINER}"
-
-      run
+      container "${CONTAINER}" start "${IMAGE}" "config_start"
     ;;
     destroy)
       output_debug "config, destroy, \${SERVICE}: ${SERVICE}"
