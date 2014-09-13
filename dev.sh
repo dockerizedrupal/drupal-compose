@@ -229,8 +229,11 @@ config() {
     set)
       dev config set "${2}" "${3}"
     ;;
+    -h|--help)
+      echo "dev config --help"
+    ;;
     *)
-      output_error "Unknown command"
+      output_error "Unknown command. See 'dev config --help'"
     ;;
   esac
 }
