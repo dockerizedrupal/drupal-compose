@@ -70,8 +70,6 @@ image_pull() {
 
   local IMAGE="${1}"
 
-  output_debug "image_pull, \${IMAGE}: ${IMAGE}"
-
   output "Pulling image: ${IMAGE}"
 
   sudo docker pull "${IMAGE}" > >(log) 2> >(log_error)
@@ -81,8 +79,6 @@ image_destroy() {
   output_debug "image_destroy, \${@}: ${*}"
 
   local IMAGE="${1}"
-
-  output_debug "image_destroy, \${IMAGE}: ${IMAGE}"
 
   if ! $(image_exists "${IMAGE}"); then
     output_error "No such image: ${IMAGE}"
@@ -116,8 +112,6 @@ EOF
   fi
 
   local IMAGE="${1}"
-
-  output_debug "image, \${IMAGE}: ${IMAGE}"
 
   case "${2}" in
     pull)
@@ -165,10 +159,6 @@ container_start() {
   local CONTAINER="${2}"
   local CALLBACK="${CONTAINER}_start"
 
-  output_debug "container_start, \${IMAGE}: ${IMAGE}"
-  output_debug "container_start, \${CONTAINER}: ${CONTAINER}"
-  output_debug "container_start, \${CALLBACK}: ${CALLBACK}"
-
   if $(container_exists "${CONTAINER}"); then
     container "${CONTAINER}" destroy
   fi
@@ -194,8 +184,6 @@ EOF
 
   local CONTAINER="${1}"
 
-  output_debug "container, \${CONTAINER}: ${CONTAINER}"
-
   case "${2}" in
     start)
       local IMAGE="${3}"
@@ -203,8 +191,6 @@ EOF
       container_start "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
-      output_debug "container, destroy, \${CONTAINER}: ${CONTAINER}"
-
       if ! $(container_exists "${CONTAINER}"); then
         output_error "No such container: ${CONTAINER}"
 
@@ -237,8 +223,6 @@ redis2814_start() {
   output_debug "redis2814_start, \${@}: ${*}"
 
   local CONTAINER="${1}"
-
-  output_debug "config_start, \${CONTAINER}: ${CONTAINER}"
 
   sudo docker run \
     --name "${CONTAINER}" \
