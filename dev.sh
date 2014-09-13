@@ -8,12 +8,12 @@ if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
   cat << EOF
 dev install
 dev update
-dev config up
-dev config destroy
-dev config get [KEY]
-dev config set [KEY] [VALUE]
-dev dev config get [KEY]
-dev dev config set [KEY] [VALUE]
+dev redis up
+dev redis destroy
+dev redis get [KEY]
+dev redis set [KEY] [VALUE]
+dev dev redis get [KEY]
+dev dev redis set [KEY] [VALUE]
 dev image [IMAGE] pull
 dev image [IMAGE] destroy
 dev container [CONTAINER] start [IMAGE]
@@ -215,8 +215,47 @@ EOF
   esac
 }
 
-redis2814_start() {
-  output_debug "FUNCTION: redis2814_start ARGS: ${*}"
+dev() {
+  local IMAGE=simpledrupalcloud/dev
+
+  output_debug "FUNCTION: dev ARGS: ${*}"
+
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev dev redis get [KEY]
+dev dev redis set [KEY] [VALUE]
+EOF
+
+    exit 1
+  fi
+
+  local ACTION="${1}"
+
+  case "${ACTION}" in
+    redis)
+      case "${2}" in
+        get)
+          local KEY="${3}"
+
+          echo -n "$(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" redis get "${KEY}" 2> >(log_error))"
+        ;;
+        set)
+          local KEY="${3}"
+          local VALUE="${4}"
+
+          sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" redis set "${KEY}" "${VALUE}" > >(log) 2> >(log_error)
+        ;;
+        *)
+          output_error "dev: Unknown command. See 'dev dev --help'"
+
+          exit 1
+      esac
+    ;;
+  esac
+}
+
+redis_start() {
+  output_debug "FUNCTION: redis_start ARGS: ${*}"
 
   local CONTAINER="${1}"
   local IMAGE="${2}"
@@ -229,19 +268,19 @@ redis2814_start() {
     "${IMAGE}" > >(log) 2> >(log_error)
 }
 
-config() {
-  local SERVICE="Configuration manager"
-  local CONTAINER=redis2814
+redis() {
+  local SERVICE="Redis"
+  local CONTAINER=redis
   local IMAGE=simpledrupalcloud/redis:2.8.14
 
-  output_debug "FUNCTION: config ARGS: ${*}"
+  output_debug "FUNCTION: redis ARGS: ${*}"
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
-dev config up
-dev config destroy
-dev config get [KEY]
-dev config set [KEY] [VALUE]
+dev redis up
+dev redis destroy
+dev redis get [KEY]
+dev redis set [KEY] [VALUE]
 EOF
 
     exit 1
@@ -263,57 +302,18 @@ EOF
     get)
       local KEY="${2}"
 
-      echo -n "$(dev config get "${KEY}")"
+      echo -n "$(dev redis get "${KEY}")"
     ;;
     set)
       local KEY="${2}"
       local VALUE="${3}"
 
-      dev config set "${KEY}" "${VALUE}"
+      dev redis set "${KEY}" "${VALUE}"
     ;;
     *)
-      output_error "dev: Unknown command. See 'dev config --help'"
+      output_error "dev: Unknown command. See 'dev redis --help'"
 
       exit 1
-    ;;
-  esac
-}
-
-dev() {
-  local IMAGE=simpledrupalcloud/dev
-
-  output_debug "FUNCTION: dev ARGS: ${*}"
-
-  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
-    cat << EOF
-dev dev config get [KEY]
-dev dev config set [KEY] [VALUE]
-EOF
-
-    exit 1
-  fi
-
-  local ACTION="${1}"
-
-  case "${ACTION}" in
-    config)
-      case "${2}" in
-        get)
-          local KEY="${3}"
-
-          echo -n "$(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config get "${KEY}" 2> >(log_error))"
-        ;;
-        set)
-          local KEY="${3}"
-          local VALUE="${4}"
-
-          sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" config set "${KEY}" "${VALUE}" > >(log) 2> >(log_error)
-        ;;
-        *)
-          output_error "dev: Unknown command. See 'dev dev --help'"
-
-          exit 1
-      esac
     ;;
   esac
 }
@@ -909,13 +909,13 @@ case "${1}" in
 #      ;;
 #    esac
 #    ;;
-  config)
+  redis)
     case "${2}" in
       get)
-        echo -n "$(config get "${@:3}")"
+        echo -n "$(redis get "${@:3}")"
       ;;
       *)
-        config "${@:2}"
+        redis "${@:2}"
       ;;
     esac
   ;;

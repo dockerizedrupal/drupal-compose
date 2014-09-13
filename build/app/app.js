@@ -149,7 +149,7 @@ var Config = require('./config.js');
 //  });
 
 program
-  .command('config')
+  .command('redis')
   .action(function(action, key, value) {
     var config = new Config();
 
