@@ -31,6 +31,10 @@ output_error() {
 }
 
 output_debug() {
+  if [ ! ${DEBUG} ]; then
+    return 1
+  fi
+
   output "${1}" 3
 }
 
