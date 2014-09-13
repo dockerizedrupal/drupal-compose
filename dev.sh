@@ -134,7 +134,7 @@ container() {
 
       output_debug "container, start, \${4}: ${4}"
 
-      "${4}"
+      "${4} ${CONTAINER} ${IMAGE}"
     ;;
     destroy)
       output_debug "container, destroy, \${CONTAINER}: ${CONTAINER}"
