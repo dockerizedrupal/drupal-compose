@@ -138,7 +138,7 @@ container_start() {
 }
 
 container() {
-  output_debug "container, \${@}: $@"
+  output_debug "container, \${@}: ${*}"
 
   local CONTAINER="$(container_name "${1}")"
 
