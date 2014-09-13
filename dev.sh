@@ -17,7 +17,7 @@ log_error() {
 }
 
 output() {
-  local COLOR="${1}"
+  local COLOR="${2}"
 
   echo "${COLOR}"
 
@@ -29,11 +29,11 @@ output() {
 }
 
 output_error() {
-  >&2 output 1
+  >&2 output "${1}" 1
 }
 
 output_debug() {
-  output 3
+  output "${1}" 3
 }
 
 image() {
