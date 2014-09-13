@@ -972,6 +972,9 @@ case "${1}" in
       ;;
     esac
   ;;
+  apache)
+    apache "${@:2}"
+  ;;
   dev)
     dev "${@:2}"
   ;;
