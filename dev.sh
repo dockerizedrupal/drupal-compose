@@ -1,5 +1,24 @@
 #!/usr/bin/env bash
 
+if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev install
+dev update
+dev config up
+dev config destroy
+dev config get [KEY]
+dev config set [KEY] [VALUE]
+dev dev config get [KEY]
+dev dev config set [KEY] [VALUE]
+dev image [NAME] pull
+dev image [NAME] destroy
+dev container [CONTAINER] start [IMAGE]
+dev container [CONTAINER] destroy
+EOF
+
+  exit 1
+fi
+
 LOG_DIR=/var/log/dev
 LOG="${LOG_DIR}/dev.log"
 LOG_ERROR="${LOG_DIR}/error.log"
@@ -218,6 +237,17 @@ redis2814_start() {
 config() {
   output_debug "config, \${@}: ${*}"
 
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev config up
+dev config destroy
+dev config get [KEY]
+dev config set [KEY] [VALUE]
+EOF
+
+    exit 1
+  fi
+
   local SERVICE="Configuration manager"
   local CONTAINER=redis2814
   local IMAGE=simpledrupalcloud/redis:2.8.14
@@ -242,16 +272,6 @@ config() {
     ;;
     set)
       dev config set "${2}" "${3}"
-    ;;
-    -h|--help)
-      cat << EOF
-dev config up
-dev config destroy
-dev config get [KEY]
-dev config set [KEY] [VALUE]
-EOF
-
-      exit 1
     ;;
     *)
       output_error "Unknown command. See 'dev config --help'"
@@ -891,24 +911,6 @@ case "${1}" in
   ;;
   container)
     container "${@:2}"
-  ;;
-  -h|--help)
-    cat << EOF
-dev install
-dev update
-dev config up
-dev config destroy
-dev config get [KEY]
-dev config set [KEY] [VALUE]
-dev dev config get [KEY]
-dev dev config set [KEY] [VALUE]
-dev image [NAME] pull
-dev image [NAME] destroy
-dev container [CONTAINER] start [IMAGE]
-dev container [CONTAINER] destroy
-EOF
-
-    exit 1
   ;;
   *)
     output_error "Unknown command. See 'dev --help'"
