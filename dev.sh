@@ -912,6 +912,9 @@ case "${1}" in
   apache)
     apache "${@:2}"
   ;;
+  mysql)
+    mysql "${@:2}"
+  ;;
   dev)
     dev "${@:2}"
   ;;
