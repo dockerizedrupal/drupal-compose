@@ -127,7 +127,7 @@ EOF
       image_destroy "${IMAGE}"
     ;;
     *)
-      output_error "Unknown command. See 'dev image --help'"
+      output_error "dev: Unknown command. See 'dev image --help'"
 
       exit 1
     ;;
@@ -224,7 +224,7 @@ EOF
       sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
     ;;
     *)
-      output_error "Unknown command. See 'dev container --help'"
+      output_error "dev: Unknown command. See 'dev container --help'"
 
       exit 1
     ;;
@@ -288,7 +288,7 @@ EOF
       dev config set "${2}" "${3}"
     ;;
     *)
-      output_error "Unknown command. See 'dev config --help'"
+      output_error "dev: Unknown command. See 'dev config --help'"
 
       exit 1
     ;;
@@ -927,7 +927,7 @@ case "${1}" in
     container "${@:2}"
   ;;
   *)
-    output_error "Unknown command. See 'dev --help'"
+    output_error "dev: Unknown command. See 'dev --help'"
 
     exit 1
   ;;
