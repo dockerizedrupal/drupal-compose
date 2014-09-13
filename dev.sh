@@ -216,11 +216,10 @@ EOF
 }
 
 redis2814_start() {
-  local IMAGE=simpledrupalcloud/redis:2.8.14
-
   output_debug "FUNCTION: redis2814_start ARGS: ${*}"
 
   local CONTAINER="${1}"
+  local IMAGE="${2}"
 
   sudo docker run \
     --name "${CONTAINER}" \
