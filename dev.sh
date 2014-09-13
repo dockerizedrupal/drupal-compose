@@ -194,7 +194,7 @@ config_start() {
 }
 
 config() {
-  output_debug "image, \${@}: ${@}"
+  output_debug "config, \${@}: ${@}"
 
   local SERVICE="Configuration manager"
   local CONTAINER=redis2814
