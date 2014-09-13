@@ -31,7 +31,7 @@ output_error() {
 }
 
 output_debug() {
-  if [ "${DEBUG}" == "1" ]; then
+  if [ ${DEBUG} ]; then
     output "${1}" 3
   fi
 }
