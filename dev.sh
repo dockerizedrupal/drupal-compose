@@ -874,7 +874,23 @@ case "${1}" in
   container)
     container "${@:2}"
   ;;
+  -h|--help)
+    cat << EOF
+dev install
+dev update
+dev config up
+dev config destroy
+dev config get [KEY]
+dev config set [KEY] [VALUE]
+dev dev config get [KEY]
+dev dev config set [KEY] [VALUE]
+dev image [NAME] pull
+dev image [NAME] destroy
+dev container [CONTAINER] start [IMAGE]
+dev container [CONTAINER] destroy
+EOF
+  ;;
   *)
-    output_error "Unknown command"
+    output_error "Unknown command. See 'dev --help'"
   ;;
 esac
