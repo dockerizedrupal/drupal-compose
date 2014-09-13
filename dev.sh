@@ -863,4 +863,7 @@ case "${1}" in
   container)
     container "${@:2}"
   ;;
+  *)
+    output_error "Unknown command"
+  ;;
 esac
