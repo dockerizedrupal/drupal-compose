@@ -150,31 +150,6 @@ image_destroy() {
   sudo docker rmi "${IMAGE}" > >(log) 2> >(log_error)
 }
 
-image() {
-  output_debug "FUNCTION: image ARGS: ${*}"
-
-  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
-    cat << EOF
-dev image [NAME] destroy
-EOF
-
-    exit 1
-  fi
-
-  local IMAGE="${1}"
-
-  case "${2}" in
-    destroy)
-      image_destroy "${IMAGE}"
-    ;;
-    *)
-      output_error "dev: Unknown command. See 'dev image --help'"
-
-      exit 1
-    ;;
-  esac
-}
-
 container_exists() {
   local RETURN=0
 
@@ -361,7 +336,7 @@ EOF
       container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
-      image "${IMAGE}" destroy
+      image_destroy "${IMAGE}"
     ;;
     redis)
       case "${2}" in
@@ -445,7 +420,7 @@ EOF
       container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
-      image "${IMAGE}" destroy
+      image_destroy "${IMAGE}"
     ;;
     get)
       local KEY="${2}"
@@ -529,7 +504,7 @@ EOF
       container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
-      image "${IMAGE}" destroy
+      image_destroy "${IMAGE}"
     ;;
     *)
       output_error "dev: Unknown command. See 'dev apache --help'"
@@ -599,7 +574,7 @@ EOF
       container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
-      image "${IMAGE}" destroy
+      image_destroy "${IMAGE}"
     ;;
     *)
       output_error "dev: Unknown command. See 'dev mysql --help'"
@@ -668,7 +643,7 @@ EOF
       container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
-      image "${IMAGE}" destroy
+      image_destroy "${IMAGE}"
     ;;
     *)
       output_error "dev: Unknown command. See 'dev php52 --help'"
@@ -737,7 +712,7 @@ EOF
       container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
-      image "${IMAGE}" destroy
+      image_destroy "${IMAGE}"
     ;;
     *)
       output_error "dev: Unknown command. See 'dev php53 --help'"
@@ -806,7 +781,7 @@ EOF
       container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
-      image "${IMAGE}" destroy
+      image_destroy "${IMAGE}"
     ;;
     *)
       output_error "dev: Unknown command. See 'dev php54 --help'"
@@ -875,7 +850,7 @@ EOF
       container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
-      image "${IMAGE}" destroy
+      image_destroy "${IMAGE}"
     ;;
     *)
       output_error "dev: Unknown command. See 'dev php55 --help'"
@@ -991,7 +966,7 @@ EOF
       container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
-      image "${IMAGE}" destroy
+      image_destroy "${IMAGE}"
     ;;
     *)
       output_error "dev: Unknown command. See 'dev mailcatcher --help'"
