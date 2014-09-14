@@ -386,6 +386,8 @@ redis() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev redis update
+dev redis build
 dev redis up
 dev redis destroy
 dev redis get [KEY]
@@ -471,6 +473,8 @@ apache() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev apache update
+dev apache build
 dev apache up
 dev apache destroy
 EOF
@@ -540,6 +544,8 @@ mysql() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev mysql update
+dev mysql build
 dev mysql up
 dev mysql destroy
 EOF
@@ -607,6 +613,8 @@ php52() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev php52 update
+dev php52 build
 dev php52 up
 dev php52 destroy
 EOF
@@ -675,6 +683,8 @@ php53() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev php53 update
+dev php53 build
 dev php53 up
 dev php53 destroy
 EOF
@@ -743,6 +753,8 @@ php54() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev php54 update
+dev php54 build
 dev php54 up
 dev php54 destroy
 EOF
@@ -811,6 +823,8 @@ php55() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev php55 update
+dev php55 build
 dev php55 up
 dev php55 destroy
 EOF
@@ -849,6 +863,8 @@ php() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev php update
+dev php build
 dev php up
 dev php destroy
 EOF
@@ -925,6 +941,8 @@ mailcatcher() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev mailcatcher update
+dev mailcatcher build
 dev mailcatcher up
 dev mailcatcher destroy
 EOF
