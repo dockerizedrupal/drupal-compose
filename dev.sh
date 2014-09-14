@@ -115,12 +115,16 @@ image_build() {
   eval "${CALLBACK} ${IMAGE}"
 }
 
-image_pull() {
-  output_debug "FUNCTION: image_pull ARGS: ${*}"
+image_update() {
+  output_debug "FUNCTION: image_update ARGS: ${*}"
 
   local IMAGE="${1}"
 
-  output "Pulling image: ${IMAGE}"
+  if $(image_exists "${IMAGE}"); then
+    output "Updating image: ${IMAGE}"
+  else
+    output "Downloading image: ${IMAGE}"
+  fi
 
   sudo docker pull "${IMAGE}" > >(log) 2> >(log_error)
 }
@@ -169,7 +173,7 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     pull)
-      image_pull "${IMAGE}"
+      image_update "${IMAGE}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -356,7 +360,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      image "${IMAGE}" pull
+      image_update "${IMAGE}"
     ;;
     build)
       image "${IMAGE}" build "${CONTAINER}"
