@@ -177,8 +177,7 @@ container_name() {
 container_start() {
   output_debug "FUNCTION: container_start ARGS: ${*}"
 
-  local IMAGE="${1}"
-  local CONTAINER="${2}"
+  local CONTAINER="${1}"
   local CALLBACK="${CONTAINER}_up"
 
   if $(container_exists "${CONTAINER}"); then
@@ -197,7 +196,7 @@ container_cp() {
   local SOURCE="${2}"
   local DESTINATION="${3}"
 
-  sudo docker cp "${CONTAINER}:${SOURCE}" "${DESTINATION}"
+  sudo docker cp "${CONTAINER}:${SOURCE}" "${DESTINATION}" > >(log) 2> >(log_error)
 }
 
 container_attach() {
@@ -217,7 +216,7 @@ container_attach() {
     exit 1
   fi
 
-  local PID="$(sudo docker inspect --format "{{ .State.Pid }}" "${CONTAINER}" 2> /dev/null)"
+  local PID="$(sudo docker inspect -f "{{ .State.Pid }}" "${CONTAINER}" 2> /dev/null)"
 
   sudo nsenter --target "${PID}" --mount --uts --ipc --net --pid
 }
@@ -296,7 +295,7 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      container_start "${IMAGE}" "${CONTAINER}"
+      container_start "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -383,7 +382,7 @@ EOF
     start)
       dev start
 
-      container_start "${IMAGE}" "${CONTAINER}"
+      container_start "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -465,7 +464,7 @@ EOF
     start)
       dev start
 
-      container_start "${IMAGE}" "${CONTAINER}"
+      container_start "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -533,7 +532,7 @@ EOF
     start)
       dev start
 
-      container_start "${IMAGE}" "${CONTAINER}"
+      container_start "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -600,7 +599,7 @@ EOF
       dev start
       apache start
 
-      container_start "${IMAGE}" "${CONTAINER}"
+      container_start "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -667,7 +666,7 @@ EOF
       dev start
       apache start
 
-      container_start "${IMAGE}" "${CONTAINER}"
+      container_start "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -734,7 +733,7 @@ EOF
       dev start
       apache start
 
-      container_start "${IMAGE}" "${CONTAINER}"
+      container_start "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -801,7 +800,7 @@ EOF
       dev start
       apache start
 
-      container_start "${IMAGE}" "${CONTAINER}"
+      container_start "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -913,7 +912,7 @@ EOF
     start)
       dev start
 
-      container_start "${IMAGE}" "${CONTAINER}"
+      container_start "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
