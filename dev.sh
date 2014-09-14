@@ -181,6 +181,12 @@ container_start() {
   local CALLBACK="${CONTAINER}_up"
 
   if $(container_exists "${CONTAINER}"); then
+    if $(container_running "${CONTAINER}"); then
+      output_error "Container is already running: ${CONTAINER}"
+
+      return 1
+    fi
+  
     container_destroy "${CONTAINER}"
   fi
 
