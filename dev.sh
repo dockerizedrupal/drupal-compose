@@ -1051,7 +1051,9 @@ update() {
 
   git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${TMP}"
 
-  exec "${TMP}/dev.sh" install
+  "${TMP}/dev.sh" install
+
+  exit 0
 }
 
 up() {
