@@ -8,6 +8,8 @@ Build the image
       -t simpledrupalcloud/dev \
       http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git
 
+Run
+---
 
     CONTAINER=dev && sudo docker run \
       --name "${CONTAINER}" \
@@ -25,6 +27,22 @@ Build the image
       -e APACHE_SERVERNAME=example.com \
       -d \
       simpledrupalcloud/apache:2.2.22
+
+    CONTAINER=php5515 && sudo docker run \
+      --name "${CONTAINER}" \
+      --net container:dev \
+      --volumes-from apache \
+      -d \
+      simpledrupalcloud/php:5.5.15
+
+    CONTAINER=mysql && sudo docker run \
+      --name "${CONTAINER}" \
+      --net container:dev \
+      -v /var/mysql-5.5.38/conf.d:/mysql-5.5.38/conf.d \
+      -v /var/mysql-5.5.38/data:/mysql-5.5.38/data \
+      -v /var/mysql-5.5.38/log:/mysql-5.5.38/log \
+      -d \
+      simpledrupalcloud/mysql:5.5.38
 
 Install
 -------
