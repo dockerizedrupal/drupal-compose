@@ -8,28 +8,50 @@ if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
   cat << EOF
 dev install
 dev update
+dev dev update
+dev dev build
+dev dev up
+dev dev destroy
+dev dev redis get [KEY]
+dev dev redis set [KEY] [VALUE]
+dev redis update
+dev redis build
 dev redis up
 dev redis destroy
 dev redis get [KEY]
 dev redis set [KEY] [VALUE]
+dev apache update
+dev apache build
 dev apache up
 dev apache destroy
+dev mysql update
+dev mysql build
 dev mysql up
 dev mysql destroy
+dev php update
+dev php build
 dev php up
 dev php destroy
+dev php52 update
+dev php52 build
 dev php52 up
 dev php52 destroy
+dev php53 update
+dev php53 build
 dev php53 up
 dev php53 destroy
+dev php54 update
+dev php54 build
 dev php54 up
 dev php54 destroy
+dev php55 update
+dev php55 build
 dev php55 up
 dev php55 destroy
+dev mailcatcher update
+dev mailcatcher build
 dev mailcatcher up
 dev mailcatcher destroy
-dev dev redis get [KEY]
-dev dev redis set [KEY] [VALUE]
 dev image [IMAGE] pull
 dev image [IMAGE] destroy
 dev container [CONTAINER] up [IMAGE]
