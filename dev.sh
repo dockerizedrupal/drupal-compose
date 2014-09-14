@@ -155,8 +155,6 @@ image() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
-dev image [NAME] build
-dev image [NAME] pull
 dev image [NAME] destroy
 EOF
 
@@ -166,14 +164,6 @@ EOF
   local IMAGE="${1}"
 
   case "${2}" in
-    build)
-      local CONTAINER="${3}"
-
-      image_build "${IMAGE}" "${CONTAINER}"
-    ;;
-    pull)
-      image_update "${IMAGE}"
-    ;;
     destroy)
       image_destroy "${IMAGE}"
     ;;
@@ -365,7 +355,7 @@ EOF
       image_update "${IMAGE}"
     ;;
     build)
-      image "${IMAGE}" build "${CONTAINER}"
+      image_build "${IMAGE}" "${CONTAINER}"
     ;;
     up)
       container "${CONTAINER}" up "${IMAGE}"
@@ -447,7 +437,7 @@ EOF
       image_update "${IMAGE}"
     ;;
     build)
-      image "${IMAGE}" build "${CONTAINER}"
+      image_build "${IMAGE}" "${CONTAINER}"
     ;;
     up)
       dev up
@@ -531,7 +521,7 @@ EOF
       image_update "${IMAGE}"
     ;;
     build)
-      image "${IMAGE}" build "${CONTAINER}"
+      image_build "${IMAGE}" "${CONTAINER}"
     ;;
     up)
       dev up
@@ -601,7 +591,7 @@ EOF
       image_update "${IMAGE}"
     ;;
     build)
-      image "${IMAGE}" build "${CONTAINER}"
+      image_build "${IMAGE}" "${CONTAINER}"
     ;;
     up)
       dev up
@@ -669,7 +659,7 @@ EOF
       image_update "${IMAGE}"
     ;;
     build)
-      image "${IMAGE}" build "${CONTAINER}"
+      image_build "${IMAGE}" "${CONTAINER}"
     ;;
     up)
       dev up
@@ -738,7 +728,7 @@ EOF
       image_update "${IMAGE}"
     ;;
     build)
-      image "${IMAGE}" build "${CONTAINER}"
+      image_build "${IMAGE}" "${CONTAINER}"
     ;;
     up)
       dev up
@@ -807,7 +797,7 @@ EOF
       image_update "${IMAGE}"
     ;;
     build)
-      image "${IMAGE}" build "${CONTAINER}"
+      image_build "${IMAGE}" "${CONTAINER}"
     ;;
     up)
       dev up
@@ -876,7 +866,7 @@ EOF
       image_update "${IMAGE}"
     ;;
     build)
-      image "${IMAGE}" build "${CONTAINER}"
+      image_build "${IMAGE}" "${CONTAINER}"
     ;;
     up)
       dev up
@@ -993,7 +983,7 @@ EOF
       image_update "${IMAGE}"
     ;;
     build)
-      image "${IMAGE}" build "${CONTAINER}"
+      image_build "${IMAGE}" "${CONTAINER}"
     ;;
     up)
       dev up
