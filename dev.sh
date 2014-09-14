@@ -182,12 +182,12 @@ container_up() {
   local CALLBACK="${CONTAINER}_up"
 
   if $(container_exists "${CONTAINER}"); then
-    container "${CONTAINER}" destroy
+    container_destroy "${CONTAINER}"
   fi
 
   output "Starting container: ${CONTAINER}"
 
-  eval "${CALLBACK} ${CONTAINER} ${IMAGE}"
+  "${CALLBACK}"
 }
 
 container_cp() {
@@ -246,41 +246,6 @@ container_destroy() {
   sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
 }
 
-container() {
-  output_debug "FUNCTION: container ARGS: ${*}"
-
-  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
-    cat << EOF
-dev container [CONTAINER] attach
-dev container [CONTAINER] up
-dev container [CONTAINER] destroy
-EOF
-
-    exit 1
-  fi
-
-  local CONTAINER="${1}"
-
-  case "${2}" in
-    attach)
-      container_attach "${CONTAINER}"
-    ;;
-    up)
-      local IMAGE="${3}"
-
-      container_up "${IMAGE}" "${CONTAINER}"
-    ;;
-    destroy)
-      container_destroy "${CONTAINER}"
-    ;;
-    *)
-      output_error "dev: Unknown command. See 'dev container --help'"
-
-      exit 1
-    ;;
-  esac
-}
-
 dev_build() {
   output_debug "FUNCTION: dev_build ARGS: ${*}"
 
@@ -331,7 +296,7 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     up)
-      container "${CONTAINER}" up "${IMAGE}"
+      container_up "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -418,7 +383,7 @@ EOF
     up)
       dev up
 
-      container "${CONTAINER}" up "${IMAGE}"
+      container_up "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -500,7 +465,7 @@ EOF
     up)
       dev up
 
-      container "${CONTAINER}" up "${IMAGE}"
+      container_up "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -568,7 +533,7 @@ EOF
     up)
       dev up
 
-      container "${CONTAINER}" up "${IMAGE}"
+      container_up "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -635,7 +600,7 @@ EOF
       dev up
       apache up
 
-      container "${CONTAINER}" up "${IMAGE}"
+      container_up "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -702,7 +667,7 @@ EOF
       dev up
       apache up
 
-      container "${CONTAINER}" up "${IMAGE}"
+      container_up "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -769,7 +734,7 @@ EOF
       dev up
       apache up
 
-      container "${CONTAINER}" up "${IMAGE}"
+      container_up "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -836,7 +801,7 @@ EOF
       dev up
       apache up
 
-      container "${CONTAINER}" up "${IMAGE}"
+      container_up "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -948,7 +913,7 @@ EOF
     up)
       dev up
 
-      container "${CONTAINER}" up "${IMAGE}"
+      container_up "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
