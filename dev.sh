@@ -1025,29 +1025,33 @@ EOF
       jpetazzo/nsenter > >(log) 2> >(log_error)
   #fi
 
-#  sudo docker stop redis2814
-#  sudo docker rm redis2814
-#  sudo docker stop apache
-#  sudo docker rm apache
-#  sudo docker stop mysql
-#  sudo docker rm mysql
-#
-#  docker_dev_update
-#  docker_config_update
-#  docker_apache2222_update
-#
-#  sudo cp $(dirname "${0}")/php5-fcgi /var/apache-2.2.22/conf.d
-#
-#  docker_apache2222_update
-#
-#  docker_php5217_update
-#  docker_php5328_update
-#  docker_php5328_update
-#  docker_php5431_update
-#  docker_php5515_update
-#  docker_mysql5538_update
-#  docker_mailcatcher0512_update
-#
+  dev stop
+  dev update
+  dev start
+
+  redis stop
+  redis update
+  redis start
+
+  sudo mkdir -p /var/apache-2.2.22/conf.d
+  sudo cp $(dirname "${0}")/apache-2.2.22/php5-fcgi /var/apache-2.2.22/conf.d
+
+  apache stop
+  apache update
+  apache start
+
+  mysql stop
+  mysql update
+  mysql start
+
+  php stop
+  php update
+  php start
+
+  mailcatcher stop
+  mailcatcher update
+  mailcatcher start
+
 #  phpmyadmin
 #
 #  sudo cp $(dirname "${0}")/config.inc.php /var/apache-2.2.22/data/phpmyadmin
@@ -1058,9 +1062,11 @@ EOF
 }
 
 update() {
+  output "Updating dev"
+
   TMP=$(mktemp -d)
 
-  git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${TMP}"
+  git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${TMP}" > >(log) 2> >(log_error)
 
   "${TMP}/dev.sh" install
 
