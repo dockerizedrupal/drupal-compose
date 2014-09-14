@@ -320,25 +320,20 @@ EOF
 dev_build() {
   output_debug "FUNCTION: dev_build ARGS: ${*}"
 
-  local IMAGE="${1}"
-
   sudo docker build \
-    -t "${IMAGE}" \
+    -t simpledrupalcloud/dev \
     http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git
 }
 
 dev_up() {
   output_debug "FUNCTION: dev_up ARGS: ${*}"
 
-  local CONTAINER="${1}"
-  local IMAGE="${2}"
-
   sudo docker run \
-    --name "${CONTAINER}" \
-    -h "${CONTAINER}" \
+    --name dev \
+    -h dev \
     -p 80:80 \
     -d \
-    "${IMAGE}" > >(log) 2> >(log_error)
+    simpledrupalcloud/dev > >(log) 2> >(log_error)
 }
 
 dev() {
@@ -404,28 +399,23 @@ EOF
 redis_build() {
   output_debug "FUNCTION: redis_build ARGS: ${*}"
 
-  local IMAGE="${1}"
-
-  TMP=$(mktemp -d) \
+  local TMP=$(mktemp -d) \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-redis.git "${TMP}" \
     && cd "${TMP}" \
     && git checkout 2.8.14 \
-    && sudo docker build -t "${IMAGE}" . \
+    && sudo docker build -t simpledrupalcloud/redis:2.8.14 . \
     && cd -
 }
 
 redis_up() {
   output_debug "FUNCTION: redis_up ARGS: ${*}"
 
-  local CONTAINER="${1}"
-  local IMAGE="${2}"
-
   sudo docker run \
-    --name "${CONTAINER}" \
+    --name redis \
     --net container:dev \
     -v /var/redis-2.8.14/data:/redis-2.8.14/data \
     -d \
-    "${IMAGE}" > >(log) 2> >(log_error)
+    simpledrupalcloud/redis:2.8.14 > >(log) 2> >(log_error)
 }
 
 redis() {
@@ -490,33 +480,28 @@ EOF
 apache_build() {
   output_debug "FUNCTION: apache_build ARGS: ${*}"
 
-  local IMAGE="${1}"
-
-  TMP=$(mktemp -d) \
+  local TMP=$(mktemp -d) \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-apache.git "${TMP}" \
     && cd "${TMP}" \
     && git checkout 2.2.22 \
-    && sudo docker build -t "${IMAGE}" . \
+    && sudo docker build -t simpledrupalcloud/apache:2.2.22 . \
     && cd -
 }
 
 apache_up() {
   output_debug "FUNCTION: apache_up ARGS: ${*}"
 
-  local CONTAINER="${1}"
-  local IMAGE="${2}"
-
   local APACHE_SERVERNAME=example.com
 
   sudo docker run \
-    --name "${CONTAINER}" \
+    --name apache \
     --net container:dev \
     -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -v /var/apache-2.2.22/log:/apache-2.2.22/log \
     -e APACHE_SERVERNAME="${APACHE_SERVERNAME}" \
     -d \
-    "${IMAGE}" > >(log) 2> >(log_error)
+    simpledrupalcloud/apache:2.2.22 > >(log) 2> >(log_error)
 }
 
 apache() {
@@ -568,30 +553,25 @@ EOF
 mysql_build() {
   output_debug "FUNCTION: mysql_build ARGS: ${*}"
 
-  local IMAGE="${1}"
-
-  TMP=$(mktemp -d) \
+  local TMP=$(mktemp -d) \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-mysql.git "${TMP}" \
     && cd "${TMP}" \
     && git checkout 5.5.38 \
-    && sudo docker build -t "${IMAGE}" . \
+    && sudo docker build -t simpledrupalcloud/mysql:5.5.38 . \
     && cd -
 }
 
 mysql_up() {
   output_debug "FUNCTION: mysql_up ARGS: ${*}"
 
-  local CONTAINER="${1}"
-  local IMAGE="${2}"
-
   sudo docker run \
-    --name "${CONTAINER}" \
+    --name mysql \
     --net container:dev \
     -v /var/mysql-5.5.38/conf.d:/mysql-5.5.38/conf.d \
     -v /var/mysql-5.5.38/data:/mysql-5.5.38/data \
     -v /var/mysql-5.5.38/log:/mysql-5.5.38/log \
     -d \
-    "${IMAGE}" > >(log) 2> >(log_error)
+    simpledrupalcloud/mysql:5.5.38 > >(log) 2> >(log_error)
 }
 
 mysql() {
@@ -643,28 +623,23 @@ EOF
 php52_build() {
   output_debug "FUNCTION: php52_build ARGS: ${*}"
 
-  local IMAGE="${1}"
-
-  TMP=$(mktemp -d) \
+  local TMP=$(mktemp -d) \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
     && cd "${TMP}" \
     && git checkout 5.2.17 \
-    && sudo docker build -t "${IMAGE}" . \
+    && sudo docker build -t simpledrupalcloud/php:5.2.17 . \
     && cd -
 }
 
 php52_up() {
   output_debug "FUNCTION: php52_up ARGS: ${*}"
 
-  local CONTAINER="${1}"
-  local IMAGE="${2}"
-
   sudo docker run \
-    --name "${CONTAINER}" \
+    --name php52 \
     --net container:dev \
     --volumes-from apache \
     -d \
-    "${IMAGE}" > >(log) 2> >(log_error)
+    simpledrupalcloud/php:5.2.17 > >(log) 2> >(log_error)
 }
 
 php52() {
@@ -717,28 +692,23 @@ EOF
 php53_build() {
   output_debug "FUNCTION: php53_build ARGS: ${*}"
 
-  local IMAGE="${1}"
-
-  TMP=$(mktemp -d) \
+  local TMP=$(mktemp -d) \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
     && cd "${TMP}" \
     && git checkout 5.3.28 \
-    && sudo docker build -t "${IMAGE}" . \
+    && sudo docker build -t simpledrupalcloud/php:5.3.28 . \
     && cd -
 }
 
 php53_up() {
   output_debug "FUNCTION: php53_up ARGS: ${*}"
 
-  local CONTAINER="${1}"
-  local IMAGE="${2}"
-
   sudo docker run \
-    --name "${CONTAINER}" \
+    --name php53 \
     --net container:dev \
     --volumes-from apache \
     -d \
-    "${IMAGE}" > >(log) 2> >(log_error)
+    simpledrupalcloud/php:5.3.28 > >(log) 2> >(log_error)
 }
 
 php53() {
@@ -791,28 +761,23 @@ EOF
 php54_build() {
   output_debug "FUNCTION: php53_build ARGS: ${*}"
 
-  local IMAGE="${1}"
-
-  TMP=$(mktemp -d) \
+  local TMP=$(mktemp -d) \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
     && cd "${TMP}" \
     && git checkout 5.4.31 \
-    && sudo docker build -t "${IMAGE}" . \
+    && sudo docker build -t simpledrupalcloud/php:5.4.31 . \
     && cd -
 }
 
 php54_up() {
   output_debug "FUNCTION: php54_up ARGS: ${*}"
 
-  local CONTAINER="${1}"
-  local IMAGE="${2}"
-
   sudo docker run \
-    --name "${CONTAINER}" \
+    --name php54 \
     --net container:dev \
     --volumes-from apache \
     -d \
-    "${IMAGE}" > >(log) 2> >(log_error)
+    simpledrupalcloud/php:5.4.31 > >(log) 2> >(log_error)
 }
 
 php54() {
@@ -865,28 +830,23 @@ EOF
 php55_build() {
   output_debug "FUNCTION: php53_build ARGS: ${*}"
 
-  local IMAGE="${1}"
-
-  TMP=$(mktemp -d) \
+  local TMP=$(mktemp -d) \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
     && cd "${TMP}" \
     && git checkout 5.5.15 \
-    && sudo docker build -t "${IMAGE}" . \
+    && sudo docker build -t simpledrupalcloud/php:5.5.15 . \
     && cd -
 }
 
 php55_up() {
   output_debug "FUNCTION: php55_up ARGS: ${*}"
 
-  local CONTAINER="${1}"
-  local IMAGE="${2}"
-
   sudo docker run \
-    --name "${CONTAINER}" \
+    --name php55 \
     --net container:dev \
     --volumes-from apache \
     -d \
-    "${IMAGE}" > >(log) 2> >(log_error)
+    simpledrupalcloud/php:5.5.15 > >(log) 2> >(log_error)
 }
 
 php55() {
@@ -988,27 +948,22 @@ EOF
 mailcatcher_build() {
   output_debug "FUNCTION: php53_build ARGS: ${*}"
 
-  local IMAGE="${1}"
-
-  TMP=$(mktemp -d) \
+  local TMP=$(mktemp -d) \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-mailcatcher.git "${TMP}" \
     && cd "${TMP}" \
     && git checkout 0.5.12 \
-    && sudo docker build -t "${IMAGE}" . \
+    && sudo docker build -t simpledrupalcloud/mailcatcher:0.5.12 . \
     && cd -
 }
 
 mailcatcher_up() {
   output_debug "FUNCTION: mailcatcher_up ARGS: ${*}"
 
-  local CONTAINER="${1}"
-  local IMAGE="${2}"
-
   sudo docker run \
-    --name "${CONTAINER}" \
+    --name mailcatcher \
     --net container:dev \
     -d \
-    "${IMAGE}" > >(log) 2> >(log_error)
+    simpledrupalcloud/mailcatcher:0.5.12 > >(log) 2> >(log_error)
 }
 
 mailcatcher() {
