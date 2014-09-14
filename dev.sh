@@ -178,7 +178,7 @@ container_start() {
   output_debug "FUNCTION: container_start ARGS: ${*}"
 
   local CONTAINER="${1}"
-  local CALLBACK="${CONTAINER}_up"
+  local CALLBACK="${CONTAINER}_start"
 
   if $(container_exists "${CONTAINER}"); then
     if $(container_running "${CONTAINER}"); then
@@ -186,13 +186,33 @@ container_start() {
 
       return 1
     fi
-  
+
     container_destroy "${CONTAINER}"
   fi
 
   output "Starting container: ${CONTAINER}"
 
   "${CALLBACK}"
+}
+
+container_stop() {
+  output_debug "FUNCTION: container_stop ARGS: ${*}"
+
+  local CONTAINER="${1}"
+
+  if ! $(container_exists "${CONTAINER}"); then
+    output_error "No such container: ${CONTAINER}"
+
+    return 1
+  fi
+
+  if ! $(container_running "${CONTAINER}"); then
+    output_error "Container is not running: ${CONTAINER}"
+
+    return 1
+  fi
+
+  container_destroy "${CONTAINER}"
 }
 
 container_cp() {
@@ -217,7 +237,7 @@ container_attach() {
   fi
 
   if ! $(container_running "${CONTAINER}"); then
-    output_error "Container not running: ${CONTAINER}"
+    output_error "Container is not running: ${CONTAINER}"
 
     exit 1
   fi
@@ -259,8 +279,8 @@ dev_build() {
     http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git
 }
 
-dev_up() {
-  output_debug "FUNCTION: dev_up ARGS: ${*}"
+dev_start() {
+  output_debug "FUNCTION: dev_start ARGS: ${*}"
 
   sudo docker run \
     --name dev \
@@ -282,6 +302,7 @@ dev dev attach
 dev dev update
 dev dev build
 dev dev start
+dev dev stop
 dev dev destroy
 dev dev redis get [KEY]
 dev dev redis set [KEY] [VALUE]
@@ -302,6 +323,9 @@ EOF
     ;;
     start)
       container_start "${CONTAINER}"
+    ;;
+    stop)
+      container_stop "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -344,8 +368,8 @@ redis_build() {
     && cd -
 }
 
-redis_up() {
-  output_debug "FUNCTION: redis_up ARGS: ${*}"
+redis_start() {
+  output_debug "FUNCTION: redis_start ARGS: ${*}"
 
   sudo docker run \
     --name redis \
@@ -367,6 +391,7 @@ dev redis attach
 dev redis update
 dev redis build
 dev redis start
+dev redis stop
 dev redis destroy
 dev redis get [KEY]
 dev redis set [KEY] [VALUE]
@@ -389,6 +414,9 @@ EOF
       dev start
 
       container_start "${CONTAINER}"
+    ;;
+    stop)
+      container_stop "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -423,8 +451,8 @@ apache_build() {
     && cd -
 }
 
-apache_up() {
-  output_debug "FUNCTION: apache_up ARGS: ${*}"
+apache_start() {
+  output_debug "FUNCTION: apache_start ARGS: ${*}"
 
   local APACHE_SERVERNAME=example.com
 
@@ -451,6 +479,7 @@ dev apache attach
 dev apache update
 dev apache build
 dev apache start
+dev apache stop
 dev apache destroy
 EOF
 
@@ -471,6 +500,9 @@ EOF
       dev start
 
       container_start "${CONTAINER}"
+    ;;
+    stop)
+      container_stop "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -494,8 +526,8 @@ mysql_build() {
     && cd -
 }
 
-mysql_up() {
-  output_debug "FUNCTION: mysql_up ARGS: ${*}"
+mysql_start() {
+  output_debug "FUNCTION: mysql_start ARGS: ${*}"
 
   sudo docker run \
     --name mysql \
@@ -519,6 +551,7 @@ dev mysql attach
 dev mysql update
 dev mysql build
 dev mysql start
+dev mysql stop
 dev mysql destroy
 EOF
 
@@ -539,6 +572,9 @@ EOF
       dev start
 
       container_start "${CONTAINER}"
+    ;;
+    stop)
+      container_stop "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -562,8 +598,8 @@ php52_build() {
     && cd -
 }
 
-php52_up() {
-  output_debug "FUNCTION: php52_up ARGS: ${*}"
+php52_start() {
+  output_debug "FUNCTION: php52_start ARGS: ${*}"
 
   sudo docker run \
     --name php52 \
@@ -585,6 +621,7 @@ dev php52 attach
 dev php52 update
 dev php52 build
 dev php52 start
+dev php52 stop
 dev php52 destroy
 EOF
 
@@ -606,6 +643,9 @@ EOF
       apache start
 
       container_start "${CONTAINER}"
+    ;;
+    stop)
+      container_stop "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -629,8 +669,8 @@ php53_build() {
     && cd -
 }
 
-php53_up() {
-  output_debug "FUNCTION: php53_up ARGS: ${*}"
+php53_start() {
+  output_debug "FUNCTION: php53_start ARGS: ${*}"
 
   sudo docker run \
     --name php53 \
@@ -652,6 +692,7 @@ dev php53 attach
 dev php53 update
 dev php53 build
 dev php53 start
+dev php53 stop
 dev php53 destroy
 EOF
 
@@ -673,6 +714,9 @@ EOF
       apache start
 
       container_start "${CONTAINER}"
+    ;;
+    stop)
+      container_stop "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -696,8 +740,8 @@ php54_build() {
     && cd -
 }
 
-php54_up() {
-  output_debug "FUNCTION: php54_up ARGS: ${*}"
+php54_start() {
+  output_debug "FUNCTION: php54_start ARGS: ${*}"
 
   sudo docker run \
     --name php54 \
@@ -719,6 +763,7 @@ dev php54 attach
 dev php54 update
 dev php54 build
 dev php54 start
+dev php54 stop
 dev php54 destroy
 EOF
 
@@ -740,6 +785,9 @@ EOF
       apache start
 
       container_start "${CONTAINER}"
+    ;;
+    stop)
+      container_stop "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -763,8 +811,8 @@ php55_build() {
     && cd -
 }
 
-php55_up() {
-  output_debug "FUNCTION: php55_up ARGS: ${*}"
+php55_start() {
+  output_debug "FUNCTION: php55_start ARGS: ${*}"
 
   sudo docker run \
     --name php55 \
@@ -786,6 +834,7 @@ dev php55 attach
 dev php55 update
 dev php55 build
 dev php55 start
+dev php55 stop
 dev php55 destroy
 EOF
 
@@ -808,6 +857,9 @@ EOF
 
       container_start "${CONTAINER}"
     ;;
+    stop)
+      container_stop "${CONTAINER}"
+    ;;
     destroy)
       image_destroy "${IMAGE}"
     ;;
@@ -827,6 +879,7 @@ php() {
 dev php update
 dev php build
 dev php start
+dev php stop
 dev php destroy
 EOF
 
@@ -851,6 +904,12 @@ EOF
       php53 start
       php54 start
       php55 start
+    ;;
+    stop)
+      php52 stop
+      php53 stop
+      php54 stop
+      php55 stop
     ;;
     destroy)
       php52 destroy
@@ -877,8 +936,8 @@ mailcatcher_build() {
     && cd -
 }
 
-mailcatcher_up() {
-  output_debug "FUNCTION: mailcatcher_up ARGS: ${*}"
+mailcatcher_start() {
+  output_debug "FUNCTION: mailcatcher_start ARGS: ${*}"
 
   sudo docker run \
     --name mailcatcher \
@@ -899,6 +958,7 @@ dev mailcatcher attach
 dev mailcatcher update
 dev mailcatcher build
 dev mailcatcher start
+dev mailcatcher stop
 dev mailcatcher destroy
 EOF
 
@@ -919,6 +979,9 @@ EOF
       dev start
 
       container_start "${CONTAINER}"
+    ;;
+    stop)
+      container_stop "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
