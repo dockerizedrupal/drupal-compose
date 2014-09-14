@@ -1,6 +1,13 @@
 dev
 ===
 
+Build the image
+---------------
+
+    sudo docker build \
+      -t simpledrupalcloud/dev \
+      http://git.simpledrupalcloud.com/simpledrupalcloud/docker-dev.git
+
 All-in-one powertool
 
 Install
