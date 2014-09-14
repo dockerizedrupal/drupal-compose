@@ -251,15 +251,30 @@ EOF
   esac
 }
 
+dev_up() {
+  output_debug "FUNCTION: dev_up ARGS: ${*}"
+
+  local CONTAINER="${1}"
+  local IMAGE="${2}"
+
+  sudo docker run \
+    --name "${CONTAINER}" \
+    -h "${CONTAINER}" \
+    -p 80:80 \
+    -d \
+    "${IMAGE}" > >(log) 2> >(log_error)
+}
+
 dev() {
+  local CONTAINER=dev
   local IMAGE=simpledrupalcloud/dev
 
   output_debug "FUNCTION: dev ARGS: ${*}"
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
-dev dev redis get [KEY]
-dev dev redis set [KEY] [VALUE]
+dev dev up
+dev dev destroy
 EOF
 
     exit 1
@@ -268,6 +283,12 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    up)
+      container "${CONTAINER}" up "${IMAGE}"
+    ;;
+    destroy)
+      image "${IMAGE}" destroy
+    ;;
     redis)
       case "${2}" in
         get)
@@ -298,7 +319,7 @@ redis_up() {
 
   sudo docker run \
     --name "${CONTAINER}" \
-    --net host \
+    --net container:dev \
     -v /var/redis-2.8.14/data:/redis-2.8.14/data \
     -d \
     "${IMAGE}" > >(log) 2> >(log_error)
@@ -325,6 +346,8 @@ EOF
 
   case "${ACTION}" in
     up)
+      dev up
+      
       container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
@@ -359,7 +382,7 @@ apache_up() {
 
   sudo docker run \
     --name "${CONTAINER}" \
-    --net host \
+    --net container:dev \
     -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -v /var/apache-2.2.22/log:/apache-2.2.22/log \
@@ -387,6 +410,8 @@ EOF
 
   case "${ACTION}" in
     up)
+      dev up
+
       container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
@@ -408,7 +433,7 @@ mysql_up() {
 
   sudo docker run \
     --name "${CONTAINER}" \
-    --net host \
+    --net container:dev \
     -v /var/mysql-5.5.38/conf.d:/mysql-5.5.38/conf.d \
     -v /var/mysql-5.5.38/data:/mysql-5.5.38/data \
     -v /var/mysql-5.5.38/log:/mysql-5.5.38/log \
@@ -435,6 +460,8 @@ EOF
 
   case "${ACTION}" in
     up)
+      dev up
+
       container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
@@ -456,7 +483,7 @@ php52_up() {
 
   sudo docker run \
     --name "${CONTAINER}" \
-    --net host \
+    --net container:dev \
     --volumes-from apache \
     -d \
     "${IMAGE}" > >(log) 2> >(log_error)
@@ -481,6 +508,7 @@ EOF
 
   case "${ACTION}" in
     up)
+      dev up
       apache up
 
       container "${CONTAINER}" up "${IMAGE}"
@@ -504,7 +532,7 @@ php53_up() {
 
   sudo docker run \
     --name "${CONTAINER}" \
-    --net host \
+    --net container:dev \
     --volumes-from apache \
     -d \
     "${IMAGE}" > >(log) 2> >(log_error)
@@ -529,6 +557,7 @@ EOF
 
   case "${ACTION}" in
     up)
+      dev up
       apache up
 
       container "${CONTAINER}" up "${IMAGE}"
@@ -552,7 +581,7 @@ php54_up() {
 
   sudo docker run \
     --name "${CONTAINER}" \
-    --net host \
+    --net container:dev \
     --volumes-from apache \
     -d \
     "${IMAGE}" > >(log) 2> >(log_error)
@@ -577,6 +606,7 @@ EOF
 
   case "${ACTION}" in
     up)
+      dev up
       apache up
 
       container "${CONTAINER}" up "${IMAGE}"
@@ -600,7 +630,7 @@ php55_up() {
 
   sudo docker run \
     --name "${CONTAINER}" \
-    --net host \
+    --net container:dev \
     --volumes-from apache \
     -d \
     "${IMAGE}" > >(log) 2> >(log_error)
@@ -625,6 +655,7 @@ EOF
 
   case "${ACTION}" in
     up)
+      dev up
       apache up
 
       container "${CONTAINER}" up "${IMAGE}"
@@ -683,7 +714,7 @@ mailcatcher_up() {
 
   sudo docker run \
     --name "${CONTAINER}" \
-    --net host \
+    --net container:dev \
     -d \
     "${IMAGE}" > >(log) 2> >(log_error)
 }
@@ -707,6 +738,8 @@ EOF
 
   case "${ACTION}" in
     up)
+      dev up
+
       container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
@@ -801,6 +834,7 @@ update() {
 }
 
 up() {
+  dev up
   redis up
   apache up
   mysql up
@@ -809,6 +843,7 @@ up() {
 }
 
 destroy() {
+  dev destroy
   redis destroy
   apache destroy
   mysql destroy
@@ -829,6 +864,9 @@ case "${1}" in
   destroy)
     destroy
     ;;
+  dev)
+    dev "${@:2}"
+  ;;
   redis)
     case "${2}" in
       get)
@@ -862,9 +900,6 @@ case "${1}" in
   ;;
   mailcatcher)
     mailcatcher "${@:2}"
-  ;;
-  dev)
-    dev "${@:2}"
   ;;
   image)
     image "${@:2}"

@@ -18,6 +18,16 @@ Run dev
       -d \
       simpledrupalcloud/dev
 
+Run Redis
+---------
+
+    CONTAINER=redis2814 && sudo docker run \
+      --name "${CONTAINER}" \
+      --net container:dev \
+      -v /var/redis-2.8.14/data:/redis-2.8.14/data \
+      -d \
+      simpledrupalcloud/redis:2.8.14
+
 Run Apache HTTP Server
 ----------------------
 
@@ -38,7 +48,6 @@ Run PHP 5.5.15
       --name "${CONTAINER}" \
       --net container:dev \
       --volumes-from apache \
-      --volumes-from mysql \
       -d \
       simpledrupalcloud/php:5.5.15
 
@@ -53,6 +62,15 @@ Run MySQL
       -v /var/mysql-5.5.38/log:/mysql-5.5.38/log \
       -d \
       simpledrupalcloud/mysql:5.5.38
+
+Run MailCatcher
+---------------
+
+    CONTAINER=mailcatcher && sudo docker run \
+      --name "${CONTAINER}" \
+      --net container:dev \
+      -d \
+      simpledrupalcloud/mailcatcher:0.5.12
 
 Install
 -------
