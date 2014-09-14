@@ -32,7 +32,7 @@ dev dev redis get [KEY]
 dev dev redis set [KEY] [VALUE]
 dev image [IMAGE] pull
 dev image [IMAGE] destroy
-dev container [CONTAINER] start [IMAGE]
+dev container [CONTAINER] up [IMAGE]
 dev container [CONTAINER] destroy
 EOF
 
@@ -166,12 +166,12 @@ container_name() {
   echo "$(sudo docker inspect -f "{{ .Name }}" "${1}" 2> /dev/null | cut -d "/" -f 2)"
 }
 
-container_start() {
-  output_debug "FUNCTION: container_start ARGS: ${*}"
+container_up() {
+  output_debug "FUNCTION: container_up ARGS: ${*}"
 
   local IMAGE="${1}"
   local CONTAINER="${2}"
-  local CALLBACK="${CONTAINER}_start"
+  local CALLBACK="${CONTAINER}_up"
 
   if $(container_exists "${CONTAINER}"); then
     container "${CONTAINER}" destroy
@@ -189,7 +189,7 @@ container() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
-dev container [CONTAINER] start
+dev container [CONTAINER] up
 dev container [CONTAINER] destroy
 EOF
 
@@ -199,10 +199,10 @@ EOF
   local CONTAINER="${1}"
 
   case "${2}" in
-    start)
+    up)
       local IMAGE="${3}"
 
-      container_start "${IMAGE}" "${CONTAINER}"
+      container_up "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       if ! $(container_exists "${CONTAINER}"); then
@@ -270,8 +270,8 @@ EOF
   esac
 }
 
-redis_start() {
-  output_debug "FUNCTION: redis_start ARGS: ${*}"
+redis_up() {
+  output_debug "FUNCTION: redis_up ARGS: ${*}"
 
   local CONTAINER="${1}"
   local IMAGE="${2}"
@@ -305,7 +305,7 @@ EOF
 
   case "${ACTION}" in
     up)
-      container "${CONTAINER}" start "${IMAGE}"
+      container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
       image "${IMAGE}" destroy
@@ -329,8 +329,8 @@ EOF
   esac
 }
 
-apache_start() {
-  output_debug "FUNCTION: apache_start ARGS: ${*}"
+apache_up() {
+  output_debug "FUNCTION: apache_up ARGS: ${*}"
 
   local CONTAINER="${1}"
   local IMAGE="${2}"
@@ -367,7 +367,7 @@ EOF
 
   case "${ACTION}" in
     up)
-      container "${CONTAINER}" start "${IMAGE}"
+      container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
       image "${IMAGE}" destroy
@@ -380,8 +380,8 @@ EOF
   esac
 }
 
-mysql_start() {
-  output_debug "FUNCTION: mysql_start ARGS: ${*}"
+mysql_up() {
+  output_debug "FUNCTION: mysql_up ARGS: ${*}"
 
   local CONTAINER="${1}"
   local IMAGE="${2}"
@@ -415,7 +415,7 @@ EOF
 
   case "${ACTION}" in
     up)
-      container "${CONTAINER}" start "${IMAGE}"
+      container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
       image "${IMAGE}" destroy
@@ -428,8 +428,8 @@ EOF
   esac
 }
 
-php52_start() {
-  output_debug "FUNCTION: php52_start ARGS: ${*}"
+php52_up() {
+  output_debug "FUNCTION: php52_up ARGS: ${*}"
 
   local CONTAINER="${1}"
   local IMAGE="${2}"
@@ -463,7 +463,7 @@ EOF
     up)
       apache up
 
-      container "${CONTAINER}" start "${IMAGE}"
+      container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
       image "${IMAGE}" destroy
@@ -476,8 +476,8 @@ EOF
   esac
 }
 
-php53_start() {
-  output_debug "FUNCTION: php53_start ARGS: ${*}"
+php53_up() {
+  output_debug "FUNCTION: php53_up ARGS: ${*}"
 
   local CONTAINER="${1}"
   local IMAGE="${2}"
@@ -511,7 +511,7 @@ EOF
     up)
       apache up
 
-      container "${CONTAINER}" start "${IMAGE}"
+      container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
       image "${IMAGE}" destroy
@@ -524,8 +524,8 @@ EOF
   esac
 }
 
-php54_start() {
-  output_debug "FUNCTION: php54_start ARGS: ${*}"
+php54_up() {
+  output_debug "FUNCTION: php54_up ARGS: ${*}"
 
   local CONTAINER="${1}"
   local IMAGE="${2}"
@@ -559,7 +559,7 @@ EOF
     up)
       apache up
 
-      container "${CONTAINER}" start "${IMAGE}"
+      container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
       image "${IMAGE}" destroy
@@ -572,8 +572,8 @@ EOF
   esac
 }
 
-php55_start() {
-  output_debug "FUNCTION: php55_start ARGS: ${*}"
+php55_up() {
+  output_debug "FUNCTION: php55_up ARGS: ${*}"
 
   local CONTAINER="${1}"
   local IMAGE="${2}"
@@ -607,7 +607,7 @@ EOF
     up)
       apache up
 
-      container "${CONTAINER}" start "${IMAGE}"
+      container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
       image "${IMAGE}" destroy
@@ -655,8 +655,8 @@ EOF
   esac
 }
 
-mailcatcher_start() {
-  output_debug "FUNCTION: mailcatcher_start ARGS: ${*}"
+mailcatcher_up() {
+  output_debug "FUNCTION: mailcatcher_up ARGS: ${*}"
 
   local CONTAINER="${1}"
   local IMAGE="${2}"
@@ -687,7 +687,7 @@ EOF
 
   case "${ACTION}" in
     up)
-      container "${CONTAINER}" start "${IMAGE}"
+      container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
       image "${IMAGE}" destroy
