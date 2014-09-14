@@ -991,9 +991,11 @@ EOF
 install() {
   sudo mkdir -p "${LOG_DIR}"
 
-  if [ ! -f /usr/local/bin/dev ]; then
-    sudo apt-get install -y realpath
-  fi
+  #if [ ! -f /usr/local/bin/dev ]; then
+    output "Instaling package: realpath"
+
+    sudo apt-get install -y realpath > >(log) 2> >(log_error)
+  #fi
 
   SCRIPT=$(realpath -s "${0}")
 
@@ -1006,7 +1008,7 @@ EOF
     exit 1
   fi
 
-  if [ ! -f /usr/local/bin/dev ]; then
+  #if [ ! -f /usr/local/bin/dev ]; then
     output "Instaling package: curl"
 
     sudo apt-get install -y curl > >(log) 2> >(log_error)
@@ -1021,7 +1023,7 @@ EOF
       --rm \
       -v /usr/local/bin:/target \
       jpetazzo/nsenter > >(log) 2> >(log_error)
-  fi
+  #fi
 
 #  sudo docker stop redis2814
 #  sudo docker rm redis2814
