@@ -746,6 +746,8 @@ EOF
     sudo apt-get install -y curl
 
     curl -sSL https://get.docker.io/ubuntu/ | sudo bash
+
+    sudo docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
   fi
 
 #  sudo docker stop redis2814
