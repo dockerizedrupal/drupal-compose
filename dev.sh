@@ -1001,17 +1001,26 @@ install() {
     cat << EOF
 dev is already installed on this machine.
 
-Type "dev update" to get the latest updates.
+Type 'dev update' to get the latest updates.
 EOF
-    exit
+    exit 1
   fi
 
   if [ ! -f /usr/local/bin/dev ]; then
-    sudo apt-get install -y curl
+    output "Instaling package: curl"
 
-    curl -sSL https://get.docker.io/ubuntu/ | sudo bash
+    sudo apt-get install -y curl > >(log) 2> >(log_error)
 
-    sudo docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
+    output "Instaling package: docker"
+
+    curl -sSL https://get.docker.io/ubuntu/ | sudo bash > >(log) 2> >(log_error)
+
+    output "Instaling package: nsenter"
+
+    sudo docker run \
+      --rm \
+      -v /usr/local/bin:/target \
+      jpetazzo/nsenter > >(log) 2> >(log_error)
   fi
 
 #  sudo docker stop redis2814
