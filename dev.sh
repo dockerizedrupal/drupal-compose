@@ -199,8 +199,6 @@ container_up() {
     container "${CONTAINER}" destroy
   fi
 
-  image "${IMAGE}" pull
-
   output "Starting container: ${CONTAINER}"
 
   eval "${CALLBACK} ${CONTAINER} ${IMAGE}"
@@ -315,6 +313,9 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    update)
+      image "${IMAGE}" pull
+    ;;
     build)
       image "${IMAGE}" build "${CONTAINER}"
     ;;
