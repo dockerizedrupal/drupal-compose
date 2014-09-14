@@ -1073,13 +1073,31 @@ update() {
   exit
 }
 
-up() {
+build() {
+  dev build
+  redis build
+  apache build
+  mysql build
+  php build
+  mailcatcher build
+}
+
+start() {
   dev start
   redis start
   apache start
   mysql start
   php start
   mailcatcher start
+}
+
+stop() {
+  dev stop
+  redis stop
+  apache stop
+  mysql stop
+  php stop
+  mailcatcher stop
 }
 
 destroy() {
@@ -1098,9 +1116,15 @@ case "${1}" in
   update)
     update
     ;;
+  build)
+    build
+  ;;
   start)
     start
     ;;
+  stop)
+    stop
+  ;;
   destroy)
     destroy
     ;;
