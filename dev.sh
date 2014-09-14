@@ -52,10 +52,6 @@ dev mailcatcher update
 dev mailcatcher build
 dev mailcatcher up
 dev mailcatcher destroy
-dev image [IMAGE] pull
-dev image [IMAGE] destroy
-dev container [CONTAINER] up [IMAGE]
-dev container [CONTAINER] destroy
 EOF
 
   exit 1
@@ -241,6 +237,18 @@ container_attach() {
 
   local CONTAINER="${1}"
 
+  if ! $(container_exists "${CONTAINER}"); then
+    output_error "No such container: ${CONTAINER}"
+
+    exit 1
+  fi
+
+  if ! $(container_running "${CONTAINER}"); then
+    output_error "Container not running: ${CONTAINER}"
+
+    exit 1
+  fi
+
   local PID="$(sudo docker inspect --format "{{ .State.Pid }}" "${CONTAINER}" 2> /dev/null)"
 
   sudo nsenter --target "${PID}" --mount --uts --ipc --net --pid
@@ -251,6 +259,7 @@ container() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev container [CONTAINER] attach
 dev container [CONTAINER] up
 dev container [CONTAINER] destroy
 EOF
@@ -261,6 +270,9 @@ EOF
   local CONTAINER="${1}"
 
   case "${2}" in
+    attach)
+      container_attach "${CONTAINER}"
+    ;;
     up)
       local IMAGE="${3}"
 
@@ -325,6 +337,7 @@ dev() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev dev attach
 dev dev update
 dev dev build
 dev dev up
@@ -339,6 +352,9 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    attach)
+      container_attach "${CONTAINER}"
+    ;;
     update)
       image "${IMAGE}" pull
     ;;
@@ -408,6 +424,7 @@ redis() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev redis attach
 dev redis update
 dev redis build
 dev redis up
@@ -422,6 +439,9 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    attach)
+      container_attach "${CONTAINER}"
+    ;;
     update)
       image "${IMAGE}" pull
     ;;
@@ -495,6 +515,7 @@ apache() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev apache attach
 dev apache update
 dev apache build
 dev apache up
@@ -507,6 +528,9 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    attach)
+      container_attach "${CONTAINER}"
+    ;;
     update)
       image "${IMAGE}" pull
     ;;
@@ -566,6 +590,7 @@ mysql() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev mysql attach
 dev mysql update
 dev mysql build
 dev mysql up
@@ -578,6 +603,9 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    attach)
+      container_attach "${CONTAINER}"
+    ;;
     update)
       image "${IMAGE}" pull
     ;;
@@ -635,6 +663,7 @@ php52() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev php52 attach
 dev php52 update
 dev php52 build
 dev php52 up
@@ -647,6 +676,9 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    attach)
+      container_attach "${CONTAINER}"
+    ;;
     update)
       image "${IMAGE}" pull
     ;;
@@ -705,6 +737,7 @@ php53() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev php53 attach
 dev php53 update
 dev php53 build
 dev php53 up
@@ -717,6 +750,9 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    attach)
+      container_attach "${CONTAINER}"
+    ;;
     update)
       image "${IMAGE}" pull
     ;;
@@ -775,6 +811,7 @@ php54() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev php54 attach
 dev php54 update
 dev php54 build
 dev php54 up
@@ -787,6 +824,9 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    attach)
+      container_attach "${CONTAINER}"
+    ;;
     update)
       image "${IMAGE}" pull
     ;;
@@ -845,6 +885,7 @@ php55() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev php55 attach
 dev php55 update
 dev php55 build
 dev php55 up
@@ -857,6 +898,9 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    attach)
+      container_attach "${CONTAINER}"
+    ;;
     update)
       image "${IMAGE}" pull
     ;;
@@ -963,6 +1007,7 @@ mailcatcher() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev mailcatcher attach
 dev mailcatcher update
 dev mailcatcher build
 dev mailcatcher up
@@ -975,6 +1020,9 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    attach)
+      container_attach "${CONTAINER}"
+    ;;
     update)
       image "${IMAGE}" pull
     ;;
@@ -1144,12 +1192,6 @@ case "${1}" in
   ;;
   mailcatcher)
     mailcatcher "${@:2}"
-  ;;
-  image)
-    image "${@:2}"
-  ;;
-  container)
-    container "${@:2}"
   ;;
   *)
     output_error "dev: Unknown command. See 'dev --help'"
