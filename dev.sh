@@ -142,7 +142,7 @@ image_destroy() {
 
   for ID in $(sudo docker ps -aq); do
     if [ "$(sudo docker inspect -f "{{ .Config.Image }}" "${ID}" 2> /dev/null)" == "${IMAGE}" ]; then
-      container "${ID}" destroy
+      container_destroy "${ID}"
     fi
   done
 
@@ -258,6 +258,30 @@ container_attach() {
   sudo nsenter --target "${PID}" --mount --uts --ipc --net --pid
 }
 
+container_destroy() {
+  output_debug "FUNCTION: container ARGS: ${*}"
+
+  local CONTAINER="${1}"
+
+  if ! $(container_exists "${CONTAINER}"); then
+    output_error "No such container: ${CONTAINER}"
+
+    return 1
+  fi
+
+  CONTAINER=$(container_name "${CONTAINER}")
+
+  if $(container_running "${CONTAINER}"); then
+    output "Stopping container: ${CONTAINER}"
+
+    sudo docker stop "${CONTAINER}" > >(log) 2> >(log_error)
+  fi
+
+  output "Destroying container: ${CONTAINER}"
+
+  sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
+}
+
 container() {
   output_debug "FUNCTION: container ARGS: ${*}"
 
@@ -283,23 +307,7 @@ EOF
       container_up "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
-      if ! $(container_exists "${CONTAINER}"); then
-        output_error "No such container: ${CONTAINER}"
-
-        return 1
-      fi
-
-      CONTAINER=$(container_name "${CONTAINER}")
-
-      if $(container_running "${CONTAINER}"); then
-        output "Stopping container: ${CONTAINER}"
-
-        sudo docker stop "${CONTAINER}" > >(log) 2> >(log_error)
-      fi
-
-      output "Destroying container: ${CONTAINER}"
-
-      sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
+      container_destroy "${CONTAINER}"
     ;;
     *)
       output_error "dev: Unknown command. See 'dev container --help'"
@@ -447,7 +455,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      image "${IMAGE}" pull
+      image_update "${IMAGE}"
     ;;
     build)
       image "${IMAGE}" build "${CONTAINER}"
@@ -536,7 +544,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      image "${IMAGE}" pull
+      image_update "${IMAGE}"
     ;;
     build)
       image "${IMAGE}" build "${CONTAINER}"
@@ -611,7 +619,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      image "${IMAGE}" pull
+      image_update "${IMAGE}"
     ;;
     build)
       image "${IMAGE}" build "${CONTAINER}"
@@ -684,7 +692,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      image "${IMAGE}" pull
+      image_update "${IMAGE}"
     ;;
     build)
       image "${IMAGE}" build "${CONTAINER}"
@@ -758,7 +766,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      image "${IMAGE}" pull
+      image_update "${IMAGE}"
     ;;
     build)
       image "${IMAGE}" build "${CONTAINER}"
@@ -832,7 +840,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      image "${IMAGE}" pull
+      image_update "${IMAGE}"
     ;;
     build)
       image "${IMAGE}" build "${CONTAINER}"
@@ -906,7 +914,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      image "${IMAGE}" pull
+      image_update "${IMAGE}"
     ;;
     build)
       image "${IMAGE}" build "${CONTAINER}"
@@ -1028,7 +1036,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      image "${IMAGE}" pull
+      image_update "${IMAGE}"
     ;;
     build)
       image "${IMAGE}" build "${CONTAINER}"
