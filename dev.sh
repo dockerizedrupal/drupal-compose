@@ -195,26 +195,6 @@ container_start() {
   "${CALLBACK}"
 }
 
-container_stop() {
-  output_debug "FUNCTION: container_stop ARGS: ${*}"
-
-  local CONTAINER="${1}"
-
-  if ! $(container_exists "${CONTAINER}"); then
-    output_error "No such container: ${CONTAINER}"
-
-    return 1
-  fi
-
-  if ! $(container_running "${CONTAINER}"); then
-    output_error "Container is not running: ${CONTAINER}"
-
-    return 1
-  fi
-
-  container_destroy "${CONTAINER}"
-}
-
 container_cp() {
   output_debug "FUNCTION: container_cp ARGS: ${*}"
 
@@ -325,7 +305,7 @@ EOF
       container_start "${CONTAINER}"
     ;;
     stop)
-      container_stop "${CONTAINER}"
+      container_destroy "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -416,7 +396,7 @@ EOF
       container_start "${CONTAINER}"
     ;;
     stop)
-      container_stop "${CONTAINER}"
+      container_destroy "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -502,7 +482,7 @@ EOF
       container_start "${CONTAINER}"
     ;;
     stop)
-      container_stop "${CONTAINER}"
+      container_destroy "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -574,7 +554,7 @@ EOF
       container_start "${CONTAINER}"
     ;;
     stop)
-      container_stop "${CONTAINER}"
+      container_destroy "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -645,7 +625,7 @@ EOF
       container_start "${CONTAINER}"
     ;;
     stop)
-      container_stop "${CONTAINER}"
+      container_destroy "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -716,7 +696,7 @@ EOF
       container_start "${CONTAINER}"
     ;;
     stop)
-      container_stop "${CONTAINER}"
+      container_destroy "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -787,7 +767,7 @@ EOF
       container_start "${CONTAINER}"
     ;;
     stop)
-      container_stop "${CONTAINER}"
+      container_destroy "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -858,7 +838,7 @@ EOF
       container_start "${CONTAINER}"
     ;;
     stop)
-      container_stop "${CONTAINER}"
+      container_destroy "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -981,7 +961,7 @@ EOF
       container_start "${CONTAINER}"
     ;;
     stop)
-      container_stop "${CONTAINER}"
+      container_destroy "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
