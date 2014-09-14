@@ -206,7 +206,7 @@ container_cp() {
 }
 
 container_attach() {
-  output_debug "FUNCTION: container_cp ARGS: ${*}"
+  output_debug "FUNCTION: container_attach ARGS: ${*}"
 
   local CONTAINER="${1}"
 
@@ -228,7 +228,7 @@ container_attach() {
 }
 
 container_destroy() {
-  output_debug "FUNCTION: container ARGS: ${*}"
+  output_debug "FUNCTION: container_destroy ARGS: ${*}"
 
   local CONTAINER="${1}"
 
