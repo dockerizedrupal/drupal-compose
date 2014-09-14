@@ -10,47 +10,47 @@ dev install
 dev update
 dev dev update
 dev dev build
-dev dev up
+dev dev start
 dev dev destroy
 dev dev redis get [KEY]
 dev dev redis set [KEY] [VALUE]
 dev redis update
 dev redis build
-dev redis up
+dev redis start
 dev redis destroy
 dev redis get [KEY]
 dev redis set [KEY] [VALUE]
 dev apache update
 dev apache build
-dev apache up
+dev apache start
 dev apache destroy
 dev mysql update
 dev mysql build
-dev mysql up
+dev mysql start
 dev mysql destroy
 dev php update
 dev php build
-dev php up
+dev php start
 dev php destroy
 dev php52 update
 dev php52 build
-dev php52 up
+dev php52 start
 dev php52 destroy
 dev php53 update
 dev php53 build
-dev php53 up
+dev php53 start
 dev php53 destroy
 dev php54 update
 dev php54 build
-dev php54 up
+dev php54 start
 dev php54 destroy
 dev php55 update
 dev php55 build
-dev php55 up
+dev php55 start
 dev php55 destroy
 dev mailcatcher update
 dev mailcatcher build
-dev mailcatcher up
+dev mailcatcher start
 dev mailcatcher destroy
 EOF
 
@@ -174,8 +174,8 @@ container_name() {
   echo "$(sudo docker inspect -f "{{ .Name }}" "${1}" 2> /dev/null | cut -d "/" -f 2)"
 }
 
-container_up() {
-  output_debug "FUNCTION: container_up ARGS: ${*}"
+container_start() {
+  output_debug "FUNCTION: container_start ARGS: ${*}"
 
   local IMAGE="${1}"
   local CONTAINER="${2}"
@@ -276,7 +276,7 @@ dev() {
 dev dev attach
 dev dev update
 dev dev build
-dev dev up
+dev dev start
 dev dev destroy
 dev dev redis get [KEY]
 dev dev redis set [KEY] [VALUE]
@@ -295,8 +295,8 @@ EOF
     build)
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
-    up)
-      container_up "${IMAGE}" "${CONTAINER}"
+    start)
+      container_start "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -361,7 +361,7 @@ redis() {
 dev redis attach
 dev redis update
 dev redis build
-dev redis up
+dev redis start
 dev redis destroy
 dev redis get [KEY]
 dev redis set [KEY] [VALUE]
@@ -380,10 +380,10 @@ EOF
     build)
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
-    up)
-      dev up
+    start)
+      dev start
 
-      container_up "${IMAGE}" "${CONTAINER}"
+      container_start "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -445,7 +445,7 @@ apache() {
 dev apache attach
 dev apache update
 dev apache build
-dev apache up
+dev apache start
 dev apache destroy
 EOF
 
@@ -462,10 +462,10 @@ EOF
     build)
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
-    up)
-      dev up
+    start)
+      dev start
 
-      container_up "${IMAGE}" "${CONTAINER}"
+      container_start "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -513,7 +513,7 @@ mysql() {
 dev mysql attach
 dev mysql update
 dev mysql build
-dev mysql up
+dev mysql start
 dev mysql destroy
 EOF
 
@@ -530,10 +530,10 @@ EOF
     build)
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
-    up)
-      dev up
+    start)
+      dev start
 
-      container_up "${IMAGE}" "${CONTAINER}"
+      container_start "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -579,7 +579,7 @@ php52() {
 dev php52 attach
 dev php52 update
 dev php52 build
-dev php52 up
+dev php52 start
 dev php52 destroy
 EOF
 
@@ -596,11 +596,11 @@ EOF
     build)
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
-    up)
-      dev up
-      apache up
+    start)
+      dev start
+      apache start
 
-      container_up "${IMAGE}" "${CONTAINER}"
+      container_start "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -646,7 +646,7 @@ php53() {
 dev php53 attach
 dev php53 update
 dev php53 build
-dev php53 up
+dev php53 start
 dev php53 destroy
 EOF
 
@@ -663,11 +663,11 @@ EOF
     build)
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
-    up)
-      dev up
-      apache up
+    start)
+      dev start
+      apache start
 
-      container_up "${IMAGE}" "${CONTAINER}"
+      container_start "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -713,7 +713,7 @@ php54() {
 dev php54 attach
 dev php54 update
 dev php54 build
-dev php54 up
+dev php54 start
 dev php54 destroy
 EOF
 
@@ -730,11 +730,11 @@ EOF
     build)
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
-    up)
-      dev up
-      apache up
+    start)
+      dev start
+      apache start
 
-      container_up "${IMAGE}" "${CONTAINER}"
+      container_start "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -780,7 +780,7 @@ php55() {
 dev php55 attach
 dev php55 update
 dev php55 build
-dev php55 up
+dev php55 start
 dev php55 destroy
 EOF
 
@@ -797,11 +797,11 @@ EOF
     build)
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
-    up)
-      dev up
-      apache up
+    start)
+      dev start
+      apache start
 
-      container_up "${IMAGE}" "${CONTAINER}"
+      container_start "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -821,7 +821,7 @@ php() {
     cat << EOF
 dev php update
 dev php build
-dev php up
+dev php start
 dev php destroy
 EOF
 
@@ -841,11 +841,11 @@ EOF
       php54 build
       php55 build
     ;;
-    up)
-      php52 up
-      php53 up
-      php54 up
-      php55 up
+    start)
+      php52 start
+      php53 start
+      php54 start
+      php55 start
     ;;
     destroy)
       php52 destroy
@@ -893,7 +893,7 @@ mailcatcher() {
 dev mailcatcher attach
 dev mailcatcher update
 dev mailcatcher build
-dev mailcatcher up
+dev mailcatcher start
 dev mailcatcher destroy
 EOF
 
@@ -910,10 +910,10 @@ EOF
     build)
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
-    up)
-      dev up
+    start)
+      dev start
 
-      container_up "${IMAGE}" "${CONTAINER}"
+      container_start "${IMAGE}" "${CONTAINER}"
     ;;
     destroy)
       image_destroy "${IMAGE}"
@@ -1007,12 +1007,12 @@ update() {
 }
 
 up() {
-  dev up
-  redis up
-  apache up
-  mysql up
-  php up
-  mailcatcher up
+  dev start
+  redis start
+  apache start
+  mysql start
+  php start
+  mailcatcher start
 }
 
 destroy() {
@@ -1031,8 +1031,8 @@ case "${1}" in
   update)
     update
     ;;
-  up)
-    up
+  start)
+    start
     ;;
   destroy)
     destroy
