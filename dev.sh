@@ -194,6 +194,16 @@ container_cp() {
   sudo docker cp "${CONTAINER}:${SOURCE}" "${DESTINATION}"
 }
 
+container_attach() {
+  output_debug "FUNCTION: container_cp ARGS: ${*}"
+
+  local CONTAINER="${1}"
+
+  local PID="$(sudo docker inspect --format "{{ .State.Pid }}" "${CONTAINER}" 2> /dev/null)"
+
+  sudo nsenter --target "${PID}" --mount --uts --ipc --net --pid
+}
+
 container() {
   output_debug "FUNCTION: container ARGS: ${*}"
 
