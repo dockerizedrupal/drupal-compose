@@ -1053,7 +1053,7 @@ update() {
 
   "${TMP}/dev.sh" install
 
-  exit 0
+  exit
 }
 
 up() {
