@@ -184,6 +184,16 @@ container_up() {
   eval "${CALLBACK} ${CONTAINER} ${IMAGE}"
 }
 
+container_cp() {
+  output_debug "FUNCTION: container_cp ARGS: ${*}"
+
+  local CONTAINER="${1}"
+  local SOURCE="${2}"
+  local DESTINATION="${3}"
+
+  sudo docker cp "${CONTAINER}:${SOURCE}" "${DESTINATION}"
+}
+
 container() {
   output_debug "FUNCTION: container ARGS: ${*}"
 
