@@ -271,6 +271,16 @@ EOF
   esac
 }
 
+dev_build() {
+  output_debug "FUNCTION: dev_build ARGS: ${*}"
+
+  local IMAGE="${1}"
+
+  sudo docker build \
+    -t "${IMAGE}" \
+    http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git > >(log) 2> >(log_error)
+}
+
 dev_up() {
   output_debug "FUNCTION: dev_up ARGS: ${*}"
 
@@ -285,16 +295,6 @@ dev_up() {
     "${IMAGE}" > >(log) 2> >(log_error)
 }
 
-dev_build() {
-  output_debug "FUNCTION: dev_build ARGS: ${*}"
-
-  local IMAGE="${1}"
-
-  sudo docker build \
-    -t "${IMAGE}" \
-    http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git > >(log) 2> >(log_error)
-}
-
 dev() {
   local CONTAINER=dev
   local IMAGE=simpledrupalcloud/dev
@@ -303,8 +303,12 @@ dev() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev dev update
+dev dev build
 dev dev up
 dev dev destroy
+dev dev redis get [KEY]
+dev dev redis set [KEY] [VALUE]
 EOF
 
     exit 1
@@ -347,6 +351,19 @@ EOF
   esac
 }
 
+redis_build() {
+  output_debug "FUNCTION: dev_build ARGS: ${*}"
+
+  local IMAGE="${1}"
+
+  TMP=$(mktemp -d) \
+    && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-redis.git "${TMP}" \
+    && cd "${TMP}" \
+    && git checkout 2.8.14 \
+    && sudo docker build -t "${IMAGE}" . \
+    && cd -
+}
+
 redis_up() {
   output_debug "FUNCTION: redis_up ARGS: ${*}"
 
@@ -381,6 +398,12 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    update)
+      image "${IMAGE}" pull
+    ;;
+    build)
+      image "${IMAGE}" build "${CONTAINER}"
+    ;;
     up)
       dev up
 
