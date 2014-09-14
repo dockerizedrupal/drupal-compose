@@ -81,6 +81,22 @@ image_exists() {
   return "${RETURN}"
 }
 
+image_build() {
+  output_debug "FUNCTION: image_build ARGS: ${*}"
+
+  local IMAGE="${1}"
+  local CONTAINER="${2}"
+  local CALLBACK="${CONTAINER}_build"
+
+  if $(image_exists "${IMAGE}"); then
+    image_destroy "${IMAGE}"
+  fi
+
+  output "Building image: ${IMAGE}"
+
+  eval "${CALLBACK} ${IMAGE}"
+}
+
 image_pull() {
   output_debug "FUNCTION: image_pull ARGS: ${*}"
 
@@ -118,6 +134,7 @@ image() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev image [NAME] build
 dev image [NAME] pull
 dev image [NAME] destroy
 EOF
@@ -128,6 +145,11 @@ EOF
   local IMAGE="${1}"
 
   case "${2}" in
+    build)
+      local CONTAINER="${3}"
+
+      image_build "${IMAGE}" "${CONTAINER}"
+    ;;
     pull)
       image_pull "${IMAGE}"
     ;;
@@ -265,6 +287,16 @@ dev_up() {
     "${IMAGE}" > >(log) 2> >(log_error)
 }
 
+dev_build() {
+  output_debug "FUNCTION: dev_build ARGS: ${*}"
+
+  local IMAGE="${1}"
+
+  sudo docker build \
+    -t "${IMAGE}" \
+    http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git > >(log) 2> >(log_error)
+}
+
 dev() {
   local CONTAINER=dev
   local IMAGE=simpledrupalcloud/dev
@@ -283,6 +315,9 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    build)
+      image "${IMAGE}" build "${CONTAINER}"
+    ;;
     up)
       container "${CONTAINER}" up "${IMAGE}"
     ;;
@@ -347,7 +382,7 @@ EOF
   case "${ACTION}" in
     up)
       dev up
-      
+
       container "${CONTAINER}" up "${IMAGE}"
     ;;
     destroy)
