@@ -103,8 +103,7 @@ image_build() {
   output_debug "FUNCTION: image_build ARGS: ${*}"
 
   local IMAGE="${1}"
-  local CONTAINER="${2}"
-  local CALLBACK="${CONTAINER}_build"
+  local CALLBACK="${2}_build"
 
   if $(image_exists "${IMAGE}"); then
     image_destroy "${IMAGE}"
@@ -112,7 +111,7 @@ image_build() {
 
   output "Building image: ${IMAGE}"
 
-  eval "${CALLBACK} ${IMAGE}"
+  "${CALLBACK}"
 }
 
 image_update() {
