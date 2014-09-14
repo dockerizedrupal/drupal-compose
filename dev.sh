@@ -278,7 +278,7 @@ dev_build() {
 
   sudo docker build \
     -t "${IMAGE}" \
-    http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git > >(log) 2> >(log_error)
+    http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git
 }
 
 dev_up() {
@@ -352,7 +352,7 @@ EOF
 }
 
 redis_build() {
-  output_debug "FUNCTION: dev_build ARGS: ${*}"
+  output_debug "FUNCTION: redis_build ARGS: ${*}"
 
   local IMAGE="${1}"
 
@@ -431,6 +431,19 @@ EOF
   esac
 }
 
+apache_build() {
+  output_debug "FUNCTION: apache_build ARGS: ${*}"
+
+  local IMAGE="${1}"
+
+  TMP=$(mktemp -d) \
+    && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-apache.git "${TMP}" \
+    && cd "${TMP}" \
+    && git checkout 2.2.22 \
+    && sudo docker build -t "${IMAGE}" . \
+    && cd -
+}
+
 apache_up() {
   output_debug "FUNCTION: apache_up ARGS: ${*}"
 
@@ -468,6 +481,12 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    update)
+      image "${IMAGE}" pull
+    ;;
+    build)
+      image "${IMAGE}" build "${CONTAINER}"
+    ;;
     up)
       dev up
 
@@ -482,6 +501,19 @@ EOF
       exit 1
     ;;
   esac
+}
+
+mysql_build() {
+  output_debug "FUNCTION: mysql_build ARGS: ${*}"
+
+  local IMAGE="${1}"
+
+  TMP=$(mktemp -d) \
+    && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-mysql.git "${TMP}" \
+    && cd "${TMP}" \
+    && git checkout 5.5.38 \
+    && sudo docker build -t "${IMAGE}" . \
+    && cd -
 }
 
 mysql_up() {
@@ -518,6 +550,12 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    update)
+      image "${IMAGE}" pull
+    ;;
+    build)
+      image "${IMAGE}" build "${CONTAINER}"
+    ;;
     up)
       dev up
 
@@ -532,6 +570,19 @@ EOF
       exit 1
     ;;
   esac
+}
+
+php52_build() {
+  output_debug "FUNCTION: php52_build ARGS: ${*}"
+
+  local IMAGE="${1}"
+
+  TMP=$(mktemp -d) \
+    && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
+    && cd "${TMP}" \
+    && git checkout 5.2.17 \
+    && sudo docker build -t "${IMAGE}" . \
+    && cd -
 }
 
 php52_up() {
@@ -566,6 +617,12 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    update)
+      image "${IMAGE}" pull
+    ;;
+    build)
+      image "${IMAGE}" build "${CONTAINER}"
+    ;;
     up)
       dev up
       apache up
@@ -581,6 +638,19 @@ EOF
       exit 1
     ;;
   esac
+}
+
+php53_build() {
+  output_debug "FUNCTION: php53_build ARGS: ${*}"
+
+  local IMAGE="${1}"
+
+  TMP=$(mktemp -d) \
+    && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
+    && cd "${TMP}" \
+    && git checkout 5.3.28 \
+    && sudo docker build -t "${IMAGE}" . \
+    && cd -
 }
 
 php53_up() {
@@ -615,6 +685,12 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    update)
+      image "${IMAGE}" pull
+    ;;
+    build)
+      image "${IMAGE}" build "${CONTAINER}"
+    ;;
     up)
       dev up
       apache up
@@ -630,6 +706,19 @@ EOF
       exit 1
     ;;
   esac
+}
+
+php54_build() {
+  output_debug "FUNCTION: php53_build ARGS: ${*}"
+
+  local IMAGE="${1}"
+
+  TMP=$(mktemp -d) \
+    && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
+    && cd "${TMP}" \
+    && git checkout 5.4.31 \
+    && sudo docker build -t "${IMAGE}" . \
+    && cd -
 }
 
 php54_up() {
@@ -664,6 +753,12 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    update)
+      image "${IMAGE}" pull
+    ;;
+    build)
+      image "${IMAGE}" build "${CONTAINER}"
+    ;;
     up)
       dev up
       apache up
@@ -679,6 +774,19 @@ EOF
       exit 1
     ;;
   esac
+}
+
+php55_build() {
+  output_debug "FUNCTION: php53_build ARGS: ${*}"
+
+  local IMAGE="${1}"
+
+  TMP=$(mktemp -d) \
+    && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
+    && cd "${TMP}" \
+    && git checkout 5.5.15 \
+    && sudo docker build -t "${IMAGE}" . \
+    && cd -
 }
 
 php55_up() {
@@ -713,6 +821,12 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    update)
+      image "${IMAGE}" pull
+    ;;
+    build)
+      image "${IMAGE}" build "${CONTAINER}"
+    ;;
     up)
       dev up
       apache up
@@ -745,6 +859,18 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    update)
+      php52 update
+      php53 update
+      php54 update
+      php55 update
+    ;;
+    build)
+      php52 build
+      php53 build
+      php54 build
+      php55 build
+    ;;
     up)
       php52 up
       php53 up
@@ -763,6 +889,19 @@ EOF
       exit 1
     ;;
   esac
+}
+
+mailcatcher_build() {
+  output_debug "FUNCTION: php53_build ARGS: ${*}"
+
+  local IMAGE="${1}"
+
+  TMP=$(mktemp -d) \
+    && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-mailcatcher.git "${TMP}" \
+    && cd "${TMP}" \
+    && git checkout 0.5.12 \
+    && sudo docker build -t "${IMAGE}" . \
+    && cd -
 }
 
 mailcatcher_up() {
@@ -796,6 +935,12 @@ EOF
   local ACTION="${1}"
 
   case "${ACTION}" in
+    update)
+      image "${IMAGE}" pull
+    ;;
+    build)
+      image "${IMAGE}" build "${CONTAINER}"
+    ;;
     up)
       dev up
 
