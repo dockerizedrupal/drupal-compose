@@ -320,9 +320,7 @@ EOF
     exit 1
   fi
 
-  local ACTION="${1}"
-
-  case "${ACTION}" in
+  case "${1}" in
     attach)
       container_attach "${CONTAINER}"
     ;;
@@ -356,6 +354,11 @@ EOF
 
           exit 1
       esac
+    ;;
+    *)
+      output_error "dev: Unknown command. See 'dev dev --help'"
+
+      exit 1
     ;;
   esac
 }
@@ -402,9 +405,7 @@ EOF
     exit 1
   fi
 
-  local ACTION="${1}"
-
-  case "${ACTION}" in
+  case "${1}" in
     attach)
       container_attach "${CONTAINER}"
     ;;
@@ -486,9 +487,7 @@ EOF
     exit 1
   fi
 
-  local ACTION="${1}"
-
-  case "${ACTION}" in
+  case "${1}" in
     attach)
       container_attach "${CONTAINER}"
     ;;
@@ -556,9 +555,7 @@ EOF
     exit 1
   fi
 
-  local ACTION="${1}"
-
-  case "${ACTION}" in
+  case "${1}" in
     attach)
       container_attach "${CONTAINER}"
     ;;
@@ -624,9 +621,7 @@ EOF
     exit 1
   fi
 
-  local ACTION="${1}"
-
-  case "${ACTION}" in
+  case "${1}" in
     attach)
       container_attach "${CONTAINER}"
     ;;
@@ -693,9 +688,7 @@ EOF
     exit 1
   fi
 
-  local ACTION="${1}"
-
-  case "${ACTION}" in
+  case "${1}" in
     attach)
       container_attach "${CONTAINER}"
     ;;
@@ -762,9 +755,7 @@ EOF
     exit 1
   fi
 
-  local ACTION="${1}"
-
-  case "${ACTION}" in
+  case "${1}" in
     attach)
       container_attach "${CONTAINER}"
     ;;
@@ -831,9 +822,7 @@ EOF
     exit 1
   fi
 
-  local ACTION="${1}"
-
-  case "${ACTION}" in
+  case "${1}" in
     attach)
       container_attach "${CONTAINER}"
     ;;
@@ -874,9 +863,7 @@ EOF
     exit 1
   fi
 
-  local ACTION="${1}"
-
-  case "${ACTION}" in
+  case "${1}" in
     update)
       php52 update
       php53 update
@@ -948,9 +935,7 @@ EOF
     exit 1
   fi
 
-  local ACTION="${1}"
-
-  case "${ACTION}" in
+  case "${1}" in
     attach)
       container_attach "${CONTAINER}"
     ;;
