@@ -431,6 +431,8 @@ EOF
 php52_start() {
   output_debug "FUNCTION: php52_start ARGS: ${*}"
 
+  apache up
+
   local CONTAINER="${1}"
   local IMAGE="${2}"
 
@@ -476,6 +478,8 @@ EOF
 
 php53_start() {
   output_debug "FUNCTION: php53_start ARGS: ${*}"
+
+  apache up
 
   local CONTAINER="${1}"
   local IMAGE="${2}"
@@ -523,6 +527,8 @@ EOF
 php54_start() {
   output_debug "FUNCTION: php54_start ARGS: ${*}"
 
+  apache up
+
   local CONTAINER="${1}"
   local IMAGE="${2}"
 
@@ -568,6 +574,8 @@ EOF
 
 php55_start() {
   output_debug "FUNCTION: php55_start ARGS: ${*}"
+
+  apache up
 
   local CONTAINER="${1}"
   local IMAGE="${2}"
