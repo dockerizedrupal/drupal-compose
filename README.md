@@ -8,7 +8,23 @@ Build the image
       -t simpledrupalcloud/dev \
       http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git
 
-All-in-one powertool
+
+    CONTAINER=dev && sudo docker run \
+      --name "${CONTAINER}" \
+      -h "${CONTAINER}" \
+      -p 80:80 \
+      -d \
+      simpledrupalcloud/dev
+
+    CONTAINER=apache && sudo docker run \
+      --name "${CONTAINER}" \
+      --net container:dev \
+      -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
+      -v /var/apache-2.2.22/data:/apache-2.2.22/data \
+      -v /var/apache-2.2.22/log:/apache-2.2.22/log \
+      -e APACHE_SERVERNAME=example.com \
+      -d \
+      simpledrupalcloud/apache:2.2.22
 
 Install
 -------
