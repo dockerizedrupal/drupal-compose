@@ -327,8 +327,8 @@ dev_start() {
     --name dev \
     -h dev \
     -p 80:80 \
-    -p 127.0.0.1:3306:3306 \
-    -p 127.0.0.1:1080:1080 \
+    -p 3306:3306 \
+    -p 1080:1080 \
     -d \
     simpledrupalcloud/dev > >(log) 2> >(log_error)
 }
