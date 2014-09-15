@@ -340,7 +340,7 @@ EOF
 redis_build() {
   output_debug "FUNCTION: redis_build ARGS: ${*}"
 
-  local TMP=$(mktemp -d) \
+  local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-redis.git "${TMP}" \
     && cd "${TMP}" \
     && git checkout 2.8.14 \
@@ -423,7 +423,7 @@ EOF
 apache_build() {
   output_debug "FUNCTION: apache_build ARGS: ${*}"
 
-  local TMP=$(mktemp -d) \
+  local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-apache.git "${TMP}" \
     && cd "${TMP}" \
     && git checkout 2.2.22 \
@@ -498,7 +498,7 @@ EOF
 mysql_build() {
   output_debug "FUNCTION: mysql_build ARGS: ${*}"
 
-  local TMP=$(mktemp -d) \
+  local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-mysql.git "${TMP}" \
     && cd "${TMP}" \
     && git checkout 5.5.38 \
@@ -570,7 +570,7 @@ EOF
 php52_build() {
   output_debug "FUNCTION: php52_build ARGS: ${*}"
 
-  local TMP=$(mktemp -d) \
+  local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
     && cd "${TMP}" \
     && git checkout 5.2.17 \
@@ -641,7 +641,7 @@ EOF
 php53_build() {
   output_debug "FUNCTION: php53_build ARGS: ${*}"
 
-  local TMP=$(mktemp -d) \
+  local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
     && cd "${TMP}" \
     && git checkout 5.3.28 \
@@ -712,7 +712,7 @@ EOF
 php54_build() {
   output_debug "FUNCTION: php53_build ARGS: ${*}"
 
-  local TMP=$(mktemp -d) \
+  local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
     && cd "${TMP}" \
     && git checkout 5.4.31 \
@@ -783,7 +783,7 @@ EOF
 php55_build() {
   output_debug "FUNCTION: php53_build ARGS: ${*}"
 
-  local TMP=$(mktemp -d) \
+  local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
     && cd "${TMP}" \
     && git checkout 5.5.15 \
@@ -908,7 +908,7 @@ EOF
 mailcatcher_build() {
   output_debug "FUNCTION: php53_build ARGS: ${*}"
 
-  local TMP=$(mktemp -d) \
+  local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-mailcatcher.git "${TMP}" \
     && cd "${TMP}" \
     && git checkout 0.5.12 \
@@ -974,19 +974,29 @@ EOF
   esac
 }
 
-#phpmyadmin() {
-#  TMP=$(mktemp -d)
-#
-#  sudo wget http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin/4.2.8/phpMyAdmin-4.2.8-english.zip -O "${TMP}/phpMyAdmin-4.2.8-english.zip"
-#
-#  sudo apt-get install -y unzip
-#
-#  sudo unzip "${TMP}/phpMyAdmin-4.2.8-english.zip" -d /var/apache-2.2.22/data
-#
-#  sudo rm -rf /var/apache-2.2.22/data/phpmyadmin
-#
-#  sudo mv /var/apache-2.2.22/data/phpMyAdmin-4.2.8-english /var/apache-2.2.22/data/phpmyadmin
-#}
+phpmyadmin() {
+  output "Instaling package: phpmyadmin"
+
+  TMP="$(mktemp -d)" > >(log) 2> >(log_error)
+
+  output "Downloading package: PhpMyAdmin"
+
+  sudo wget http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin/4.2.8/phpMyAdmin-4.2.8-english.zip -O "${TMP}/phpMyAdmin-4.2.8-english.zip" > >(log) 2> >(log_error)
+
+  output "Instaling package: unzip"
+
+  sudo apt-get install -y unzip > >(log) 2> >(log_error)
+
+  sudo unzip "${TMP}/phpMyAdmin-4.2.8-english.zip" -d /var/apache-2.2.22/data > >(log) 2> >(log_error)
+
+  sudo rm -rf /var/apache-2.2.22/data/phpmyadmin > >(log) 2> >(log_error)
+
+  sudo mv /var/apache-2.2.22/data/phpMyAdmin-4.2.8-english /var/apache-2.2.22/data/phpmyadmin > >(log) 2> >(log_error)
+
+  sudo cp $(dirname "${0}")/apache-2.2.22/config.inc.php /var/apache-2.2.22/data/phpmyadmin > >(log) 2> >(log_error)
+
+  sudo chown www-data.www-data /var/apache-2.2.22/data/phpmyadmin -R > >(log) 2> >(log_error)
+}
 
 install() {
   sudo mkdir -p "${LOG_DIR}"
@@ -1052,11 +1062,7 @@ EOF
   mailcatcher update
   mailcatcher start
 
-#  phpmyadmin
-#
-#  sudo cp $(dirname "${0}")/config.inc.php /var/apache-2.2.22/data/phpmyadmin
-#
-#  sudo chown www-data.www-data /var/apache-2.2.22/data/phpmyadmin -R
+  phpmyadmin
 
   sudo cp "${SCRIPT}" /usr/local/bin/dev
 }
@@ -1064,7 +1070,7 @@ EOF
 update() {
   output "Updating dev"
 
-  TMP=$(mktemp -d)
+  TMP="$(mktemp -d)"
 
   git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${TMP}" > >(log) 2> >(log_error)
 
