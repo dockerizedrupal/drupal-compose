@@ -869,32 +869,32 @@ EOF
   case "${1}" in
     update)
       php52 update
-      php53 update
-      php54 update
+#      php53 update
+#      php54 update
       php55 update
     ;;
     build)
       php52 build
-      php53 build
-      php54 build
+#      php53 build
+#      php54 build
       php55 build
     ;;
     start)
       php52 start
-      php53 start
-      php54 start
+#      php53 start
+#      php54 start
       php55 start
     ;;
     stop)
       php52 stop
-      php53 stop
-      php54 stop
+#      php53 stop
+#      php54 stop
       php55 stop
     ;;
     destroy)
       php52 destroy
-      php53 destroy
-      php54 destroy
+#      php53 destroy
+#      php54 destroy
       php55 destroy
     ;;
     *)
