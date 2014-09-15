@@ -1080,7 +1080,7 @@ install() {
   redis start
 
   sudo mkdir -p /var/apache-2.2.22/conf.d
-  sudo cp $(dirname "${0}")/apache-2.2.22/php5-fcgi /var/apache-2.2.22/conf.d
+  sudo cp $(dirname "${0}")/apache-2.2.22/php /var/apache-2.2.22/conf.d
 
   apache stop
   apache update
