@@ -1305,7 +1305,7 @@ case "${1}" in
   redis)
     case "${2}" in
       get)
-        echo -n "$(redis get "${@:3}")"
+        echo -n "$(dev_get "${@:3}")"
       ;;
       *)
         redis "${@:2}"
