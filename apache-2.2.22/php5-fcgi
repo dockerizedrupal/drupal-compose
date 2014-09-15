@@ -1,41 +1,41 @@
 <IfModule mod_fastcgi.c>
-	AddHandler php5-fcgi .php
+	AddHandler php .php
 
-	Alias /php-5.2.17-fcgi /var/www/php-5.2.17-fcgi
-	FastCgiExternalServer /var/www/php-5.2.17-fcgi -host 127.0.0.1:5217 -idle-timeout 300 -pass-header Authorization
+	Alias /php52 /var/www/php52
+	FastCgiExternalServer /var/www/php52 -host 127.0.0.1:5217 -idle-timeout 300 -pass-header Authorization
 
-	<Location /php-5.2.17-fcgi>
+	<Location /php52>
 		Order deny,allow
 		Deny from all
 		Allow from env=REDIRECT_STATUS
 	</Location>
 
-	Alias /php-5.3.28-fcgi /var/www/php-5.3.28-fcgi
-	FastCgiExternalServer /var/www/php-5.3.28-fcgi -host 127.0.0.1:5328 -idle-timeout 300 -pass-header Authorization
+	Alias /php53 /var/www/php53
+	FastCgiExternalServer /var/www/php53 -host 127.0.0.1:5328 -idle-timeout 300 -pass-header Authorization
 
-	<Location /php-5.3.28-fcgi>
+	<Location /php53>
 		Order deny,allow
 		Deny from all
 		Allow from env=REDIRECT_STATUS
 	</Location>
 
-	Alias /php-5.4.31-fcgi /var/www/php-5.4.31-fcgi
-	FastCgiExternalServer /var/www/php-5.4.31-fcgi -host 127.0.0.1:5431 -idle-timeout 300 -pass-header Authorization
+	Alias /php54 /var/www/php54
+	FastCgiExternalServer /var/www/php54 -host 127.0.0.1:5431 -idle-timeout 300 -pass-header Authorization
 
-	<Location /php-5.4.31-fcgi>
+	<Location /php54>
 		Order deny,allow
 		Deny from all
 		Allow from env=REDIRECT_STATUS
 	</Location>
 
-	Alias /php-5.5.15-fcgi /var/www/php-5.5.15-fcgi
-	FastCgiExternalServer /var/www/php-5.5.15-fcgi -host 127.0.0.1:5515 -idle-timeout 300 -pass-header Authorization
+	Alias /php55 /var/www/php55
+	FastCgiExternalServer /var/www/php55 -host 127.0.0.1:5515 -idle-timeout 300 -pass-header Authorization
 
-	<Location /php-5.5.15-fcgi>
+	<Location /php55>
 		Order deny,allow
 		Deny from all
 		Allow from env=REDIRECT_STATUS
 	</Location>
 
-	Action php5-fcgi /php-5.5.15-fcgi
+	Action php /php55
 </IfModule>
