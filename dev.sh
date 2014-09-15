@@ -1031,12 +1031,9 @@ install() {
 
   SCRIPT=$(realpath -s "${0}")
 
-  if [ "${SCRIPT}" = /usr/local/bin/dev ]; then
-    cat << EOF
-dev is already installed on this machine.
+  if [ "${SCRIPT}" == /usr/local/bin/dev ]; then
+    output_error "dev: Already installed on this machine"
 
-Type 'dev update' to get the latest updates.
-EOF
     exit 1
   fi
 
