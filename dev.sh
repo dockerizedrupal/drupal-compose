@@ -307,17 +307,17 @@ EOF
   fi
 
   case "${1}" in
-    status)
-      if $(container_exists "${CONTAINER}"); then
-        output_error "No such container: ${CONTAINER}"
-
-        return 0
-      else
-        output_error "No such container: ${CONTAINER}"
-
-        return 1
-      fi
-    ;;
+#    status)
+#      if $(container_exists "${CONTAINER}"); then
+#        output_error "No such container: ${CONTAINER}"
+#
+#        return 0
+#      else
+#        output_error "No such container: ${CONTAINER}"
+#
+#        return 1
+#      fi
+#    ;;
     attach)
       container_attach "${CONTAINER}"
     ;;
