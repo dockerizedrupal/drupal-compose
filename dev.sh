@@ -12,8 +12,6 @@ dev dev update
 dev dev build
 dev dev start
 dev dev destroy
-dev dev redis get [KEY]
-dev dev redis set [KEY] [VALUE]
 dev redis update
 dev redis build
 dev redis start
@@ -251,6 +249,19 @@ container_destroy() {
   sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
 }
 
+dev_get() {
+  local KEY="${1}"
+
+  echo -n "$(sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev redis get "${KEY}" 2> >(log_error))"
+}
+
+dev_set() {
+  local KEY="${1}"
+  local VALUE="${2}"
+
+  sudo docker run --net host --rm -i -t -a stdout simpledrupalcloud/dev redis set "${KEY}" "${VALUE}" > >(log) 2> >(log_error)
+}
+
 dev_build() {
   output_debug "FUNCTION: dev_build ARGS: ${*}"
 
@@ -284,8 +295,6 @@ dev dev build
 dev dev start
 dev dev stop
 dev dev destroy
-dev dev redis get [KEY]
-dev dev redis set [KEY] [VALUE]
 EOF
 
     exit 1
@@ -309,25 +318,6 @@ EOF
     ;;
     destroy)
       image_destroy "${IMAGE}"
-    ;;
-    redis)
-      case "${2}" in
-        get)
-          local KEY="${3}"
-
-          echo -n "$(sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" redis get "${KEY}" 2> >(log_error))"
-        ;;
-        set)
-          local KEY="${3}"
-          local VALUE="${4}"
-
-          sudo docker run --net host --rm -i -t -a stdout "${IMAGE}" redis set "${KEY}" "${VALUE}" > >(log) 2> >(log_error)
-        ;;
-        *)
-          output_error "dev: Unknown command. See 'dev dev --help'"
-
-          exit 1
-      esac
     ;;
     *)
       output_error "dev: Unknown command. See 'dev dev --help'"
@@ -404,13 +394,13 @@ EOF
     get)
       local KEY="${2}"
 
-      echo -n "$(dev redis get "${KEY}")"
+      echo -n "$(dev_get "${KEY}")"
     ;;
     set)
       local KEY="${2}"
       local VALUE="${3}"
 
-      dev redis set "${KEY}" "${VALUE}"
+      dev_set "${KEY}" "${VALUE}"
     ;;
     *)
       output_error "dev: Unknown command. See 'dev redis --help'"
@@ -986,6 +976,8 @@ phpmyadmin() {
   output "Instaling package: unzip"
 
   sudo apt-get install -y unzip > >(log) 2> >(log_error)
+
+  mkdir -p /var/apache-2.2.22/data > >(log) 2> >(log_error)
 
   sudo unzip "${TMP}/phpMyAdmin-4.2.8-english.zip" -d /var/apache-2.2.22/data > >(log) 2> >(log_error)
 
