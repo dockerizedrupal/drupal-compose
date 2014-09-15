@@ -176,6 +176,7 @@ container_start() {
   output_debug "FUNCTION: container_start ARGS: ${*}"
 
   local CONTAINER="${1}"
+  local IMAGE="${2}"
   local CALLBACK="${CONTAINER}_start"
 
   if $(container_exists "${CONTAINER}"); then
@@ -186,6 +187,10 @@ container_start() {
     fi
 
     container_destroy "${CONTAINER}"
+  fi
+
+  if ! $(image_exists "${IMAGE}"); then
+    image_update "${IMAGE}"
   fi
 
   output "Starting container: ${CONTAINER}"
@@ -311,7 +316,7 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      container_start "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -385,7 +390,7 @@ EOF
         dev start
       fi
 
-      container_start "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -473,7 +478,7 @@ EOF
         dev start
       fi
 
-      container_start "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -547,7 +552,7 @@ EOF
         dev start
       fi
 
-      container_start "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -623,7 +628,7 @@ EOF
         apache start
       fi
 
-      container_start "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -699,7 +704,7 @@ EOF
         apache start
       fi
 
-      container_start "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -775,7 +780,7 @@ EOF
         apache start
       fi
 
-      container_start "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -851,7 +856,7 @@ EOF
         apache start
       fi
 
-      container_start "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -976,7 +981,7 @@ EOF
         dev start
       fi
 
-      container_start "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -1007,7 +1012,7 @@ phpmyadmin() {
 
   mkdir -p /var/apache-2.2.22/data > >(log) 2> >(log_error)
 
-  output "phpmyadmin: Extracting"
+  output "phpmyadmin: Extracting files"
 
   sudo unzip "${TMP}/phpMyAdmin-4.2.8-english.zip" -d /var/apache-2.2.22/data > >(log) 2> >(log_error)
 
@@ -1123,23 +1128,23 @@ start() {
 stop() {
   output "dev: Destroying containers"
 
-  dev stop
-  redis stop
-  apache stop
-  mysql stop
-  php stop
   mailcatcher stop
+  php stop
+  mysql stop
+  apache stop
+  redis stop
+  dev stop
 }
 
 destroy() {
   output "dev: Destroying images"
 
-  dev destroy
-  redis destroy
-  apache destroy
-  mysql destroy
-  php destroy
-  mailcatcher destroy
+  mailcatcher stop
+  php stop
+  mysql stop
+  apache stop
+  redis stop
+  dev stop
 }
 
 case "${1}" in
