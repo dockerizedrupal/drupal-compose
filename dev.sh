@@ -1028,6 +1028,8 @@ phpmyadmin() {
 }
 
 install() {
+  output "dev: Instaling"
+
   sudo mkdir -p "${LOG_DIR}"
 
   output "dev: Instaling realpath"
