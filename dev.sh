@@ -993,15 +993,15 @@ EOF
 }
 
 phpmyadmin() {
-  output "Instaling package: phpmyadmin"
+  output "phpmyadmin: Instaling package"
 
   TMP="$(mktemp -d)" > >(log) 2> >(log_error)
 
-  output "Downloading package: PhpMyAdmin"
+  output "phpmyadmin: Downloading package"
 
   sudo wget http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin/4.2.8/phpMyAdmin-4.2.8-english.zip -O "${TMP}/phpMyAdmin-4.2.8-english.zip" > >(log) 2> >(log_error)
 
-  output "Instaling package: unzip"
+  output "phpmyadmin: Instaling unzip"
 
   sudo apt-get install -y unzip > >(log) 2> >(log_error)
 
@@ -1021,11 +1021,9 @@ phpmyadmin() {
 install() {
   sudo mkdir -p "${LOG_DIR}"
 
-  #if [ ! -f /usr/local/bin/dev ]; then
-    output "Instaling package: realpath"
+  output "dev: Instaling realpath"
 
-    sudo apt-get install -y realpath > >(log) 2> >(log_error)
-  #fi
+  sudo apt-get install -y realpath > >(log) 2> >(log_error)
 
   SCRIPT=$(realpath -s "${0}")
 
@@ -1038,22 +1036,20 @@ EOF
     exit 1
   fi
 
-  #if [ ! -f /usr/local/bin/dev ]; then
-    output "Instaling package: curl"
+  output "dev: Instaling curl"
 
-    sudo apt-get install -y curl > >(log) 2> >(log_error)
+  sudo apt-get install -y curl > >(log) 2> >(log_error)
 
-    output "Instaling package: docker"
+  output "dev: Instaling docker"
 
-    curl -sSL https://get.docker.io/ubuntu/ | sudo bash > >(log) 2> >(log_error)
+  curl -sSL https://get.docker.io/ubuntu/ | sudo bash > >(log) 2> >(log_error)
 
-    output "Instaling package: nsenter"
+  output "dev: Instaling nsenter"
 
-    sudo docker run \
-      --rm \
-      -v /usr/local/bin:/target \
-      jpetazzo/nsenter > >(log) 2> >(log_error)
-  #fi
+  sudo docker run \
+    --rm \
+    -v /usr/local/bin:/target \
+    jpetazzo/nsenter > >(log) 2> >(log_error)
 
   dev stop
   dev update
