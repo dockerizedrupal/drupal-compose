@@ -57,13 +57,13 @@ fi
 
 log() {
   while read DATA; do
-    echo "[$(date +"%D %T")] ${DATA}" | sudo tee -a "${LOG}"
+    echo "[$(date +"%D %T")] ${DATA}" | sudo tee -a "${LOG}" > /dev/null
   done
 }
 
 log_error() {
   while read DATA; do
-   echo "[$(date +"%D %T")] ${DATA}" | sudo tee -a "${LOG_ERROR}"
+   echo "[$(date +"%D %T")] ${DATA}" | sudo tee -a "${LOG_ERROR}" > /dev/null
   done
 }
 
