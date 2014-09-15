@@ -381,7 +381,9 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      dev start
+      if ! $(container_exists "dev") || ! $(container_running "dev"); then
+        dev start
+      fi
 
       container_start "${CONTAINER}"
     ;;
@@ -467,7 +469,9 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      dev start
+      if ! $(container_exists "dev") || ! $(container_running "dev"); then
+        dev start
+      fi
 
       container_start "${CONTAINER}"
     ;;
@@ -539,7 +543,9 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      dev start
+      if ! $(container_exists "dev") || ! $(container_running "dev"); then
+        dev start
+      fi
 
       container_start "${CONTAINER}"
     ;;
@@ -609,8 +615,13 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      dev start
-      apache start
+      if ! $(container_exists "dev") || ! $(container_running "dev"); then
+        dev start
+      fi
+
+      if ! $(container_exists "apache") || ! $(container_running "apache"); then
+        apache start
+      fi
 
       container_start "${CONTAINER}"
     ;;
@@ -680,8 +691,13 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      dev start
-      apache start
+      if ! $(container_exists "dev") || ! $(container_running "dev"); then
+        dev start
+      fi
+
+      if ! $(container_exists "apache") || ! $(container_running "apache"); then
+        apache start
+      fi
 
       container_start "${CONTAINER}"
     ;;
@@ -751,8 +767,13 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      dev start
-      apache start
+      if ! $(container_exists "dev") || ! $(container_running "dev"); then
+        dev start
+      fi
+
+      if ! $(container_exists "apache") || ! $(container_running "apache"); then
+        apache start
+      fi
 
       container_start "${CONTAINER}"
     ;;
@@ -822,8 +843,13 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      dev start
-      apache start
+      if ! $(container_exists "dev") || ! $(container_running "dev"); then
+        dev start
+      fi
+
+      if ! $(container_exists "apache") || ! $(container_running "apache"); then
+        apache start
+      fi
 
       container_start "${CONTAINER}"
     ;;
@@ -946,7 +972,9 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      dev start
+      if ! $(container_exists "dev") || ! $(container_running "dev"); then
+        dev start
+      fi
 
       container_start "${CONTAINER}"
     ;;
