@@ -282,6 +282,7 @@ dev_start() {
     --name dev \
     -h dev \
     -p 80:80 \
+    -p 127.0.0.1:3306:3306 \
     -d \
     simpledrupalcloud/dev > >(log) 2> >(log_error)
 }
@@ -306,6 +307,17 @@ EOF
   fi
 
   case "${1}" in
+    status)
+      if $(container_exists "${CONTAINER}"); then
+        output_error "No such container: ${CONTAINER}"
+
+        return 0
+      else
+        output_error "No such container: ${CONTAINER}"
+
+        return 1
+      fi
+    ;;
     attach)
       container_attach "${CONTAINER}"
     ;;
@@ -1149,7 +1161,14 @@ destroy() {
   dev stop
 }
 
+status() {
+
+}
+
 case "${1}" in
+  status)
+    status
+  ;;
   install)
     install
     ;;

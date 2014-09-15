@@ -15,6 +15,7 @@ Run dev
       --name "${CONTAINER}" \
       -h "${CONTAINER}" \
       -p 80:80 \
+      -p 127.0.0.1:3306:3306 \
       -d \
       simpledrupalcloud/dev
 
