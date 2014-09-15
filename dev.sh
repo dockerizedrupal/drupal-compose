@@ -993,11 +993,11 @@ EOF
 }
 
 phpmyadmin() {
-  output "phpmyadmin: Instaling package"
+  output "phpmyadmin: Instaling"
 
   TMP="$(mktemp -d)" > >(log) 2> >(log_error)
 
-  output "phpmyadmin: Downloading package"
+  output "phpmyadmin: Downloading"
 
   sudo wget http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin/4.2.8/phpMyAdmin-4.2.8-english.zip -O "${TMP}/phpMyAdmin-4.2.8-english.zip" > >(log) 2> >(log_error)
 
@@ -1007,6 +1007,8 @@ phpmyadmin() {
 
   mkdir -p /var/apache-2.2.22/data > >(log) 2> >(log_error)
 
+  output "phpmyadmin: Extracting"
+
   sudo unzip "${TMP}/phpMyAdmin-4.2.8-english.zip" -d /var/apache-2.2.22/data > >(log) 2> >(log_error)
 
   sudo rm -rf /var/apache-2.2.22/data/phpmyadmin > >(log) 2> >(log_error)
@@ -1014,6 +1016,8 @@ phpmyadmin() {
   sudo mv /var/apache-2.2.22/data/phpMyAdmin-4.2.8-english /var/apache-2.2.22/data/phpmyadmin > >(log) 2> >(log_error)
 
   sudo cp $(dirname "${0}")/apache-2.2.22/config.inc.php /var/apache-2.2.22/data/phpmyadmin > >(log) 2> >(log_error)
+
+  output "phpmyadmin: Overwriting permissions"
 
   sudo chown www-data.www-data /var/apache-2.2.22/data/phpmyadmin -R > >(log) 2> >(log_error)
 }
@@ -1084,9 +1088,11 @@ EOF
 }
 
 update() {
-  output "Updating dev"
+  output "dev: Updating"
 
   TMP="$(mktemp -d)"
+
+  output "dev: Cloning repository"
 
   git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${TMP}" > >(log) 2> >(log_error)
 
@@ -1096,6 +1102,8 @@ update() {
 }
 
 build() {
+  output "dev: Building images"
+
   dev build
   redis build
   apache build
@@ -1105,6 +1113,8 @@ build() {
 }
 
 start() {
+  output "dev: Starting containers"
+
   dev start
   redis start
   apache start
@@ -1114,6 +1124,8 @@ start() {
 }
 
 stop() {
+  output "dev: Destroying containers"
+
   dev stop
   redis stop
   apache stop
@@ -1123,6 +1135,8 @@ stop() {
 }
 
 destroy() {
+  output "dev: Destroying images"
+
   dev destroy
   redis destroy
   apache destroy
