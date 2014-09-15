@@ -6,49 +6,94 @@ LOG_ERROR="${LOG_DIR}/error.log"
 
 if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
   cat << EOF
+dev status
 dev install
 dev update
+dev build
+dev start
+dev restart
+dev stop
+
+dev dev attach
 dev dev update
 dev dev build
 dev dev start
+dev dev restart
+dev dev stop
 dev dev destroy
+
+dev redis attach
 dev redis update
 dev redis build
 dev redis start
+dev redis restart
+dev redis stop
 dev redis destroy
 dev redis get [KEY]
 dev redis set [KEY] [VALUE]
+
+dev apache attach
 dev apache update
 dev apache build
 dev apache start
+dev apache restart
+dev apache stop
 dev apache destroy
+
+dev mysql attach
 dev mysql update
 dev mysql build
 dev mysql start
+dev mysql restart
+dev mysql stop
 dev mysql destroy
+
+dev php attach
 dev php update
 dev php build
 dev php start
+dev php restart
+dev php stop
 dev php destroy
+
+dev php52 attach
 dev php52 update
 dev php52 build
 dev php52 start
+dev php52 restart
+dev php52 stop
 dev php52 destroy
+
+dev php53 attach
 dev php53 update
 dev php53 build
 dev php53 start
+dev php53 restart
+dev php53 stop
 dev php53 destroy
+
+dev php54 attach
 dev php54 update
 dev php54 build
 dev php54 start
+dev php54 restart
+dev php54 stop
 dev php54 destroy
+
+dev php55 attach
 dev php55 update
 dev php55 build
 dev php55 start
+dev php55 restart
+dev php55 stop
 dev php55 destroy
+
+dev mailcatcher attach
 dev mailcatcher update
 dev mailcatcher build
 dev mailcatcher start
+dev mailcatcher restart
+dev mailcatcher stop
 dev mailcatcher destroy
 EOF
 
@@ -283,6 +328,7 @@ dev_start() {
     -h dev \
     -p 80:80 \
     -p 127.0.0.1:3306:3306 \
+    -p 127.0.0.1:1080:1080 \
     -d \
     simpledrupalcloud/dev > >(log) 2> >(log_error)
 }
@@ -299,6 +345,7 @@ dev dev attach
 dev dev update
 dev dev build
 dev dev start
+dev dev restart
 dev dev stop
 dev dev destroy
 EOF
@@ -329,6 +376,10 @@ EOF
     ;;
     start)
       container_start "${CONTAINER}" "${IMAGE}"
+    ;;
+    restart)
+      dev stop
+      dev start
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -378,6 +429,7 @@ dev redis attach
 dev redis update
 dev redis build
 dev redis start
+dev redis restart
 dev redis stop
 dev redis destroy
 dev redis get [KEY]
@@ -403,6 +455,10 @@ EOF
       fi
 
       container_start "${CONTAINER}" "${IMAGE}"
+    ;;
+    restart)
+      redis stop
+      redis start
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -468,6 +524,7 @@ dev apache attach
 dev apache update
 dev apache build
 dev apache start
+dev apache restart
 dev apache stop
 dev apache destroy
 EOF
@@ -491,6 +548,10 @@ EOF
       fi
 
       container_start "${CONTAINER}" "${IMAGE}"
+    ;;
+    restart)
+      apache stop
+      apache start
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -542,6 +603,7 @@ dev mysql attach
 dev mysql update
 dev mysql build
 dev mysql start
+dev mysql restart
 dev mysql stop
 dev mysql destroy
 EOF
@@ -565,6 +627,10 @@ EOF
       fi
 
       container_start "${CONTAINER}" "${IMAGE}"
+    ;;
+    restart)
+      mysql stop
+      mysql start
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -614,6 +680,7 @@ dev php52 attach
 dev php52 update
 dev php52 build
 dev php52 start
+dev php52 restart
 dev php52 stop
 dev php52 destroy
 EOF
@@ -641,6 +708,10 @@ EOF
       fi
 
       container_start "${CONTAINER}" "${IMAGE}"
+    ;;
+    restart)
+      php52 stop
+      php52 start
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -690,6 +761,7 @@ dev php53 attach
 dev php53 update
 dev php53 build
 dev php53 start
+dev php53 restart
 dev php53 stop
 dev php53 destroy
 EOF
@@ -717,6 +789,10 @@ EOF
       fi
 
       container_start "${CONTAINER}" "${IMAGE}"
+    ;;
+    restart)
+      php53 stop
+      php53 start
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -766,6 +842,7 @@ dev php54 attach
 dev php54 update
 dev php54 build
 dev php54 start
+dev php54 restart
 dev php54 stop
 dev php54 destroy
 EOF
@@ -793,6 +870,10 @@ EOF
       fi
 
       container_start "${CONTAINER}" "${IMAGE}"
+    ;;
+    restart)
+      php54 stop
+      php54 start
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -842,6 +923,7 @@ dev php55 attach
 dev php55 update
 dev php55 build
 dev php55 start
+dev php55 restart
 dev php55 stop
 dev php55 destroy
 EOF
@@ -870,6 +952,10 @@ EOF
 
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
+    restart)
+      php55 stop
+      php55 start
+    ;;
     stop)
       container_destroy "${CONTAINER}"
     ;;
@@ -892,6 +978,7 @@ php() {
 dev php update
 dev php build
 dev php start
+dev php restart
 dev php stop
 dev php destroy
 EOF
@@ -917,6 +1004,12 @@ EOF
 #      php53 start
 #      php54 start
       php55 start
+    ;;
+    restart)
+      php52 restart
+#      php53 restart
+#      php54 restart
+      php55 restart
     ;;
     stop)
       php52 stop
@@ -971,6 +1064,7 @@ dev mailcatcher attach
 dev mailcatcher update
 dev mailcatcher build
 dev mailcatcher start
+dev mailcatcher restart
 dev mailcatcher stop
 dev mailcatcher destroy
 EOF
@@ -994,6 +1088,10 @@ EOF
       fi
 
       container_start "${CONTAINER}" "${IMAGE}"
+    ;;
+    restart)
+      mailcatcher stop
+      mailcatcher start
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -1139,6 +1237,17 @@ start() {
   mailcatcher start
 }
 
+restart() {
+  output "dev: Restarting containers"
+
+  dev restart
+  redis restart
+  apache restart
+  mysql restart
+  php restart
+  mailcatcher restart
+}
+
 stop() {
   output "dev: Destroying containers"
 
@@ -1181,6 +1290,9 @@ case "${1}" in
   start)
     start
     ;;
+  restart)
+    restart
+  ;;
   stop)
     stop
   ;;
