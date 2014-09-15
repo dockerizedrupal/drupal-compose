@@ -57,13 +57,13 @@ fi
 
 log() {
   while read DATA; do
-    echo "[$(date +"%D %T")] ${DATA}" >> "${LOG}"
+    sudo echo "[$(date +"%D %T")] ${DATA}" >> "${LOG}"
   done
 }
 
 log_error() {
   while read DATA; do
-    echo "[$(date +"%D %T")] ${DATA}" >> "${LOG_ERROR}"
+    sudo echo "[$(date +"%D %T")] ${DATA}" >> "${LOG_ERROR}"
   done
 }
 
