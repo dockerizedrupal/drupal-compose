@@ -1162,7 +1162,7 @@ destroy() {
 }
 
 status() {
-
+  echo "status"
 }
 
 case "${1}" in
