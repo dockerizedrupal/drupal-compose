@@ -4,6 +4,8 @@ LOG_DIR=/var/log/dev
 LOG="${LOG_DIR}/dev.log"
 LOG_ERROR="${LOG_DIR}/error.log"
 
+WORKING_DIR="$(pwd)"
+
 if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
   cat << EOF
 dev status
@@ -56,6 +58,7 @@ dev php restart
 dev php stop
 dev php destroy
 
+dev php52 enable
 dev php52 attach
 dev php52 update
 dev php52 build
@@ -64,6 +67,7 @@ dev php52 restart
 dev php52 stop
 dev php52 destroy
 
+dev php53 enable
 dev php53 attach
 dev php53 update
 dev php53 build
@@ -72,6 +76,7 @@ dev php53 restart
 dev php53 stop
 dev php53 destroy
 
+dev php54 enable
 dev php54 attach
 dev php54 update
 dev php54 build
@@ -80,6 +85,7 @@ dev php54 restart
 dev php54 stop
 dev php54 destroy
 
+dev php55 enable
 dev php55 attach
 dev php55 update
 dev php55 build
@@ -327,6 +333,7 @@ dev_start() {
     --name dev \
     -h dev \
     -p 80:80 \
+    -p 443:443 \
     -p 3306:3306 \
     -p 1080:1080 \
     -d \
@@ -676,6 +683,7 @@ php52() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev php52 enable
 dev php52 attach
 dev php52 update
 dev php52 build
@@ -689,6 +697,9 @@ EOF
   fi
 
   case "${1}" in
+    enable)
+      php_enable "${CONTAINER}"
+    ;;
     attach)
       container_attach "${CONTAINER}"
     ;;
@@ -757,6 +768,7 @@ php53() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev php53 enable
 dev php53 attach
 dev php53 update
 dev php53 build
@@ -770,6 +782,9 @@ EOF
   fi
 
   case "${1}" in
+    enable)
+      php_enable "${CONTAINER}"
+    ;;
     attach)
       container_attach "${CONTAINER}"
     ;;
@@ -838,6 +853,7 @@ php54() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev php54 enable
 dev php54 attach
 dev php54 update
 dev php54 build
@@ -851,6 +867,9 @@ EOF
   fi
 
   case "${1}" in
+    enable)
+      php_enable "${CONTAINER}"
+    ;;
     attach)
       container_attach "${CONTAINER}"
     ;;
@@ -919,6 +938,7 @@ php55() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev php55 enable
 dev php55 attach
 dev php55 update
 dev php55 build
@@ -932,6 +952,9 @@ EOF
   fi
 
   case "${1}" in
+    enable)
+      php_enable "${CONTAINER}"
+    ;;
     attach)
       container_attach "${CONTAINER}"
     ;;
@@ -968,6 +991,10 @@ EOF
       exit 1
     ;;
   esac
+}
+
+php_enable() {
+
 }
 
 php() {
