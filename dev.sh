@@ -994,7 +994,9 @@ EOF
 }
 
 php_enable() {
-
+  if [ ! -f "${WORKING_DIR}/.htaccess" ]; then
+    touch "${WORKING_DIR}/.htaccess"
+  fi
 }
 
 php() {
