@@ -139,7 +139,7 @@ log() {
 
 log_error() {
   while read DATA; do
-   echo "[$(date +"%D %T")] ${DATA}" | sudo tee -a "${LOG_ERROR}" > /dev/null
+    echo "[$(date +"%D %T")] ${DATA}" | sudo tee -a "${LOG_ERROR}" > /dev/null
   done
 }
 
