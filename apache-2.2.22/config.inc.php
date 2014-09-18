@@ -24,5 +24,7 @@ $cfg['MaxTableList'] = 1000;
 $cfg['ExecTimeLimit'] = 300;
 $cfg['NavigationTreeEnableGrouping'] = false;
 $cfg['MaxNavigationItems'] = 1000;
+$cfg['NavigationTreeDisplayItemFilterMinimum'] = 1;
+$cfg['NavigationTreeDisplayDbFilterMinimum'] = 1;
 
 $_REQUEST['display_blob'] = true;
