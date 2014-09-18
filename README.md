@@ -44,15 +44,55 @@ Run Apache HTTP Server
       -d \
       simpledrupalcloud/apache:2.2.22
 
-Run PHP 5.5.15
---------------
+Run PHP 5.6.0
+-------------
 
-    CONTAINER=php5515 && sudo docker run \
+    CONTAINER=php56 && sudo docker run \
       --name "${CONTAINER}" \
       --net container:dev \
       --volumes-from apache \
       -d \
-      simpledrupalcloud/php:5.5.15
+      simpledrupalcloud/php:5.6.0
+
+Run PHP 5.5.17
+--------------
+
+    CONTAINER=php55 && sudo docker run \
+      --name "${CONTAINER}" \
+      --net container:dev \
+      --volumes-from apache \
+      -d \
+      simpledrupalcloud/php:5.5.17
+
+Run PHP 5.4.31
+--------------
+
+    CONTAINER=php54 && sudo docker run \
+      --name "${CONTAINER}" \
+      --net container:dev \
+      --volumes-from apache \
+      -d \
+      simpledrupalcloud/php:5.4.31
+
+Run PHP 5.2.17
+--------------
+
+    CONTAINER=php52 && sudo docker run \
+      --name "${CONTAINER}" \
+      --net container:dev \
+      --volumes-from apache \
+      -d \
+      simpledrupalcloud/php:5.2.17
+
+Run PHP 5.3.28
+--------------
+
+    CONTAINER=php53 && sudo docker run \
+      --name "${CONTAINER}" \
+      --net container:dev \
+      --volumes-from apache \
+      -d \
+      simpledrupalcloud/php:5.3.28
 
 Run MySQL
 ---------

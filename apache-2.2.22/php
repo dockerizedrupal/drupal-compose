@@ -29,7 +29,7 @@
 	</Location>
 
 	Alias /php55 /apache-2.2.22/php55
-	FastCgiExternalServer /apache-2.2.22/php55 -host 127.0.0.1:5515 -idle-timeout 300 -pass-header Authorization
+	FastCgiExternalServer /apache-2.2.22/php55 -host 127.0.0.1:5517 -idle-timeout 300 -pass-header Authorization
 
 	<Location /php55>
 		Order deny,allow

@@ -60,23 +60,23 @@ Stable commands:
     dev php stop
     dev php destroy
 
-    dev php52 enable
-    dev php52 attach
-    dev php52 update
-    dev php52 build
-    dev php52 start
-    dev php52 restart
-    dev php52 stop
-    dev php52 destroy
+    dev php56 enable
+    dev php56 attach
+    dev php56 update
+    dev php56 build
+    dev php56 start
+    dev php56 restart
+    dev php56 stop
+    dev php56 destroy
 
-    dev php53 enable
-    dev php53 attach
-    dev php53 update
-    dev php53 build
-    dev php53 start
-    dev php53 restart
-    dev php53 stop
-    dev php53 destroy
+    dev php55 enable
+    dev php55 attach
+    dev php55 update
+    dev php55 build
+    dev php55 start
+    dev php55 restart
+    dev php55 stop
+    dev php55 destroy
 
     dev php54 enable
     dev php54 attach
@@ -87,14 +87,23 @@ Stable commands:
     dev php54 stop
     dev php54 destroy
 
-    dev php55 enable
-    dev php55 attach
-    dev php55 update
-    dev php55 build
-    dev php55 start
-    dev php55 restart
-    dev php55 stop
-    dev php55 destroy
+    dev php53 enable
+    dev php53 attach
+    dev php53 update
+    dev php53 build
+    dev php53 start
+    dev php53 restart
+    dev php53 stop
+    dev php53 destroy
+
+    dev php52 enable
+    dev php52 attach
+    dev php52 update
+    dev php52 build
+    dev php52 start
+    dev php52 restart
+    dev php52 stop
+    dev php52 destroy
 
     dev mailcatcher attach
     dev mailcatcher update
@@ -110,10 +119,11 @@ Unstable or not implemented commands:
 
     dev ports 80 127.0.0.1:3360
 
-    dev php52 enable
-    dev php53 enable
-    dev php54 enable
+    dev php56 enable
     dev php55 enable
+    dev php54 enable
+    dev php53 enable
+    dev php52 enable
 
     dev svn archive 31337:HEAD archive
 EOF
@@ -954,13 +964,13 @@ EOF
 }
 
 php55_build() {
-  output_debug "FUNCTION: php53_build ARGS: ${*}"
+  output_debug "FUNCTION: php55_build ARGS: ${*}"
 
   local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
     && cd "${TMP}" \
-    && git checkout 5.5.15 \
-    && sudo docker build -t simpledrupalcloud/php:5.5.15 . \
+    && git checkout 5.5.17 \
+    && sudo docker build -t simpledrupalcloud/php:5.5.17 . \
     && cd -
 }
 
@@ -972,12 +982,12 @@ php55_start() {
     --net container:dev \
     --volumes-from apache \
     -d \
-    simpledrupalcloud/php:5.5.15 > >(log) 2> >(log_error)
+    simpledrupalcloud/php:5.5.17 > >(log) 2> >(log_error)
 }
 
 php55() {
   local CONTAINER=php55
-  local IMAGE=simpledrupalcloud/php:5.5.15
+  local IMAGE=simpledrupalcloud/php:5.5.17
 
   output_debug "FUNCTION: php55 ARGS: ${*}"
 
@@ -1038,6 +1048,91 @@ EOF
   esac
 }
 
+php56_build() {
+  output_debug "FUNCTION: php56_build ARGS: ${*}"
+
+  local TMP="$(mktemp -d)" \
+    && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
+    && cd "${TMP}" \
+    && git checkout 5.6.0 \
+    && sudo docker build -t simpledrupalcloud/php:5.6.0 . \
+    && cd -
+}
+
+php56_start() {
+  output_debug "FUNCTION: php56_start ARGS: ${*}"
+
+  sudo docker run \
+    --name php56 \
+    --net container:dev \
+    --volumes-from apache \
+    -d \
+    simpledrupalcloud/php:5.6.0 > >(log) 2> >(log_error)
+}
+
+php56() {
+  local CONTAINER=php56
+  local IMAGE=simpledrupalcloud/php:5.6.0
+
+  output_debug "FUNCTION: php56 ARGS: ${*}"
+
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev php56 enable
+dev php56 attach
+dev php56 update
+dev php56 build
+dev php56 start
+dev php56 restart
+dev php56 stop
+dev php56 destroy
+EOF
+
+    exit 1
+  fi
+
+  case "${1}" in
+    enable)
+      php_enable "${CONTAINER}"
+    ;;
+    attach)
+      container_attach "${CONTAINER}"
+    ;;
+    update)
+      image_update "${IMAGE}"
+    ;;
+    build)
+      image_build "${IMAGE}" "${CONTAINER}"
+    ;;
+    start)
+      if ! $(container_exists "dev") || ! $(container_running "dev"); then
+        dev start
+      fi
+
+      if ! $(container_exists "apache") || ! $(container_running "apache"); then
+        apache start
+      fi
+
+      container_start "${CONTAINER}" "${IMAGE}"
+    ;;
+    restart)
+      php56 stop
+      php56 start
+    ;;
+    stop)
+      container_destroy "${CONTAINER}"
+    ;;
+    destroy)
+      image_destroy "${IMAGE}"
+    ;;
+    *)
+      output_error "dev: Unknown command. See 'dev php56 --help'"
+
+      exit 1
+    ;;
+  esac
+}
+
 php_enable() {
   if [ ! -f "${WORKING_DIR}/.htaccess" ]; then
     touch "${WORKING_DIR}/.htaccess"
@@ -1063,39 +1158,45 @@ EOF
   case "${1}" in
     update)
       php52 update
-#      php53 update
-#      php54 update
+      php53 update
+      php54 update
       php55 update
+      php56 update
     ;;
     build)
       php52 build
-#      php53 build
-#      php54 build
+      php53 build
+      php54 build
       php55 build
+      php56 build
     ;;
     start)
       php52 start
-#      php53 start
-#      php54 start
+      php53 start
+      php54 start
       php55 start
+      php56 start
     ;;
     restart)
       php52 restart
-#      php53 restart
-#      php54 restart
+      php53 restart
+      php54 restart
       php55 restart
+      php56 restart
     ;;
     stop)
       php52 stop
-#      php53 stop
-#      php54 stop
+      php53 stop
+      php54 stop
       php55 stop
+      php56 stop
     ;;
     destroy)
       php52 destroy
-#      php53 destroy
-#      php54 destroy
+      php53 destroy
+      php54 destroy
       php55 destroy
+      php56 destroy
     ;;
     *)
       output_error "dev: Unknown command. See 'dev php --help'"
