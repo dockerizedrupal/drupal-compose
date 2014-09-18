@@ -2,7 +2,7 @@
 
 var program = require('commander');
 
-var Config = require('./config.js');
+var Redis = require('./redis.js');
 
 //var through2 = require('through2');
 
@@ -151,11 +151,11 @@ var Config = require('./config.js');
 program
   .command('redis')
   .action(function(action, key, value) {
-    var config = new Config();
+    var redis = new Redis();
 
     switch (action) {
       case 'get':
-        config.get(key, function(err, reply) {
+          redis.get(key, function(err, reply) {
           if (err) {
             return console.error(err);
           }
@@ -165,7 +165,7 @@ program
 
         break;
       case 'set':
-        config.set(key, value, function(err, reply) {
+          redis.set(key, value, function(err, reply) {
           if (err) {
             return console.error(err);
           }

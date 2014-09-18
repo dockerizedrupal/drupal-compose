@@ -1,10 +1,10 @@
 var redis = require('redis');
 
-function Config() {
+function Redis() {
 
 }
 
-Config.prototype.get = function(key, callback) {
+Redis.prototype.get = function(key, callback) {
   var client = redis.createClient();
 
   client.get(key, function(err, reply) {
@@ -18,7 +18,7 @@ Config.prototype.get = function(key, callback) {
   });
 };
 
-Config.prototype.set = function(key, value, callback) {
+Redis.prototype.set = function(key, value, callback) {
   var client = redis.createClient();
 
   client.set(key, value, function(err, reply) {
@@ -32,4 +32,4 @@ Config.prototype.set = function(key, value, callback) {
   });
 };
 
-module.exports = Config;
+module.exports = Redis;

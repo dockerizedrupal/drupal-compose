@@ -1,6 +1,7 @@
 class packages {
   package {[
-      'build-essential'
+      'build-essential',
+      'subversion'
     ]:
     ensure => present
   }

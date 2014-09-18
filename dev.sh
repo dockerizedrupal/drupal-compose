@@ -8,99 +8,114 @@ WORKING_DIR="$(pwd)"
 
 if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
   cat << EOF
-dev status
-dev install
-dev update
-dev build
-dev start
-dev restart
-dev stop
 
-dev dev attach
-dev dev update
-dev dev build
-dev dev start
-dev dev restart
-dev dev stop
-dev dev destroy
+Stable commands:
 
-dev redis attach
-dev redis update
-dev redis build
-dev redis start
-dev redis restart
-dev redis stop
-dev redis destroy
-dev redis get [KEY]
-dev redis set [KEY] [VALUE]
+    dev install
+    dev update
+    dev build
+    dev start
+    dev restart
+    dev stop
 
-dev apache attach
-dev apache update
-dev apache build
-dev apache start
-dev apache restart
-dev apache stop
-dev apache destroy
+    dev dev attach
+    dev dev update
+    dev dev build
+    dev dev start
+    dev dev restart
+    dev dev stop
+    dev dev destroy
 
-dev mysql attach
-dev mysql update
-dev mysql build
-dev mysql start
-dev mysql restart
-dev mysql stop
-dev mysql destroy
+    dev redis attach
+    dev redis update
+    dev redis build
+    dev redis start
+    dev redis restart
+    dev redis stop
+    dev redis destroy
+    dev redis get [KEY]
+    dev redis set [KEY] [VALUE]
 
-dev php attach
-dev php update
-dev php build
-dev php start
-dev php restart
-dev php stop
-dev php destroy
+    dev apache attach
+    dev apache update
+    dev apache build
+    dev apache start
+    dev apache restart
+    dev apache stop
+    dev apache destroy
 
-dev php52 enable
-dev php52 attach
-dev php52 update
-dev php52 build
-dev php52 start
-dev php52 restart
-dev php52 stop
-dev php52 destroy
+    dev mysql attach
+    dev mysql update
+    dev mysql build
+    dev mysql start
+    dev mysql restart
+    dev mysql stop
+    dev mysql destroy
 
-dev php53 enable
-dev php53 attach
-dev php53 update
-dev php53 build
-dev php53 start
-dev php53 restart
-dev php53 stop
-dev php53 destroy
+    dev php attach
+    dev php update
+    dev php build
+    dev php start
+    dev php restart
+    dev php stop
+    dev php destroy
 
-dev php54 enable
-dev php54 attach
-dev php54 update
-dev php54 build
-dev php54 start
-dev php54 restart
-dev php54 stop
-dev php54 destroy
+    dev php52 enable
+    dev php52 attach
+    dev php52 update
+    dev php52 build
+    dev php52 start
+    dev php52 restart
+    dev php52 stop
+    dev php52 destroy
 
-dev php55 enable
-dev php55 attach
-dev php55 update
-dev php55 build
-dev php55 start
-dev php55 restart
-dev php55 stop
-dev php55 destroy
+    dev php53 enable
+    dev php53 attach
+    dev php53 update
+    dev php53 build
+    dev php53 start
+    dev php53 restart
+    dev php53 stop
+    dev php53 destroy
 
-dev mailcatcher attach
-dev mailcatcher update
-dev mailcatcher build
-dev mailcatcher start
-dev mailcatcher restart
-dev mailcatcher stop
-dev mailcatcher destroy
+    dev php54 enable
+    dev php54 attach
+    dev php54 update
+    dev php54 build
+    dev php54 start
+    dev php54 restart
+    dev php54 stop
+    dev php54 destroy
+
+    dev php55 enable
+    dev php55 attach
+    dev php55 update
+    dev php55 build
+    dev php55 start
+    dev php55 restart
+    dev php55 stop
+    dev php55 destroy
+
+    dev mailcatcher attach
+    dev mailcatcher update
+    dev mailcatcher build
+    dev mailcatcher start
+    dev mailcatcher restart
+    dev mailcatcher stop
+    dev mailcatcher destroy
+
+Unstable or not implemented commands:
+
+    dev status
+
+    dev ports 80 127.0.0.1:3360
+
+    dev php52 enable
+    dev php53 enable
+    dev php54 enable
+    dev php55 enable
+
+    dev svn archive 31337:HEAD archive
 EOF
 
   exit 1
@@ -303,6 +318,36 @@ container_destroy() {
   output "Destroying container: ${CONTAINER}"
 
   sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
+}
+
+svn_archive() {
+    #-v $(pwd):/src \
+    #-v ~/.subversion:/root/.subversion \
+
+    echo "dev_svn_archive"
+}
+
+svn() {
+  output_debug "FUNCTION: svn ARGS: ${*}"
+
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev svn archive ...
+EOF
+
+    exit 1
+  fi
+
+  case "${1}" in
+    archive)
+      svn_archive
+    ;;
+    *)
+      output_error "dev: Unknown command. See 'dev svn --help'"
+
+      exit 1
+    ;;
+  esac
 }
 
 dev_get() {
@@ -1136,6 +1181,18 @@ EOF
   esac
 }
 
+adminer() {
+  TMP="$(mktemp -d)" > >(log) 2> >(log_error)
+
+  sudo wget http://downloads.sourceforge.net/adminer/adminer-4.1.0-mysql-en.php "${TMP}/adminer-4.1.0-mysql-en.php" > >(log) 2> >(log_error)
+
+  sudo mkdir -p /var/apache-2.2.22/data/adminer > >(log) 2> >(log_error)
+
+  sudo cp "${TMP}/adminer-4.1.0-mysql-en.php" /var/apache-2.2.22/data/adminer/index.php
+
+  sudo chown www-data.www-data /var/apache-2.2.22/data/adminer -R > >(log) 2> >(log_error)
+}
+
 phpmyadmin() {
   output "phpmyadmin: Instaling"
 
@@ -1149,7 +1206,7 @@ phpmyadmin() {
 
   sudo apt-get install -y unzip > >(log) 2> >(log_error)
 
-  mkdir -p /var/apache-2.2.22/data > >(log) 2> >(log_error)
+  sudo mkdir -p /var/apache-2.2.22/data > >(log) 2> >(log_error)
 
   output "phpmyadmin: Extracting files"
 
@@ -1226,6 +1283,7 @@ install() {
   mailcatcher start
 
   phpmyadmin
+  adminer
 
   sudo cp "${SCRIPT}" /usr/local/bin/dev
 }
@@ -1328,6 +1386,9 @@ case "${1}" in
   destroy)
     destroy
     ;;
+  svn)
+    svn "${@:2}"
+  ;;
   dev)
     dev "${@:2}"
   ;;
