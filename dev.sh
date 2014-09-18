@@ -431,12 +431,12 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=1
+      local CONTAINER_STOPPED=false
 
       if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
         dev stop
 
-        CONTAINER_STOPPED=0
+        CONTAINER_STOPPED=true
       fi
 
       image_update "${IMAGE}"
@@ -518,12 +518,12 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=1
+      local CONTAINER_STOPPED=false
 
       if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
         redis stop
 
-        CONTAINER_STOPPED=0
+        CONTAINER_STOPPED=true
       fi
 
       image_update "${IMAGE}"
@@ -623,12 +623,12 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=1
+      local CONTAINER_STOPPED=false
 
       if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
         apache stop
 
-        CONTAINER_STOPPED=0
+        CONTAINER_STOPPED=true
       fi
 
       image_update "${IMAGE}"
@@ -714,12 +714,12 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=1
+      local CONTAINER_STOPPED=false
 
       if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
         mysql stop
 
-        CONTAINER_STOPPED=0
+        CONTAINER_STOPPED=true
       fi
 
       image_update "${IMAGE}"
@@ -807,12 +807,12 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=1
+      local CONTAINER_STOPPED=false
 
       if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
         php52 stop
 
-        CONTAINER_STOPPED=0
+        CONTAINER_STOPPED=true
       fi
 
       image_update "${IMAGE}"
@@ -904,12 +904,12 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=1
+      local CONTAINER_STOPPED=false
 
       if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
         php53 stop
 
-        CONTAINER_STOPPED=0
+        CONTAINER_STOPPED=true
       fi
 
       image_update "${IMAGE}"
@@ -1001,12 +1001,12 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=1
+      local CONTAINER_STOPPED=false
 
       if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
         php54 stop
 
-        CONTAINER_STOPPED=0
+        CONTAINER_STOPPED=true
       fi
 
       image_update "${IMAGE}"
@@ -1098,12 +1098,12 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=1
+      local CONTAINER_STOPPED=false
 
       if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
         php55 stop
 
-        CONTAINER_STOPPED=0
+        CONTAINER_STOPPED=true
       fi
 
       image_update "${IMAGE}"
@@ -1195,12 +1195,12 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=1
+      local CONTAINER_STOPPED=false
 
       if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
         php56 stop
 
-        CONTAINER_STOPPED=0
+        CONTAINER_STOPPED=true
       fi
 
       image_update "${IMAGE}"
@@ -1360,12 +1360,12 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=1
+      local CONTAINER_STOPPED=false
 
       if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
         mailcatcher stop
 
-        CONTAINER_STOPPED=0
+        CONTAINER_STOPPED=true
       fi
 
       image_update "${IMAGE}"
