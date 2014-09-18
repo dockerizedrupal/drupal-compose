@@ -1,6 +1,13 @@
 dev
 ===
 
+Install
+-------
+
+    TMP="$(mktemp -d)" \
+      && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${TMP}" \
+      && "${TMP}/dev.sh" install
+
 Build the image
 ---------------
 
@@ -8,8 +15,8 @@ Build the image
       -t simpledrupalcloud/dev \
       http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git
 
-Run dev
--------
+Start dev
+---------
 
     CONTAINER=dev && sudo docker run \
       --name "${CONTAINER}" \
@@ -21,8 +28,8 @@ Run dev
       -d \
       simpledrupalcloud/dev
 
-Run Redis
----------
+Start Redis
+-----------
 
     CONTAINER=redis && sudo docker run \
       --name "${CONTAINER}" \
@@ -31,8 +38,8 @@ Run Redis
       -d \
       simpledrupalcloud/redis:2.8.14
 
-Run Apache HTTP Server
-----------------------
+Start Apache HTTP Server
+------------------------
 
     CONTAINER=apache && sudo docker run \
       --name "${CONTAINER}" \
@@ -44,8 +51,8 @@ Run Apache HTTP Server
       -d \
       simpledrupalcloud/apache:2.2.22
 
-Run PHP 5.6.0
--------------
+Start PHP 5.6.0
+---------------
 
     CONTAINER=php56 && sudo docker run \
       --name "${CONTAINER}" \
@@ -54,8 +61,8 @@ Run PHP 5.6.0
       -d \
       simpledrupalcloud/php:5.6.0
 
-Run PHP 5.5.17
---------------
+Start PHP 5.5.17
+----------------
 
     CONTAINER=php55 && sudo docker run \
       --name "${CONTAINER}" \
@@ -64,8 +71,8 @@ Run PHP 5.5.17
       -d \
       simpledrupalcloud/php:5.5.17
 
-Run PHP 5.4.31
---------------
+Start PHP 5.4.31
+----------------
 
     CONTAINER=php54 && sudo docker run \
       --name "${CONTAINER}" \
@@ -74,8 +81,8 @@ Run PHP 5.4.31
       -d \
       simpledrupalcloud/php:5.4.31
 
-Run PHP 5.2.17
---------------
+Start PHP 5.2.17
+----------------
 
     CONTAINER=php52 && sudo docker run \
       --name "${CONTAINER}" \
@@ -84,8 +91,8 @@ Run PHP 5.2.17
       -d \
       simpledrupalcloud/php:5.2.17
 
-Run PHP 5.3.28
---------------
+Start PHP 5.3.28
+----------------
 
     CONTAINER=php53 && sudo docker run \
       --name "${CONTAINER}" \
@@ -94,8 +101,8 @@ Run PHP 5.3.28
       -d \
       simpledrupalcloud/php:5.3.28
 
-Run MySQL
----------
+Start MySQL
+-----------
 
     CONTAINER=mysql && sudo docker run \
       --name "${CONTAINER}" \
@@ -106,18 +113,11 @@ Run MySQL
       -d \
       simpledrupalcloud/mysql:5.5.38
 
-Run MailCatcher
----------------
+Start MailCatcher
+-----------------
 
     CONTAINER=mailcatcher && sudo docker run \
       --name "${CONTAINER}" \
       --net container:dev \
       -d \
       simpledrupalcloud/mailcatcher:0.5.12
-
-Install
--------
-
-    TMP="$(mktemp -d)" \
-      && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${TMP}" \
-      && "${TMP}/dev.sh" install
