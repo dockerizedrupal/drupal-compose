@@ -1047,6 +1047,16 @@ EOF
   esac
 }
 
+php55_update_1() {
+  output_debug "FUNCTION: php55_update_1 ARGS: ${*}"
+
+  local IMAGE=simpledrupalcloud/php:5.5.15
+
+  if $(image_exists "${IMAGE}"); then
+    image_destroy "${IMAGE}"
+  fi
+}
+
 php55_build() {
   output_debug "FUNCTION: php55_build ARGS: ${*}"
 
@@ -1098,6 +1108,8 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
+      php55_update_1
+
       local CONTAINER_STOPPED=false
 
       if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
