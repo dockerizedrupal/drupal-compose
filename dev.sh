@@ -1644,6 +1644,9 @@ case "${1}" in
   php55)
     php55 "${@:2}"
   ;;
+  php56)
+    php56 "${@:2}"
+  ;;
   mailcatcher)
     mailcatcher "${@:2}"
   ;;
