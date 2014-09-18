@@ -1431,18 +1431,6 @@ EOF
   esac
 }
 
-adminer() {
-  TMP="$(mktemp -d)" > >(log) 2> >(log_error)
-
-  sudo wget http://downloads.sourceforge.net/adminer/adminer-4.1.0-mysql-en.php "${TMP}/adminer-4.1.0-mysql-en.php" > >(log) 2> >(log_error)
-
-  sudo mkdir -p /var/apache-2.2.22/data/adminer > >(log) 2> >(log_error)
-
-  sudo cp "${TMP}/adminer-4.1.0-mysql-en.php" /var/apache-2.2.22/data/adminer/index.php
-
-  sudo chown www-data.www-data /var/apache-2.2.22/data/adminer -R > >(log) 2> >(log_error)
-}
-
 phpmyadmin() {
   output "phpmyadmin: Instaling"
 
@@ -1533,7 +1521,6 @@ install() {
   mailcatcher start
 
   phpmyadmin
-  adminer
 
   sudo cp "${SCRIPT}" /usr/local/bin/dev
 }
