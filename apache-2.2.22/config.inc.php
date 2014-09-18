@@ -24,6 +24,5 @@ $cfg['MaxTableList'] = 1000;
 $cfg['ExecTimeLimit'] = 300;
 $cfg['NavigationTreeEnableGrouping'] = false;
 $cfg['MaxNavigationItems'] = 1000;
-$cfg['MainBackground'] = "#0f0";
 
 $_REQUEST['display_blob'] = true;
