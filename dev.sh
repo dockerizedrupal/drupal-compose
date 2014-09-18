@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
 LOG_DIR=/var/log/dev
-LOG="${LOG_DIR}/dev.log"
-LOG_ERROR="${LOG_DIR}/error.log"
 
-WORKING_DIR="$(pwd)"
+sudo mkdir -p "${LOG_DIR}"
+
+LOG="${LOG_DIR}/dev.log"
+LOG_DEBUG="${LOG_DIR}/debug.log"
+LOG_ERROR="${LOG_DIR}/error.log"
 
 if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
   cat << EOF
@@ -143,6 +145,12 @@ log_error() {
   done
 }
 
+log_debug() {
+  while read DATA; do
+    echo "[$(date +"%D %T")] ${DATA}" | sudo tee -a "${LOG_DEBUG}" > /dev/null
+  done
+}
+
 output() {
   local COLOR="${2}"
 
@@ -158,10 +166,19 @@ output_error() {
 }
 
 output_debug() {
+  local COLOR=3
+
   if [ ${DEBUG} ]; then
-    output "${1}" 3
+    local MESSAGE="${1}"
+
+    echo "${MESSAGE}" > >(log_debug)
+    echo "$(tput setaf "${COLOR}")${MESSAGE}$(tput sgr 0)"
   fi
 }
+
+WORKING_DIR="$(pwd)"
+
+output_debug "\${WORKING_DIR}: ${WORKING_DIR}"
 
 image_exists() {
   local RETURN=0
