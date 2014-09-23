@@ -6,7 +6,7 @@ Install
 
     TMP="$(mktemp -d)" \
       && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${TMP}" \
-      && "${TMP}/dev.sh" install
+      && sudo cp "${TMP}/dev.sh" /usr/local/bin/dev
 
 Build the image
 ---------------
