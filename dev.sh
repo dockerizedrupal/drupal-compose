@@ -115,6 +115,10 @@ Stable commands:
     dev mailcatcher stop
     dev mailcatcher destroy
 
+    dev phpmyadmin install
+    dev phpmyadmin update
+    dev phpmyadmin destroy
+
 Unstable or not implemented commands:
 
     dev status
