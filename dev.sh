@@ -1383,7 +1383,7 @@ dev mailcatcher stop
 dev mailcatcher destroy
 EOF
 
-    exit 1
+    exit
   fi
 
   case "${1}" in
@@ -1433,7 +1433,7 @@ EOF
   esac
 }
 
-phpmyadmin() {
+phpmyadmin_install() {
   output "phpmyadmin: Instaling"
 
   TMP="$(mktemp -d)" > >(log) 2> >(log_error)
@@ -1463,28 +1463,57 @@ phpmyadmin() {
   sudo chown www-data.www-data /var/apache-2.2.22/data/phpmyadmin -R > >(log) 2> >(log_error)
 }
 
+phpmyadmin() {
+  output_debug "FUNCTION: phpmyadmin ARGS: ${*}"
+
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev phpmyadmin install
+dev phpmyadmin update
+dev phpmyadmin destroy
+EOF
+  exit
+
+  fi
+
+  case "${1}" in
+    install)
+      phpmyadmin_install
+    ;;
+    update)
+      echo "update"
+    ;;
+    destroy)
+      echo "destroy"
+    ;;
+    *)
+      output_error "dev: Unknown command. See 'dev phpmyadmin --help'"
+
+      exit 1
+    ;;
+  esac
+}
+
 install() {
   output "dev: Instaling"
 
-  sudo mkdir -p "${LOG_DIR}"
+  if [ ! -d "${LOG_DIR}" ]; then
+    output "dev: Creating directory: ${LOG_DIR}"
 
-  output "dev: Instaling realpath"
+    sudo mkdir -p "${LOG_DIR}"
+  fi
+
+  output "dev: Instaling package: realpath"
 
   sudo apt-get install -y realpath > >(log) 2> >(log_error)
 
-  SCRIPT=$(realpath -s "${0}")
+  SCRIPT="$(realpath -s "${0}")"
 
-  if [ "${SCRIPT}" == /usr/local/bin/dev ]; then
-    output_error "dev: Already installed on this machine"
-
-    exit 1
-  fi
-
-  output "dev: Instaling curl"
+  output "dev: Instaling package: curl"
 
   sudo apt-get install -y curl > >(log) 2> >(log_error)
 
-  output "dev: Instaling docker"
+  output "dev: Instaling package: docker"
 
   curl -sSL https://get.docker.io/ubuntu/ | sudo bash > >(log) 2> >(log_error)
 
@@ -1522,9 +1551,7 @@ install() {
   mailcatcher update
   mailcatcher start
 
-  phpmyadmin
-
-  sudo cp "${SCRIPT}" /usr/local/bin/dev
+  phpmyadmin install
 }
 
 update() {
@@ -1667,6 +1694,9 @@ case "${1}" in
   ;;
   mailcatcher)
     mailcatcher "${@:2}"
+  ;;
+  phpmyadmin)
+    phpmyadmin "${@:2}"
   ;;
   *)
     output_error "dev: Unknown command. See 'dev --help'"
