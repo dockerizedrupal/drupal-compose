@@ -127,7 +127,7 @@ Unstable or not implemented commands:
     dev php53 enable
     dev php52 enable
 
-    dev svn export
+    dev svn export [REPOSITORY] <REVISION_FROM:REVISION_TO> <TARGET>
 
     dev ssh <ENVIRONMENT> [PATH]
 
