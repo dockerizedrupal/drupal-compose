@@ -35,8 +35,8 @@ Stable commands:
     dev redis restart
     dev redis stop
     dev redis destroy
-    dev redis get [KEY]
-    dev redis set [KEY] [VALUE]
+    dev redis get <KEY]>
+    dev redis set <KEY> <VALUE>
 
     dev apache attach
     dev apache update
@@ -127,7 +127,11 @@ Unstable or not implemented commands:
     dev php53 enable
     dev php52 enable
 
-    dev svn archive 31337:HEAD archive
+    dev svn export
+
+    dev ssh <ENVIRONMENT> [PATH]
+
+
 EOF
 
   exit 1
