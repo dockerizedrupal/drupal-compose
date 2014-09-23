@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 
-/usr/bin/supervisord
+if [ "${#}" -eq 0 ]; then
+  /usr/bin/supervisord
+
+  exit
+fi
+
+
