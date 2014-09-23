@@ -130,8 +130,6 @@ Unstable or not implemented commands:
     dev svn export [REPOSITORY] <REVISION_FROM:REVISION_TO> <TARGET>
 
     dev ssh <ENVIRONMENT> [PATH]
-
-
 EOF
 
   exit 1
