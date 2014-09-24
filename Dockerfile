@@ -1,4 +1,4 @@
-FROM simpledrupalcloud/node
+FROM simpledrupalcloud/base
 
 MAINTAINER Simple Drupal Cloud <support@simpledrupalcloud.com>
 
