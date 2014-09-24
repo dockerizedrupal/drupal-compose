@@ -1,12 +1,13 @@
-#class packages {
-#  package {[
+class packages {
+  package {[
+        'git'
 #      'build-essential',
 #      'subversion'
-#    ]:
-#    ensure => present
-#  }
-#}
-#
+    ]:
+    ensure => present
+  }
+}
+
 #class dev {
 #  exec { 'mkdir /src':
 #    path => ['/bin']
@@ -37,13 +38,13 @@ node default {
     mode => 755
   }
 
-#  include packages
+  include packages
 #  include dev
-#
+
 #  Class['packages'] -> Class['dev']
-#
-#  exec { 'apt-get update':
-#    path => ['/usr/bin'],
-#    before => Class['packages']
-#  }
+
+  exec { 'apt-get update':
+    path => ['/usr/bin'],
+    before => Class['packages']
+  }
 }
