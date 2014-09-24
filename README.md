@@ -4,9 +4,7 @@ dev
 Install
 -------
 
-    TMP="$(mktemp -d)" \
-      && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${TMP}" \
-      && sudo cp "${TMP}/dev.sh" /usr/local/bin/dev
+    sudo docker run --rm -i -t -v /usr/local/bin:/usr/local/bin simpledrupalcloud/dev install
 
 Build the image
 ---------------
