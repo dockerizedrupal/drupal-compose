@@ -54,14 +54,6 @@ Stable commands:
     dev mysql stop
     dev mysql destroy
 
-    dev php attach
-    dev php update
-    dev php build
-    dev php start
-    dev php restart
-    dev php stop
-    dev php destroy
-
     dev php56 enable
     dev php56 attach
     dev php56 update
@@ -1282,73 +1274,6 @@ php_enable() {
   fi
 }
 
-php() {
-  output_debug "FUNCTION: php ARGS: ${*}"
-
-  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
-    cat << EOF
-dev php update
-dev php build
-dev php start
-dev php restart
-dev php stop
-dev php destroy
-EOF
-
-    exit 1
-  fi
-
-  case "${1}" in
-    update)
-      php52 update
-      php53 update
-      php54 update
-      php55 update
-      php56 update
-    ;;
-    build)
-      php52 build
-      php53 build
-      php54 build
-      php55 build
-      php56 build
-    ;;
-    start)
-      php52 start
-      php53 start
-      php54 start
-      php55 start
-      php56 start
-    ;;
-    restart)
-      php52 restart
-      php53 restart
-      php54 restart
-      php55 restart
-      php56 restart
-    ;;
-    stop)
-      php52 stop
-      php53 stop
-      php54 stop
-      php55 stop
-      php56 stop
-    ;;
-    destroy)
-      php52 destroy
-      php53 destroy
-      php54 destroy
-      php55 destroy
-      php56 destroy
-    ;;
-    *)
-      output_error "dev: Unknown command. See 'dev php --help'"
-
-      exit 1
-    ;;
-  esac
-}
-
 mailcatcher_build() {
   output_debug "FUNCTION: php53_build ARGS: ${*}"
 
@@ -1506,7 +1431,7 @@ install() {
     sudo mkdir -p "${LOG_DIR}"
   fi
 
-  output "dev: Instaling nsenter"
+  output "dev: Installing nsenter"
 
   sudo docker run \
     --rm \
@@ -1532,9 +1457,25 @@ install() {
   mysql update
   mysql start
 
-  php stop
-  php update
-  php start
+  php56 stop
+  php56 update
+  php56 start
+
+  php55 stop
+  php55 update
+  php55 start
+
+  php54 stop
+  php54 update
+  php54 start
+
+  php53 stop
+  php53 update
+  php53 start
+
+  php52 stop
+  php52 update
+  php52 start
 
   mailcatcher stop
   mailcatcher update
@@ -1564,7 +1505,11 @@ build() {
   redis build
   apache build
   mysql build
-  php build
+  php56 build
+  php55 build
+  php54 build
+  php53 build
+  php52 build
   mailcatcher build
 }
 
@@ -1575,7 +1520,11 @@ start() {
   redis start
   apache start
   mysql start
-  php start
+  php56 start
+  php55 start
+  php54 start
+  php53 start
+  php52 start
   mailcatcher start
 }
 
@@ -1586,7 +1535,11 @@ restart() {
   redis restart
   apache restart
   mysql restart
-  php restart
+  php56 restart
+  php55 restart
+  php54 restart
+  php53 restart
+  php52 restart
   mailcatcher restart
 }
 
@@ -1594,7 +1547,11 @@ stop() {
   output "dev: Destroying containers"
 
   mailcatcher stop
-  php stop
+  php56 stop
+  php55 stop
+  php54 stop
+  php53 stop
+  php52 stop
   mysql stop
   apache stop
   redis stop
@@ -1605,7 +1562,11 @@ destroy() {
   output "dev: Destroying images"
 
   mailcatcher stop
-  php stop
+  php56 stop
+  php55 stop
+  php54 stop
+  php53 stop
+  php52 stop
   mysql stop
   apache stop
   redis stop
@@ -1662,9 +1623,6 @@ case "${1}" in
   ;;
   mysql)
     mysql "${@:2}"
-  ;;
-  php)
-    php "${@:2}"
   ;;
   php52)
     php52 "${@:2}"
