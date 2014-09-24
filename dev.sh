@@ -1476,8 +1476,7 @@ dev phpmyadmin install
 dev phpmyadmin update
 dev phpmyadmin destroy
 EOF
-  exit
-
+    exit
   fi
 
   case "${1}" in
@@ -1506,20 +1505,6 @@ install() {
 
     sudo mkdir -p "${LOG_DIR}"
   fi
-
-  output "dev: Instaling package: realpath"
-
-  sudo apt-get install -y realpath > >(log) 2> >(log_error)
-
-  SCRIPT="$(realpath -s "${0}")"
-
-  output "dev: Instaling package: curl"
-
-  sudo apt-get install -y curl > >(log) 2> >(log_error)
-
-  output "dev: Instaling package: docker"
-
-  curl -sSL https://get.docker.io/ubuntu/ | sudo bash > >(log) 2> >(log_error)
 
   output "dev: Instaling nsenter"
 
