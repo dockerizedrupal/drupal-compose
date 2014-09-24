@@ -4,7 +4,13 @@ dev
 Install
 -------
 
-    sudo docker run --rm -i -t -v /usr/local/bin:/usr/local/bin simpledrupalcloud/dev install
+    sudo docker run \
+      --rm \
+      -i \
+      -t \
+      -v /usr/local/bin:/usr/local/bin \
+      simpledrupalcloud/dev \
+      install
 
 Build the image
 ---------------

@@ -14,9 +14,4 @@ case "${1}" in
 
     cp "${TMP}/dev.sh" /usr/local/bin/dev
   ;;
-  *)
-    output_error "dev: Unknown command. See 'dev mysql --help'"
-
-    exit 1
-  ;;
 esac
