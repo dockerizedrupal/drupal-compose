@@ -11,3 +11,8 @@ Install
       -v /usr/local/bin:/usr/local/bin \
       simpledrupalcloud/dev \
       install
+
+Help
+----
+
+    dev --help
