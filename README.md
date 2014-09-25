@@ -25,6 +25,22 @@ Stable commands:
     dev restart
     dev stop
 
+    dev skydns attach
+    dev skydns update
+    dev skydns build
+    dev skydns start
+    dev skydns restart
+    dev skydns stop
+    dev skydns destroy
+
+    dev skydock attach
+    dev skydock update
+    dev skydock build
+    dev skydock start
+    dev skydock restart
+    dev skydock stop
+    dev skydock destroy
+
     dev dev attach
     dev dev update
     dev dev build
