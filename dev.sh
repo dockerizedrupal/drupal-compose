@@ -178,6 +178,16 @@ WORKING_DIR="$(pwd)"
 
 output_debug "\${WORKING_DIR}: ${WORKING_DIR}"
 
+interface_ip() {
+  local INTERFACE="${1}"
+
+  echo "$(ip addr show "${INTERFACE}" 2> /dev/null | grep inet | awk -F " " '{ print $2 }' | sed -e 's/\/.*$//')"
+}
+
+docker0_ip() {
+  echo "$(interface_ip "docker0")"
+}
+
 image_exists() {
   local RETURN=0
 
@@ -602,9 +612,9 @@ apache_start() {
 
   local APACHE_SERVERNAME=example.com
 
-  sudo docker run \
-    --name apache \
-    --net container:dev \
+  local CONTAINER="apache" && sudo docker run \
+    --name "${CONTAINER}" \
+    -h "${CONTAINER}" \
     -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -v /var/apache-2.2.22/log:/apache-2.2.22/log \
