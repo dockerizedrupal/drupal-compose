@@ -809,8 +809,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      container_destroy "${CONTAINER}"
-      container_start "${CONTAINER}" "${IMAGE}"
+      apache stop
+      apache start
     ;;
     stop)
       php55 stop
