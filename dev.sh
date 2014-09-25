@@ -1571,6 +1571,9 @@ case "${1}" in
   svn)
     svn "${@:2}"
   ;;
+  skydns)
+    skydns "${@:2}"
+  ;;
   dev)
     dev "${@:2}"
   ;;
