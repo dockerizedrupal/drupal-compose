@@ -634,7 +634,7 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
-      skydns stop
+      skydock stop
 
       container_destroy "${CONTAINER}"
     ;;
