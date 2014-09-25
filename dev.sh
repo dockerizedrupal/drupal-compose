@@ -646,8 +646,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      container_destroy "${CONTAINER}"
-      container_start "${CONTAINER}" "${IMAGE}"
+      skydns stop
+      skydns start
     ;;
     stop)
       skydock stop
@@ -720,8 +720,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      container_destroy "${CONTAINER}"
-      container_start "${CONTAINER}" "${IMAGE}"
+      skydock stop
+      skydock start
     ;;
     stop)
       apache stop
@@ -1241,8 +1241,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      container_destroy "${CONTAINER}"
-      container_start "${CONTAINER}" "${IMAGE}"
+      php55 stop
+      php55 start
     ;;
     stop)
       container_destroy "${CONTAINER}"
