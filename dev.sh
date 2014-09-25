@@ -587,8 +587,8 @@ EOF
 skydns_start() {
   output_debug "FUNCTION: skydns_start ARGS: ${*}"
 
-  sudo docker run \
-    --name skydns \
+  local CONTAINER="skydns" && sudo docker run \
+    --name "${CONTAINER}" \
     -p "$(docker0_ip):53:53/udp" \
     -d \
     crosbymichael/skydns -nameserver 8.8.8.8:53 -domain docker > >(log) 2> >(log_error)
