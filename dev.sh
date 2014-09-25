@@ -468,19 +468,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=false
-
-      if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
-        dev stop
-
-        CONTAINER_STOPPED=true
-      fi
-
-      image_update "${IMAGE}"
-
-      if ${CONTAINER_STOPPED}; then
-        dev start
-      fi
+      image_update "${IMAGE}" "${CONTAINER}"
     ;;
     build)
       image_build "${IMAGE}" "${CONTAINER}"
@@ -555,19 +543,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=false
-
-      if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
-        redis stop
-
-        CONTAINER_STOPPED=true
-      fi
-
-      image_update "${IMAGE}"
-
-      if ${CONTAINER_STOPPED}; then
-        redis start
-      fi
+      image_update "${IMAGE}" "${CONTAINER}"
     ;;
     build)
       image_build "${IMAGE}" "${CONTAINER}"
@@ -737,19 +713,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=false
-
-      if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
-        apache stop
-
-        CONTAINER_STOPPED=true
-      fi
-
-      image_update "${IMAGE}"
-
-      if ${CONTAINER_STOPPED}; then
-        apache start
-      fi
+      image_update "${IMAGE}" "${CONTAINER}"
     ;;
     build)
       image_build "${IMAGE}" "${CONTAINER}"
@@ -828,19 +792,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=false
-
-      if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
-        mysql stop
-
-        CONTAINER_STOPPED=true
-      fi
-
-      image_update "${IMAGE}"
-
-      if ${CONTAINER_STOPPED}; then
-        mysql start
-      fi
+      image_update "${IMAGE}" "${CONTAINER}"
     ;;
     build)
       image_build "${IMAGE}" "${CONTAINER}"
@@ -921,19 +873,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=false
-
-      if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
-        php52 stop
-
-        CONTAINER_STOPPED=true
-      fi
-
-      image_update "${IMAGE}"
-
-      if ${CONTAINER_STOPPED}; then
-        php52 start
-      fi
+      image_update "${IMAGE}" "${CONTAINER}"
     ;;
     build)
       image_build "${IMAGE}" "${CONTAINER}"
@@ -1018,19 +958,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=false
-
-      if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
-        php53 stop
-
-        CONTAINER_STOPPED=true
-      fi
-
-      image_update "${IMAGE}"
-
-      if ${CONTAINER_STOPPED}; then
-        php53 start
-      fi
+      image_update "${IMAGE}" "${CONTAINER}"
     ;;
     build)
       image_build "${IMAGE}" "${CONTAINER}"
@@ -1115,19 +1043,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=false
-
-      if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
-        php54 stop
-
-        CONTAINER_STOPPED=true
-      fi
-
-      image_update "${IMAGE}"
-
-      if ${CONTAINER_STOPPED}; then
-        php54 start
-      fi
+      image_update "${IMAGE}" "${CONTAINER}"
     ;;
     build)
       image_build "${IMAGE}" "${CONTAINER}"
@@ -1224,19 +1140,7 @@ EOF
     update)
       php55_update_1
 
-      local CONTAINER_STOPPED=false
-
-      if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
-        php55 stop
-
-        CONTAINER_STOPPED=true
-      fi
-
-      image_update "${IMAGE}"
-
-      if ${CONTAINER_STOPPED}; then
-        php55 start
-      fi
+      image_update "${IMAGE}" "${CONTAINER}"
     ;;
     build)
       image_build "${IMAGE}" "${CONTAINER}"
@@ -1321,19 +1225,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=false
-
-      if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
-        php56 stop
-
-        CONTAINER_STOPPED=true
-      fi
-
-      image_update "${IMAGE}"
-
-      if ${CONTAINER_STOPPED}; then
-        php56 start
-      fi
+      image_update "${IMAGE}" "${CONTAINER}"
     ;;
     build)
       image_build "${IMAGE}" "${CONTAINER}"
@@ -1419,19 +1311,7 @@ EOF
       container_attach "${CONTAINER}"
     ;;
     update)
-      local CONTAINER_STOPPED=false
-
-      if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
-        mailcatcher stop
-
-        CONTAINER_STOPPED=true
-      fi
-
-      image_update "${IMAGE}"
-
-      if ${CONTAINER_STOPPED}; then
-        mailcatcher start
-      fi
+      image_update "${IMAGE}" "${CONTAINER}"
     ;;
     build)
       image_build "${IMAGE}" "${CONTAINER}"
