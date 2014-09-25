@@ -477,8 +477,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      dev stop
-      dev start
+      container_destroy "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -556,8 +556,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      redis stop
-      redis start
+      container_destroy "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -634,15 +634,11 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      if ! $(container_exists "dev") || ! $(container_running "dev"); then
-        dev start
-      fi
-
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      apache stop
-      apache start
+      container_destroy "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -726,8 +722,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      apache stop
-      apache start
+      container_destroy "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -805,8 +801,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      mysql stop
-      mysql start
+      container_destroy "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -890,8 +886,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      php52 stop
-      php52 start
+      container_destroy "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -975,8 +971,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      php53 stop
-      php53 start
+      container_destroy "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -1060,8 +1056,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      php54 stop
-      php54 start
+      container_destroy "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -1157,8 +1153,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      php55 stop
-      php55 start
+      container_destroy "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -1242,8 +1238,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      php56 stop
-      php56 start
+      container_destroy "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -1324,8 +1320,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      mailcatcher stop
-      mailcatcher start
+      container_destroy "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
       container_destroy "${CONTAINER}"
