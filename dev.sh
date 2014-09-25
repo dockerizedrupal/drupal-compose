@@ -767,9 +767,9 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      if ! $(container_exists "dev") || ! $(container_running "dev"); then
-        dev start
-      fi
+#      if ! $(container_exists "dev") || ! $(container_running "dev"); then
+#        dev start
+#      fi
 
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
