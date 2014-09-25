@@ -181,7 +181,7 @@ output_debug "\${WORKING_DIR}: ${WORKING_DIR}"
 interface_ip() {
   local INTERFACE="${1}"
 
-  echo "$(ip addr show "${INTERFACE}" 2> /dev/null | grep inet | awk -F " " '{ print $2 }' | sed -e 's/\/.*$//')"
+  echo "$(ip addr show "${INTERFACE}" 2> /dev/null | grep "inet " | awk -F " " '{ print $2 }' | sed -e 's/\/.*$//')"
 }
 
 docker0_ip() {
@@ -217,6 +217,14 @@ image_update() {
   output_debug "FUNCTION: image_update ARGS: ${*}"
 
   local IMAGE="${1}"
+  local CONTAINER="${2}"
+  local CONTAINER_STOPPED=false
+
+  if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
+    container_destroy "${CONTAINER}"
+
+    CONTAINER_STOPPED=true
+  fi
 
   if $(image_exists "${IMAGE}"); then
     output "Updating image: ${IMAGE}"
@@ -225,6 +233,10 @@ image_update() {
   fi
 
   sudo docker pull "${IMAGE}" > >(log) 2> >(log_error)
+
+  if ${CONTAINER_STOPPED}; then
+    container_start "${CONTAINER}" "${IMAGE}"
+  fi
 }
 
 image_destroy() {
@@ -596,6 +608,80 @@ EOF
   esac
 }
 
+skydns_start() {
+  output_debug "FUNCTION: skydns_start ARGS: ${*}"
+
+  APACHE_SERVERNAME=example.com
+
+  CONTAINER="apache" && sudo docker run \
+    --name "${CONTAINER}" \
+    -h "${CONTAINER}" \
+    --dns "$(docker0_ip)" \
+    -p 80:80 \
+    -p 443:443 \
+    -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
+    -v /var/apache-2.2.22/data:/apache-2.2.22/data \
+    -v /var/apache-2.2.22/log:/apache-2.2.22/log \
+    -e APACHE_SERVERNAME="${APACHE_SERVERNAME}" \
+    -d \
+    simpledrupalcloud/apache:2.2.22 > >(log) 2> >(log_error)
+}
+
+skydns() {
+  local CONTAINER=skydns
+  local IMAGE=crosbymichael/skydns:latest
+
+  output_debug "FUNCTION: skydns ARGS: ${*}"
+
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev apache attach
+dev apache update
+dev apache build
+dev apache start
+dev apache restart
+dev apache stop
+dev apache destroy
+EOF
+
+    exit 1
+  fi
+
+  case "${1}" in
+    attach)
+      container_attach "${CONTAINER}"
+    ;;
+    update)
+      image_update "${IMAGE}" "${CONTAINER}"
+    ;;
+    build)
+      image_build "${IMAGE}" "${CONTAINER}"
+    ;;
+    start)
+      if ! $(container_exists "dev") || ! $(container_running "dev"); then
+        dev start
+      fi
+
+      container_start "${CONTAINER}" "${IMAGE}"
+    ;;
+    restart)
+      apache stop
+      apache start
+    ;;
+    stop)
+      container_destroy "${CONTAINER}"
+    ;;
+    destroy)
+      image_destroy "${IMAGE}"
+    ;;
+    *)
+      output_error "dev: Unknown command. See 'dev apache --help'"
+
+      exit 1
+    ;;
+  esac
+}
+
 apache_build() {
   output_debug "FUNCTION: apache_build ARGS: ${*}"
 
@@ -610,11 +696,14 @@ apache_build() {
 apache_start() {
   output_debug "FUNCTION: apache_start ARGS: ${*}"
 
-  local APACHE_SERVERNAME=example.com
+  APACHE_SERVERNAME=example.com
 
-  local CONTAINER="apache" && sudo docker run \
+  CONTAINER="apache" && sudo docker run \
     --name "${CONTAINER}" \
     -h "${CONTAINER}" \
+    --dns "$(docker0_ip)" \
+    -p 80:80 \
+    -p 443:443 \
     -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -v /var/apache-2.2.22/log:/apache-2.2.22/log \
