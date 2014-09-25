@@ -757,7 +757,9 @@ apache_start() {
 
   APACHE_SERVERNAME=example.com
 
-  CONTAINER="apache" && sudo docker run \
+  local CONTAINER="apache"
+
+  sudo docker run \
     --name "${CONTAINER}" \
     -h "${CONTAINER}" \
     --dns "$(docker0_ip)" \
@@ -811,9 +813,13 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
+      php55 stop
+
       container_destroy "${CONTAINER}"
     ;;
     destroy)
+      php55 destroy
+
       image_destroy "${IMAGE}"
     ;;
     *)
@@ -1182,9 +1188,12 @@ php55_build() {
 php55_start() {
   output_debug "FUNCTION: php55_start ARGS: ${*}"
 
+  local CONTAINER="php55"
+
   sudo docker run \
-    --name php55 \
-    --net container:dev \
+    --name "${CONTAINER}" \
+    -h "${CONTAINER}" \
+    --dns "$(docker0_ip)" \
     --volumes-from apache \
     -d \
     simpledrupalcloud/php:5.5.17 > >(log) 2> >(log_error)
@@ -1227,13 +1236,7 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      if ! $(container_exists "dev") || ! $(container_running "dev"); then
-        dev start
-      fi
-
-      if ! $(container_exists "apache") || ! $(container_running "apache"); then
-        apache start
-      fi
+      apache start
 
       container_start "${CONTAINER}" "${IMAGE}"
     ;;

@@ -2,7 +2,7 @@
 	AddHandler php .php
 
 	Alias /php52 /apache-2.2.22/php52
-	FastCgiExternalServer /apache-2.2.22/php52 -host 127.0.0.1:5217 -idle-timeout 300 -pass-header Authorization
+	FastCgiExternalServer /apache-2.2.22/php52 -host php52.php.dev.localhost:5217 -idle-timeout 300 -pass-header Authorization
 
 	<Location /php52>
 		Order deny,allow
@@ -11,7 +11,7 @@
 	</Location>
 
 	Alias /php53 /apache-2.2.22/php53
-	FastCgiExternalServer /apache-2.2.22/php53 -host 127.0.0.1:5328 -idle-timeout 300 -pass-header Authorization
+	FastCgiExternalServer /apache-2.2.22/php53 -host php53.php.dev.localhost:5328 -idle-timeout 300 -pass-header Authorization
 
 	<Location /php53>
 		Order deny,allow
@@ -20,7 +20,7 @@
 	</Location>
 
 	Alias /php54 /apache-2.2.22/php54
-	FastCgiExternalServer /apache-2.2.22/php54 -host 127.0.0.1:5431 -idle-timeout 300 -pass-header Authorization
+	FastCgiExternalServer /apache-2.2.22/php54 -host php54.php.dev.localhost:5431 -idle-timeout 300 -pass-header Authorization
 
 	<Location /php54>
 		Order deny,allow
@@ -29,7 +29,7 @@
 	</Location>
 
 	Alias /php55 /apache-2.2.22/php55
-	FastCgiExternalServer /apache-2.2.22/php55 -host 127.0.0.1:5517 -idle-timeout 300 -pass-header Authorization
+	FastCgiExternalServer /apache-2.2.22/php55 -host php55.php.dev.localhost:5517 -idle-timeout 300 -pass-header Authorization
 
 	<Location /php55>
 		Order deny,allow
@@ -38,7 +38,7 @@
 	</Location>
 
 	Alias /php56 /apache-2.2.22/php56
-	FastCgiExternalServer /apache-2.2.22/php56 -host 127.0.0.1:5600 -idle-timeout 300 -pass-header Authorization
+	FastCgiExternalServer /apache-2.2.22/php56 -host php56.php.dev.localhost:5600 -idle-timeout 300 -pass-header Authorization
 
 	<Location /php56>
 		Order deny,allow
