@@ -487,7 +487,7 @@ EOF
       image_destroy "${IMAGE}"
     ;;
     *)
-      output_error "dev: Unknown command. See 'dev dev --help'"
+      output_error "dev: Unknown command. See 'dev ${CONTAINER} --help'"
 
       exit 1
     ;;
@@ -577,7 +577,7 @@ EOF
       dev_set "${KEY}" "${VALUE}"
     ;;
     *)
-      output_error "dev: Unknown command. See 'dev redis --help'"
+      output_error "dev: Unknown command. See 'dev ${CONTAINER} --help'"
 
       exit 1
     ;;
@@ -587,20 +587,11 @@ EOF
 skydns_start() {
   output_debug "FUNCTION: skydns_start ARGS: ${*}"
 
-  APACHE_SERVERNAME=example.com
-
-  CONTAINER="apache" && sudo docker run \
-    --name "${CONTAINER}" \
-    -h "${CONTAINER}" \
-    --dns "$(docker0_ip)" \
-    -p 80:80 \
-    -p 443:443 \
-    -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
-    -v /var/apache-2.2.22/data:/apache-2.2.22/data \
-    -v /var/apache-2.2.22/log:/apache-2.2.22/log \
-    -e APACHE_SERVERNAME="${APACHE_SERVERNAME}" \
+  sudo docker run \
+    --name skydns \
+    -p "$(docker0_ip):53/udp" \
     -d \
-    simpledrupalcloud/apache:2.2.22 > >(log) 2> >(log_error)
+    crosbymichael/skydns -nameserver 8.8.8.8:53 -domain docker > >(log) 2> >(log_error)
 }
 
 skydns() {
@@ -647,7 +638,7 @@ EOF
       image_destroy "${IMAGE}"
     ;;
     *)
-      output_error "dev: Unknown command. See 'dev apache --help'"
+      output_error "dev: Unknown command. See 'dev ${CONTAINER} --help'"
 
       exit 1
     ;;
@@ -732,7 +723,7 @@ EOF
       image_destroy "${IMAGE}"
     ;;
     *)
-      output_error "dev: Unknown command. See 'dev apache --help'"
+      output_error "dev: Unknown command. See 'dev ${CONTAINER} --help'"
 
       exit 1
     ;;
@@ -811,7 +802,7 @@ EOF
       image_destroy "${IMAGE}"
     ;;
     *)
-      output_error "dev: Unknown command. See 'dev mysql --help'"
+      output_error "dev: Unknown command. See 'dev ${CONTAINER} --help'"
 
       exit 1
     ;;
@@ -896,7 +887,7 @@ EOF
       image_destroy "${IMAGE}"
     ;;
     *)
-      output_error "dev: Unknown command. See 'dev php52 --help'"
+      output_error "dev: Unknown command. See 'dev ${CONTAINER} --help'"
 
       exit 1
     ;;
@@ -981,7 +972,7 @@ EOF
       image_destroy "${IMAGE}"
     ;;
     *)
-      output_error "dev: Unknown command. See 'dev php53 --help'"
+      output_error "dev: Unknown command. See 'dev ${CONTAINER} --help'"
 
       exit 1
     ;;
@@ -1066,7 +1057,7 @@ EOF
       image_destroy "${IMAGE}"
     ;;
     *)
-      output_error "dev: Unknown command. See 'dev php54 --help'"
+      output_error "dev: Unknown command. See 'dev ${CONTAINER} --help'"
 
       exit 1
     ;;
@@ -1163,7 +1154,7 @@ EOF
       image_destroy "${IMAGE}"
     ;;
     *)
-      output_error "dev: Unknown command. See 'dev php55 --help'"
+      output_error "dev: Unknown command. See 'dev ${CONTAINER} --help'"
 
       exit 1
     ;;
@@ -1248,7 +1239,7 @@ EOF
       image_destroy "${IMAGE}"
     ;;
     *)
-      output_error "dev: Unknown command. See 'dev php56 --help'"
+      output_error "dev: Unknown command. See 'dev ${CONTAINER} --help'"
 
       exit 1
     ;;
@@ -1330,7 +1321,7 @@ EOF
       image_destroy "${IMAGE}"
     ;;
     *)
-      output_error "dev: Unknown command. See 'dev mailcatcher --help'"
+      output_error "dev: Unknown command. See 'dev ${CONTAINER} --help'"
 
       exit 1
     ;;
