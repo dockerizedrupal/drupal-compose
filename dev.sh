@@ -652,7 +652,7 @@ skydock_start() {
     --name "${CONTAINER}" \
     -v /var/run/docker.sock:/docker.sock \
     -d \
-    crosbymichael/skydock -ttl 30 -environment dev -s /docker.sock -domain docker -name skydns
+    crosbymichael/skydock -ttl 30 -environment dev -s /docker.sock -domain docker -name skydns > >(log) 2> >(log_error)
 }
 
 skydock() {
