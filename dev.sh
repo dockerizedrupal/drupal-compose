@@ -303,7 +303,7 @@ container_start() {
   fi
 
   if ! $(image_exists "${IMAGE}"); then
-    image_update "${IMAGE}"
+    image_update "${IMAGE}" "${CONTAINER}"
   fi
 
   output "Starting container: ${CONTAINER}"
