@@ -589,7 +589,7 @@ skydns_start() {
 
   sudo docker run \
     --name skydns \
-    -p "$(docker0_ip):53/udp" \
+    -p "$(docker0_ip):53:53/udp" \
     -d \
     crosbymichael/skydns -nameserver 8.8.8.8:53 -domain docker > >(log) 2> >(log_error)
 }
