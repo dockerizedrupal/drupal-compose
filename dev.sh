@@ -639,6 +639,8 @@ EOF
       container_destroy "${CONTAINER}"
     ;;
     destroy)
+      skydock destroy
+
       image_destroy "${IMAGE}"
     ;;
     *)
@@ -711,6 +713,8 @@ EOF
       container_destroy "${CONTAINER}"
     ;;
     destroy)
+      apache destroy
+
       image_destroy "${IMAGE}"
     ;;
     *)
