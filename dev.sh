@@ -602,13 +602,74 @@ skydns() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
-dev apache attach
-dev apache update
-dev apache build
-dev apache start
-dev apache restart
-dev apache stop
-dev apache destroy
+dev skydns attach
+dev skydns update
+dev skydns build
+dev skydns start
+dev skydns restart
+dev skydns stop
+dev skydns destroy
+EOF
+
+    exit 1
+  fi
+
+  case "${1}" in
+    attach)
+      container_attach "${CONTAINER}"
+    ;;
+    update)
+      image_update "${IMAGE}" "${CONTAINER}"
+    ;;
+    build)
+      image_build "${IMAGE}" "${CONTAINER}"
+    ;;
+    start)
+      container_start "${CONTAINER}" "${IMAGE}"
+    ;;
+    restart)
+      container_destroy "${CONTAINER}"
+      container_start "${CONTAINER}" "${IMAGE}"
+    ;;
+    stop)
+      container_destroy "${CONTAINER}"
+    ;;
+    destroy)
+      image_destroy "${IMAGE}"
+    ;;
+    *)
+      output_error "dev: Unknown command. See 'dev ${CONTAINER} --help'"
+
+      exit 1
+    ;;
+  esac
+}
+
+skydock_start() {
+  output_debug "FUNCTION: skydock_start ARGS: ${*}"
+
+  local CONTAINER="skydock" && sudo docker run \
+    --name "${CONTAINER}" \
+    -v /var/run/docker.sock:/docker.sock \
+    -d \
+    crosbymichael/skydock -ttl 30 -environment dev -s /docker.sock -domain docker -name skydns
+}
+
+skydock() {
+  local CONTAINER=skydock
+  local IMAGE=crosbymichael/skydock:latest
+
+  output_debug "FUNCTION: skydock ARGS: ${*}"
+
+  if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+    cat << EOF
+dev skydock attach
+dev skydock update
+dev skydock build
+dev skydock start
+dev skydock restart
+dev skydock stop
+dev skydock destroy
 EOF
 
     exit 1
@@ -1573,6 +1634,9 @@ case "${1}" in
   ;;
   skydns)
     skydns "${@:2}"
+  ;;
+  skydock)
+    skydock "${@:2}"
   ;;
   dev)
     dev "${@:2}"
