@@ -587,7 +587,9 @@ EOF
 skydns_start() {
   output_debug "FUNCTION: skydns_start ARGS: ${*}"
 
-  local CONTAINER="skydns" && sudo docker run \
+  local CONTAINER="skydns"
+
+  sudo docker run \
     --name "${CONTAINER}" \
     -p "$(docker0_ip):53:53/udp" \
     -d \
@@ -632,6 +634,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
+      skydns stop
+
       container_destroy "${CONTAINER}"
     ;;
     destroy)
@@ -648,11 +652,18 @@ EOF
 skydock_start() {
   output_debug "FUNCTION: skydock_start ARGS: ${*}"
 
-  local CONTAINER="skydock" && sudo docker run \
+  local CONTAINER="skydock"
+
+  sudo docker run \
     --name "${CONTAINER}" \
     -v /var/run/docker.sock:/docker.sock \
     -d \
-    crosbymichael/skydock -ttl 30 -environment dev -s /docker.sock -domain docker -name skydns > >(log) 2> >(log_error)
+    crosbymichael/skydock:latest \
+    -ttl 30 \
+    -environment dev \
+    -s /docker.sock \
+    -domain docker \
+    -name skydns > >(log) 2> >(log_error)
 }
 
 skydock() {
@@ -686,6 +697,8 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
+      skydns start
+
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
@@ -693,6 +706,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     stop)
+      apache stop
+
       container_destroy "${CONTAINER}"
     ;;
     destroy)
@@ -767,9 +782,7 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-#      if ! $(container_exists "dev") || ! $(container_running "dev"); then
-#        dev start
-#      fi
+      skydock start
 
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
