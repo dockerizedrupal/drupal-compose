@@ -1499,7 +1499,7 @@ install() {
   sudo docker run \
     --rm \
     -v /usr/local/bin:/target \
-    jpetazzo/nsenter > >(log) 2> >(log_error)
+    jpetazzo/nsenter:latest > >(log) 2> >(log_error)
 
   dev stop
   dev update

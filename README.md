@@ -147,3 +147,9 @@ Unstable or not implemented commands:
     dev svn export [REPOSITORY] <REVISION_FROM:REVISION_TO> <TARGET>
 
     dev ssh <ENVIRONMENT> [PATH]
+    
+    dev rsync <ENVIRONMENT:/PATH> [PATH]
+    
+    dev scp <ENVIRONMENT:/PATH> [PATH]
+    
+    dev ftp <ENVIRONMENT:/PATH> [PATH]
