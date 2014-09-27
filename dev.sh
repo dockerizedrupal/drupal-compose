@@ -724,12 +724,12 @@ EOF
       skydock start
     ;;
     stop)
-      apache stop
+      php55 stop
 
       container_destroy "${CONTAINER}"
     ;;
     destroy)
-      apache destroy
+      php55 destroy
 
       image_destroy "${IMAGE}"
     ;;
@@ -809,7 +809,7 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      skydock start
+      php55 start
 
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
@@ -1241,7 +1241,7 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      apache start
+      skydock start
 
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
