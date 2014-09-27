@@ -818,13 +818,9 @@ EOF
       apache start
     ;;
     stop)
-      php55 stop
-
       container_destroy "${CONTAINER}"
     ;;
     destroy)
-      php55 destroy
-
       image_destroy "${IMAGE}"
     ;;
     *)
@@ -1250,9 +1246,13 @@ EOF
       php55 start
     ;;
     stop)
+      apache stop
+
       container_destroy "${CONTAINER}"
     ;;
     destroy)
+      apache destroy
+
       image_destroy "${IMAGE}"
     ;;
     *)
