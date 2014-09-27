@@ -765,15 +765,11 @@ apache_start() {
     --dns "$(docker0_ip)" \
     -p 80:80 \
     -p 443:443 \
+    --link php55:php55 \
     -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -v /var/apache-2.2.22/log:/apache-2.2.22/log \
     -e APACHE_SERVERNAME="${APACHE_SERVERNAME}" \
-    -e PHP52=php52.php.dev.docker \
-    -e PHP53=php53.php.dev.docker \
-    -e PHP54=php54.php.dev.docker \
-    -e PHP55=php55.php.dev.docker \
-    -e PHP56=php56.php.dev.docker \
     -d \
     simpledrupalcloud/apache:2.2.22 > >(log) 2> >(log_error)
 }
