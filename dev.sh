@@ -1199,7 +1199,7 @@ php55_start() {
     --name "${CONTAINER}" \
     -h "${CONTAINER}" \
     --dns "$(docker0_ip)" \
-    --volumes-from apache \
+    -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -d \
     simpledrupalcloud/php:5.5.17 > >(log) 2> >(log_error)
 }
