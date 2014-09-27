@@ -769,6 +769,11 @@ apache_start() {
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -v /var/apache-2.2.22/log:/apache-2.2.22/log \
     -e APACHE_SERVERNAME="${APACHE_SERVERNAME}" \
+    -e PHP52=php52.php.dev.docker \
+    -e PHP53=php53.php.dev.docker \
+    -e PHP54=php54.php.dev.docker \
+    -e PHP55=php55.php.dev.docker \
+    -e PHP56=php56.php.dev.docker \
     -d \
     simpledrupalcloud/apache:2.2.22 > >(log) 2> >(log_error)
 }
@@ -1493,13 +1498,6 @@ install() {
 
     sudo mkdir -p "${LOG_DIR}"
   fi
-
-  output "dev: Installing nsenter"
-
-  sudo docker run \
-    --rm \
-    -v /usr/local/bin:/target \
-    jpetazzo/nsenter:latest > >(log) 2> >(log_error)
 
   dev stop
   dev update
