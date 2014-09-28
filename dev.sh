@@ -1371,6 +1371,7 @@ mailcatcher_start() {
     --name "${CONTAINER}" \
     -h "${CONTAINER}" \
     --dns "$(docker0_ip)" \
+    -p 8080:80 \
     -d \
     simpledrupalcloud/mailcatcher:0.5.12 > >(log) 2> >(log_error)
 }
