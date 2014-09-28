@@ -724,12 +724,12 @@ EOF
       skydock start
     ;;
     stop)
-      php55 stop
+      mailcatcher stop
 
       container_destroy "${CONTAINER}"
     ;;
     destroy)
-      php55 destroy
+      mailcatcher destroy
 
       image_destroy "${IMAGE}"
     ;;
@@ -1205,7 +1205,7 @@ php55() {
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
 dev php55 enable
-dev php55 attach
+dev php55 attachthh
 dev php55 update
 dev php55 build
 dev php55 start
@@ -1233,7 +1233,7 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      skydock start
+      mailcatcher start
 
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
@@ -1364,9 +1364,12 @@ mailcatcher_build() {
 mailcatcher_start() {
   output_debug "FUNCTION: mailcatcher_start ARGS: ${*}"
 
+  local CONTAINER="mailcatcher"
+
   sudo docker run \
-    --name mailcatcher \
-    --net container:dev \
+    --name "${CONTAINER}" \
+    -h "${CONTAINER}" \
+    --dns "$(docker0_ip)" \
     -d \
     simpledrupalcloud/mailcatcher:0.5.12 > >(log) 2> >(log_error)
 }
@@ -1402,20 +1405,22 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      if ! $(container_exists "dev") || ! $(container_running "dev"); then
-        dev start
-      fi
+      skydock start
 
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      container_destroy "${CONTAINER}"
-      container_start "${CONTAINER}" "${IMAGE}"
+      mailcatcher stop
+      mailcatcher start
     ;;
     stop)
+      php55 stop
+
       container_destroy "${CONTAINER}"
     ;;
     destroy)
+      php55 destroy
+
       image_destroy "${IMAGE}"
     ;;
     *)
