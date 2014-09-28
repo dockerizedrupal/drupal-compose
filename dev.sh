@@ -237,7 +237,7 @@ image_update() {
   local CONTAINER_STOPPED=false
 
   if $(container_running "${CONTAINER}" || $(container_exists "${CONTAINER}")); then
-    container_destroy "${CONTAINER}"
+    "${CONTAINER} stop"
 
     CONTAINER_STOPPED=true
   fi
@@ -251,7 +251,7 @@ image_update() {
   sudo docker pull "${IMAGE}" > >(log) 2> >(log_error)
 
   if ${CONTAINER_STOPPED}; then
-    container_start "${CONTAINER}" "${IMAGE}"
+    "${CONTAINER} start"
   fi
 }
 
