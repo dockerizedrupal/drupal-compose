@@ -765,7 +765,11 @@ apache_start() {
     --dns "$(docker0_ip)" \
     -p 80:80 \
     -p 443:443 \
+    --link php52:php52 \
+    --link php53:php53 \
+    --link php54:php54 \
     --link php55:php55 \
+    --link php56:php56 \
     -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -v /var/apache-2.2.22/log:/apache-2.2.22/log \
@@ -805,7 +809,11 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
+      php52 start
+      php53 start
+      php54 start
       php55 start
+      php56 start
 
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
@@ -920,10 +928,14 @@ php52_build() {
 php52_start() {
   output_debug "FUNCTION: php52_start ARGS: ${*}"
 
+  local CONTAINER="php52"
+
   sudo docker run \
-    --name php52 \
-    --net container:dev \
-    --volumes-from apache \
+    --name "${CONTAINER}" \
+    -h "${CONTAINER}" \
+    --dns "$(docker0_ip)" \
+    --link mailcatcher:ssmtp \
+    -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -d \
     simpledrupalcloud/php:5.2.17 > >(log) 2> >(log_error)
 }
@@ -963,24 +975,22 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      if ! $(container_exists "dev") || ! $(container_running "dev"); then
-        dev start
-      fi
-
-      if ! $(container_exists "apache") || ! $(container_running "apache"); then
-        apache start
-      fi
+      mailcatcher start
 
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      container_destroy "${CONTAINER}"
-      container_start "${CONTAINER}" "${IMAGE}"
+      php52 stop
+      php52 start
     ;;
     stop)
+      apache stop
+
       container_destroy "${CONTAINER}"
     ;;
     destroy)
+      apache destroy
+
       image_destroy "${IMAGE}"
     ;;
     *)
@@ -1005,10 +1015,14 @@ php53_build() {
 php53_start() {
   output_debug "FUNCTION: php53_start ARGS: ${*}"
 
+  local CONTAINER="php53"
+
   sudo docker run \
-    --name php53 \
-    --net container:dev \
-    --volumes-from apache \
+    --name "${CONTAINER}" \
+    -h "${CONTAINER}" \
+    --dns "$(docker0_ip)" \
+    --link mailcatcher:ssmtp \
+    -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -d \
     simpledrupalcloud/php:5.3.28 > >(log) 2> >(log_error)
 }
@@ -1048,24 +1062,22 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      if ! $(container_exists "dev") || ! $(container_running "dev"); then
-        dev start
-      fi
-
-      if ! $(container_exists "apache") || ! $(container_running "apache"); then
-        apache start
-      fi
+      mailcatcher start
 
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      container_destroy "${CONTAINER}"
-      container_start "${CONTAINER}" "${IMAGE}"
+      php53 stop
+      php53 start
     ;;
     stop)
+      apache stop
+
       container_destroy "${CONTAINER}"
     ;;
     destroy)
+      apache destroy
+
       image_destroy "${IMAGE}"
     ;;
     *)
@@ -1077,7 +1089,7 @@ EOF
 }
 
 php54_build() {
-  output_debug "FUNCTION: php53_build ARGS: ${*}"
+  output_debug "FUNCTION: php54_build ARGS: ${*}"
 
   local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
@@ -1090,10 +1102,14 @@ php54_build() {
 php54_start() {
   output_debug "FUNCTION: php54_start ARGS: ${*}"
 
+  local CONTAINER="php54"
+
   sudo docker run \
-    --name php54 \
-    --net container:dev \
-    --volumes-from apache \
+    --name "${CONTAINER}" \
+    -h "${CONTAINER}" \
+    --dns "$(docker0_ip)" \
+    --link mailcatcher:ssmtp \
+    -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -d \
     simpledrupalcloud/php:5.4.31 > >(log) 2> >(log_error)
 }
@@ -1133,24 +1149,22 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      if ! $(container_exists "dev") || ! $(container_running "dev"); then
-        dev start
-      fi
-
-      if ! $(container_exists "apache") || ! $(container_running "apache"); then
-        apache start
-      fi
+      mailcatcher start
 
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      container_destroy "${CONTAINER}"
-      container_start "${CONTAINER}" "${IMAGE}"
+      php54 stop
+      php54 start
     ;;
     stop)
+      apache stop
+
       container_destroy "${CONTAINER}"
     ;;
     destroy)
+      apache destroy
+
       image_destroy "${IMAGE}"
     ;;
     *)
@@ -1274,10 +1288,14 @@ php56_build() {
 php56_start() {
   output_debug "FUNCTION: php56_start ARGS: ${*}"
 
+  local CONTAINER="php56"
+
   sudo docker run \
-    --name php56 \
-    --net container:dev \
-    --volumes-from apache \
+    --name "${CONTAINER}" \
+    -h "${CONTAINER}" \
+    --dns "$(docker0_ip)" \
+    --link mailcatcher:ssmtp \
+    -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -d \
     simpledrupalcloud/php:5.6.0 > >(log) 2> >(log_error)
 }
@@ -1317,24 +1335,22 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      if ! $(container_exists "dev") || ! $(container_running "dev"); then
-        dev start
-      fi
-
-      if ! $(container_exists "apache") || ! $(container_running "apache"); then
-        apache start
-      fi
+      mailcatcher start
 
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      container_destroy "${CONTAINER}"
-      container_start "${CONTAINER}" "${IMAGE}"
+      php56 stop
+      php56 start
     ;;
     stop)
+      apache stop
+
       container_destroy "${CONTAINER}"
     ;;
     destroy)
+      apache destroy
+
       image_destroy "${IMAGE}"
     ;;
     *)

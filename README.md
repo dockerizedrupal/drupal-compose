@@ -1,8 +1,6 @@
-dev
-===
+# dev
 
-Install
--------
+## Install
 
     sudo docker run \
       --rm \
@@ -12,9 +10,7 @@ Install
       simpledrupalcloud/dev \
       install
 
-dev --help
-----------
-
+## dev --help
 
 Stable commands:
 
