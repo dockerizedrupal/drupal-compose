@@ -759,7 +759,7 @@ apache_build() {
 apache_start() {
   output_debug "FUNCTION: apache_start ARGS: ${*}"
 
-  APACHE_SERVERNAME=example.com
+  local APACHE_SERVERNAME=example.com
 
   local CONTAINER="apache"
 
@@ -1562,29 +1562,29 @@ build() {
 start() {
   output "dev: Starting containers"
 
-  redis start
-  apache start
-  mysql start
+  mailcatcher start
   php56 start
   php55 start
   php54 start
   php53 start
   php52 start
-  mailcatcher start
+  apache start
+  mysql start
+  redis start
 }
 
 restart() {
   output "dev: Restarting containers"
 
-  redis restart
-  apache restart
-  mysql restart
+  mailcatcher restart
   php56 restart
   php55 restart
   php54 restart
   php53 restart
   php52 restart
-  mailcatcher restart
+  apache restart
+  mysql restart
+  redis restart
 }
 
 stop() {
