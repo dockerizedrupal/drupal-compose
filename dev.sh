@@ -437,20 +437,19 @@ dev_build() {
 dev_start() {
   output_debug "FUNCTION: dev_start ARGS: ${*}"
 
+  local CONTAINER="dev"
+
   sudo docker run \
-    --name dev \
-    -h dev \
-    -p 80:80 \
-    -p 443:443 \
-    -p 3306:3306 \
-    -p 1080:1080 \
+    --name "${CONTAINER}" \
+    -h "${CONTAINER}" \
+    --dns "$(docker0_ip)" \
     -d \
-    simpledrupalcloud/dev > >(log) 2> >(log_error)
+    simpledrupalcloud/dev:latest > >(log) 2> >(log_error)
 }
 
 dev() {
   local CONTAINER=dev
-  local IMAGE=simpledrupalcloud/dev
+  local IMAGE=simpledrupalcloud/dev:latest
 
   output_debug "FUNCTION: dev ARGS: ${*}"
 
@@ -493,8 +492,8 @@ EOF
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      container_destroy "${CONTAINER}"
-      container_start "${CONTAINER}" "${IMAGE}"
+      dev stop
+      dev start
     ;;
     stop)
       container_destroy "${CONTAINER}"
