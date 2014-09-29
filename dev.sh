@@ -1524,8 +1524,8 @@ EOF
   esac
 }
 
-install() {
-  output "dev: Instaling"
+update() {
+  output "dev: Updating"
 
   if [ ! -d "${LOG_DIR}" ]; then
     output "dev: Creating directory: ${LOG_DIR}"
@@ -1533,64 +1533,16 @@ install() {
     sudo mkdir -p "${LOG_DIR}"
   fi
 
-  dev stop
   dev update
-  dev start
-
-  redis stop
   redis update
-  redis start
-
-  sudo mkdir -p /var/apache-2.2.22/conf.d
-  sudo cp $(dirname "${0}")/apache-2.2.22/php /var/apache-2.2.22/conf.d
-
-  apache stop
   apache update
-  apache start
-
-  mysql stop
   mysql update
-  mysql start
-
-  php56 stop
-  php56 update
-  php56 start
-
-  php55 stop
-  php55 update
-  php55 start
-
-  php54 stop
-  php54 update
-  php54 start
-
-  php53 stop
-  php53 update
-  php53 start
-
-  php52 stop
   php52 update
-  php52 start
-
-  mailcatcher stop
+  php53 update
+  php54 update
+  php55 update
+  php56 update
   mailcatcher update
-  mailcatcher start
-
-  phpmyadmin install
-}
-
-update() {
-  output "dev: Updating"
-
-  TMP="$(mktemp -d)"
-
-  output "dev: Cloning repository"
-
-  git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${TMP}" > >(log) 2> >(log_error)
-
-  "${TMP}/dev.sh" install
-
-  exit
 }
 
 build() {
