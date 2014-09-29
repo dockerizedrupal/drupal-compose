@@ -1563,7 +1563,6 @@ build() {
 start() {
   output "dev: Starting containers"
 
-  dev start
   redis start
   apache start
   mysql start
@@ -1578,7 +1577,6 @@ start() {
 restart() {
   output "dev: Restarting containers"
 
-  dev restart
   redis restart
   apache restart
   mysql restart
@@ -1602,7 +1600,6 @@ stop() {
   mysql stop
   apache stop
   redis stop
-  dev stop
 }
 
 destroy() {
@@ -1617,7 +1614,6 @@ destroy() {
   mysql stop
   apache stop
   redis stop
-  dev stop
 }
 
 status() {
