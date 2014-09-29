@@ -7,7 +7,7 @@
       -i \
       -t \
       -v /usr/local/bin:/usr/local/bin \
-      simpledrupalcloud/dev \
+      simpledrupalcloud/dev:latest \
       install
 
 ## dev --help
