@@ -383,7 +383,7 @@ container_destroy() {
   sudo docker rm "${CONTAINER}" > >(log) 2> >(log_error)
 }
 
-svn_archive() {
+svn_export() {
     #-v $(pwd):/src \
     #-v ~/.subversion:/root/.subversion \
 
@@ -402,8 +402,8 @@ EOF
   fi
 
   case "${1}" in
-    archive)
-      svn_archive
+    export)
+      svn_export
     ;;
     *)
       output_error "dev: Unknown command. See 'dev svn --help'"
@@ -524,9 +524,12 @@ redis_build() {
 redis_start() {
   output_debug "FUNCTION: redis_start ARGS: ${*}"
 
+  local CONTAINER="redis"
+
   sudo docker run \
-    --name redis \
-    --net container:dev \
+    --name "${CONTAINER}" \
+    -h "${CONTAINER}" \
+    --dns "$(docker0_ip)" \
     -v /var/redis-2.8.14/data:/redis-2.8.14/data \
     -d \
     simpledrupalcloud/redis:2.8.14 > >(log) 2> >(log_error)
@@ -565,15 +568,13 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      if ! $(container_exists "dev") || ! $(container_running "dev"); then
-        dev start
-      fi
+      skydock start
 
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      container_destroy "${CONTAINER}"
-      container_start "${CONTAINER}" "${IMAGE}"
+      redis stop
+      redis start
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -725,11 +726,15 @@ EOF
     ;;
     stop)
       mailcatcher stop
+      mysql stop
+      redis stop
 
       container_destroy "${CONTAINER}"
     ;;
     destroy)
       mailcatcher destroy
+      mysql destroy
+      redis destroy
 
       image_destroy "${IMAGE}"
     ;;
@@ -849,9 +854,13 @@ mysql_build() {
 mysql_start() {
   output_debug "FUNCTION: mysql_start ARGS: ${*}"
 
+  local CONTAINER="mysql"
+
   sudo docker run \
-    --name mysql \
-    --net container:dev \
+    --name "${CONTAINER}" \
+    -h "${CONTAINER}" \
+    --dns "$(docker0_ip)" \
+    -p 3306:3306 \
     -v /var/mysql-5.5.38/conf.d:/mysql-5.5.38/conf.d \
     -v /var/mysql-5.5.38/data:/mysql-5.5.38/data \
     -v /var/mysql-5.5.38/log:/mysql-5.5.38/log \
@@ -890,15 +899,13 @@ EOF
       image_build "${IMAGE}" "${CONTAINER}"
     ;;
     start)
-      if ! $(container_exists "dev") || ! $(container_running "dev"); then
-        dev start
-      fi
+      skydock start
 
       container_start "${CONTAINER}" "${IMAGE}"
     ;;
     restart)
-      container_destroy "${CONTAINER}"
-      container_start "${CONTAINER}" "${IMAGE}"
+      mysql stop
+      mysql start
     ;;
     stop)
       container_destroy "${CONTAINER}"
@@ -1432,12 +1439,20 @@ EOF
       mailcatcher start
     ;;
     stop)
+      php52 stop
+      php53 stop
+      php54 stop
       php55 stop
+      php56 stop
 
       container_destroy "${CONTAINER}"
     ;;
     destroy)
+      php52 destroy
+      php53 destroy
+      php54 destroy
       php55 destroy
+      php56 destroy
 
       image_destroy "${IMAGE}"
     ;;
