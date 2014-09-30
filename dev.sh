@@ -1494,6 +1494,9 @@ phpmyadmin_start() {
 }
 
 phpmyadmin() {
+  local CONTAINER=phpmyadmin
+  local IMAGE=simpledrupalcloud/phpmyadmin:4.2.8
+
   output_debug "FUNCTION: phpmyadmin ARGS: ${*}"
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
