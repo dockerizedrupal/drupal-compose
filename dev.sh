@@ -907,9 +907,13 @@ EOF
       mysql start
     ;;
     stop)
+      phpmyadmin stop
+
       container_destroy "${CONTAINER}"
     ;;
     destroy)
+      phpmyadmin destroy
+
       image_destroy "${IMAGE}"
     ;;
     *)
@@ -1463,34 +1467,30 @@ EOF
   esac
 }
 
-phpmyadmin_install() {
-  output "phpmyadmin: Instaling"
+phpmyadmin_build() {
+  output_debug "FUNCTION: phpmyadmin_build ARGS: ${*}"
 
-  TMP="$(mktemp -d)" > >(log) 2> >(log_error)
+  local TMP="$(mktemp -d)" \
+    && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-phpmyadmin.git "${TMP}" \
+    && cd "${TMP}" \
+    && git checkout 4.2.8 \
+    && sudo docker build -t simpledrupalcloud/phpmyadmin:4.2.8 . \
+    && cd -
+}
 
-  output "phpmyadmin: Downloading"
+phpmyadmin_start() {
+  output_debug "FUNCTION: phpmyadmin_start ARGS: ${*}"
 
-  sudo wget http://sourceforge.net/projects/phpmyadmin/files/phpMyAdmin/4.2.8/phpMyAdmin-4.2.8-english.zip -O "${TMP}/phpMyAdmin-4.2.8-english.zip" > >(log) 2> >(log_error)
+  local CONTAINER="phpmyadmin"
 
-  output "phpmyadmin: Instaling unzip"
-
-  sudo apt-get install -y unzip > >(log) 2> >(log_error)
-
-  sudo mkdir -p /var/apache-2.2.22/data > >(log) 2> >(log_error)
-
-  output "phpmyadmin: Extracting files"
-
-  sudo unzip "${TMP}/phpMyAdmin-4.2.8-english.zip" -d /var/apache-2.2.22/data > >(log) 2> >(log_error)
-
-  sudo rm -rf /var/apache-2.2.22/data/phpmyadmin > >(log) 2> >(log_error)
-
-  sudo mv /var/apache-2.2.22/data/phpMyAdmin-4.2.8-english /var/apache-2.2.22/data/phpmyadmin > >(log) 2> >(log_error)
-
-  sudo cp $(dirname "${0}")/apache-2.2.22/config.inc.php /var/apache-2.2.22/data/phpmyadmin > >(log) 2> >(log_error)
-
-  output "phpmyadmin: Overwriting permissions"
-
-  sudo chown www-data.www-data /var/apache-2.2.22/data/phpmyadmin -R > >(log) 2> >(log_error)
+  sudo docker run \
+    --name "${CONTAINER}" \
+    -h "${CONTAINER}" \
+    --dns "$(docker0_ip)" \
+    -p 8081:80 \
+    --link mysql:mysql \
+    -d \
+    simpledrupalcloud/phpmyadmin:4.2.8 > >(log) 2> >(log_error)
 }
 
 phpmyadmin() {
@@ -1498,25 +1498,44 @@ phpmyadmin() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
-dev phpmyadmin install
+dev phpmyadmin attach
 dev phpmyadmin update
+dev phpmyadmin build
+dev phpmyadmin start
+dev phpmyadmin restart
+dev phpmyadmin stop
 dev phpmyadmin destroy
 EOF
     exit
   fi
 
   case "${1}" in
-    install)
-      phpmyadmin_install
+    attach)
+      container_attach "${CONTAINER}"
     ;;
     update)
-      echo "update"
+      image_update "${IMAGE}" "${CONTAINER}"
+    ;;
+    build)
+      image_build "${IMAGE}" "${CONTAINER}"
+    ;;
+    start)
+      mysql start
+
+      container_start "${CONTAINER}" "${IMAGE}"
+    ;;
+    restart)
+      phpmyadmin stop
+      phpmyadmin start
+    ;;
+    stop)
+      container_destroy "${CONTAINER}"
     ;;
     destroy)
-      echo "destroy"
+      image_destroy "${IMAGE}"
     ;;
     *)
-      output_error "dev: Unknown command. See 'dev phpmyadmin --help'"
+      output_error "dev: Unknown command. See 'dev ${CONTAINER} --help'"
 
       exit 1
     ;;

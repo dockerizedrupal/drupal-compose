@@ -149,3 +149,5 @@ Unstable or not implemented commands:
     dev scp <ENVIRONMENT:/PATH> [PATH]
     
     dev ftp <ENVIRONMENT:/PATH> [PATH]
+    
+    dev [SERVICE] logs
