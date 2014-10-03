@@ -1,10 +1,39 @@
 class packages {
   package {[
-        'git'
-#      'build-essential',
-#      'subversion'
+      'git',
+      'curl',
+      'build-essential',
+      'libxml2-dev',
+      'libssl-dev',
+      'libbz2-dev',
+      'libcurl4-gnutls-dev',
+      'libjpeg-dev',
+      'libpng12-dev',
+      'libmcrypt-dev',
+      'libmhash-dev',
+      'libmysqlclient-dev',
+      'libpspell-dev',
+      'autoconf',
+      'libcloog-ppl0'
     ]:
     ensure => present
+  }
+}
+
+class phpfarm {
+  include packages
+
+  exec { 'git clone git://git.code.sf.net/p/phpfarm/code phpfarm':
+    cwd => '/',
+    path => ['/usr/bin'],
+    require => Class['packages']
+  }
+}
+
+class php_supervisor {
+  file { '/etc/supervisor/conf.d/php.conf':
+    ensure => present,
+    source => '/tmp/build/etc/supervisor/conf.d/php.conf'
   }
 }
 
@@ -30,6 +59,10 @@ class packages {
 #    require => File['/app']
 #  }
 #}
+
+class php {
+
+}
 
 node default {
   file { '/run.sh':

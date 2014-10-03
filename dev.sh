@@ -1550,6 +1550,8 @@ EOF
     exit
   fi
 
+
+
   case "${1}" in
     status)
       if $(container_exists "${CONTAINER}"); then
