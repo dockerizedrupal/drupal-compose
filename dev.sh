@@ -1,23 +1,49 @@
 #!/usr/bin/env bash
 
+# MailCatcher
+
 MAILCATCHER_VERSION="0.5.12"
 
+# PHP56
+
 PHP56_VERSION="5.6.1"
+
+# PHP55
+
 PHP55_VERSION="5.5.17"
+
+# PHP54
+
 PHP54_VERSION="5.4.33"
+
+# PHP53
+
 PHP53_VERSION="5.3.29"
+
+# PHP52
+
 PHP52_VERSION="5.2.17"
+
+# Apache HTTP Server
 
 APACHE_VERSION="2.2.22"
 
+# MySQL
+
 MYSQL_VERSION="5.5.38"
 
+# Redis
+
 REDIS_VERSION="2.8.14"
+
+# phpMyAdmin
 
 PHPMYADMIN_VERSION="4.2.8"
 
 DOCKER_INTERFACE="docker0"
 DOCKER_INTERFACE_IP="$(ip addr show "${DOCKER_INTERFACE}" 2> /dev/null | grep "inet " | awk -F " " '{ print $2 }' | sed -e 's/\/.*$//')"
+
+# Logging
 
 LOG_DIR="/var/log/dev"
 
