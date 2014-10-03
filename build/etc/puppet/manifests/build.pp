@@ -156,8 +156,15 @@ node default {
 
   Class['packages'] -> Class['php'] -> Class['apache']
 
+  file { '/etc/apt/sources.list.d/non-free.list':
+    ensure => present,
+    source => '/tmp/build/etc/apt/sources.list.d/non-free.list',
+    mode => 644,
+    before => Class['packages']
+  }
+
   exec { 'apt-get update':
     path => ['/usr/bin'],
-    before => Class['packages']
+    require => File['/etc/apt/sources.list.d/non-free.list']
   }
 }
