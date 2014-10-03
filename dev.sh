@@ -1538,6 +1538,7 @@ phpmyadmin() {
 
   if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
     cat << EOF
+dev phpmyadmin status
 dev phpmyadmin attach
 dev phpmyadmin update
 dev phpmyadmin build
@@ -1550,6 +1551,17 @@ EOF
   fi
 
   case "${1}" in
+    status)
+      if $(container_exists "${CONTAINER}"); then
+        output_error "No such container: ${CONTAINER}"
+
+        return 0
+      else
+        output_error "No such container: ${CONTAINER}"
+
+        return 1
+      fi
+    ;;
     attach)
       container_attach "${CONTAINER}"
     ;;
@@ -1675,83 +1687,94 @@ destroy() {
 }
 
 status() {
-  echo "status"
+  local CONTAINER="${1}"
+
+  "${CONTAINER}" status
+}
+
+attach() {
+  local CONTAINER="${1}"
+
+  "${CONTAINER}" attach
 }
 
 case "${1}" in
   status)
-    status
+    status "${@:2}"
   ;;
-  install)
-    install
-    ;;
-  update)
-    update
-    ;;
-  build)
-    build
+  attach)
+    attach "${@:2}"
   ;;
-  start)
-    start
-    ;;
-  restart)
-    restart
-  ;;
-  stop)
-    stop
-  ;;
-  destroy)
-    destroy
-    ;;
-  svn)
-    svn "${@:2}"
-  ;;
-  skydns)
-    skydns "${@:2}"
-  ;;
-  skydock)
-    skydock "${@:2}"
-  ;;
-  dev)
-    dev "${@:2}"
-  ;;
-  redis)
-    case "${2}" in
-      get)
-        echo -n "$(dev_get "${@:3}")"
-      ;;
-      *)
-        redis "${@:2}"
-      ;;
-    esac
-  ;;
-  apache)
-    apache "${@:2}"
-  ;;
-  mysql)
-    mysql "${@:2}"
-  ;;
-  php52)
-    php52 "${@:2}"
-  ;;
-  php53)
-    php53 "${@:2}"
-  ;;
-  php54)
-    php54 "${@:2}"
-  ;;
-  php55)
-    php55 "${@:2}"
-  ;;
-  php56)
-    php56 "${@:2}"
-  ;;
-  mailcatcher)
-    mailcatcher "${@:2}"
-  ;;
-  phpmyadmin)
-    phpmyadmin "${@:2}"
-  ;;
+#  install)
+#    install
+#    ;;
+#  update)
+#    update
+#    ;;
+#  build)
+#    build
+#  ;;
+#  start)
+#    start
+#    ;;
+#  restart)
+#    restart
+#  ;;
+#  stop)
+#    stop
+#  ;;
+#  destroy)
+#    destroy
+#    ;;
+#  svn)
+#    svn "${@:2}"
+#  ;;
+#  skydns)
+#    skydns "${@:2}"
+#  ;;
+#  skydock)
+#    skydock "${@:2}"
+#  ;;
+#  dev)
+#    dev "${@:2}"
+#  ;;
+#  redis)
+#    case "${2}" in
+#      get)
+#        echo -n "$(dev_get "${@:3}")"
+#      ;;
+#      *)
+#        redis "${@:2}"
+#      ;;
+#    esac
+#  ;;
+#  apache)
+#    apache "${@:2}"
+#  ;;
+#  mysql)
+#    mysql "${@:2}"
+#  ;;
+#  php52)
+#    php52 "${@:2}"
+#  ;;
+#  php53)
+#    php53 "${@:2}"
+#  ;;
+#  php54)
+#    php54 "${@:2}"
+#  ;;
+#  php55)
+#    php55 "${@:2}"
+#  ;;
+#  php56)
+#    php56 "${@:2}"
+#  ;;
+#  mailcatcher)
+#    mailcatcher "${@:2}"
+#  ;;
+#  phpmyadmin)
+#    phpmyadmin "${@:2}"
+#  ;;
   *)
     output_error "dev: Unknown command. See 'dev --help'"
 
