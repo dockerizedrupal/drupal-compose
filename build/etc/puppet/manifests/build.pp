@@ -14,7 +14,9 @@ class packages {
       'libmysqlclient-dev',
       'libpspell-dev',
       'autoconf',
-      'libcloog-ppl0'
+      'libcloog-ppl0',
+      'apache2',
+      'libapache2-mod-fastcgi'
     ]:
     ensure => present
   }
@@ -84,6 +86,63 @@ class php {
   }
 }
 
+class apache_supervisor {
+  file { '/etc/supervisor/conf.d/apache.conf':
+    ensure => present,
+    source => '/tmp/build/etc/supervisor/conf.d/apache.conf'
+  }
+}
+
+class apache {
+  include apache_supervisor
+
+  exec { '/bin/bash -c "a2enmod actions"': }
+  exec { '/bin/bash -c "a2enmod fastcgi"': }
+  exec { '/bin/bash -c "a2enmod vhost_alias"': }
+  exec { '/bin/bash -c "a2enmod rewrite"': }
+  exec { '/bin/bash -c "a2enmod ssl"': }
+
+  file { '/etc/apache2/apache2.conf':
+    ensure => present,
+    source => '/tmp/build/etc/apache2/apache2.conf',
+    mode => 644
+  }
+
+  file { '/etc/apache2/conf.d/php':
+    ensure => present,
+    source => '/tmp/build/etc/apache2/conf.d/php',
+    mode => 644
+  }
+
+  file { '/etc/apache2/sites-enabled/000-default':
+    ensure => absent
+  }
+
+  file { '/etc/apache2/sites-available/default':
+    ensure => present,
+    source => '/tmp/build/etc/apache2/sites-available/default',
+    mode => 644
+  }
+
+  file { '/etc/apache2/sites-enabled/default':
+    ensure => link,
+    target => '/etc/apache2/sites-available/default',
+    require => File['/etc/apache2/sites-available/default']
+  }
+
+  file { '/etc/apache2/sites-available/default-ssl':
+    ensure => present,
+    source => '/tmp/build/etc/apache2/sites-available/default-ssl',
+    mode => 644
+  }
+
+  file { '/etc/apache2/sites-enabled/default-ssl':
+    ensure => link,
+    target => '/etc/apache2/sites-available/default-ssl',
+    require => File['/etc/apache2/sites-available/default-ssl']
+  }
+}
+
 node default {
   file { '/run.sh':
     ensure => present,
@@ -93,8 +152,9 @@ node default {
 
   include packages
   include php
+  include apache
 
-  Class['packages'] -> Class['php']
+  Class['packages'] -> Class['php'] -> Class['apache']
 
   exec { 'apt-get update':
     path => ['/usr/bin'],
