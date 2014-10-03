@@ -6,7 +6,12 @@ PHP54_VERSION="5.4.33"
 PHP53_VERSION="5.3.29"
 PHP52_VERSION="5.2.17"
 
-LOG_DIR=/var/log/dev
+APACHE_VERSION="2.2.22"
+
+DOCKER_INTERFACE="docker0"
+DOCKER_INTERFACE_IP="$(ip addr show "${DOCKER_INTERFACE}" 2> /dev/null | grep "inet " | awk -F " " '{ print $2 }' | sed -e 's/\/.*$//')"
+
+LOG_DIR="/var/log/dev"
 
 sudo mkdir -p "${LOG_DIR}"
 
@@ -199,16 +204,6 @@ output_debug() {
 WORKING_DIR="$(pwd)"
 
 output_debug "\${WORKING_DIR}: ${WORKING_DIR}"
-
-interface_ip() {
-  local INTERFACE="${1}"
-
-  echo "$(ip addr show "${INTERFACE}" 2> /dev/null | grep "inet " | awk -F " " '{ print $2 }' | sed -e 's/\/.*$//')"
-}
-
-docker0_ip() {
-  echo "$(interface_ip "docker0")"
-}
 
 image_exists() {
   local RETURN=0
@@ -448,7 +443,7 @@ dev_start() {
   sudo docker run \
     --name "${CONTAINER}" \
     -h "${CONTAINER}" \
-    --dns "$(docker0_ip)" \
+    --dns "${DOCKER_INTERFACE_IP}" \
     -d \
     simpledrupalcloud/dev:latest > >(log) 2> >(log_error)
 }
@@ -534,7 +529,7 @@ redis_start() {
   sudo docker run \
     --name "${CONTAINER}" \
     -h "${CONTAINER}" \
-    --dns "$(docker0_ip)" \
+    --dns "${DOCKER_INTERFACE_IP}" \
     -v /var/redis-2.8.14/data:/redis-2.8.14/data \
     -d \
     simpledrupalcloud/redis:2.8.14 > >(log) 2> >(log_error)
@@ -613,7 +608,7 @@ skydns_start() {
 
   sudo docker run \
     --name "${CONTAINER}" \
-    -p "$(docker0_ip):53:53/udp" \
+    -p "${DOCKER_INTERFACE_IP}:53:53/udp" \
     -d \
     crosbymichael/skydns:latest -nameserver 8.8.8.8:53 -domain docker > >(log) 2> >(log_error)
 }
@@ -757,8 +752,8 @@ apache_build() {
   local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-apache.git "${TMP}" \
     && cd "${TMP}" \
-    && git checkout 2.2.22 \
-    && sudo docker build -t simpledrupalcloud/apache:2.2.22 . \
+    && git checkout "${APACHE_VERSION}" \
+    && sudo docker build -t "simpledrupalcloud/apache:${APACHE_VERSION}" . \
     && cd -
 }
 
@@ -772,25 +767,25 @@ apache_start() {
   sudo docker run \
     --name "${CONTAINER}" \
     -h "${CONTAINER}" \
-    --dns "$(docker0_ip)" \
+    --dns "${DOCKER_INTERFACE_IP}" \
     -p 80:80 \
     -p 443:443 \
-    --link php52:php52 \
-    --link php53:php53 \
-    --link php54:php54 \
-    --link php55:php55 \
     --link php56:php56 \
+    --link php55:php55 \
+    --link php54:php54 \
+    --link php53:php53 \
+    --link php52:php52 \
     -v /var/apache-2.2.22/conf.d:/apache-2.2.22/conf.d \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -v /var/apache-2.2.22/log:/apache-2.2.22/log \
     -e APACHE_SERVERNAME="${APACHE_SERVERNAME}" \
     -d \
-    simpledrupalcloud/apache:2.2.22 > >(log) 2> >(log_error)
+    "simpledrupalcloud/apache:${APACHE_VERSION}" > >(log) 2> >(log_error)
 }
 
 apache() {
   local CONTAINER=apache
-  local IMAGE=simpledrupalcloud/apache:2.2.22
+  local IMAGE="simpledrupalcloud/apache:${APACHE_VERSION}"
 
   output_debug "FUNCTION: apache ARGS: ${*}"
 
@@ -864,7 +859,7 @@ mysql_start() {
   sudo docker run \
     --name "${CONTAINER}" \
     -h "${CONTAINER}" \
-    --dns "$(docker0_ip)" \
+    --dns "${DOCKER_INTERFACE_IP}" \
     -p 3306:3306 \
     -v /var/mysql-5.5.38/conf.d:/mysql-5.5.38/conf.d \
     -v /var/mysql-5.5.38/data:/mysql-5.5.38/data \
@@ -949,7 +944,7 @@ php52_start() {
   sudo docker run \
     --name "${CONTAINER}" \
     -h "${CONTAINER}" \
-    --dns "$(docker0_ip)" \
+    --dns "${DOCKER_INTERFACE_IP}" \
     --link mailcatcher:ssmtp \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -d \
@@ -1036,7 +1031,7 @@ php53_start() {
   sudo docker run \
     --name "${CONTAINER}" \
     -h "${CONTAINER}" \
-    --dns "$(docker0_ip)" \
+    --dns "${DOCKER_INTERFACE_IP}" \
     --link mailcatcher:ssmtp \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -d \
@@ -1123,7 +1118,7 @@ php54_start() {
   sudo docker run \
     --name "${CONTAINER}" \
     -h "${CONTAINER}" \
-    --dns "$(docker0_ip)" \
+    --dns "${DOCKER_INTERFACE_IP}" \
     --link mailcatcher:ssmtp \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -d \
@@ -1220,7 +1215,7 @@ php55_start() {
   sudo docker run \
     --name "${CONTAINER}" \
     -h "${CONTAINER}" \
-    --dns "$(docker0_ip)" \
+    --dns "${DOCKER_INTERFACE_IP}" \
     --link mailcatcher:ssmtp \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -d \
@@ -1309,7 +1304,7 @@ php56_start() {
   sudo docker run \
     --name "${CONTAINER}" \
     -h "${CONTAINER}" \
-    --dns "$(docker0_ip)" \
+    --dns "${DOCKER_INTERFACE_IP}" \
     --link mailcatcher:ssmtp \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -d \
@@ -1402,7 +1397,7 @@ mailcatcher_start() {
   sudo docker run \
     --name "${CONTAINER}" \
     -h "${CONTAINER}" \
-    --dns "$(docker0_ip)" \
+    --dns "${DOCKER_INTERFACE_IP}" \
     -p 8080:80 \
     -d \
     simpledrupalcloud/mailcatcher:0.5.12 > >(log) 2> >(log_error)
@@ -1492,7 +1487,7 @@ phpmyadmin_start() {
   sudo docker run \
     --name "${CONTAINER}" \
     -h "${CONTAINER}" \
-    --dns "$(docker0_ip)" \
+    --dns "${DOCKER_INTERFACE_IP}" \
     -p 8081:80 \
     --link mysql:mysql \
     -d \
