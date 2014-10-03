@@ -1,4 +1,5 @@
 var fs = require('fs');
+
 var dockerode = require('dockerode');
 var through2 = require('through2');
 

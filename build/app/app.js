@@ -2,7 +2,7 @@
 
 var program = require('commander');
 
-var Redis = require('./redis.js');
+//var Redis = require('./redis.js');
 
 //var through2 = require('through2');
 
@@ -142,39 +142,50 @@ var Redis = require('./redis.js');
 //    console.log(dotty.get(YAML.load('/src/dev.yaml'), 'dev.destroy'));
 //  });
 //
+
 //program
-//  .command('yaml')
-//  .action(function(action, path) {
-//    process.stdout.write(dotty[action](YAML.load('/src/dev.yaml'), path));
+//  .command('redis')
+//  .action(function(action, key, value) {
+//    var redis = new Redis();
+//
+//    switch (action) {
+//      case 'get':
+//          redis.get(key, function(err, reply) {
+//          if (err) {
+//            return console.error(err);
+//          }
+//
+//          process.stdout.write(reply);
+//        });
+//
+//        break;
+//      case 'set':
+//          redis.set(key, value, function(err, reply) {
+//          if (err) {
+//            return console.error(err);
+//          }
+//
+//          console.log(reply);
+//        });
+//
+//        break;
+//    }
 //  });
 
+var util = require('util');
+
+var dotty = require("dotty");
+
+var yaml = require('./yaml.js');
+var containers = require('./containers.js');
+
 program
-  .command('redis')
-  .action(function(action, key, value) {
-    var redis = new Redis();
+  .command('yaml')
+  .action(function() {
+    var doc = yaml.load('./dev.yml');
+    var start_order = containers(doc.containers).start_order();
 
-    switch (action) {
-      case 'get':
-          redis.get(key, function(err, reply) {
-          if (err) {
-            return console.error(err);
-          }
-          
-          process.stdout.write(reply);
-        });
-
-        break;
-      case 'set':
-          redis.set(key, value, function(err, reply) {
-          if (err) {
-            return console.error(err);
-          }
-
-          console.log(reply);
-        });
-
-        break;
-    }
+    console.log(util.inspect(start_order, true, 10, true));
   });
 
 program.parse(process.argv);

@@ -1,0 +1,13 @@
+language.admin_overview:
+  title: 'List'
+  route_name: language.admin_overview
+  base_route: language.admin_overview
+language.negotiation:
+  title: 'Detection and selection'
+  route_name: language.negotiation
+  base_route: language.admin_overview
+
+entity.configurable_language.edit_form:
+  title: 'Edit'
+  route_name: entity.configurable_language.edit_form
+  base_route: entity.configurable_language.edit_form
