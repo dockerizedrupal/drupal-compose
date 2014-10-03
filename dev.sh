@@ -1701,11 +1701,13 @@ attach() {
 }
 
 case "${1}" in
-  status)
-    status "${@:2}"
+  build)
+    sudo docker build \
+      -t simpledrupalcloud/dev \
+      http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git
   ;;
-  attach)
-    attach "${@:2}"
+  update)
+    image_update "simpledrupalcloud/dev:latest" "dev"
   ;;
 #  install)
 #    install
