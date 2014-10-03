@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+MAILCATCHER_VERSION="0.5.12"
+
 PHP56_VERSION="5.6.1"
 PHP55_VERSION="5.5.17"
 PHP54_VERSION="5.4.33"
@@ -8,12 +10,16 @@ PHP52_VERSION="5.2.17"
 
 APACHE_VERSION="2.2.22"
 
+MYSQL_VERSION="5.5.38"
+
+REDIS_VERSION="2.8.14"
+
+PHPMYADMIN_VERSION="4.2.8"
+
 DOCKER_INTERFACE="docker0"
 DOCKER_INTERFACE_IP="$(ip addr show "${DOCKER_INTERFACE}" 2> /dev/null | grep "inet " | awk -F " " '{ print $2 }' | sed -e 's/\/.*$//')"
 
 LOG_DIR="/var/log/dev"
-
-sudo mkdir -p "${LOG_DIR}"
 
 LOG="${LOG_DIR}/dev.log"
 LOG_DEBUG="${LOG_DIR}/debug.log"
@@ -156,6 +162,10 @@ Unstable or not implemented commands:
 EOF
 
   exit 1
+fi
+
+if [ ! -d "${LOG_DIR}" ]; then
+  sudo mkdir -p "${LOG_DIR}"
 fi
 
 log() {
@@ -516,8 +526,8 @@ redis_build() {
   local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-redis.git "${TMP}" \
     && cd "${TMP}" \
-    && git checkout 2.8.14 \
-    && sudo docker build -t simpledrupalcloud/redis:2.8.14 . \
+    && git checkout "${REDIS_VERSION}" \
+    && sudo docker build -t "simpledrupalcloud/redis:${REDIS_VERSION}" . \
     && cd -
 }
 
@@ -532,12 +542,12 @@ redis_start() {
     --dns "${DOCKER_INTERFACE_IP}" \
     -v /var/redis-2.8.14/data:/redis-2.8.14/data \
     -d \
-    simpledrupalcloud/redis:2.8.14 > >(log) 2> >(log_error)
+    "simpledrupalcloud/redis:${REDIS_VERSION}" > >(log) 2> >(log_error)
 }
 
 redis() {
   local CONTAINER=redis
-  local IMAGE=simpledrupalcloud/redis:2.8.14
+  local IMAGE="simpledrupalcloud/redis:${REDIS_VERSION}"
 
   output_debug "FUNCTION: redis ARGS: ${*}"
 
@@ -846,8 +856,8 @@ mysql_build() {
   local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-mysql.git "${TMP}" \
     && cd "${TMP}" \
-    && git checkout 5.5.38 \
-    && sudo docker build -t simpledrupalcloud/mysql:5.5.38 . \
+    && git checkout "${MYSQL_VERSION}" \
+    && sudo docker build -t "simpledrupalcloud/mysql:${MYSQL_VERSION}" . \
     && cd -
 }
 
@@ -865,12 +875,12 @@ mysql_start() {
     -v /var/mysql-5.5.38/data:/mysql-5.5.38/data \
     -v /var/mysql-5.5.38/log:/mysql-5.5.38/log \
     -d \
-    simpledrupalcloud/mysql:5.5.38 > >(log) 2> >(log_error)
+    "simpledrupalcloud/mysql:${MYSQL_VERSION}" > >(log) 2> >(log_error)
 }
 
 mysql() {
   local CONTAINER=mysql
-  local IMAGE=simpledrupalcloud/mysql:5.5.38
+  local IMAGE="simpledrupalcloud/mysql:${MYSQL_VERSION}"
 
   output_debug "FUNCTION: mysql ARGS: ${*}"
 
@@ -1384,8 +1394,8 @@ mailcatcher_build() {
   local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-mailcatcher.git "${TMP}" \
     && cd "${TMP}" \
-    && git checkout 0.5.12 \
-    && sudo docker build -t simpledrupalcloud/mailcatcher:0.5.12 . \
+    && git checkout "${MAILCATCHER_VERSION}" \
+    && sudo docker build -t "simpledrupalcloud/mailcatcher:${MAILCATCHER_VERSION}" . \
     && cd -
 }
 
@@ -1400,12 +1410,12 @@ mailcatcher_start() {
     --dns "${DOCKER_INTERFACE_IP}" \
     -p 8080:80 \
     -d \
-    simpledrupalcloud/mailcatcher:0.5.12 > >(log) 2> >(log_error)
+    "simpledrupalcloud/mailcatcher:${MAILCATCHER_VERSION}" > >(log) 2> >(log_error)
 }
 
 mailcatcher() {
   local CONTAINER=mailcatcher
-  local IMAGE=simpledrupalcloud/mailcatcher:0.5.12
+  local IMAGE="simpledrupalcloud/mailcatcher:${MAILCATCHER_VERSION}"
 
   output_debug "FUNCTION: mailcatcher ARGS: ${*}"
 
@@ -1474,8 +1484,8 @@ phpmyadmin_build() {
   local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-phpmyadmin.git "${TMP}" \
     && cd "${TMP}" \
-    && git checkout 4.2.8 \
-    && sudo docker build -t simpledrupalcloud/phpmyadmin:4.2.8 . \
+    && git checkout "${PHPMYADMIN_VERSION}" \
+    && sudo docker build -t "simpledrupalcloud/phpmyadmin:${PHPMYADMIN_VERSION}" . \
     && cd -
 }
 
@@ -1491,12 +1501,12 @@ phpmyadmin_start() {
     -p 8081:80 \
     --link mysql:mysql \
     -d \
-    simpledrupalcloud/phpmyadmin:4.2.8 > >(log) 2> >(log_error)
+    "simpledrupalcloud/phpmyadmin:${PHPMYADMIN_VERSION}" > >(log) 2> >(log_error)
 }
 
 phpmyadmin() {
   local CONTAINER=phpmyadmin
-  local IMAGE=simpledrupalcloud/phpmyadmin:4.2.8
+  local IMAGE="simpledrupalcloud/phpmyadmin:${PHPMYADMIN_VERSION}"
 
   output_debug "FUNCTION: phpmyadmin ARGS: ${*}"
 
