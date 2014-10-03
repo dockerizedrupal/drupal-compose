@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 
+PHP56_VERSION="5.6.1"
+PHP55_VERSION="5.5.17"
+PHP54_VERSION="5.4.33"
+PHP53_VERSION="5.3.29"
+PHP52_VERSION="5.2.17"
+
 LOG_DIR=/var/log/dev
 
 sudo mkdir -p "${LOG_DIR}"
@@ -930,8 +936,8 @@ php52_build() {
   local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
     && cd "${TMP}" \
-    && git checkout 5.2.17 \
-    && sudo docker build -t simpledrupalcloud/php:5.2.17 . \
+    && git checkout "${PHP52_VERSION}" \
+    && sudo docker build -t "simpledrupalcloud/php:${PHP52_VERSION}" . \
     && cd -
 }
 
@@ -947,12 +953,12 @@ php52_start() {
     --link mailcatcher:ssmtp \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -d \
-    simpledrupalcloud/php:5.2.17 > >(log) 2> >(log_error)
+    "simpledrupalcloud/php:${PHP52_VERSION}" > >(log) 2> >(log_error)
 }
 
 php52() {
   local CONTAINER=php52
-  local IMAGE=simpledrupalcloud/php:5.2.17
+  local IMAGE="simpledrupalcloud/php:${PHP52_VERSION}"
 
   output_debug "FUNCTION: php52 ARGS: ${*}"
 
@@ -1017,8 +1023,8 @@ php53_build() {
   local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
     && cd "${TMP}" \
-    && git checkout 5.3.28 \
-    && sudo docker build -t simpledrupalcloud/php:5.3.28 . \
+    && git checkout "${PHP53_VERSION}" \
+    && sudo docker build -t "simpledrupalcloud/php:${PHP53_VERSION}" . \
     && cd -
 }
 
@@ -1034,12 +1040,12 @@ php53_start() {
     --link mailcatcher:ssmtp \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -d \
-    simpledrupalcloud/php:5.3.28 > >(log) 2> >(log_error)
+    "simpledrupalcloud/php:${PHP53_VERSION}" > >(log) 2> >(log_error)
 }
 
 php53() {
   local CONTAINER=php53
-  local IMAGE=simpledrupalcloud/php:5.3.28
+  local IMAGE="simpledrupalcloud/php:${PHP53_VERSION}"
 
   output_debug "FUNCTION: php53 ARGS: ${*}"
 
@@ -1104,8 +1110,8 @@ php54_build() {
   local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
     && cd "${TMP}" \
-    && git checkout 5.4.31 \
-    && sudo docker build -t simpledrupalcloud/php:5.4.31 . \
+    && git checkout "${PHP54_VERSION}" \
+    && sudo docker build -t "simpledrupalcloud/php:${PHP54_VERSION}" . \
     && cd -
 }
 
@@ -1121,12 +1127,12 @@ php54_start() {
     --link mailcatcher:ssmtp \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -d \
-    simpledrupalcloud/php:5.4.31 > >(log) 2> >(log_error)
+    "simpledrupalcloud/php:${PHP54_VERSION}" > >(log) 2> >(log_error)
 }
 
 php54() {
   local CONTAINER=php54
-  local IMAGE=simpledrupalcloud/php:5.4.31
+  local IMAGE="simpledrupalcloud/php:${PHP54_VERSION}"
 
   output_debug "FUNCTION: php54 ARGS: ${*}"
 
@@ -1201,8 +1207,8 @@ php55_build() {
   local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
     && cd "${TMP}" \
-    && git checkout 5.5.17 \
-    && sudo docker build -t simpledrupalcloud/php:5.5.17 . \
+    && git checkout "${PHP55_VERSION}" \
+    && sudo docker build -t "simpledrupalcloud/php:${PHP55_VERSION}" . \
     && cd -
 }
 
@@ -1218,12 +1224,12 @@ php55_start() {
     --link mailcatcher:ssmtp \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -d \
-    simpledrupalcloud/php:5.5.17 > >(log) 2> >(log_error)
+    "simpledrupalcloud/php:${PHP55_VERSION}" > >(log) 2> >(log_error)
 }
 
 php55() {
   local CONTAINER=php55
-  local IMAGE=simpledrupalcloud/php:5.5.17
+  local IMAGE="simpledrupalcloud/php:${PHP55_VERSION}"
 
   output_debug "FUNCTION: php55 ARGS: ${*}"
 
@@ -1290,8 +1296,8 @@ php56_build() {
   local TMP="$(mktemp -d)" \
     && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-php.git "${TMP}" \
     && cd "${TMP}" \
-    && git checkout 5.6.0 \
-    && sudo docker build -t simpledrupalcloud/php:5.6.0 . \
+    && git checkout "${PHP56_VERSION}" \
+    && sudo docker build -t "simpledrupalcloud/php:${PHP56_VERSION}" . \
     && cd -
 }
 
@@ -1307,12 +1313,12 @@ php56_start() {
     --link mailcatcher:ssmtp \
     -v /var/apache-2.2.22/data:/apache-2.2.22/data \
     -d \
-    simpledrupalcloud/php:5.6.0 > >(log) 2> >(log_error)
+    "simpledrupalcloud/php:${PHP56_VERSION}" > >(log) 2> >(log_error)
 }
 
 php56() {
   local CONTAINER=php56
-  local IMAGE=simpledrupalcloud/php:5.6.0
+  local IMAGE="simpledrupalcloud/php:${PHP56_VERSION}"
 
   output_debug "FUNCTION: php56 ARGS: ${*}"
 
