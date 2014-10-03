@@ -102,12 +102,6 @@ class apache {
   exec { '/bin/bash -c "a2enmod rewrite"': }
   exec { '/bin/bash -c "a2enmod ssl"': }
 
-  file { '/etc/apache2/apache2.conf':
-    ensure => present,
-    source => '/tmp/build/etc/apache2/apache2.conf',
-    mode => 644
-  }
-
   file { '/etc/apache2/conf.d/php':
     ensure => present,
     source => '/tmp/build/etc/apache2/conf.d/php',
