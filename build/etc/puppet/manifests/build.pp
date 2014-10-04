@@ -163,6 +163,15 @@ class drupal {
     owner => 'www-data',
     group => 'www-data'
   }
+
+  exec { 'mysql < /var/www/drupal/dev.sql':
+    require => File['/var/www/drupal']
+  }
+
+  file { '/var/www/drupal/dev.sql':
+    ensure => absent,
+    require => Exec['mysql < /var/www/drupal/dev.sql']
+  }
 }
 
 node default {
