@@ -164,8 +164,7 @@ class drupal {
     group => 'www-data'
   }
 
-  exec { 'mysql < /var/www/drupal/dev.sql':
-    path => ['/usr/bin'],
+  exec { '/bin/bash -c "/etc/init.d/mysql start && mysql < /var/www/drupal/dev.sql"':
     require => File['/var/www/drupal']
   }
 
@@ -183,12 +182,12 @@ node default {
   }
 
   include packages
-  include php
   include apache
-  include drupal
   include mysql
+  include php
+  include drupal
 
-  Class['packages'] -> Class['php'] -> Class['apache'] -> Class['drupal'] -> Class['mysql']
+  Class['packages'] -> Class['apache'] -> Class['mysql'] -> Class['php'] -> Class['drupal']
 
   file { '/etc/apt/sources.list.d/non-free.list':
     ensure => present,
