@@ -165,6 +165,7 @@ class drupal {
   }
 
   exec { 'mysql < /var/www/drupal/dev.sql':
+    path => ['/usr/bin'],
     require => File['/var/www/drupal']
   }
 
