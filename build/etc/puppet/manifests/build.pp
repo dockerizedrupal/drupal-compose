@@ -16,7 +16,8 @@ class packages {
       'autoconf',
       'libcloog-ppl0',
       'apache2',
-      'libapache2-mod-fastcgi'
+      'libapache2-mod-fastcgi',
+      'mysql-server'
     ]:
     ensure => present
   }
@@ -137,6 +138,17 @@ class apache {
   }
 }
 
+class mysql_supervisor {
+  file { '/etc/supervisor/conf.d/mysql.conf':
+    ensure => present,
+    source => '/tmp/build/etc/supervisor/conf.d/mysql.conf'
+  }
+}
+
+class mysql {
+  include mysql_supervisor
+}
+
 node default {
   file { '/run.sh':
     ensure => present,
@@ -147,8 +159,9 @@ node default {
   include packages
   include php
   include apache
+  include mysql
 
-  Class['packages'] -> Class['php'] -> Class['apache']
+  Class['packages'] -> Class['php'] -> Class['apache'] -> Class['mysql']
 
   file { '/etc/apt/sources.list.d/non-free.list':
     ensure => present,
