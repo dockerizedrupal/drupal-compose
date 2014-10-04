@@ -1,0 +1,16 @@
+<IfModule mod_ssl.c>
+  <VirtualHost *:443>
+    DocumentRoot /var/www/drupal
+
+    <Directory "/var/www/drupal">
+      Options Indexes FollowSymLinks MultiViews
+      AllowOverride All
+      Order allow,deny
+      Allow from all
+    </Directory>
+
+    SSLEngine on
+    SSLCertificateFile /etc/ssl/certs/ssl-cert-snakeoil.pem
+    SSLCertificateKeyFile /etc/ssl/private/ssl-cert-snakeoil.key
+  </VirtualHost>
+</IfModule>
