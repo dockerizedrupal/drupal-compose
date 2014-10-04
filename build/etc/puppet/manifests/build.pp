@@ -169,10 +169,10 @@ class drupal {
     require => File['/var/www/drupal']
   }
 
-  file { '/var/www/drupal/dev.sql':
-    ensure => absent,
-    require => Exec['mysql < /var/www/drupal/dev.sql']
-  }
+#  file { '/var/www/drupal/dev.sql':
+#    ensure => absent,
+#    require => Exec['mysql < /var/www/drupal/dev.sql']
+#  }
 }
 
 node default {
