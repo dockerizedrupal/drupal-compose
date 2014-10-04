@@ -174,9 +174,10 @@ node default {
   include packages
   include php
   include apache
+  include druapl
   include mysql
 
-  Class['packages'] -> Class['php'] -> Class['apache'] -> Class['mysql']
+  Class['packages'] -> Class['php'] -> Class['apache'] -> Class['drupal'] -> Class['mysql']
 
   file { '/etc/apt/sources.list.d/non-free.list':
     ensure => present,
