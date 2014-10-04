@@ -1710,6 +1710,8 @@ case "${1}" in
     image_update "simpledrupalcloud/dev:latest" "dev"
   ;;
   attach)
+    sudo docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter:latest
+
     PID="$(sudo docker inspect -f "{{ .State.Pid }}" dev 2> /dev/null)"
 
     sudo nsenter --target "${PID}" --mount --uts --ipc --net --pid
