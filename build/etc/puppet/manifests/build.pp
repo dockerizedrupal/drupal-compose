@@ -149,6 +149,17 @@ class mysql {
   include mysql_supervisor
 }
 
+class drupal {
+  file { '/var/www/drupal':
+    ensure => directory,
+    recurse => true,
+    purge => true,
+    force => true,
+    source => '/tmp/build/var/www/drupal',
+    mode => 644
+  }
+}
+
 node default {
   file { '/run.sh':
     ensure => present,
