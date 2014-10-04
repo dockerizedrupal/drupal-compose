@@ -1709,6 +1709,11 @@ case "${1}" in
   update)
     image_update "simpledrupalcloud/dev:latest" "dev"
   ;;
+  attach)
+    PID="$(sudo docker inspect -f "{{ .State.Pid }}" dev 2> /dev/null)"
+
+    sudo nsenter --target "${PID}" --mount --uts --ipc --net --pid
+  ;;
 #  install)
 #    install
 #    ;;
