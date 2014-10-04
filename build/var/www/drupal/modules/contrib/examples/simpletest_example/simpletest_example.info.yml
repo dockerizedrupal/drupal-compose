@@ -1,0 +1,17 @@
+name: SimpleTest Example
+type: module
+hidden: false
+description: 'Some demonstrations of SimpleTest-based testing in Drupal 8.'
+package: Example modules
+# core: 8.x
+dependencies:
+  - simpletest
+  - node
+  - field
+  - examples
+
+# Information added by Drupal.org packaging script on 2014-10-02
+version: '8.x-1.x-dev'
+core: '8.x'
+project: 'examples'
+datestamp: 1412291638

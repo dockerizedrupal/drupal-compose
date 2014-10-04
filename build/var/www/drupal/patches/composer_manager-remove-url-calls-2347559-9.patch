@@ -1,0 +1,118 @@
+diff --git a/composer_manager.install b/composer_manager.install
+index bf07daa..4b166ad 100644
+--- a/composer_manager.install
++++ b/composer_manager.install
+@@ -4,6 +4,7 @@
+  * @file
+  * Install, update, and uninstall functions for the Composer Manager module.
+  */
++use Drupal\Core\Url;
+ 
+ /**
+  * Implements hook_requirements().
+@@ -29,7 +30,7 @@ function composer_manager_requirements($phase) {
+     $instructions = t('Run <code>drush composer-json-rebuild</code> on the command line or submit the <em>Rebuild composer.json file</em> button on this page to build the file.');
+   }
+   else {
+-    $instructions = t('Run <code>drush composer-json-rebuild</code> on the command line or submit the <em>Rebuild composer.json file</em> button on the <a href="@url">package status page</a> to build the file.', array('@url' => url('admin/config/system/composer-manager')));
++    $instructions = t('Run <code>drush composer-json-rebuild</code> on the command line or submit the <em>Rebuild composer.json file</em> button on the <a href="@url">package status page</a> to build the file.', array('@url' => Url::fromRoute('composer_manager.packages_page')->toString()));
+   }
+ 
+   if (!$composer_json->exists()) {
+@@ -44,19 +45,19 @@ function composer_manager_requirements($phase) {
+   }
+   elseif (!is_file($manager->getAutoloadFilepath())) {
+     $requirements['composer_manager']['value'] = t('Dependencies not installed');
+-    $args = array('!command' => 'install', '@url' => url('http://drupal.org/project/composer_manager', array('absolute' => TRUE)));
++    $args = array('!command' => 'install', '@url' => 'http://drupal.org/project/composer_manager');
+     $requirements['composer_manager']['description'] = t('Composer\'s <code>!command</code> command must be run to generate the autoloader and install the required packages.<br/>Refer to the instructions on the <a href="@url" target="_blank">Composer Manager project page</a> for installing packages.', $args);
+     $requirements['composer_manager']['severity'] = REQUIREMENT_ERROR;
+   }
+   elseif ($install_required = $packages->getInstallRequired()) {
+     $requirements['composer_manager']['value'] = t('Dependencies not installed');
+-    $args = array('@packages' => join(', ', $install_required), '@url' => url('http://drupal.org/project/composer_manager', array('absolute' => TRUE)));
++    $args = array('@packages' => join(', ', $install_required), '@url' =>'http://drupal.org/project/composer_manager');
+     $requirements['composer_manager']['description'] = t('The following packages must be installed: @packages<br/>Refer to the instructions on the <a href="@url" target="_blank">Composer Manager project page</a> for updating packages.', $args);
+     $requirements['composer_manager']['severity'] = REQUIREMENT_ERROR;
+   }
+   else {
+     $requirements['composer_manager']['value'] = t('Dependencies installed');
+-    $requirements['composer_manager']['description'] =  t('Visit the <a href="@url">package status page</a> to view the status of individual packages.', array('@url' => url('admin/config/system/composer-manager')));
++    $requirements['composer_manager']['description'] =  t('Visit the <a href="@url">package status page</a> to view the status of individual packages.', array('@url' => \Drupal::url('composer_manager.packages_page')));
+     $requirements['composer_manager']['severity'] = REQUIREMENT_INFO;
+   }
+ 
+diff --git a/composer_manager.module b/composer_manager.module
+index 8015063..f3ed15b 100644
+--- a/composer_manager.module
++++ b/composer_manager.module
+@@ -61,7 +61,7 @@ function composer_manager_write_if_changed(array $modules) {
+     drupal_set_message(t('A composer.json file was written to @filepath.', array('@filepath' => $filepath)));
+ 
+     $command = $manager->getComposerLockFile()->exists() ? 'update' : 'install';
+-    $args = array('!command' => $command, '@url' => url('http://drupal.org/project/composer_manager', array('absolute' => TRUE)));
++    $args = array('!command' => $command, '@url' => 'http://drupal.org/project/composer_manager');
+ 
+     if ('install' == $command) {
+       $message = t('Composer\'s <code>!command</code> command must be run to generate the autoloader and install the required packages.<br/>Refer to the instructions on the <a href="@url" target="_blank">Composer Manager project page</a> for installing packages.', $args);
+diff --git a/src/AutoloaderSubscriber.php b/src/AutoloaderSubscriber.php
+index 1a34a9b..d5b0069 100644
+--- a/src/AutoloaderSubscriber.php
++++ b/src/AutoloaderSubscriber.php
+@@ -8,6 +8,7 @@
+ namespace Drupal\composer_manager;
+ 
+ use Drupal\composer_manager\ComposerManagerInterface;
++use Drupal\Core\Url;
+ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+ use Symfony\Component\HttpKernel\KernelEvents;
+@@ -44,8 +45,7 @@ class AutoloaderSubscriber implements EventSubscriberInterface {
+     }
+     catch (\RuntimeException $e) {
+       if (PHP_SAPI !== 'cli') {
+-        $link = l('admin/config/system/composer-manager', 'admin/config/system/composer-manager');
+-        watchdog_exception('composer_manager', $e, NULL, array(), WATCHDOG_WARNING, $link);
++        watchdog_exception('composer_manager', $e, NULL, array(), WATCHDOG_WARNING);
+       }
+     }
+   }
+diff --git a/src/Controller/Packages.php b/src/Controller/Packages.php
+index d40c893..f8ee98b 100644
+--- a/src/Controller/Packages.php
++++ b/src/Controller/Packages.php
+@@ -14,6 +14,8 @@ use Drupal\composer_manager\Form\RebuildForm;
+ use Drupal\Core\Config\ConfigFactoryInterface;
+ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+ use Drupal\Core\Extension\ModuleHandlerInterface;
++use Drupal\Core\Routing\LinkGeneratorTrait;
++use Drupal\Core\Url;
+ use Symfony\Component\DependencyInjection\ContainerInterface;
+ use Drupal\composer_manager\ComposerPackagesInterface;
+ 
+@@ -21,6 +23,7 @@ use Drupal\composer_manager\ComposerPackagesInterface;
+  * Provides a controller for display the list of composer packages.
+  */
+ class Packages implements ContainerInjectionInterface {
++  use LinkGeneratorTrait;
+ 
+   /**
+    * @var \Drupal\Core\Extension\ModuleHandlerInterface
+@@ -122,7 +125,7 @@ class Packages implements ContainerInjectionInterface {
+       // Get the package name and description.
+       if ($is_installed && !empty($installed[$package_name]['homepage'])) {
+         $options = array('attributes' => array('target' => '_blank'));
+-        $name = l($package_name, $installed[$package_name]['homepage'], $options);
++        $name = $this->l($package_name, Url::fromUri($installed[$package_name]['homepage']), $options);
+       }
+       else {
+         $name = String::checkPlain($package_name);
+@@ -230,7 +233,7 @@ class Packages implements ContainerInjectionInterface {
+       drupal_set_message($requirements['composer_manager']['description'], 'error');
+     }
+     elseif ($update_needed) {
+-      $args = array('!command' => 'update', '@url' => url('http://drupal.org/project/composer_manager', array('absolute' => TRUE)));
++      $args = array('!command' => 'update', '@url' => 'http://drupal.org/project/composer_manager');
+       drupal_set_message(t('Packages need to be installed or removed by running Composer\'s <code>!command</code> command.<br/>Refer to the instructions on the <a href="@url" target="_blank">Composer Manager project page</a> for updating packages.', $args), 'warning');
+     }
+     if ($has_conflicts) {

@@ -1,0 +1,14 @@
+name: 'Symfony Dependency'
+description: 'Required by modules that depend on the symfony/symfony package.'
+package: 'Composer'
+# core: '8.x'
+type: module
+
+dependencies:
+  - composer_manager
+
+# Information added by Drupal.org packaging script on 2014-08-11
+version: '8.x-1.0-alpha7+4-dev'
+core: '8.x'
+project: 'composer_manager'
+datestamp: 1407767330

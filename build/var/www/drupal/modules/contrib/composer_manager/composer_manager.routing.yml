@@ -1,0 +1,14 @@
+composer_manager.packages_page:
+  path: '/admin/config/system/composer-manager'
+  defaults:
+    _content: '\Drupal\composer_manager\Controller\Packages::page'
+  requirements:
+    _permission: 'administer site configuration'
+
+composer_manager.settings:
+  path: '/admin/config/system/composer-manager/settings'
+  defaults:
+    _form: '\Drupal\composer_manager\Form\SettingsForm'
+    _title: 'Composer Manager Setting'
+  requirements:
+    _permission: 'administer site configuration'

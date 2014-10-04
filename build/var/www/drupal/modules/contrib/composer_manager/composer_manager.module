@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * @file
+ * Provides consolidated management of third-party Composer-compatible packages
+ * required by contributed modules.
+ */
+
+/**
+ * Implements hook_modules_installed().
+ *
+ * @see composer_manager_write_if_changed()
+ */
+function composer_manager_modules_installed($modules) {
+  composer_manager_write_if_changed($modules);
+}
+
+/**
+ * Implements hook_modules_uninstalled().
+ *
+ * @see composer_manager_write_if_changed()
+ */
+function composer_manager_modules_uninstalled($modules) {
+  composer_manager_write_if_changed($modules);
+}
+
+/**
+ * Writes the composer.json file if one of the enabled / disabled modules
+ * has a composer.json file.
+ *
+ * This is a primitive check to ensure that the composer.json file is built only
+ * when it has changes. This check always passes when run via the command line,
+ * as it is assumed that Drush is being used to enable or disable the the
+ * modules.
+ *
+ * @param array $modules
+ *   The enabled / disabled modules being scanned for a composer.json file.
+ */
+function composer_manager_write_if_changed(array $modules) {
+  /* @var $packages Drupal\composer_manager\ComposerPackagesInterface */
+  $packages = Drupal::service('composer_manager.packages');
+  $manager = $packages->getManager();
+
+  // Don't write the composer.json file if the autobuild option is disabled.
+  if (!$manager->autobuildComposerJsonFile()) {
+    return;
+  }
+
+  // Don't write the composer.json file if package requirements haven't changed.
+  if (!$packages->haveChanges($modules)) {
+    return;
+  }
+
+  // Write the composer.json file!
+  $written = ($packages->writeComposerJsonFile() !== FALSE);
+
+  // If the file was written, display helpful messages to site administrators.
+  if ($written && Drupal::currentUser()->hasPermission('administer site configuration')) {
+
+    $filepath = drupal_realpath($manager->getComposerJsonFile()->getFilepath());
+    drupal_set_message(t('A composer.json file was written to @filepath.', array('@filepath' => $filepath)));
+
+    $command = $manager->getComposerLockFile()->exists() ? 'update' : 'install';
+    $args = array('!command' => $command, '@url' => 'http://drupal.org/project/composer_manager');
+
+    if ('install' == $command) {
+      $message = t('Composer\'s <code>!command</code> command must be run to generate the autoloader and install the required packages.<br/>Refer to the instructions on the <a href="@url" target="_blank">Composer Manager project page</a> for installing packages.', $args);
+    }
+    else {
+      $message = t('Composer\'s <code>!command</code> command must be run to install the required packages.<br/>Refer to the instructions on the <a href="@url" target="_blank">Composer Manager project page</a> for updating packages.', $args);
+    }
+    drupal_set_message($message, 'warning');
+  }
+}

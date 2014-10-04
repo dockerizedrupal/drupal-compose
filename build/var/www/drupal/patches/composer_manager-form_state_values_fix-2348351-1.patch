@@ -1,0 +1,19 @@
+diff --git a/src/Form/SettingsForm.php b/src/Form/SettingsForm.php
+index 4e31f0c..78ee7df 100644
+--- a/src/Form/SettingsForm.php
++++ b/src/Form/SettingsForm.php
+@@ -107,11 +107,12 @@ class SettingsForm extends ConfigFormBase implements FormInterface, ContainerInj
+    */
+   public function validateForm(array &$form, FormStateInterface $form_state) {
+     parent::validateForm($form, $form_state);
++    $form_state_values = $form_state->getValues();
+ 
+     $this->moduleHandler->loadInclude('composer_manager', 'inc', 'composer_manager.writer');
+ 
+-    $autobuild_file = $form_state['values']['composer_manager_autobuild_file'];
+-    $file_dir = $form_state['values']['composer_manager_file_dir'];
++    $autobuild_file = $form_state_values['composer_manager_autobuild_file'];
++    $file_dir = $form_state_values['composer_manager_file_dir'];
+     if ($autobuild_file && !$this->filesystem->prepareDirectory($file_dir)) {
+       $form_state->setErrorByName('composer_manager_file_dir', t('Composer file directory must be writable'));
+     }

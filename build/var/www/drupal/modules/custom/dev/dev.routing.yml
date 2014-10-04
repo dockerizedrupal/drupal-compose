@@ -1,0 +1,7 @@
+dev.dev:
+  path: '/dev'
+  defaults:
+    _content: '\Drupal\dev\Controller\Controller::dev'
+    _title: 'Dev'
+  requirements:
+    _permission: 'access content'

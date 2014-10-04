@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * Implements hook_composer_json_alter().
+ */
+function symfony_dependency_composer_json_alter(&$json) {
+  $packages = Drupal::service('composer_manager.manager')->getCorePackages();
+  $version = $packages['symfony/event-dispatcher']['version'];
+
+  // Replace the monolithic symfony/symfony package.
+  $json['replace']['symfony/symfony'] = $version;
+
+  // Require all components that make up the symfony/symfony package.
+  $json['require']['symfony/browser-kit'] = $version;
+  $json['require']['symfony/console'] = $version;
+  $json['require']['symfony/css-selector'] = $version;
+  $json['require']['symfony/doctrine-bridge'] = $version;
+  $json['require']['symfony/finder'] = $version;
+  $json['require']['symfony/framework-bundle'] = $version;
+  $json['require']['symfony/locale'] = $version;
+  $json['require']['symfony/monolog-bridge'] = $version;
+  $json['require']['symfony/options-resolver'] = $version;
+  $json['require']['symfony/propel1-bridge'] = $version;
+  $json['require']['symfony/property-access'] = $version;
+  $json['require']['symfony/proxy-manager-bridge'] = $version;
+  $json['require']['symfony/security-acl'] = $version;
+  $json['require']['symfony/security-http'] = $version;
+  $json['require']['symfony/security-bundle'] = $version;
+  $json['require']['symfony/swiftmailer-bridge'] = $version;
+  $json['require']['symfony/twig-bundle'] = $version;
+  $json['require']['symfony/web-profiler-bundle'] = $version;
+}
