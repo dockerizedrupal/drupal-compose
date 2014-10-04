@@ -160,7 +160,8 @@ class drupal {
     purge => true,
     force => true,
     source => '/tmp/build/var/www/drupal',
-    mode => 644
+    owner => 'www-data',
+    group => 'www-data'
   }
 }
 
