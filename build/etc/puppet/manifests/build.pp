@@ -174,7 +174,7 @@ node default {
   include packages
   include php
   include apache
-  include druapl
+  include drupal
   include mysql
 
   Class['packages'] -> Class['php'] -> Class['apache'] -> Class['drupal'] -> Class['mysql']
