@@ -113,6 +113,10 @@ class apache {
     ensure => absent
   }
 
+  file { '/var/www/index.html':
+    ensure => absent
+  }
+
   file { '/etc/apache2/sites-available/default':
     ensure => present,
     source => '/tmp/build/etc/apache2/sites-available/default',
