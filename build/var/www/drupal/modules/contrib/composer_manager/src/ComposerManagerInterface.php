@@ -79,5 +79,5 @@ interface ComposerManagerInterface {
    *
    * @throws \RuntimeException
    */
-  public function registerAutolaoder();
+  public function registerAutoloader();
 }

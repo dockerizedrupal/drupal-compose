@@ -1,0 +1,37 @@
+diff --git a/src/AutoloaderSubscriber.php b/src/AutoloaderSubscriber.php
+index 1a34a9b..b3888d8 100644
+--- a/src/AutoloaderSubscriber.php
++++ b/src/AutoloaderSubscriber.php
+@@ -40,7 +40,7 @@ class AutoloaderSubscriber implements EventSubscriberInterface {
+    */
+   public function onRequest(GetResponseEvent $event) {
+     try {
+-      $this->manager->registerAutolaoder();
++      $this->manager->registerAutoloader();
+     }
+     catch (\RuntimeException $e) {
+       if (PHP_SAPI !== 'cli') {
+diff --git a/src/ComposerManager.php b/src/ComposerManager.php
+index 655ac33..1a57d74 100644
+--- a/src/ComposerManager.php
++++ b/src/ComposerManager.php
+@@ -171,7 +171,7 @@ class ComposerManager implements ComposerManagerInterface {
+    *
+    * @throws \RuntimeException
+    */
+-  public function registerAutolaoder() {
++  public function registerAutoloader() {
+     if (!$this->autoloaderRegistered) {
+ 
+       $filepath = $this->getAutoloadFilepath();
+diff --git a/src/ComposerManagerInterface.php b/src/ComposerManagerInterface.php
+index 419d22b..74a8ec0 100644
+--- a/src/ComposerManagerInterface.php
++++ b/src/ComposerManagerInterface.php
+@@ -79,5 +79,5 @@ interface ComposerManagerInterface {
+    *
+    * @throws \RuntimeException
+    */
+-  public function registerAutolaoder();
++  public function registerAutoloader();
+ }

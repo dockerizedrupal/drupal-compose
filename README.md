@@ -1,5 +1,7 @@
 # dev
 
+The most easy to use development tool to develop Drupal projects
+
 ## Install
 
     sudo docker run \

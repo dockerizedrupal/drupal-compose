@@ -41,7 +41,7 @@ class AutoloaderSubscriber implements EventSubscriberInterface {
    */
   public function onRequest(GetResponseEvent $event) {
     try {
-      $this->manager->registerAutolaoder();
+      $this->manager->registerAutoloader();
     }
     catch (\RuntimeException $e) {
       if (PHP_SAPI !== 'cli') {

@@ -171,7 +171,7 @@ class ComposerManager implements ComposerManagerInterface {
    *
    * @throws \RuntimeException
    */
-  public function registerAutolaoder() {
+  public function registerAutoloader() {
     if (!$this->autoloaderRegistered) {
 
       $filepath = $this->getAutoloadFilepath();
