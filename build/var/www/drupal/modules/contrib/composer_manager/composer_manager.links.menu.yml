@@ -1,5 +1,0 @@
-composer_manager.admin.config.system.composer_manager:
-  title: 'Composer Manager'
-  description: 'View the status of packages managed by Composer and configure the location of the composer.json file and verdor directory.'
-  route_name: composer_manager.packages_page
-  parent: system.admin_config_system

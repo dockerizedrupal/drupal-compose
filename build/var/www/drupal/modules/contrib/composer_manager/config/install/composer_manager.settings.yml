@@ -1,4 +1,0 @@
-autobuild_file: 1
-file_dir: 'public://composer'
-vendor_dir: 'sites/all/vendor'
-autobuild_packages: 1
