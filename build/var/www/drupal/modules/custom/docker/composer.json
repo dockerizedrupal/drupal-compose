@@ -1,5 +1,0 @@
-{
-  "require": {
-    "stage1/docker-php": "@dev"
-  }
-}

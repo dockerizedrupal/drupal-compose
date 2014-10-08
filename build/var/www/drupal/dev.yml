@@ -1,0 +1,55 @@
+---
+agents:
+  master:
+    type: ssh
+    ssh:
+      user: root
+      hostname: dev-agent.simpledrupalcloud.com
+      private_key:
+        path: ~/.ssh/id_rsa
+    drupal:
+      path: /var/www/drupal
+containers:
+  php56:
+    image: simpledrupalcloud/php:5.6.1
+    volumes:
+      /apache-2.2.22/data: /var/apache-2.2.22/data
+  php55:
+    image: simpledrupalcloud/php:5.5.17
+    volumes:
+      /apache-2.2.22/data: /var/apache-2.2.22/data
+  php54:
+    image: simpledrupalcloud/php:5.4.33
+    volumes:
+      /apache-2.2.22/data: /var/apache-2.2.22/data
+  php53:
+    image: simpledrupalcloud/php:5.3.29
+    volumes:
+      /apache-2.2.22/data: /var/apache-2.2.22/data
+  php52:
+    image: simpledrupalcloud/php:5.2.17
+    volumes:
+      /apache-2.2.22/data: /var/apache-2.2.22/data
+  apache:
+    image: simpledrupalcloud/apache:2.2.22
+    links:
+      php56: php56
+      php55: php55
+      php54: php54
+      php53: php53
+      php52: php52
+    ports:
+      80: 80
+      443: 443
+    volumes:
+      /apache-2.2.22/conf.d: /var/apache-2.2.22/conf.d
+      /apache-2.2.22/data: /var/apache-2.2.22/data
+      /apache-2.2.22/log: /var/apache-2.2.22/log
+  mysql:
+    image: simpledrupalcloud/mysql:5.5.38
+    ports:
+      3306: 3306
+    volumes:
+      /mysql-5.5.38/conf.d: /var/mysql-5.5.38/conf.d
+      /mysql-5.5.38/data: /var/mysql-5.5.38/data
+      /mysql-5.5.38/log: /var/mysql-5.5.38/log
