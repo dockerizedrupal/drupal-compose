@@ -653,4 +653,4 @@ $settings['install_profile'] = 'standard';
 $config_directories['active'] = 'sites/default/files/config_gqyGamu4-AeetR20ZIF-Amjm1VULTy1Tx51_5F_sazSu1XN8vHiAimIYnxz2tcIp9c5WsbjpBg/active';
 $config_directories['staging'] = 'sites/default/files/config_gqyGamu4-AeetR20ZIF-Amjm1VULTy1Tx51_5F_sazSu1XN8vHiAimIYnxz2tcIp9c5WsbjpBg/staging';
 
-$settings['src'] = '.';
+$settings['dev.yml'] = '/home/viljaste/dev/build/var/www/drupal/dev.yml';

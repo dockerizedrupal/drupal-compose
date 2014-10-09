@@ -5,11 +5,15 @@ namespace Drupal\dev\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Site\Settings;
 
+use Drupal\dev\Yaml\Yaml;
+
 class YamlController extends ControllerBase {
   public function yaml() {
+    $yaml = new Yaml(Settings::get('dev.yml'));
+
     return array(
       '#theme' => 'yaml',
-      '#yaml' => file_get_contents(Settings::get('src') . '/dev.yml'),
+      '#yaml' => $yaml,
     );
   }
 }

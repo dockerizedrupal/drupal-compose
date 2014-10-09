@@ -10,6 +10,21 @@ agents:
     drupal:
       path: /var/www/drupal
 containers:
+  apache:
+    image: simpledrupalcloud/apache:2.2.22
+    links:
+      php56: php56
+      php55: php55
+      php54: php54
+      php53: php53
+      php52: php52
+    ports:
+      80: 80
+      443: 443
+    volumes:
+      /apache-2.2.22/conf.d: /var/apache-2.2.22/conf.d
+      /apache-2.2.22/data: /var/apache-2.2.22/data
+      /apache-2.2.22/log: /var/apache-2.2.22/log
   php56:
     image: simpledrupalcloud/php:5.6.1
     volumes:
@@ -30,21 +45,6 @@ containers:
     image: simpledrupalcloud/php:5.2.17
     volumes:
       /apache-2.2.22/data: /var/apache-2.2.22/data
-  apache:
-    image: simpledrupalcloud/apache:2.2.22
-    links:
-      php56: php56
-      php55: php55
-      php54: php54
-      php53: php53
-      php52: php52
-    ports:
-      80: 80
-      443: 443
-    volumes:
-      /apache-2.2.22/conf.d: /var/apache-2.2.22/conf.d
-      /apache-2.2.22/data: /var/apache-2.2.22/data
-      /apache-2.2.22/log: /var/apache-2.2.22/log
   mysql:
     image: simpledrupalcloud/mysql:5.5.38
     ports:
