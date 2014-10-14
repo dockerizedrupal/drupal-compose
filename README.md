@@ -1,6 +1,6 @@
 # dev
 
-The most easy to use development tool to develop Drupal projects
+The most easy to use development environment to develop Drupal projects
 
 ## Install
 

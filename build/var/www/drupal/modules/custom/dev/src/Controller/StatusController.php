@@ -11,11 +11,6 @@ use Docker\Http\DockerClient;
 
 class StatusController extends ControllerBase {
   public function status() {
-    $containers = new Containers();
-
-    $graph = $containers->getGraph();
-    $sorted = $containers->sortAll();
-
     $header = array(
       'id' => t('ID'),
       'name' => t('Name'),
@@ -29,18 +24,32 @@ class StatusController extends ControllerBase {
 
     $manager = $docker->getContainerManager();
 
-    foreach ($manager->findAll(array('all' => TRUE)) as $container) {
-      $config = $container->getConfig();
-      $data = $container->getData();
-      $env = $container->getEnv();
+    $containers = $manager->findAll(array('all' => TRUE));
 
-      $rows[] = array(
-        'data' => array(
-          $container->getId(),
-          $container->getName(),
-          $data['Image'],
-        ),
+    foreach ((new Containers())->sortAll() as $name) {
+      $row = array(
+        'data' => array(),
       );
+
+      $row['data'][] = 'id';
+      $row['data'][] = $name;
+      $row['data'][] = 'image';
+
+//      if (!in_array($container->getName(), $containers)) {
+//        continue;
+//      }
+
+//      $data = $container->getData();
+//
+//      $rows[] = array(
+//        'data' => array(
+//          $container->getId(),
+//          $container->getName(),
+//          $data['Image'],
+//        ),
+//      );
+
+      $rows[] = $row;
     }
 
     $table = array(
