@@ -44,5 +44,8 @@
     "vendor-dir": "core/vendor",
     "preferred-install": "dist",
     "autoloader-suffix": "Drupal8"
+  },
+  "require-dev": {
+    "drupal/console": "@stable"
   }
 }

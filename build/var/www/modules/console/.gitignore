@@ -1,0 +1,11 @@
+# Composer
+/vendor
+/bin/phpunit
+/composer.lock
+
+# Binaries
+/box.phar
+/console.phar
+
+# Test
+/phpunit.xml

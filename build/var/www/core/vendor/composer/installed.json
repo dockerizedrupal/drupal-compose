@@ -2617,5 +2617,267 @@
             "validation",
             "validator"
         ]
+    },
+    {
+        "name": "composer/installers",
+        "version": "v1.0.18",
+        "version_normalized": "1.0.18.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/composer/installers.git",
+            "reference": "74fb0a7a1a23696d9c8cc2fba5903f6711cdd067"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/composer/installers/zipball/74fb0a7a1a23696d9c8cc2fba5903f6711cdd067",
+            "reference": "74fb0a7a1a23696d9c8cc2fba5903f6711cdd067",
+            "shasum": ""
+        },
+        "replace": {
+            "roundcube/plugin-installer": "*",
+            "shama/baton": "*"
+        },
+        "require-dev": {
+            "composer/composer": "1.0.*@dev",
+            "phpunit/phpunit": "4.1.*"
+        },
+        "time": "2014-08-18 20:00:12",
+        "type": "composer-installer",
+        "extra": {
+            "class": "Composer\\Installers\\Installer",
+            "branch-alias": {
+                "dev-master": "1.0-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Composer\\Installers\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Kyle Robinson Young",
+                "email": "kyle@dontkry.com",
+                "homepage": "https://github.com/shama"
+            }
+        ],
+        "description": "A multi-framework Composer library installer",
+        "homepage": "http://composer.github.com/installers/",
+        "keywords": [
+            "Craft",
+            "Dolibarr",
+            "Hurad",
+            "MODX Evo",
+            "OXID",
+            "WolfCMS",
+            "agl",
+            "annotatecms",
+            "bitrix",
+            "cakephp",
+            "chef",
+            "codeigniter",
+            "concrete5",
+            "croogo",
+            "drupal",
+            "elgg",
+            "fuelphp",
+            "installer",
+            "joomla",
+            "kohana",
+            "laravel",
+            "lithium",
+            "magento",
+            "mako",
+            "mediawiki",
+            "modulework",
+            "moodle",
+            "phpbb",
+            "piwik",
+            "ppi",
+            "puppet",
+            "roundcube",
+            "shopware",
+            "silverstripe",
+            "symfony",
+            "typo3",
+            "wordpress",
+            "zend",
+            "zikula"
+        ]
+    },
+    {
+        "name": "symfony/finder",
+        "version": "v2.4.10",
+        "version_normalized": "2.4.10.0",
+        "target-dir": "Symfony/Component/Finder",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/Finder.git",
+            "reference": "cd03920154bc6669f64fbabb803d24cc8629964c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/Finder/zipball/cd03920154bc6669f64fbabb803d24cc8629964c",
+            "reference": "cd03920154bc6669f64fbabb803d24cc8629964c",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "time": "2014-09-27 08:35:25",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Symfony\\Component\\Finder\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Symfony Community",
+                "homepage": "http://symfony.com/contributors"
+            },
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            }
+        ],
+        "description": "Symfony Finder Component",
+        "homepage": "http://symfony.com"
+    },
+    {
+        "name": "symfony/console",
+        "version": "v2.4.10",
+        "version_normalized": "2.4.10.0",
+        "target-dir": "Symfony/Component/Console",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/Console.git",
+            "reference": "39dd1c85ffdfc3c5fb008019dd027af05f64ec36"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/Console/zipball/39dd1c85ffdfc3c5fb008019dd027af05f64ec36",
+            "reference": "39dd1c85ffdfc3c5fb008019dd027af05f64ec36",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "require-dev": {
+            "symfony/event-dispatcher": "~2.1"
+        },
+        "suggest": {
+            "symfony/event-dispatcher": ""
+        },
+        "time": "2014-09-22 08:51:05",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Symfony\\Component\\Console\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Symfony Community",
+                "homepage": "http://symfony.com/contributors"
+            },
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            }
+        ],
+        "description": "Symfony Console Component",
+        "homepage": "http://symfony.com"
+    },
+    {
+        "name": "drupal/console",
+        "version": "0.2.11",
+        "version_normalized": "0.2.11.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/hechoendrupal/DrupalAppConsole.git",
+            "reference": "6a0df06a9626fe1b81201c1c168d934ed1684042"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/hechoendrupal/DrupalAppConsole/zipball/6a0df06a9626fe1b81201c1c168d934ed1684042",
+            "reference": "6a0df06a9626fe1b81201c1c168d934ed1684042",
+            "shasum": ""
+        },
+        "require": {
+            "composer/installers": "~1.0",
+            "php": ">=5.4.2",
+            "symfony/console": "~2.4.0",
+            "symfony/dependency-injection": "~2.4.0",
+            "symfony/finder": "~2.4.0",
+            "twig/twig": "~1.15"
+        },
+        "require-dev": {
+            "drupal/coder": "dev-8.x-2.x",
+            "drupal/drupal": "8.0.*@dev",
+            "phpunit/phpunit": "4.1.*"
+        },
+        "time": "2014-09-23 22:34:51",
+        "bin": [
+            "bin/console"
+        ],
+        "type": "drupal-module",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Drupal\\AppConsole\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "David Flores",
+                "email": "dmousex@gmail.com",
+                "homepage": "http://dmouse.net"
+            },
+            {
+                "name": "Jesus Manuel Olivas",
+                "email": "jesus.olivas@gmail.com",
+                "homepage": "http://jmolivas.com"
+            },
+            {
+                "name": "Drupal Console Contributors",
+                "homepage": "https://github.com/hechoendrupal/DrupalAppConsole/graphs/contributors"
+            }
+        ],
+        "description": "Drupal 8 Console scaffolding module generator",
+        "keywords": [
+            "console",
+            "development",
+            "drupal"
+        ]
     }
 ]
