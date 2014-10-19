@@ -11,5 +11,4 @@ return array(
     'Drupal\\Driver\\' => array($baseDir . '/drivers/lib/Drupal/Driver'),
     'Drupal\\Core\\' => array($baseDir . '/core/lib/Drupal/Core'),
     'Drupal\\Component\\' => array($baseDir . '/core/lib/Drupal/Component'),
-    'Drupal\\AppConsole\\' => array($baseDir . '/modules/console/src'),
 );

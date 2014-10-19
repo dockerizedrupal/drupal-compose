@@ -1,5 +1,6 @@
 name: Bartik
 type: theme
+base theme: classy
 description: 'A flexible, recolorable theme with many regions and a responsive, mobile-first layout.'
 package: Core
 # version: VERSION
@@ -32,8 +33,8 @@ regions:
 settings:
   shortcut_module_link: false
 
-# Information added by Drupal.org packaging script on 2014-10-01
-version: '8.0.0-beta1'
+# Information added by Drupal.org packaging script on 2014-10-15
+version: '8.0.0-beta2'
 core: '8.x'
 project: 'drupal'
-datestamp: 1412147204
+datestamp: 1413394355
