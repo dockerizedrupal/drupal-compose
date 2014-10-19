@@ -272,7 +272,7 @@ $config_directories = array();
  *   $settings['hash_salt'] = file_get_contents('/home/example/salt.txt');
  * @endcode
  */
-$settings['hash_salt'] = 'A9_1xrOcy60NTLLIAq_Q4PFlQg8UwFf5FDTzeHZs3asUY2FIfY2a1TKaMMoZsMRryfWyraftSA';
+$settings['hash_salt'] = 'IT52B4NIF6jSY60HovpsnSkP4MownsBkS6a__W-6lA30T_rdRjTdfBgLA0JPSKTe5ixUp7bOCw';
 
 /**
  * Access control for update.php script.
@@ -640,7 +640,7 @@ ini_set('session.cookie_lifetime', 2000000);
 #   include __DIR__ . '/settings.local.php';
 # }
 $databases['default']['default'] = array (
-  'database' => 'drupal',
+  'database' => 'dev',
   'username' => 'root',
   'password' => 'root',
   'prefix' => '',
@@ -650,7 +650,5 @@ $databases['default']['default'] = array (
   'driver' => 'mysql',
 );
 $settings['install_profile'] = 'standard';
-$config_directories['active'] = 'sites/default/files/config_gqyGamu4-AeetR20ZIF-Amjm1VULTy1Tx51_5F_sazSu1XN8vHiAimIYnxz2tcIp9c5WsbjpBg/active';
-$config_directories['staging'] = 'sites/default/files/config_gqyGamu4-AeetR20ZIF-Amjm1VULTy1Tx51_5F_sazSu1XN8vHiAimIYnxz2tcIp9c5WsbjpBg/staging';
-
-$settings['dev.yml'] = '/home/viljaste/dev/build/var/www/dev.yml';
+$config_directories['active'] = 'sites/default/files/config_kWGmBZ5jdxaGZ-K-Emse9m99fdQlgf_fpOIJ2VUXt1PTtaT86ZFk1-ubmaF41XDoh97zot_bYg/active';
+$config_directories['staging'] = 'sites/default/files/config_kWGmBZ5jdxaGZ-K-Emse9m99fdQlgf_fpOIJ2VUXt1PTtaT86ZFk1-ubmaF41XDoh97zot_bYg/staging';
