@@ -2,4 +2,4 @@
 .gitignore
 README.md
 dev.sh
-php5-fcgi
+fig.yml
