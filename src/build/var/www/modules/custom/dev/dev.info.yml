@@ -1,0 +1,5 @@
+name: Dev
+description: Dev
+package: Dev
+type: module
+core: 8.x

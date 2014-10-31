@@ -1,0 +1,13 @@
+language: php
+
+php:
+  - 5.4
+  - 5.6
+
+before_script:
+  - composer install --dev --prefer-source
+
+after_success:
+  - ./bin/phpcs --standard=vendor/drupal/coder/coder_sniffer/Drupal/ruleset.xml /tmp/modules/*
+  #- if ./bin/phpcs --standard=vendor/drupal/coder/coder_sniffer/Drupal/ruleset.xml /tmp/modules/* | egrep "FOUND ([1-9]+) ERRORS" --quiet; then echo "\nErrors in coding standards\n"; exit 1; fi
+  - rm -r /tmp/modules

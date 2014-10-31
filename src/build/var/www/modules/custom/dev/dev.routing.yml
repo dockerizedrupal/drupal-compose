@@ -1,0 +1,35 @@
+dev.dev:
+  path: '/dev'
+  defaults:
+    _content: '\Drupal\dev\Controller\Controller::dev'
+    _title: 'Dev'
+  requirements:
+    _permission: 'access content'
+dev.readme:
+  path: '/readme'
+  defaults:
+    _content: '\Drupal\dev\Controller\ReadmeController::readme'
+    _title: 'README'
+  requirements:
+    _permission: 'access content'
+dev.status:
+  path: '/status'
+  defaults:
+    _content: '\Drupal\dev\Controller\StatusController::status'
+    _title: 'Status'
+  requirements:
+    _permission: 'access content'
+dev.yaml:
+  path: '/yaml'
+  defaults:
+    _content: '\Drupal\dev\Controller\YamlController::yaml'
+    _title: 'Yaml'
+  requirements:
+    _permission: 'access content'
+dev.containers:
+  path: '/containers'
+  defaults:
+    _content: '\Drupal\dev\Controller\ContainersController::containers'
+    _title: 'Containers'
+  requirements:
+    _permission: 'access content'

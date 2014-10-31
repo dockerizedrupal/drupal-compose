@@ -1,0 +1,12 @@
+{
+  "name": "dev",
+  "author": "Simple Drupal Cloud <support@simpledrupalcloud.com>",
+  "private": true,
+  "dependencies": {
+    "commander": "^2.3.0",
+    "dotty": "0.0.2",
+    "js-yaml": "^3.2.2",
+    "redis": "^0.12.1",
+    "toposort": "^0.2.10"
+  }
+}
