@@ -66,7 +66,7 @@ mailcatcher:
     - "1080:1080"
     - "1025:1025"
 data:
-  image: simpledrupalcloud/data:latest
+  image: simpledrupalcloud/data:dev
   hostname: data
   volumes:
     - /var/docker/httpd-2.2.22/data:/httpd-2.2.22/data
