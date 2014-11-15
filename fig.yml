@@ -68,5 +68,5 @@ data:
   image: simpledrupalcloud/data:dev
   hostname: data
   volumes:
-    - ~/.dev/httpd-2.2.22/data:/httpd-2.2.22/data
-    - ~/.dev/mysql-5.5.38/data:/mysql-5.5.38/data
+    - ./.dev/httpd-2.2.22/data:/httpd-2.2.22/data
+    - ./.dev/mysql-5.5.38/data:/mysql-5.5.38/data
