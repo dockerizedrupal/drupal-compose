@@ -5,25 +5,35 @@ httpd:
     - "80:80"
     - "443:443"
   volumes_from:
-    - data
+    - httpddata
   links:
     - php52
     - php53
     - php54
     - php55
     - php56
+httpddata:
+  image: simpledrupalcloud/data:dev
+  hostname: httpddata
+  volumes:
+    - .:/httpd-2.2.22/data
 mysql:
   image: simpledrupalcloud/mysql:5.5.38-dev
   hostname: mysql
   ports:
     - "127.0.0.1:3306:3306"
   volumes_from:
-    - data
+    - mysqldata
+mysqldata:
+  image: simpledrupalcloud/data:dev
+  hostname: mysqldata
+  volumes:
+    - ./.dev/mysql-5.5.38/data:/mysql-5.5.38/data
 php52:
   image: simpledrupalcloud/php:5.2-dev
   hostname: php52
   volumes_from:
-    - data
+    - httpddata
   links:
     - mysql
     - mailcatcher:ssmtp
@@ -31,7 +41,7 @@ php53:
   image: simpledrupalcloud/php:5.3-dev
   hostname: php53
   volumes_from:
-    - data
+    - httpddata
   links:
     - mysql
     - mailcatcher:ssmtp
@@ -39,7 +49,7 @@ php54:
   image: simpledrupalcloud/php:5.4-dev
   hostname: php54
   volumes_from:
-    - data
+    - httpddata
   links:
     - mysql
     - mailcatcher:ssmtp
@@ -47,7 +57,7 @@ php55:
   image: simpledrupalcloud/php:5.5-dev
   hostname: php55
   volumes_from:
-    - data
+    - httpddata
   links:
     - mysql
     - mailcatcher:ssmtp
@@ -55,7 +65,7 @@ php56:
   image: simpledrupalcloud/php:5.6-dev
   hostname: php56
   volumes_from:
-    - data
+    - httpddata
   links:
     - mysql
     - mailcatcher:ssmtp
@@ -64,9 +74,3 @@ mailcatcher:
   hostname: mailcatcher
   ports:
     - "1080:1080"
-data:
-  image: simpledrupalcloud/data:dev
-  hostname: data
-  volumes:
-    - ./.dev/httpd-2.2.22/data:/httpd-2.2.22/data
-    - ./.dev/mysql-5.5.38/data:/mysql-5.5.38/data
