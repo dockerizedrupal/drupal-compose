@@ -1,5 +1,5 @@
 httpd:
-  image: simpledrupalcloud/httpd:2.2.22-dev
+  image: simpledrupalcloud/httpd:dev
   hostname: httpd
   ports:
     - "80:80"
@@ -16,9 +16,9 @@ httpddata:
   image: simpledrupalcloud/data:dev
   hostname: httpddata
   volumes:
-    - .:/httpd-2.2.22/data
+    - .:/httpd/data
 mysqld:
-  image: simpledrupalcloud/mysqld:5.5.38-dev
+  image: simpledrupalcloud/mysqld:dev
   hostname: mysqld
   ports:
     - "127.0.0.1:3306:3306"
@@ -28,7 +28,7 @@ mysqlddata:
   image: simpledrupalcloud/data:dev
   hostname: mysqlddata
   volumes:
-    - ./.dev/mysqld-5.5.38/data:/mysqld-5.5.38/data
+    - ./.dev/mysqld/data:/mysqld/data
 php52:
   image: simpledrupalcloud/php:5.2-dev
   hostname: php52
@@ -70,7 +70,17 @@ php56:
     - mysqld
     - mailcatcher:ssmtp
 mailcatcher:
-  image: simpledrupalcloud/mailcatcher:0.5.12-dev
+  image: simpledrupalcloud/mailcatcher:dev
   hostname: mailcatcher
   ports:
     - "1080:1080"
+adminer:
+  image: simpledrupalcloud/adminer:dev
+  hostname: adminer
+  ports:
+    - "2080:80"
+  links:
+    - mysqld:db
+  environment:
+    - DB_USERNAME
+    - DB_PASSWORD
