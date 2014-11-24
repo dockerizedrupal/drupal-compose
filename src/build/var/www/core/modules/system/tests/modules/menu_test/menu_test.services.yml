@@ -1,5 +1,0 @@
-services:
-  theme.negotiator.test_theme:
-    class: Drupal\menu_test\Theme\TestThemeNegotiator
-    tags:
-      - { name: theme_negotiator }
