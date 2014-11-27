@@ -1,5 +1,7 @@
 <?php
 
+define('DEV_FIG_FILE_BASE_PATH', 'http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-drupal/raw');
+
 require_once DRUSH_BASE_PATH . '/commands/core/rsync.core.inc';
 
 /**
@@ -114,7 +116,9 @@ function drush_fig_init() {
   $destination_settings = drush_sitealias_evaluate_path($destination, $additional_options, TRUE);
 
   if (!isset($destination_settings['evaluated-path'])) {
-    return drush_set_error('DRUSH_BAD_PATH', dt('Could not evaluate destination path !path.', array('!path' => $destination)));
+    return drush_set_error('DRUSH_BAD_PATH', dt('Could not evaluate destination path !path.', array(
+      '!path' => $destination,
+    )));
   }
 
   $destination_path = $destination_settings['evaluated-path'];
@@ -122,13 +126,13 @@ function drush_fig_init() {
   $drupal_version = drush_drupal_major_version($destination_path);
 
   if ($drupal_version == 6) {
-    $fig_file_path = 'http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-drupal/raw/6.x/fig.yml';
+    $fig_file_path = DEV_FIG_FILE_BASE_PATH . '/6.x/fig.yml';
   }
   elseif ($drupal_version == 7) {
-    $fig_file_path = 'http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-drupal/raw/7.x/fig.yml';
+    $fig_file_path = DEV_FIG_FILE_BASE_PATH . '/7.x/fig.yml';
   }
   elseif ($drupal_version == 8) {
-    $fig_file_path = 'http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-drupal/raw/8.x/fig.yml';
+    $fig_file_path = DEV_FIG_FILE_BASE_PATH . '/8.x/fig.yml';
   }
   else {
     return drush_set_error(dt('Unsupported Drupal version.'));
