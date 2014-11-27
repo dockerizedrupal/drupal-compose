@@ -20,8 +20,15 @@ function dev_drush_command() {
     'description' => 'Copy settings file from remote host.',
     'allow-additional-options' => TRUE,
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
-    'aliases' => array('sc'),
     'callback' => 'drush_mysqld',
+  );
+
+  $items['fig-init'] = array(
+    'description' => 'Copy settings file from remote host.',
+    'allow-additional-options' => TRUE,
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
+    'aliases' => array('fi'),
+    'callback' => 'drush_fig_init',
   );
 
   return $items;
@@ -94,6 +101,16 @@ COMMAND;
 function _drush_mysql_socat_run($ip_address, $port) {
   $command = <<<COMMAND
 sudo socat UNIX-LISTEN:/var/run/mysqld/mysqld.sock,fork,reuseaddr,unlink-early,user=www-data,group=www-data,mode=777 TCP:$ip_address:$port
+COMMAND;
+
+  drush_shell_exec($command);
+
+  return !drush_shell_exec_output() ? TRUE : FALSE;
+}
+
+function drush_fig_init() {
+  $command = <<<COMMAND
+git clone
 COMMAND;
 
   drush_shell_exec($command);
