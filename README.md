@@ -5,7 +5,7 @@
 ## Install dev
 
     DESTINATION="~/.drush/dev" \
-      && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-dev.git "${DESTINATION}" \
+      && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${DESTINATION}" \
       && cd "${DESTINATION}" \
       && git checkout dev \
       && cd -
