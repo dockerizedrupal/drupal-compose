@@ -6,7 +6,7 @@
 
     DESTINATION="~/.drush/dev" \
       && git clone http://git.simpledrupalcloud.com/simpledrupalcloud/docker-dev.git "${DESTINATION}" \
-      && cd "${TMP}" \
+      && cd "${DESTINATION}" \
       && cd -
 
 ## Drush commands
