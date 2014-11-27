@@ -4,6 +4,7 @@
 
     drush settings-copy @dev.preprod
     drush mysqld mysqld
+    drush fig-init
 
 ## License
 
