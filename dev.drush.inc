@@ -19,31 +19,65 @@ function dev_drush_command() {
   );
 
   $items['mysqld'] = array(
-    'description' => 'Copy settings file from remote host.',
+    'description' => 'Bind mysqld container TCP/IP socket connection to local Unix domain socket.',
     'allow-additional-options' => TRUE,
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
     'callback' => 'drush_mysqld',
   );
 
   $items['fig-init'] = array(
-    'description' => 'Copy settings file from remote host.',
+    'description' => 'Generate minimal Fig configuration file that Drupal needs.',
     'allow-additional-options' => TRUE,
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
     'aliases' => array('fi'),
     'callback' => 'drush_fig_init',
   );
 
+  $items['backup-volume'] = array(
+    'description' => 'Backup Docker container volume.',
+    'allow-additional-options' => TRUE,
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
+    'aliases' => array('bv'),
+    'callback' => 'drush_backup_volume',
+  );
+
+  $items['restore-volume'] = array(
+    'description' => 'Restore Docker container volume.',
+    'allow-additional-options' => TRUE,
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
+    'aliases' => array('rv'),
+    'callback' => 'drush_restore_volume',
+  );
+
   return $items;
+}
+
+function drush_backup_volume($volume, $container) {
+  $pwd = getcwd();
+
+  $command = <<<COMMAND
+sudo docker run --rm --volumes-from $container -v $pwd:/backup simpledrupalcloud/base:latest tar czvf /backup/data.tar.gz $volume
+COMMAND;
+
+  drush_shell_exec($command);
+}
+
+function drush_restore_volume($container) {
+  $pwd = getcwd();
+
+  $command = <<<COMMAND
+sudo docker run --rm --volumes-from $container -v $pwd:/backup simpledrupalcloud/base:latest tar xzvf /backup/data.tar.gz
+COMMAND;
+
+  drush_shell_exec($command);
 }
 
 function drush_settings_copy($source) {
   drush_core_rsync($source . ':sites/default/settings.php', '@self:sites/default');
 }
 
-function drush_mysqld($container_id) {
-  drush_shell_exec('ls');
-
-  $ip_address = _drush_mysqld_container_ip_address_get($container_id);
+function drush_mysqld($container) {
+  $ip_address = _drush_mysqld_container_ip_address_get($container);
 
   if (!$ip_address) {
     return drush_set_error(dt("Unable to query container's IP Address.\nThe specific errors are below:\n!errors", array(
@@ -51,7 +85,7 @@ function drush_mysqld($container_id) {
     )));
   }
 
-  $port = _drush_mysqld_container_port_get($container_id);
+  $port = _drush_mysqld_container_port_get($container);
 
   if (!$port) {
     return drush_set_error(dt("Unable to query container's port.\nThe specific errors are below:\n!errors", array(
@@ -64,9 +98,9 @@ function drush_mysqld($container_id) {
   _drush_mysql_socat_run($ip_address, $port);
 }
 
-function _drush_mysqld_container_ip_address_get($container_id) {
+function _drush_mysqld_container_ip_address_get($container) {
   $command = <<<COMMAND
-sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' $container_id;
+sudo docker inspect --format '{{ .NetworkSettings.IPAddress }}' $container;
 COMMAND;
 
   drush_shell_exec($command);
@@ -76,9 +110,9 @@ COMMAND;
   return isset($output[0]) ? $output[0] : NULL;
 }
 
-function _drush_mysqld_container_port_get($container_id) {
+function _drush_mysqld_container_port_get($container) {
   $command = <<<COMMAND
-sudo docker inspect --format '{{(index (index .NetworkSettings.Ports "3306/tcp") 0).HostPort}}' $container_id
+sudo docker inspect --format '{{(index (index .NetworkSettings.Ports "3306/tcp") 0).HostPort}}' $container
 COMMAND;
 
   drush_shell_exec($command);
