@@ -6,7 +6,6 @@ cat /dev/zero | ssh-keygen -b 4096 -t rsa -N ""
 sudo apt-get install -y curl
 curl -sSL https://get.docker.com/ubuntu/ | sudo sh
 
-sudo apt-get upgrade lxc-docker
 sudo docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
 
 sudo apt-get install -y python-pip
