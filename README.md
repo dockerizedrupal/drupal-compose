@@ -174,8 +174,8 @@ After executing this command you need to reinitialize your bash instance.
     $aliases['example.com'] = array(
       'root' => '/var/www/drupal',
       'uri' => 'http://example.com',
-      'remote-host' => 'http://example.com',
-      'remote-user' => 'drupal',
+      'remote-host' => 'example.com',
+      'remote-user' => exec('whoami'),
       'command-specific' => array(
         'sql-sync' => array(
           'create-db' => TRUE,

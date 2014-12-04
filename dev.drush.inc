@@ -11,11 +11,11 @@ require_once DRUSH_BASE_PATH . '/commands/pm/pm.drush.inc';
 function dev_drush_command() {
   $items = array();
 
-  $items['settings-copy'] = array(
+  $items['copy-settings'] = array(
     'description' => 'Copy settings file from remote host.',
     'allow-additional-options' => TRUE,
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
-    'aliases' => array('sc'),
+    'aliases' => array('cs'),
     'callback' => 'drush_settings_copy',
   );
 
@@ -26,12 +26,20 @@ function dev_drush_command() {
     'callback' => 'drush_mysqld',
   );
 
-  $items['fig-init'] = array(
+  $items['fig-template'] = array(
     'description' => 'Fetch preconfigured Fig configuration file for Drupal.',
     'allow-additional-options' => TRUE,
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
-    'aliases' => array('fi'),
-    'callback' => 'drush_fig_init',
+    'aliases' => array('ft'),
+    'callback' => 'dev_fig_template',
+  );
+
+  $items['alias-template'] = array(
+    'description' => 'Fetch preconfigured Fig configuration file for Drupal.',
+    'allow-additional-options' => TRUE,
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
+    'aliases' => array('at'),
+    'callback' => 'dev_alias_template',
   );
 
   $items['backup-volume'] = array(
@@ -50,28 +58,7 @@ function dev_drush_command() {
     'callback' => 'drush_restore_volume',
   );
 
-  $items['disable-uninstall'] = array(
-    'description' => 'Uninstall a module',
-    'allow-additional-options' => TRUE,
-    'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_FULL,
-    'aliases' => array('du'),
-    'engines' => array(
-      'version_control',
-      'package_handler',
-      'release_info' => array(
-        'add-options-to-command' => FALSE,
-      ),
-    ),
-  );
-
   return $items;
-}
-
-function drush_dev_disable_uninstall() {
-  $args = func_get_args();
-
-  drush_invoke_process('@self', 'pm-disable', $args);
-  drush_invoke_process('@self', 'pm-uninstall', $args);
 }
 
 function drush_backup_volume($volume, $container) {
@@ -164,7 +151,7 @@ COMMAND;
   return !drush_shell_exec_output() ? TRUE : FALSE;
 }
 
-function drush_fig_init() {
+function dev_fig_template() {
   $destination = '@self';
 
   $additional_options = array();
@@ -199,4 +186,27 @@ wget $fig_file_path -O "${destination_path}fig.yml"
 COMMAND;
 
   drush_shell_exec($command);
+}
+
+function dev_alias_template() {
+  $destination = '@self';
+
+  $additional_options = array();
+
+  $destination_settings = drush_sitealias_evaluate_path($destination, $additional_options, TRUE);
+
+  if (!isset($destination_settings['evaluated-path'])) {
+    return drush_set_error('DRUSH_BAD_PATH', dt('Could not evaluate destination path !path.', array(
+      '!path' => $destination,
+    )));
+  }
+
+  $destination_path = $destination_settings['evaluated-path'];
+  $destination_path .= '/sites/all/drush';
+
+  if (!file_exists($destination_path)) {
+    mkdir($destination_path, 0777, TRUE);
+  }
+
+  copy(getenv("HOME") . '/.drush/dev/src/sites/all/drush/dev.aliases.drushrc.php', $destination_path . '/dev.aliases.drushrc.php');
 }
