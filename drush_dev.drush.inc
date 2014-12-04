@@ -1,13 +1,14 @@
 <?php
 
-define('DEV_FIG_FILE_BASE_PATH', 'http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-drupal/raw');
+define('DRUSH_DEV_FIG_FILE_BASE_PATH', 'http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-drupal/raw');
 
 require_once DRUSH_BASE_PATH . '/commands/core/rsync.core.inc';
+require_once DRUSH_BASE_PATH . '/commands/pm/pm.drush.inc';
 
 /**
  * Implementation of hook_drush_command().
  */
-function dev_drush_command() {
+function drush_dev_drush_command() {
   $items = array();
 
   $items['settings-copy'] = array(
@@ -26,7 +27,7 @@ function dev_drush_command() {
   );
 
   $items['fig-init'] = array(
-    'description' => 'Generate minimal Fig configuration file that Drupal needs.',
+    'description' => 'Fetch preconfigured Fig configuration file for Drupal.',
     'allow-additional-options' => TRUE,
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
     'aliases' => array('fi'),
@@ -49,7 +50,28 @@ function dev_drush_command() {
     'callback' => 'drush_restore_volume',
   );
 
+  $items['disable-uninstall'] = array(
+    'description' => 'Uninstall a module',
+    'allow-additional-options' => TRUE,
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUPAL_FULL,
+    'aliases' => array('du'),
+    'engines' => array(
+      'version_control',
+      'package_handler',
+      'release_info' => array(
+        'add-options-to-command' => FALSE,
+      ),
+    ),
+  );
+
   return $items;
+}
+
+function drush_dev_disable_uninstall() {
+  $args = func_get_args();
+
+  drush_invoke_process('@self', 'pm-disable', $args);
+  drush_invoke_process('@self', 'pm-uninstall', $args);
 }
 
 function drush_backup_volume($volume, $container) {
@@ -160,13 +182,13 @@ function drush_fig_init() {
   $drupal_version = drush_drupal_major_version($destination_path);
 
   if ($drupal_version == 6) {
-    $fig_file_path = DEV_FIG_FILE_BASE_PATH . '/6.x/fig.yml';
+    $fig_file_path = DRUSH_DEV_FIG_FILE_BASE_PATH . '/6.x/fig.yml';
   }
   elseif ($drupal_version == 7) {
-    $fig_file_path = DEV_FIG_FILE_BASE_PATH . '/7.x/fig.yml';
+    $fig_file_path = DRUSH_DEV_FIG_FILE_BASE_PATH . '/7.x/fig.yml';
   }
   elseif ($drupal_version == 8) {
-    $fig_file_path = DEV_FIG_FILE_BASE_PATH . '/8.x/fig.yml';
+    $fig_file_path = DRUSH_DEV_FIG_FILE_BASE_PATH . '/8.x/fig.yml';
   }
   else {
     return drush_set_error(dt('Unsupported Drupal version.'));
