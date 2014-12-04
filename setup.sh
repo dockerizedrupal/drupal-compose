@@ -20,7 +20,9 @@ sudo apt-get install -y php5-memcached
 
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename composer
 sed -i '1i export PATH="$HOME/.composer/vendor/bin:$PATH"' $HOME/.bashrc
-source $HOME/.bashrc
+
+. $HOME/.bashrc
+
 composer global require drush/drush:6.*
 
 curl -sL https://deb.nodesource.com/setup | sudo bash -
