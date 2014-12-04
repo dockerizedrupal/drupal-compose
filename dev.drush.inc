@@ -1,6 +1,6 @@
 <?php
 
-define('DRUSH_DEV_FIG_FILE_BASE_PATH', 'http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-drupal/raw');
+define('DEV_FIG_FILE_BASE_PATH', 'http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-drupal/raw');
 
 require_once DRUSH_BASE_PATH . '/commands/core/rsync.core.inc';
 require_once DRUSH_BASE_PATH . '/commands/pm/pm.drush.inc';
@@ -8,7 +8,7 @@ require_once DRUSH_BASE_PATH . '/commands/pm/pm.drush.inc';
 /**
  * Implementation of hook_drush_command().
  */
-function drush_dev_drush_command() {
+function dev_drush_command() {
   $items = array();
 
   $items['settings-copy'] = array(
@@ -182,13 +182,13 @@ function drush_fig_init() {
   $drupal_version = drush_drupal_major_version($destination_path);
 
   if ($drupal_version == 6) {
-    $fig_file_path = DRUSH_DEV_FIG_FILE_BASE_PATH . '/6.x/fig.yml';
+    $fig_file_path = DEV_FIG_FILE_BASE_PATH . '/6.x/fig.yml';
   }
   elseif ($drupal_version == 7) {
-    $fig_file_path = DRUSH_DEV_FIG_FILE_BASE_PATH . '/7.x/fig.yml';
+    $fig_file_path = DEV_FIG_FILE_BASE_PATH . '/7.x/fig.yml';
   }
   elseif ($drupal_version == 8) {
-    $fig_file_path = DRUSH_DEV_FIG_FILE_BASE_PATH . '/8.x/fig.yml';
+    $fig_file_path = DEV_FIG_FILE_BASE_PATH . '/8.x/fig.yml';
   }
   else {
     return drush_set_error(dt('Unsupported Drupal version.'));

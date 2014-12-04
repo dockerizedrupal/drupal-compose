@@ -1,6 +1,6 @@
-# drush-dev
+# dev
 
-A development tool and a workflow for developing [Drupal](https://www.drupal.org/) based projects primarily on GNU/Linux (Debian/Ubuntu) operating system.
+A combination of multiple development tools and a workflow for developing [Drupal](https://www.drupal.org/) based projects primarily on GNU/Linux (Debian/Ubuntu) operating system.
 
 There is a plan to try to get this workflow to work on other platforms (e.g., Microsoft Windows, OS X and other GNU/Linux distributions) in the future as well.
 
