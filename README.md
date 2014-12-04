@@ -171,7 +171,7 @@ After executing this command you need to reinitialize your bash instance.
   
     <?php
     
-    $aliases['remote_server'] = array(
+    $aliases['example.com'] = array(
       'root' => '/var/www/drupal',
       'uri' => 'http://example.com',
       'remote-host' => 'http://example.com',

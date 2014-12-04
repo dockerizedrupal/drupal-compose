@@ -1,6 +1,6 @@
 <?php
 
-define('DEV_FIG_FILE_BASE_PATH', 'http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-drupal/raw');
+define('DEV_FIG_FILE_BASE_PATH', 'http://gitlab.simpledrupalcloud.com/simpledrupalcloud/fig-drupal/raw');
 
 require_once DRUSH_BASE_PATH . '/commands/core/rsync.core.inc';
 require_once DRUSH_BASE_PATH . '/commands/pm/pm.drush.inc';
