@@ -11,14 +11,6 @@ require_once DRUSH_BASE_PATH . '/commands/pm/pm.drush.inc';
 function dev_drush_command() {
   $items = array();
 
-  $items['copy-settings'] = array(
-    'description' => 'Copy settings file from remote host.',
-    'allow-additional-options' => TRUE,
-    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
-    'aliases' => array('cs'),
-    'callback' => 'drush_settings_copy',
-  );
-
   $items['mysqld'] = array(
     'description' => 'Bind mysqld container TCP/IP socket connection to local Unix domain socket.',
     'allow-additional-options' => TRUE,
@@ -79,10 +71,6 @@ sudo docker run --rm --volumes-from $container -v $pwd:/backup simpledrupalcloud
 COMMAND;
 
   drush_shell_exec($command);
-}
-
-function drush_settings_copy($source) {
-  drush_core_rsync($source . ':sites/default/settings.php', '@self:sites/default');
 }
 
 function drush_mysqld($container) {
@@ -208,5 +196,5 @@ function dev_alias_template() {
     mkdir($destination_path, 0777, TRUE);
   }
 
-  copy(getenv("HOME") . '/.drush/dev/src/sites/all/drush/dev.aliases.drushrc.php', $destination_path . '/dev.aliases.drushrc.php');
+  copy(getenv("HOME") . '/.drush/dev/src/sites/all/drush/aliases.drushrc.php', $destination_path . '/aliases.drushrc.php');
 }
