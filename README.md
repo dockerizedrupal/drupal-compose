@@ -247,11 +247,23 @@ Import the database dump into MySQL server.
 
     drush upwd admin --password="admin"
 
-### SSH into the remote Drupal instance
+### SSH into remote Drupal instance
+
+    drush @example.com site-ssh
+
+Shortcut for this command is:
 
     drush @example.com ssh
 
-## Flowchart
+### Go directly to MySQL CLI
+
+    drush sql-cli
+
+Shortcut for this command is:
+
+    drush sqlc
+
+## Workflow
 
 ![Flowchart](/flowchart.png)
 
