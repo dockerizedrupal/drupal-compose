@@ -11,6 +11,14 @@ require_once DRUSH_BASE_PATH . '/commands/pm/pm.drush.inc';
 function dev_drush_command() {
   $items = array();
 
+  $items['ftp-export-backup'] = array(
+    'description' => 'Bind mysqld container TCP/IP socket connection to local Unix domain socket.',
+    'allow-additional-options' => TRUE,
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
+    'aliases' => array('feb'),
+    'callback' => 'drush_ftp_export_backup',
+  );
+
   $items['mysqld'] = array(
     'description' => 'Bind mysqld container TCP/IP socket connection to local Unix domain socket.',
     'allow-additional-options' => TRUE,
@@ -51,6 +59,99 @@ function dev_drush_command() {
   );
 
   return $items;
+}
+
+function endsWith($haystack,$needle,$case=true) {
+  if($case){return (strcmp(substr($haystack, strlen($haystack) - strlen($needle)),$needle)===0);}
+  return (strcasecmp(substr($haystack, strlen($haystack) - strlen($needle)),$needle)===0);
+}
+
+function drush_ftp_export_backup($exported_files_path, $host, $username, $password, $backup_path, $base_path = '') {
+  $base_path = rtrim($base_path, '/');
+
+  if (!file_exists($exported_files_path)) {
+    return drush_set_error('Could not find exported files path: ' . $exported_files_path);
+  }
+
+  if (!is_dir($exported_files_path)) {
+    return drush_set_error('Exported files path is a file: ' . $exported_files_path);
+  }
+
+  $conn_id = ftp_connect($host);
+  $login_result = ftp_login($conn_id, $username, $password);
+
+  if (!$login_result) {
+    return drush_set_error('FTP login failed');
+  }
+
+  ftp_pasv($conn_id, TRUE);
+
+  if (file_exists($backup_path)) {
+    return drush_set_error('Backup directory already exists');
+  }
+
+  if (!mkdir($backup_path, 0777, TRUE)) {
+    return drush_set_error('Could not create backup directory: ' . $backup_path);
+  }
+
+  $errors = array();
+
+  $path = realpath($exported_files_path);
+  $objects = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path), RecursiveIteratorIterator::SELF_FIRST);
+
+  foreach($objects as $name => $object) {
+    $exploded = explode($exported_files_path, $name);
+    $relative_name = $exploded[1];
+
+    if ($relative_name == '.') {
+      continue;
+    }
+
+    if ($relative_name == '..') {
+      continue;
+    }
+
+    if (endsWith($relative_name, '/.', FALSE) || endsWith($relative_name, '/..', FALSE)) {
+      continue;
+    }
+
+    if (is_dir($name)) {
+      continue;
+    }
+
+    $relative_name = ltrim($relative_name, '/');
+    $exploded = explode('/', $relative_name);
+
+    unset($exploded[count($exploded) - 1]);
+
+    $join = implode('/', $exploded);
+    $remote_file = $base_path . '/' . $relative_name;
+    $contents = ftp_nlist($conn_id, $remote_file);
+
+    if (!in_array($base_path . '/' . $relative_name, $contents)) {
+      continue;
+    }
+
+    if (!file_exists($backup_path . '/' . $join)) {
+      mkdir($backup_path . '/' . $join, 0777, TRUE);
+    }
+
+    $local_file = $backup_path . '/' . $relative_name;
+
+    if (!ftp_get($conn_id, $local_file, $remote_file, FTP_BINARY)) {
+      $errors[] = $local_file;
+
+      continue;
+    }
+
+    drush_log("Successfully backed up: $local_file", 'success');
+  }
+
+  ftp_close($conn_id);
+
+  foreach ($errors as $error) {
+    drush_set_error("Backing up file $error failed");
+  }
 }
 
 function drush_backup_volume($volume, $container) {
