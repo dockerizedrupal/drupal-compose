@@ -6,7 +6,7 @@ There is a plan to try to get this workflow to work on other platforms (e.g., Mi
 
 ##  Install
 
-    git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "/home/$(whoami)/.drush/dev"
+    git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${HOME}/.drush/dev"
 
 ## drush ftp-export-backup
 
