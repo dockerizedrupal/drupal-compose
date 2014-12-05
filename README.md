@@ -15,11 +15,12 @@ These examples will be the basis for this document.
  * [Docker](http://docker.com/)
  * [Fig](http://www.fig.sh/)
  * [Drush](https://github.com/drush-ops/drush)
- * [Node.js](http://nodejs.org/)
 
 ## Set up your environment
 
 This section will be converted to [Puppet](http://puppetlabs.com/) manifest eventually.
+
+Currently there is a simple shell script `setup.sh` that executes all the commands listed in this section.
 
 ### OpenSSH
 
@@ -38,7 +39,6 @@ Note: The command will create the keys automatically without the human interacti
 #### Installing Docker
 
     sudo apt-get install -y curl
-    
     curl -sSL https://get.docker.com/ubuntu/ | sudo sh
 
 #### Updating Docker
@@ -60,7 +60,6 @@ nssenter allows you to enter Docker containers with ease.
 #### Installing Fig
 
     sudo apt-get install -y python-pip
-
     sudo pip install fig
 
 #### Updating Fig
@@ -72,15 +71,10 @@ nssenter allows you to enter Docker containers with ease.
 #### Installing PHP
 
     sudo apt-get install -y php5-cli
-
     sudo apt-get install -y php5-mysql
-
     sudo apt-get install -y php5-gd
-    
     sudo apt-get install -y php5-redis
-    
     sudo apt-get install -y php5-ldap
-    
     sudo apt-get install -y php5-memcached
 
 ### Drush
@@ -96,9 +90,7 @@ To do that, execute the following command:
 Now we are ready to install Drush.
 
     sed -i '1i export PATH="$HOME/.composer/vendor/bin:$PATH"' $HOME/.bashrc
-
     source $HOME/.bashrc
-    
     composer global require drush/drush:6.*
 
 #### Updating Drush
@@ -110,9 +102,7 @@ Now we are ready to install Drush.
 #### Installing Node.js
 
     curl -sL https://deb.nodesource.com/setup | sudo bash -
-
     sudo apt-get install -y nodejs
-
     sudo apt-get install -y build-essential
 
 ### LESS compiler
@@ -126,7 +116,6 @@ Now we are ready to install Drush.
 ### Installing Grunt
 
     sudo npm install -g grunt
-    
     sudo npm install -g grunt-cli
 
 ### Git
@@ -146,9 +135,9 @@ Now we are ready to install Drush.
 #### Installing MySQL client
 
     sudo apt-get install -y mysql-client
-    
+
 ### tmux
- 
+
 #### Installing tmux
 
     sudo apt-get install -y tmux
@@ -156,14 +145,14 @@ Now we are ready to install Drush.
 ## Working with Docker
 
 ## Working with Fig
-   
+
 ## Working with Drush
 
 ### Drush Bash completion
 
     sudo wget https://raw.githubusercontent.com/drush-ops/drush/master/drush.complete.sh -O /etc/bash_completion.d/drush.complete.sh
 
-After executing this command you need to reinitialize your bash instance.
+After executing the above command you need to reinitialize your Bash instance.
 
 ### Drush aliases
 
@@ -209,7 +198,59 @@ After executing this command you need to reinitialize your bash instance.
         ),
       ),
     );
-   
+
+### List all the Drupal site aliases
+
+     drush site-alias
+     
+Shortcut for this command is:
+
+    drush sa
+
+### Copy settings file from a remote Drupal host
+
+    drush -y rsync @example.com:sites/default/settings.php @self:sites/default
+
+### Synchronize Drupal files directory between multiple Drupal instances
+
+    drush -y rsync @example.com:%files @self:%files
+
+### Synchronize Drupal database between multiple Drupal instances
+
+    drush -y sql-sync @example.com @self
+
+### Backing up a Drupal database
+
+Clear Drupal cache tables before creating the database dump.
+
+    drush cc all
+
+Export Drupal database into a file.
+
+    drush sql-dump > ~/sql_dump.sql
+
+It's always a good practise to prepend a creation timestamp to your dump filename.
+
+    drush sql-dump > ~/$(date "+%Y%m%d%H%M%S")_sql_dump.sql
+
+### Restoring a Drupal database from a backup
+
+Drop all the tables in your database before importing the dump.
+
+    drush -y sql-drop
+
+Import the database dump into MySQL server.
+
+    drush sql-cli < ~/sql_dump.sql
+
+### Change Drupal user password
+
+    drush upwd admin --password="admin"
+
+### SSH into the remote Drupal instance
+
+    drush @example.com ssh
+
 ## TODO
 
  * Logging
@@ -219,17 +260,6 @@ After executing this command you need to reinitialize your bash instance.
 
  * drush fig-init
  * drush mysqld [container_id]
- * drush settings-copy @dev.preprod (drush sc @dev.preprod)
- * drush site-alias (drush sa)
- * drush sql-drop
- * drush -y sql-sync @dev.preprod @self
- * drush -y rsync @dev.preprod:%files @self:%files
- * drush @dev.preprod ssh
- * drush cc
- * drush sql-dump > ~/sql-dump.sql
- * drush sql-drop
- * drush sql-cli < ~/sql-dump.sql
- * drush upwd admin --password="admin"
 
 ## License
 

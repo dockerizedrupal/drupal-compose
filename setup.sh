@@ -6,7 +6,6 @@ cat /dev/zero | ssh-keygen -b 4096 -t rsa -N ""
 sudo apt-get install -y curl
 curl -sSL https://get.docker.com/ubuntu/ | sudo sh
 
-sudo apt-get upgrade lxc-docker
 sudo docker run --rm -v /usr/local/bin:/target jpetazzo/nsenter
 
 sudo apt-get install -y python-pip
@@ -21,7 +20,9 @@ sudo apt-get install -y php5-memcached
 
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename composer
 sed -i '1i export PATH="$HOME/.composer/vendor/bin:$PATH"' $HOME/.bashrc
-source $HOME/.bashrc
+
+. $HOME/.bashrc
+
 composer global require drush/drush:6.*
 
 curl -sL https://deb.nodesource.com/setup | sudo bash -
