@@ -251,6 +251,10 @@ Import the database dump into MySQL server.
 
     drush @example.com ssh
 
+## Flowchart
+
+![Flowchart](/flowchart.png)
+
 ## TODO
 
  * Logging
