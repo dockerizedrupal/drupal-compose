@@ -22,7 +22,7 @@ sed -i '/templatedir=\$confdir\/templates/d' /etc/puppet/puppet.conf
 
 puppet module install puppetlabs/stdlib
 
-puppet apply --modulepath=setup/modules setup/modules/setup.pp
+puppet apply --modulepath=setup/modules setup/setup.pp
 
 #sudo apt-get install -y openssh-server
 #cat /dev/zero | ssh-keygen -b 4096 -t rsa -N ""
