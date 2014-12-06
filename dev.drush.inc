@@ -61,9 +61,12 @@ function dev_drush_command() {
   return $items;
 }
 
-function endsWith($haystack,$needle,$case=true) {
-  if($case){return (strcmp(substr($haystack, strlen($haystack) - strlen($needle)),$needle)===0);}
-  return (strcasecmp(substr($haystack, strlen($haystack) - strlen($needle)),$needle)===0);
+function ends_with($haystack, $needle, $case = true) {
+  if ($case) {
+    return strcmp(substr($haystack, strlen($haystack) - strlen($needle)), $needle) === 0;
+  }
+
+  return strcasecmp(substr($haystack, strlen($haystack) - strlen($needle)), $needle) === 0;
 }
 
 function drush_ftp_export_backup($exported_files_path, $host, $username, $password, $backup_path, $base_path = '') {
@@ -111,7 +114,7 @@ function drush_ftp_export_backup($exported_files_path, $host, $username, $passwo
       continue;
     }
 
-    if (endsWith($relative_name, '/.', FALSE) || endsWith($relative_name, '/..', FALSE)) {
+    if (ends_with($relative_name, '/.', FALSE) || ends_with($relative_name, '/..', FALSE)) {
       continue;
     }
 
