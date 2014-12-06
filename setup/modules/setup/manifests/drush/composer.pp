@@ -1,4 +1,4 @@
-class setup::drush::compser {
+class setup::drush::composer {
   require setup::packages
 
   exec { '/bin/bash -c "curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename composer"':
