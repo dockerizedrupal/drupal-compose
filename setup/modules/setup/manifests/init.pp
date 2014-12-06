@@ -4,6 +4,6 @@ class setup {
   include setup::openssh_server
   include setup::docker
   include setup::nsenter
-  include setup::pip
+  include setup::fig
   include setup::drush
 }
