@@ -5,8 +5,7 @@ class setup::drush::composer {
     timeout => 0
   }
 
-  exec { 'sed -i \'1i export PATH="${HOME}/.composer/vendor/bin:$PATH"\' ${HOME}/.bashrc':
-    path => ['/bin'],
+  exec { '/bin/bash -l -c "sed -i \'1i export PATH="${HOME}/.composer/vendor/bin:$PATH"\' ${HOME}/.bashrc"':
     require => Exec['/bin/bash -c "curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename composer"']
   }
 }
