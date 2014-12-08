@@ -236,7 +236,23 @@ Shortcut for this command is:
 
 ### Synchronize Drupal database between multiple Drupal instances
 
-    drush -y sql-sync @example.com @self
+The Drush core `sql-sync` command is somewhat limited when it comes to transferring huge databases between remote and local Drupal sites.
+
+There is a tool called [Drush SQL Sync Pipe](https://www.drupal.org/project/drush_sql_sync_pipe) by [Mark Carver](https://www.drupal.org/u/mark-carver) that helps to solve this exact problem.
+
+#### Installing Drush SQL Sync Pipe
+
+    sudo apt-get install -y pv
+    drush dl drush_sql_sync_pipe --destination=${HOME}/.drush
+
+#### Working with Drush SQL Sync Pipe
+
+    drush -y sql-sync-pipe @example.com @self --progress
+    
+Shortcut for this command is:
+
+    drush -y ssp @example.com @self --progress
+    drush -y pipe @example.com @self --progress
 
 ### Backing up a Drupal database
 
