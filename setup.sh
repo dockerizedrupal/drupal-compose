@@ -43,7 +43,7 @@ sudo puppet apply --modulepath=setup/modules setup/setup.pp
 #sudo apt-get install -y php5-memcached
 #
 #curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename composer
-#sed -i '1i export PATH="${HOME}/.composer/vendor/bin:$PATH"' ${HOME}/.bashrc
+#sed -i '1i export PATH="${HOME}/.composer/vendor/bin:${PATH}"' ${HOME}/.bashrc
 #
 #. ${HOME}/.bashrc
 #
