@@ -216,6 +216,22 @@ After executing the above command you need to reinitialize your Bash instance.
 Shortcut for this command is:
 
     drush sa
+    
+### Update database
+    
+    drush -y updatedb
+    
+Shortcut for this command is:
+
+    drush -y updb
+    
+### Revert features
+
+    drush -y features-revert-all
+
+Shortcut for this command is:
+
+    drush -y fra
 
 ### Copy settings file from a remote Drupal host
 
