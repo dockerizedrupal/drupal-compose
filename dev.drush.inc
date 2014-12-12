@@ -240,7 +240,21 @@ COMMAND;
 
   drush_shell_exec($command);
 
-  return !drush_shell_exec_output() ? TRUE : FALSE;
+  if (drush_shell_exec_output()) {
+    return FALSE;
+  }
+
+  $command = <<<COMMAND
+sudo socat TCP-LISTEN:$port,fork TCP:$ip_address:$port
+COMMAND;
+
+  drush_shell_exec($command);
+
+  if (drush_shell_exec_output()) {
+    return FALSE;
+  }
+
+  return TRUE;
 }
 
 function dev_fig_template() {
