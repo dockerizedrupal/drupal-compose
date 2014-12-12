@@ -43,10 +43,8 @@ sudo apt-get install -y php5-ldap
 sudo apt-get install -y php5-memcached
 
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename composer
-sed -i '1i export PATH="${HOME}/.composer/vendor/bin:${PATH}"' ${HOME}/.bashrc
-
+echo 'export PATH="${HOME}/.composer/vendor/bin:${PATH}"' >> ${HOME}/.bashrc
 . ${HOME}/.bashrc
-
 composer global require drush/drush:6.*
 
 curl -sL https://deb.nodesource.com/setup | sudo bash -
@@ -66,6 +64,20 @@ sudo apt-get install -y socat
 sudo wget https://raw.githubusercontent.com/drush-ops/drush/master/drush.complete.sh -O /etc/bash_completion.d/drush.complete.sh
 
 git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${HOME}/.drush/dev"
+
+sudo groupadd docker
+sudo usermod -a -G docker $(whoami)
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/etc/sudoers.d/docker -O /etc/sudoers.d/docker
+sudo chown root.root /etc/sudoers.d/docker
+sudo chmod 440 /etc/sudoers.d/docker
+sudo groupadd fig
+sudo usermod -a -G fig $(whoami)
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/etc/sudoers.d/fig -O /etc/sudoers.d/fig
+sudo chown root.root /etc/sudoers.d/fig
+sudo chmod 440 /etc/sudoers.d/fig
+sudo service sudo restart
+echo 'export PATH="${HOME}/.drush/dev/bin:${PATH}"' >> ${HOME}/.bashrc
+. ${HOME}/.bashrc
 
 sudo apt-get install -y pv
 drush dl drush_sql_sync_pipe --destination="${HOME}/.drush"
