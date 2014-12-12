@@ -58,12 +58,23 @@ function dev_drush_command() {
     'callback' => 'drush_restore_volume',
   );
 
+  $items['fix-permissions'] = array(
+    'description' => 'Fix permissions',
+    'allow-additional-options' => TRUE,
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
+    'aliases' => array('fp'),
+    'callback' => 'drush_fix_permissions',
+  );
+
   return $items;
 }
 
-function endsWith($haystack,$needle,$case=true) {
-  if($case){return (strcmp(substr($haystack, strlen($haystack) - strlen($needle)),$needle)===0);}
-  return (strcasecmp(substr($haystack, strlen($haystack) - strlen($needle)),$needle)===0);
+function ends_with($haystack, $needle, $case = true) {
+  if ($case) {
+    return strcmp(substr($haystack, strlen($haystack) - strlen($needle)), $needle) === 0;
+  }
+
+  return strcasecmp(substr($haystack, strlen($haystack) - strlen($needle)), $needle) === 0;
 }
 
 function drush_ftp_export_backup($exported_files_path, $host, $username, $password, $backup_path, $base_path = '') {
@@ -111,7 +122,7 @@ function drush_ftp_export_backup($exported_files_path, $host, $username, $passwo
       continue;
     }
 
-    if (endsWith($relative_name, '/.', FALSE) || endsWith($relative_name, '/..', FALSE)) {
+    if (ends_with($relative_name, '/.', FALSE) || ends_with($relative_name, '/..', FALSE)) {
       continue;
     }
 
@@ -237,7 +248,43 @@ COMMAND;
 
   drush_shell_exec($command);
 
-  return !drush_shell_exec_output() ? TRUE : FALSE;
+  if (drush_shell_exec_output()) {
+    return FALSE;
+  }
+
+  $command = <<<COMMAND
+sudo socat TCP-LISTEN:$port,fork TCP:$ip_address:$port
+COMMAND;
+
+  drush_shell_exec($command);
+
+  if (drush_shell_exec_output()) {
+    return FALSE;
+  }
+
+  return TRUE;
+}
+
+function drush_fix_permissions() {
+  $destination = '@self';
+
+  $additional_options = array();
+
+  $destination_settings = drush_sitealias_evaluate_path($destination, $additional_options, TRUE);
+
+  if (!isset($destination_settings['evaluated-path'])) {
+    return drush_set_error('DRUSH_BAD_PATH', dt('Could not evaluate destination path !path.', array(
+      '!path' => $destination,
+    )));
+  }
+
+  $destination_path = $destination_settings['evaluated-path'];
+
+  $command = <<<COMMAND
+sudo chown -R $(whoami).www-data $destination_path
+COMMAND;
+
+  drush_shell_exec($command);
 }
 
 function dev_fig_template() {
