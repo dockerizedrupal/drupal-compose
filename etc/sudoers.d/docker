@@ -1,0 +1,1 @@
+%docker ALL=(root) NOPASSWD: /usr/bin/docker
