@@ -12,7 +12,7 @@ function dev_drush_command() {
   $items = array();
 
   $items['ftp-export-backup'] = array(
-    'description' => 'Bind mysqld container TCP/IP socket connection to local Unix domain socket.',
+    'description' => 'Back up files from FTP server.',
     'allow-additional-options' => TRUE,
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
     'aliases' => array('feb'),
@@ -35,7 +35,7 @@ function dev_drush_command() {
   );
 
   $items['alias-template'] = array(
-    'description' => 'Fetch preconfigured Fig configuration file for Drupal.',
+    'description' => 'Fetch preconfigured Drush alias configuration file for Drupal.',
     'allow-additional-options' => TRUE,
     'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
     'aliases' => array('at'),
