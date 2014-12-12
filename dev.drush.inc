@@ -281,7 +281,19 @@ function drush_fix_permissions() {
   $destination_path = $destination_settings['evaluated-path'];
 
   $command = <<<COMMAND
-sudo chown -R $(whoami).www-data $destination_path
+sudo chown -R $(whoami).www-data "{$destination_path}"
+COMMAND;
+
+  drush_shell_exec($command);
+
+  $command = <<<COMMAND
+sudo chown -R www-data.www-data "${destination_path}sites/default/files"
+COMMAND;
+
+  drush_shell_exec($command);
+
+  $command = <<<COMMAND
+sudo chmod -R 777 "${destination_path}sites/default/files"
 COMMAND;
 
   drush_shell_exec($command);
