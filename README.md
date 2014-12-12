@@ -76,7 +76,7 @@ nssenter allows you to enter Docker containers with ease.
 
     sudo pip install -U fig
     
-#### Add `fig` command to 
+#### #### Execute `fig` command without
 
 ### PHP for Drush
 
