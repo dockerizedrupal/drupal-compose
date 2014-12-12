@@ -76,7 +76,12 @@ nssenter allows you to enter Docker containers with ease.
 
     sudo pip install -U fig
     
-#### Add `fig` command to 
+#### Execute `fig` command without `sudo`
+
+    sudo groupadd fig
+    sudo usermod -a -G fig $(whoami)
+    
+    sudo wget https://raw.githubusercontent.com/drush-ops/drush/master/drush.complete.sh -O /etc/bash_completion.d/drush.complete.sh
 
 ### PHP for Drush
 
