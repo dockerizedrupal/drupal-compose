@@ -58,6 +58,14 @@ function dev_drush_command() {
     'callback' => 'drush_restore_volume',
   );
 
+  $items['fix-permissions'] = array(
+    'description' => 'Fix permissions',
+    'allow-additional-options' => TRUE,
+    'bootstrap' => DRUSH_BOOTSTRAP_DRUSH,
+    'aliases' => array('fp'),
+    'callback' => 'drush_fix_permissions',
+  );
+
   return $items;
 }
 
@@ -255,6 +263,28 @@ COMMAND;
   }
 
   return TRUE;
+}
+
+function drush_fix_permissions() {
+  $destination = '@self';
+
+  $additional_options = array();
+
+  $destination_settings = drush_sitealias_evaluate_path($destination, $additional_options, TRUE);
+
+  if (!isset($destination_settings['evaluated-path'])) {
+    return drush_set_error('DRUSH_BAD_PATH', dt('Could not evaluate destination path !path.', array(
+      '!path' => $destination,
+    )));
+  }
+
+  $destination_path = $destination_settings['evaluated-path'];
+
+  $command = <<<COMMAND
+sudo chown -R $(whoami).www-data $destination_path
+COMMAND;
+
+  drush_shell_exec($command);
 }
 
 function dev_fig_template() {
