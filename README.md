@@ -28,10 +28,12 @@ Currently there is a simple shell script `setup.sh` that executes all the comman
 
 ### Set up with Puppet
 
-
+    ...
 
 ### Set up with Bash script
 
+    ...
+    
 ### OpenSSH
 
 #### Installing OpenSSH
@@ -55,6 +57,21 @@ Note: The command will create the keys automatically without the human interacti
 
     sudo apt-get upgrade lxc-docker
 
+#### Execute `docker` command without `sudo`
+
+    sudo groupadd docker
+    sudo usermod -a -G docker $(whoami)
+    
+    sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/etc/sudoers.d/docker -O /etc/sudoers.d/docker
+    
+    sudo chown root.root /etc/sudoers.d/docker
+    sudo chmod 440 /etc/sudoers.d/docker
+    
+    sudo service sudo restart
+    
+    echo 'export PATH="${HOME}/.drush/dev/bin:${PATH}"' >> ${HOME}/.bashrc
+    source ${HOME}/.bashrc
+    
 ### nsenter
 
 nssenter allows you to enter Docker containers with ease.
@@ -81,7 +98,15 @@ nssenter allows you to enter Docker containers with ease.
     sudo groupadd fig
     sudo usermod -a -G fig $(whoami)
     
-    sudo wget https://raw.githubusercontent.com/drush-ops/drush/master/drush.complete.sh -O /etc/bash_completion.d/drush.complete.sh
+    sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/etc/sudoers.d/fig -O /etc/sudoers.d/fig
+    
+    sudo chown root.root /etc/sudoers.d/fig
+    sudo chmod 440 /etc/sudoers.d/fig
+    
+    sudo service sudo restart
+    
+    echo 'export PATH="${HOME}/.drush/dev/bin:${PATH}"' >> ${HOME}/.bashrc
+    source ${HOME}/.bashrc
 
 ### PHP for Drush
 
@@ -106,8 +131,8 @@ To do that, execute the following command:
 
 Now we are ready to install Drush.
 
-    sed -i '1i export PATH="$HOME/.composer/vendor/bin:$PATH"' $HOME/.bashrc
-    source $HOME/.bashrc
+    echo 'export PATH="${HOME}/.composer/vendor/bin:${PATH}"' >> ${HOME}/.bashrc
+    source ${HOME}/.bashrc
     composer global require drush/drush:6.*
 
 #### Updating Drush
@@ -158,6 +183,12 @@ Now we are ready to install Drush.
 #### Installing tmux
 
     sudo apt-get install -y tmux
+
+### socat
+
+#### Installing socat
+
+    sudo apt-get install -y socat
 
 ## Working with Docker
 
