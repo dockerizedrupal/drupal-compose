@@ -330,6 +330,10 @@ Import the database dump into MySQL server.
 
     drush sql-cli < ~/sql_dump.sql
 
+Import gzipped database dump into MySQL server.
+
+    gunzip sql_dump.sql.gz | drush sql-cli
+
 ### Change Drupal user password
 
     drush upwd admin --password="admin"
