@@ -196,6 +196,13 @@ Now we are ready to install Drush.
 
 ## Working with Drush
 
+### Drush as a Docker container
+
+There are two reason why eventually we have to add Drush into Docker container:
+
+ * The PHP CLI version and configuration (Mailcatcher, MySQL connection) should be the same as for the Drupal
+ * Clean host
+
 ### Drush Bash completion
 
     sudo wget https://raw.githubusercontent.com/drush-ops/drush/master/drush.complete.sh -O /etc/bash_completion.d/drush.complete.sh
