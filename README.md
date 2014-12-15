@@ -372,11 +372,6 @@ Drush command that backs up files over FTP from local files. Local files may be 
  * Logging
  * Backing up data volume containers
 
-## Backlog
-
- * drush fig-init
- * drush mysqld [container_id]
-
 ## License
 
 **MIT**
