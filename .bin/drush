@@ -2,4 +2,4 @@
 
 CONTAINER_ID="php"
 
-sudo docker exec -i -t "${CONTAINER_ID}" drush "${@}"
+sudo docker exec -i -t "${CONTAINER_ID}" /bin/su - root -c "drush -r /httpd/data ${@}"
