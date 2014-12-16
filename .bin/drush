@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+CONTAINER_ID="php"
+
+sudo docker exec -i -t "${CONTAINER_ID}" drush "${@}"
