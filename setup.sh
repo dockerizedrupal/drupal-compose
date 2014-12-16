@@ -19,7 +19,6 @@ sudo npm install -g grunt-cli
 
 sudo apt-get install -y git
 sudo apt-get install -y subversion
-sudo apt-get install -y mysql-client
 sudo apt-get install -y tmux
 sudo apt-get install -y socat
 
@@ -41,7 +40,9 @@ sudo service sudo restart
 
 mkdir -p "${HOME}/.bin"
 
-
+wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/.bin/docker -O "${HOME}/.bin/docker"
+wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/.bin/fig -O "${HOME}/.bin/fig"
+wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/.bin/drush -O "${HOME}/.bin/drush"
 
 echo 'export PATH="${HOME}/.bin:${PATH}"' >> ${HOME}/.bashrc
 
