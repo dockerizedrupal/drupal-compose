@@ -22,8 +22,6 @@ sudo apt-get install -y subversion
 sudo apt-get install -y tmux
 sudo apt-get install -y socat
 
-git clone http://git.simpledrupalcloud.com/simpledrupalcloud/dev.git "${HOME}/.drush/dev"
-
 sudo groupadd docker
 sudo usermod -a -G docker $(whoami)
 sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/etc/sudoers.d/docker -O /etc/sudoers.d/docker
@@ -38,12 +36,22 @@ sudo chmod 440 /etc/sudoers.d/fig
 
 sudo service sudo restart
 
-mkdir -p "${HOME}/.bin"
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/docker -O "/opt/docker"
 
-wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/.bin/docker -O "${HOME}/.bin/docker"
-wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/.bin/fig -O "${HOME}/.bin/fig"
-wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/.bin/drush -O "${HOME}/.bin/drush"
+sudo chmod +x "/opt/docker"
 
-echo 'export PATH="${HOME}/.bin:${PATH}"' >> ${HOME}/.bashrc
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/fig -O "/opt/fig"
+
+sudo chmod +x "/opt/fig"
+
+echo 'export PATH="/opt:${PATH}"' >> ${HOME}/.bashrc
 
 . ${HOME}/.bashrc
+
+SERVER_NAME="localhost"
+
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-vhost/raw/master/fig.yml -O /opt/vhost.yml
+
+sudo sed -i "s/localhost/${SERVER_NAME}/g" /opt/vhost.yml
+
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-vhost/raw/master/vhost.conf -O /etc/init/vhost.conf
