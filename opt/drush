@@ -1,5 +1,25 @@
 #!/usr/bin/env bash
 
-CONTAINER_ID="php"
+CONTAINER="$(fig ps php 2> /dev/null | grep _php_ | awk '{ print $1 }')"
 
-sudo docker exec -i -t "${CONTAINER_ID}" /bin/su - root -c "drush -r /httpd/data ${@}"
+if [ -z "${CONTAINER}" ]; then
+  echo "No such service: php"
+
+  exit
+fi
+
+IS_CONTAINER_RUNNING="$(docker exec ${CONTAINER} date 2> /dev/null)"
+
+if [ -z "${IS_CONTAINER_RUNNING}" ]; then
+  echo "Service not running: php"
+
+  exit
+fi
+
+ARGS="${@}"
+
+if [ -t 0 ]; then
+    sudo docker exec -i -t "${CONTAINER}" /bin/bash -lc "drush -r /httpd/data ${ARGS}"
+else
+    sudo docker exec -i "${CONTAINER}" /bin/bash -lc "drush -r /httpd/data ${ARGS}"
+fi

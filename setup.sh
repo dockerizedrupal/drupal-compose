@@ -44,6 +44,10 @@ sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/o
 
 sudo chmod +x "/opt/fig"
 
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/drush -O "/opt/drush"
+
+sudo chmod +x "/opt/drush"
+
 echo 'export PATH="/opt:${PATH}"' >> ${HOME}/.bashrc
 
 . ${HOME}/.bashrc
