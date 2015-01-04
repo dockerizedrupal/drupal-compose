@@ -48,9 +48,15 @@ sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/o
 
 sudo chmod +x /opt/drush
 
+echo 'export PATH="/opt:${PATH}"' >> ${HOME}/.bashrc
+
 sudo wget https://raw.githubusercontent.com/drush-ops/drush/master/drush.complete.sh -O /etc/bash_completion.d/drush.complete.sh
 
-echo 'export PATH="/opt:${PATH}"' >> ${HOME}/.bashrc
+cat >> ${HOME}/.bashrc <<SCRIPT
+if [ -f /etc/bash_completion.d/drush.complete.sh ]; then
+  . /etc/bash_completion.d/drush.complete.sh
+fi
+SCRIPT
 
 . ${HOME}/.bashrc
 
