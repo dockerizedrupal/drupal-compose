@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+SERVER_NAME="localhost"
+
 sudo apt-get install -y openssh-server
 cat /dev/zero | ssh-keygen -b 4096 -t rsa -N ""
 
@@ -37,15 +39,12 @@ sudo chmod 440 /etc/sudoers.d/fig
 sudo service sudo restart
 
 sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/docker.sh -O /opt/docker
-
 sudo chmod +x /opt/docker
 
 sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/fig.sh -O /opt/fig
-
 sudo chmod +x /opt/fig
 
 sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/drush.sh -O /opt/drush
-
 sudo chmod +x /opt/drush
 
 echo 'export PATH="/opt:${PATH}"' >> ${HOME}/.bashrc
@@ -60,10 +59,9 @@ SCRIPT
 
 . ${HOME}/.bashrc
 
-SERVER_NAME="localhost"
-
 sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-vhost/raw/master/fig.yml -O /opt/vhost.yml
-
 sudo sed -i "s/localhost/${SERVER_NAME}/g" /opt/vhost.yml
-
 sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-vhost/raw/master/vhost.conf -O /etc/init/vhost.conf
+
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-logs/raw/master/fig.yml -O /opt/logs.yml
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-logs/raw/master/logs.conf -O /etc/init/logs.conf
