@@ -70,11 +70,26 @@ Clear Drupal cache tables before creating the database dump.
 
 Export Drupal database into a file.
 
-    drush sql-dump > ~/sql_dump.sql
+    drush sql-dump > ~/dump.sql
+    
+Export gzipped Drupal database into a file.
+
+    drush sql-dump --gzip > ~/dump.sql.gz
 
 It's always a good practise to prepend a creation timestamp to your dump filename.
 
-    drush sql-dump > ~/$(date "+%Y%m%d%H%M%S")_sql_dump.sql
+    drush sql-dump > ~/$(date "+%Y%m%d%H%M%S")_dump.sql
+
+If you have multiple database connections in settings.php you have to provide the database connection key for the sql-dump command.
+
+    drush sql-dump --database=drupal > ~/dump.sql
+
+### Create empty Drupal database
+
+    drush -y sql-create
+    
+
+    drush -y sql-create --database=default
 
 ### Restoring a Drupal database from a backup
 
@@ -84,11 +99,15 @@ Drop all the tables in your database before importing the dump.
 
 Import the database dump into MySQL server.
 
-    drush sql-cli < ~/sql_dump.sql
+    drush sql-cli < ~/dump.sql
 
 Import gzipped database dump into MySQL server.
 
-    gunzip sql_dump.sql.gz | drush sql-cli
+    gunzip dump.sql.gz | drush sql-cli
+    
+If you have multiple database connections in settings.php you have to provide the database connection key for the sql-cli command.
+
+    drush sql-dump --database=default > ~/dump.sql
 
 ### Change Drupal user password
 
