@@ -36,17 +36,17 @@ sudo chmod 440 /etc/sudoers.d/fig
 
 sudo service sudo restart
 
-sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/docker.sh -O "/opt/docker"
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/docker.sh -O /opt/docker
 
-sudo chmod +x "/opt/docker"
+sudo chmod +x /opt/docker
 
-sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/fig.sh -O "/opt/fig"
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/fig.sh -O /opt/fig
 
-sudo chmod +x "/opt/fig"
+sudo chmod +x /opt/fig
 
-sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/drush.sh -O "/opt/drush"
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/drush.sh -O /opt/drush
 
-sudo chmod +x "/opt/drush"
+sudo chmod +x /opt/drush
 
 sudo wget https://raw.githubusercontent.com/drush-ops/drush/master/drush.complete.sh -O /etc/bash_completion.d/drush.complete.sh
 
