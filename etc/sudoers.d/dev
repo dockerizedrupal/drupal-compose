@@ -1,0 +1,3 @@
+%dev ALL=(root) NOPASSWD: /usr/bin/docker
+%dev ALL=(root) NOPASSWD: /usr/local/bin/fig
+%dev ALL=(root) NOPASSWD: /usr/local/bin/drush
