@@ -24,23 +24,12 @@ sudo apt-get install -y subversion
 sudo apt-get install -y tmux
 sudo apt-get install -y socat
 
-sudo groupadd docker
-sudo usermod -a -G docker $(whoami)
-sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/etc/sudoers.d/docker -O /etc/sudoers.d/docker
-sudo chown root.root /etc/sudoers.d/docker
-sudo chmod 440 /etc/sudoers.d/docker
+sudo groupadd dev
+sudo usermod -a -G dev $(whoami)
 
-sudo groupadd fig
-sudo usermod -a -G fig $(whoami)
-sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/etc/sudoers.d/fig -O /etc/sudoers.d/fig
-sudo chown root.root /etc/sudoers.d/fig
-sudo chmod 440 /etc/sudoers.d/fig
-
-sudo groupadd drush
-sudo usermod -a -G drush $(whoami)
-sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/etc/sudoers.d/drush -O /etc/sudoers.d/drush
-sudo chown root.root /etc/sudoers.d/drush
-sudo chmod 440 /etc/sudoers.d/drush
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/etc/sudoers.d/dev -O /etc/sudoers.d/dev
+sudo chown root.root /etc/sudoers.d/dev
+sudo chmod 440 /etc/sudoers.d/dev
 
 sudo service sudo restart
 
@@ -49,6 +38,9 @@ sudo chmod +x /opt/docker
 
 sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/fig.sh -O /opt/fig
 sudo chmod +x /opt/fig
+
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/usr/local/bin/drush.sh -O /usr/local/bin/drush
+sudo chmod +x /usr/local/bin/drush
 
 sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/drush.sh -O /opt/drush
 sudo chmod +x /opt/drush
