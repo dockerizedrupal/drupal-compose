@@ -36,6 +36,12 @@ sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/e
 sudo chown root.root /etc/sudoers.d/fig
 sudo chmod 440 /etc/sudoers.d/fig
 
+sudo groupadd drush
+sudo usermod -a -G drush $(whoami)
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/etc/sudoers.d/drush -O /etc/sudoers.d/drush
+sudo chown root.root /etc/sudoers.d/drush
+sudo chmod 440 /etc/sudoers.d/drush
+
 sudo service sudo restart
 
 sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/docker.sh -O /opt/docker

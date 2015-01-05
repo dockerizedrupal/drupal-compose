@@ -1,0 +1,1 @@
+%drush ALL=(root) NOPASSWD: /opt/drush

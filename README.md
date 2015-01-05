@@ -4,6 +4,20 @@ A combination of multiple development tools and a workflows for developing [Drup
 
 There is a plan to try to get this workflow to work on other platforms (e.g., Microsoft Windows, OS X and other GNU/Linux distributions) in the future as well.
 
+## Working with Fig
+
+### Start Docker containers
+
+    fig up
+    
+By default `fig up` will stay in foreground, which will prevent you from using the same shell instance for other tasks. Add `-d` option to make it run in the background.
+
+    fig up -d
+
+### List all running containers
+
+    fig ps
+
 ## Working with Drush
 
 ### List all the Drupal site aliases
