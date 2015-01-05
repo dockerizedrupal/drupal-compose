@@ -69,9 +69,9 @@ if [ -z "${IS_CONTAINER_RUNNING}" ]; then
 fi
 
 if [ -t 0 ]; then
-  docker exec -i -t "${CONTAINER}" /bin/bash -lc "drush -r ${DRUPAL_ROOT_DIRECTORY} ${ARGS}"
+  sudo docker exec -i -t "${CONTAINER}" /bin/bash -lc "drush -r ${DRUPAL_ROOT_DIRECTORY} ${ARGS}"
 else
-  docker exec -i "${CONTAINER}" /bin/bash -lc "drush -r ${DRUPAL_ROOT_DIRECTORY} ${ARGS}"
+  sudo docker exec -i "${CONTAINER}" /bin/bash -lc "drush -r ${DRUPAL_ROOT_DIRECTORY} ${ARGS}"
 fi
 
-chown -R $(whoami).www-data "${BASE_PATH}"
+sudo chown -R $(whoami).www-data "${BASE_PATH}"
