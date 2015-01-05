@@ -74,6 +74,4 @@ else
   sudo docker exec -i "${CONTAINER}" /bin/bash -lc "drush -r ${DRUPAL_ROOT_DIRECTORY} ${ARGS}"
 fi
 
-if [ -n "${BASE_PATH}" ]; then
-  sudo chown -R $(whoami).www-data "${BASE_PATH}"
-fi
+sudo chown -R $(whoami).www-data "${BASE_PATH}"
