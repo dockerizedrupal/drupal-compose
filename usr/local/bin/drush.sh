@@ -415,7 +415,7 @@ if [ "${RELATIVE_PATH:0:1}" == '/' ]; then
   RELATIVE_PATH="$(echo "${RELATIVE_PATH}" | cut -c 2-)"
 fi
 
-DRUPAL_WORKING_DIRECTORY="${DRUPAL_ROOT_DIRECTORY}/${DRUPAL_ROOT_DIRECTORY}"
+DRUPAL_WORKING_DIRECTORY="${DRUPAL_ROOT_DIRECTORY}/${RELATIVE_PATH}"
 
 if [ -t 0 ]; then
   sudo docker exec -i -t "${CONTAINER}" /bin/bash -lc "drush -r ${DRUPAL_WORKING_DIRECTORY} ${ARGS}"
