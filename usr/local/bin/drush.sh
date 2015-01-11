@@ -6,6 +6,18 @@ DRUPAL_ROOT_DIRECTORY="/httpd/data"
 
 ARGS="${@}"
 
+php_container_exists() {
+  local DRUPAL_ROOT="${1}"
+
+  echo "$(fig -f ${DRUPAL_ROOT}/fig.yml ps php 2> /dev/null | grep _php_ | awk '{ print $1 }')"
+}
+
+php_container_running() {
+  local CONTAINER="${1}"
+
+  echo "$(docker exec ${CONTAINER} date 2> /dev/null)"
+}
+
 fig_file_path() {
   local FIG_FILE_PATH=""
 
@@ -369,7 +381,7 @@ if [ -z "${DRUPAL_ROOT}" ]; then
   fi
 fi
 
-CONTAINER="$(fig -f ${DRUPAL_ROOT}/fig.yml ps php 2> /dev/null | grep _php_ | awk '{ print $1 }')"
+CONTAINER="$(php_container_exists ${DRUPAL_ROOT})"
 
 if [ -z "${CONTAINER}" ]; then
   read -p "PHP container could not be found. Would you like to start the containers? [Y/n]: " ANSWER
@@ -380,10 +392,8 @@ if [ -z "${CONTAINER}" ]; then
 
   sudo fig -f "${DRUPAL_ROOT}/fig.yml" up -d
 
-  CONTAINER="$(fig -f ${DRUPAL_ROOT}/fig.yml ps php 2> /dev/null | grep _php_ | awk '{ print $1 }')"
-elif [ -z "$(docker exec ${CONTAINER} date 2> /dev/null)" ]; then
-  echo "${CONTAINER}"
-
+  CONTAINER="$(php_container_exists ${DRUPAL_ROOT})"
+elif [ -z "$(php_container_running ${CONTAINER})" ]; then
   read -p "PHP container is not running. Would you like to start the containers? [Y/n]: " ANSWER
 
   if [ "${ANSWER}" = "n" ]; then
