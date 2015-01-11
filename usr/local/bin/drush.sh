@@ -378,7 +378,7 @@ if [ -z "${CONTAINER}" ]; then
     exit 1
   fi
 
-  sudo fig up -d
+  sudo fig -f "${DRUPAL_ROOT}/fig.yml" up -d
 else
   IS_CONTAINER_RUNNING="$(docker exec ${CONTAINER} date 2> /dev/null)"
 
@@ -389,7 +389,7 @@ else
       exit 1
     fi
 
-    sudo fig up -d
+    sudo fig -f "${DRUPAL_ROOT}/fig.yml" up -d
   fi
 fi
 
