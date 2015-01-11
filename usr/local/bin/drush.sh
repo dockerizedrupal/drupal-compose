@@ -396,7 +396,11 @@ if [ -z "${CONTAINER}" ]; then
     exit
   fi
 
-  sudo fig -f "${DRUPAL_ROOT}/fig.yml" up -d
+  cd "${DRUPAL_ROOT}"
+
+  sudo fig up -d
+
+  cd -
 
   CONTAINER="$(php_container_exists ${DRUPAL_ROOT})"
 elif [ -z "$(php_container_running ${CONTAINER})" ]; then
@@ -406,7 +410,11 @@ elif [ -z "$(php_container_running ${CONTAINER})" ]; then
     exit
   fi
 
-  sudo fig -f "${DRUPAL_ROOT}/fig.yml" up -d
+  cd "${DRUPAL_ROOT}"
+
+  sudo fig up -d
+
+  cd -
 fi
 
 RELATIVE_PATH="${WORKING_DIR/${DRUPAL_ROOT}}"
