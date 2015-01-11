@@ -372,17 +372,25 @@ fi
 CONTAINER="$(fig -f ${DRUPAL_ROOT}/fig.yml ps php 2> /dev/null | grep _php_ | awk '{ print $1 }')"
 
 if [ -z "${CONTAINER}" ]; then
-  echo "PHP container could not be found. Start PHP container by executing 'fig up -d'"
+  read -p "PHP container could not be found. Would you like to start the containers now [Y/n]: " ANSWER
 
-  exit 1
-fi
+  if [ "${ANSWER}" = "n" ]; then
+    exit 1
+  fi
 
-IS_CONTAINER_RUNNING="$(docker exec ${CONTAINER} date 2> /dev/null)"
+  sudo fig up -d
+else
+  IS_CONTAINER_RUNNING="$(docker exec ${CONTAINER} date 2> /dev/null)"
 
-if [ -z "${IS_CONTAINER_RUNNING}" ]; then
-  echo "PHP container not running. Start PHP container by executing 'fig up -d'"
+  if [ -z "${IS_CONTAINER_RUNNING}" ]; then
+    read -p "PHP container is not running. Would you like to start the containers now [Y/n]: " ANSWER
 
-  exit 1
+    if [ "${ANSWER}" = "n" ]; then
+      exit 1
+    fi
+
+    sudo fig up -d
+  fi
 fi
 
 RELATIVE_PATH="${WORKING_DIR/${DRUPAL_ROOT}}"
