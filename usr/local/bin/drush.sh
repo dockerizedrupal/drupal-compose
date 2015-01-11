@@ -372,7 +372,7 @@ fi
 CONTAINER="$(fig -f ${DRUPAL_ROOT}/fig.yml ps php 2> /dev/null | grep _php_ | awk '{ print $1 }')"
 
 if [ -z "${CONTAINER}" ]; then
-  read -p "PHP container could not be found. Would you like to start the containers now [Y/n]: " ANSWER
+  read -p "PHP container could not be found. Would you like to start the containers? [Y/n]: " ANSWER
 
   if [ "${ANSWER}" = "n" ]; then
     exit 1
@@ -383,7 +383,7 @@ else
   IS_CONTAINER_RUNNING="$(docker exec ${CONTAINER} date 2> /dev/null)"
 
   if [ -z "${IS_CONTAINER_RUNNING}" ]; then
-    read -p "PHP container is not running. Would you like to start the containers now [Y/n]: " ANSWER
+    read -p "PHP container is not running. Would you like to start the containers? [Y/n]: " ANSWER
 
     if [ "${ANSWER}" = "n" ]; then
       exit 1
