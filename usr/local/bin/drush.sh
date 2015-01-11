@@ -127,10 +127,12 @@ drupal_8_path() {
   local DRUPAL_8_PATH=""
 
   while [ "$(pwd)" != '/' ]; do
-    if [ "$(ls core/CHANGELOG.txt 2> /dev/null)" = "core/CHANGELOG.txt" ]; then
-      DRUPAL_8_PATH="$(pwd)"
+    if [ "$(ls index.php 2> /dev/null)" = "index.php" ]; then
+      if [ -n "$(cat index.php | grep "^\$autoloader" 2> /dev/null)" ]; then
+        DRUPAL_8_PATH="$(pwd)"
 
-      break
+        break
+      fi
     fi
 
     cd ..
@@ -232,10 +234,12 @@ drupal_7_path() {
   local DRUPAL_7_PATH=""
 
   while [ "$(pwd)" != '/' ]; do
-    if [ "$(ls CHANGELOG.txt 2> /dev/null)" = "CHANGELOG.txt" ]; then
-      DRUPAL_7_PATH="$(pwd)"
+    if [ "$(ls index.php 2> /dev/null)" = "index.php" ]; then
+      if [ -n "$(cat index.php | grep "^menu_execute_active_handler" 2> /dev/null)" ]; then
+        DRUPAL_7_PATH="$(pwd)"
 
-      break
+        break
+      fi
     fi
 
     cd ..
@@ -338,9 +342,11 @@ drupal_6_path() {
 
   while [ "$(pwd)" != '/' ]; do
     if [ "$(ls CHANGELOG.txt 2> /dev/null)" = "CHANGELOG.txt" ]; then
-      DRUPAL_6_PATH="$(pwd)"
+      if [ -n "$(cat index.php | grep "^drupal_page_footer" 2> /dev/null)" ]; then
+        DRUPAL_6_PATH="$(pwd)"
 
-      break
+        break
+      fi
     fi
 
     cd ..
@@ -387,7 +393,7 @@ if [ -z "${CONTAINER}" ]; then
   read -p "PHP container could not be found. Would you like to start the containers? [Y/n]: " ANSWER
 
   if [ "${ANSWER}" = "n" ]; then
-    exit 1
+    exit
   fi
 
   sudo fig -f "${DRUPAL_ROOT}/fig.yml" up -d
@@ -397,7 +403,7 @@ elif [ -z "$(php_container_running ${CONTAINER})" ]; then
   read -p "PHP container is not running. Would you like to start the containers? [Y/n]: " ANSWER
 
   if [ "${ANSWER}" = "n" ]; then
-    exit 1
+    exit
   fi
 
   sudo fig -f "${DRUPAL_ROOT}/fig.yml" up -d
