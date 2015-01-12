@@ -438,3 +438,4 @@ else
 fi
 
 sudo chown -R "${SUDO_USER}".www-data "${DRUPAL_ROOT}"
+sudo chmod -R u+w "${DRUPAL_ROOT}"
