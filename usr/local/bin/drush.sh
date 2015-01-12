@@ -364,6 +364,8 @@ if [ -z "${DRUPAL_ROOT}" ]; then
     read -p "Enter project name: " PROJECT_NAME
 
     echo -n "$(drupal_8_fig_template ${PROJECT_NAME})" > "${DRUPAL_ROOT}/fig.yml"
+
+    sudo chown -R "${SUDO_USER}".www-data "${DRUPAL_ROOT}/fig.yml"
   else
     DRUPAL_ROOT="$(drupal_7_path)"
 
@@ -371,6 +373,8 @@ if [ -z "${DRUPAL_ROOT}" ]; then
       read -p "Enter project name: " PROJECT_NAME
 
       echo -n "$(drupal_7_fig_template ${PROJECT_NAME})" > "${DRUPAL_ROOT}/fig.yml"
+
+      sudo chown -R "${SUDO_USER}".www-data "${DRUPAL_ROOT}/fig.yml"
     else
       DRUPAL_ROOT="$(drupal_6_path)"
 
@@ -378,6 +382,8 @@ if [ -z "${DRUPAL_ROOT}" ]; then
         read -p "Enter project name: " PROJECT_NAME
 
         echo -n "$(drupal_6_fig_template ${PROJECT_NAME})" > "${DRUPAL_ROOT}/fig.yml"
+
+        sudo chown -R "${SUDO_USER}".www-data "${DRUPAL_ROOT}/fig.yml"
       else
         echo "Drupal installation path could not be found."
 
@@ -426,9 +432,9 @@ fi
 DRUPAL_WORKING_DIRECTORY="${DRUPAL_ROOT_DIRECTORY}/${RELATIVE_PATH}"
 
 if [ -t 0 ]; then
-  sudo docker exec -i -t "${CONTAINER}" /bin/bash -lc "drush -r ${DRUPAL_WORKING_DIRECTORY} ${ARGS}"
+  sudo docker exec -i -t "${CONTAINER}" /bin/bash -lc "cd ${DRUPAL_WORKING_DIRECTORY} && drush ${ARGS}"
 else
-  sudo docker exec -i "${CONTAINER}" /bin/bash -lc "drush -r ${DRUPAL_WORKING_DIRECTORY} ${ARGS}"
+  sudo docker exec -i "${CONTAINER}" /bin/bash -lc "cd ${DRUPAL_WORKING_DIRECTORY} && drush ${ARGS}"
 fi
 
 sudo chown -R "${SUDO_USER}".www-data "${DRUPAL_ROOT}"
