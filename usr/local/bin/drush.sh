@@ -423,10 +423,18 @@ elif [ -z "$(php_container_running ${CONTAINER})" ]; then
   cd -
 fi
 
+RELATIVE_PATH="${WORKING_DIR/${DRUPAL_ROOT}}"
+
+if [ "${RELATIVE_PATH:0:1}" == '/' ]; then
+  RELATIVE_PATH="$(echo "${RELATIVE_PATH}" | cut -c 2-)"
+fi
+
+DRUPAL_WORKING_DIRECTORY="${DRUPAL_ROOT_DIRECTORY}/${RELATIVE_PATH}"
+
 if [ -t 0 ]; then
-  sudo docker exec -i -t "${CONTAINER}" /bin/bash -lc "drush -r ${DRUPAL_ROOT_DIRECTORY} ${ARGS}"
+  sudo docker exec -i -t "${CONTAINER}" /bin/bash -lc "cd ${DRUPAL_WORKING_DIRECTORY} && drush ${ARGS}"
 else
-  sudo docker exec -i "${CONTAINER}" /bin/bash -lc "drush -r ${DRUPAL_ROOT_DIRECTORY} ${ARGS}"
+  sudo docker exec -i "${CONTAINER}" /bin/bash -lc "cd ${DRUPAL_WORKING_DIRECTORY} && drush ${ARGS}"
 fi
 
 sudo chown -R "${SUDO_USER}".www-data "${DRUPAL_ROOT}"
