@@ -406,7 +406,7 @@ if [ -z "${CONTAINER}" ]; then
 
   sudo fig up -d
 
-  cd -
+  cd "${WORKING_DIR}"
 
   CONTAINER="$(php_container_exists ${DRUPAL_ROOT})"
 elif [ -z "$(php_container_running ${CONTAINER})" ]; then
@@ -420,7 +420,7 @@ elif [ -z "$(php_container_running ${CONTAINER})" ]; then
 
   sudo fig up -d
 
-  cd -
+  cd "${WORKING_DIR}"
 fi
 
 RELATIVE_PATH="${WORKING_DIR/${DRUPAL_ROOT}}"
