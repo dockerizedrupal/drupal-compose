@@ -341,7 +341,7 @@ drupal_6_path() {
   local DRUPAL_6_PATH=""
 
   while [ "$(pwd)" != '/' ]; do
-    if [ "$(ls CHANGELOG.txt 2> /dev/null)" = "CHANGELOG.txt" ]; then
+    if [ "$(ls index.php 2> /dev/null)" = "index.php" ]; then
       if [ -n "$(cat index.php | grep "^drupal_page_footer" 2> /dev/null)" ]; then
         DRUPAL_6_PATH="$(pwd)"
 
