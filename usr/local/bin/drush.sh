@@ -9,7 +9,7 @@ ARGS="${@}"
 php_container_exists() {
   local DRUPAL_ROOT="${1}"
 
-  echo "$(fig -f ${DRUPAL_ROOT}/fig.yml ps php 2> /dev/null | grep _php_ | awk '{ print $1 }')"
+  echo "$(cd ${DRUPAL_ROOT} && fig ps php 2> /dev/null | grep _php_ | awk '{ print $1 }')"
 }
 
 php_container_running() {
