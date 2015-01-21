@@ -45,6 +45,12 @@ sudo chmod +x /usr/local/bin/drush
 sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/drush.sh -O /opt/drush
 sudo chmod +x /opt/drush
 
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-mysqld/raw/master/tools/mysqlddata.sh -O /usr/local/bin/mysqlddata
+sudo chmod +x /usr/local/bin/mysqlddata
+
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/mysqlddata.sh -O /opt/mysqlddata
+sudo chmod +x /opt/mysqlddata
+
 echo 'export PATH="/opt:${PATH}"' >> ${HOME}/.bashrc
 
 sudo wget https://raw.githubusercontent.com/drush-ops/drush/master/drush.complete.sh -O /etc/bash_completion.d/drush.complete.sh
