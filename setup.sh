@@ -39,7 +39,7 @@ sudo chmod +x /opt/docker
 sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/fig.sh -O /opt/fig
 sudo chmod +x /opt/fig
 
-sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/usr/local/bin/drush.sh -O /usr/local/bin/drush
+sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/docker-php/raw/5.6/tools/drush.sh -O /usr/local/bin/drush
 sudo chmod +x /usr/local/bin/drush
 
 sudo wget http://gitlab.simpledrupalcloud.com/simpledrupalcloud/dev/raw/master/opt/drush.sh -O /opt/drush
