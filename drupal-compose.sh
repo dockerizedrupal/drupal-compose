@@ -398,10 +398,12 @@ if [ -n "${DRUPAL_ROOT}" ]; then
       read -p "drupal-compose: user.yml file is missing, would you like to create it? [Y/n]: " ANSWER
 
       if [ "${ANSWER}" == "n" ]; then
-        echo -n "$(user_docker_compose_template)" > "${DRUPAL_ROOT}/user.yml"
-
-        echo "drupal-compose: user.yml file has been created. Please add it to VCS ignore list, since this file is host specific."
+        exit
       fi
+
+      echo -n "$(user_docker_compose_template)" > "${DRUPAL_ROOT}/user.yml"
+
+      echo "drupal-compose: user.yml file has been created. Please add it to VCS ignore list, since this file is host specific."
     fi
 
     exit
