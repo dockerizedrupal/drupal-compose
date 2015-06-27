@@ -426,4 +426,8 @@ else
   fi
 fi
 
+echo "drupal-compose: docker-compose.yml file has been created. Don't forget to add it to VCS alongside with Drupal."
+
 echo -n "$(user_docker_compose_template)" > "${DRUPAL_ROOT}/user.yml"
+
+echo "drupal-compose: user.yml file has been created. Please add it to VCS ignore list, since this file is host specific."
