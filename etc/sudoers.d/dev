@@ -1,1 +1,0 @@
-%dev ALL=(root) NOPASSWD: /usr/bin/docker, /usr/local/bin/fig, /usr/local/bin/drush, /usr/local/bin/mysqlddata
