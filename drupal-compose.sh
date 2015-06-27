@@ -394,6 +394,16 @@ if [ -n "${DRUPAL_ROOT}" ]; then
   read -p "drupal-compose: docker-compose.yml file already exists, would you like to override it? [Y/n]: " ANSWER
 
   if [ "${ANSWER}" == "n" ]; then
+    if [ ! -f "${DRUPAL_ROOT}/user.yml" ]; then
+      read -p "drupal-compose: user.yml file is missing, would you like to create it? [Y/n]: " ANSWER
+
+      if [ "${ANSWER}" == "n" ]; then
+        echo -n "$(user_docker_compose_template)" > "${DRUPAL_ROOT}/user.yml"
+
+        echo "drupal-compose: user.yml file has been created. Please add it to VCS ignore list, since this file is host specific."
+      fi
+    fi
+
     exit
   fi
 fi
