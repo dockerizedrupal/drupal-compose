@@ -419,7 +419,7 @@ if [ -n "${DRUPAL_ROOT}" ]; then
 
       echo -n "$(host_docker_compose_template)" > "${DRUPAL_ROOT}/host.yml"
 
-      echo "drupal-compose: host.yml file has been created. Please don't add it to VCS, since this file is specific the host where it was generated."
+      echo "drupal-compose: host.yml file has been created. Please don't add it to VCS, since this file is specific to the host where it was generated."
     fi
 
     exit
@@ -458,4 +458,4 @@ echo "drupal-compose: ${DOCKER_COMPOSE_FILE} file has been created. Don't forget
 
 echo -n "$(host_docker_compose_template)" > "${DRUPAL_ROOT}/host.yml"
 
-echo "drupal-compose: host.yml file has been created. Please don't add it to VCS, since this file is specific the host where it was generated."
+echo "drupal-compose: host.yml file has been created. Please don't add it to VCS, since this file is specific to the host where it was generated."
