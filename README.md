@@ -1,4 +1,4 @@
-# dev
+# drupal-compose
 
 ## License
 
