@@ -5,6 +5,9 @@ WORKING_DIR="$(pwd)"
 help() {
   cat << EOF
 Usage: drupal-compose
+
+Options:
+  -f, --file FILE  Specify an alternate compose file (default: docker-compose.yml)
 EOF
 
   exit 1
@@ -20,15 +23,24 @@ unknown_command() {
   exit 1
 }
 
-if [ "${#}" -gt 0 ]; then
+if [ "${#}" -gt 2 ]; then
   unknown_command
+fi
+
+DOCKER_COMPOSE_FILE="docker-compose.yml"
+
+if [ "${1}" == "-f" ] || [ "${1}" == "--file" ]; then
+  DOCKER_COMPOSE_FILE="${2}"
+
+  set "${@:1}" > /dev/null 2>&1
+  set "${@:2}" > /dev/null 2>&1
 fi
 
 docker_compose_file_path() {
   local DOCKER_COMPOSE_FILE_PATH=""
 
   while [ "$(pwd)" != '/' ]; do
-    if [ "$(ls docker-compose.yml 2> /dev/null)" == "docker-compose.yml" ]; then
+    if [ "$(ls ${DOCKER_COMPOSE_FILE} 2> /dev/null)" == "${DOCKER_COMPOSE_FILE}" ]; then
       DOCKER_COMPOSE_FILE_PATH="$(pwd)"
 
       break
@@ -387,14 +399,6 @@ httpd:
     - GROUP_ID=${GROUP_ID}
 php:
   environment:
-    - PHP_INI_XDEBUG=On
-    - PHP_INI_XDEBUG_REMOTE_PORT=9000
-    - PHP_INI_XDEBUG_REMOTE_HOST=127.0.0.1
-    - PHP_INI_XDEBUG_REMOTE_CONNECT_BACK=On
-    - PHP_INI_XDEBUG_IDEKEY=PHPSTORM
-    - PHP_INI_BLACKFIRE=On
-    - PHP_INI_BLACKFIRE_SERVER_ID=
-    - PHP_INI_BLACKFIRE_SERVER_TOKEN=
     - USER_ID=${USER_ID}
     - GROUP_ID=${GROUP_ID}
 EOF
@@ -403,7 +407,7 @@ EOF
 DRUPAL_ROOT="$(docker_compose_file_path)"
 
 if [ -n "${DRUPAL_ROOT}" ]; then
-  read -p "drupal-compose: docker-compose.yml file already exists, would you like to override it? [Y/n]: " ANSWER
+  read -p "drupal-compose: ${DOCKER_COMPOSE_FILE} file already exists, would you like to override it? [Y/n]: " ANSWER
 
   if [ "${ANSWER}" == "n" ]; then
     if [ ! -f "${DRUPAL_ROOT}/host.yml" ]; then
@@ -427,21 +431,21 @@ DRUPAL_ROOT="$(drupal_8_path)"
 if [ -n "${DRUPAL_ROOT}" ]; then
   read -p "drupal-compose: Enter project name: " PROJECT_NAME
 
-  echo -n "$(drupal_8_docker_compose_template ${PROJECT_NAME})" > "${DRUPAL_ROOT}/docker-compose.yml"
+  echo -n "$(drupal_8_docker_compose_template ${PROJECT_NAME})" > "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
 else
   DRUPAL_ROOT="$(drupal_7_path)"
 
   if [ -n "${DRUPAL_ROOT}" ]; then
     read -p "drupal-compose: Enter project name: " PROJECT_NAME
 
-    echo -n "$(drupal_7_docker_compose_template ${PROJECT_NAME})" > "${DRUPAL_ROOT}/docker-compose.yml"
+    echo -n "$(drupal_7_docker_compose_template ${PROJECT_NAME})" > "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
   else
     DRUPAL_ROOT="$(drupal_6_path)"
 
     if [ -n "${DRUPAL_ROOT}" ]; then
       read -p "drupal-compose: Enter project name: " PROJECT_NAME
 
-      echo -n "$(drupal_6_docker_compose_template ${PROJECT_NAME})" > "${DRUPAL_ROOT}/docker-compose.yml"
+      echo -n "$(drupal_6_docker_compose_template ${PROJECT_NAME})" > "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
     else
       echo "drupal-compose: Drupal installation path could not be found."
 
@@ -450,7 +454,7 @@ else
   fi
 fi
 
-echo "drupal-compose: docker-compose.yml file has been created. Don't forget to add it to VCS alongside with Drupal."
+echo "drupal-compose: ${DOCKER_COMPOSE_FILE} file has been created. Don't forget to add it to VCS alongside with Drupal."
 
 echo -n "$(host_docker_compose_template)" > "${DRUPAL_ROOT}/host.yml"
 
