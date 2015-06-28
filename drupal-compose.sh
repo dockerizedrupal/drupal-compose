@@ -387,9 +387,6 @@ httpd:
     - GROUP_ID=${GROUP_ID}
 php:
   environment:
-    - PHP_INI_BLACKFIRE=On
-    - PHP_INI_BLACKFIRE_SERVER_ID=
-    - PHP_INI_BLACKFIRE_SERVER_TOKEN=
     - USER_ID=${USER_ID}
     - GROUP_ID=${GROUP_ID}
 EOF
