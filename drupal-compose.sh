@@ -46,8 +46,8 @@ drupal_8_docker_compose_template() {
   cat <<EOF
 httpd:
   extends:
-    file: user.yml
-    service: user
+    file: host.yml
+    service: httpd
   image: fenomen/httpd:2.4
   hostname: httpd
   ports:
@@ -76,8 +76,8 @@ mysqlddata:
     - /mysqld
 php:
   extends:
-    file: user.yml
-    service: user
+    file: host.yml
+    service: php
   image: fenomen/php:5.4
   hostname: php
   volumes:
@@ -158,8 +158,8 @@ drupal_7_docker_compose_template() {
   cat <<EOF
 httpd:
   extends:
-    file: user.yml
-    service: user
+    file: host.yml
+    service: httpd
   image: fenomen/httpd:2.4
   hostname: httpd
   ports:
@@ -188,8 +188,8 @@ mysqlddata:
     - /mysqld
 php:
   extends:
-    file: user.yml
-    service: user
+    file: host.yml
+    service: php
   image: fenomen/php:5.3
   hostname: php
   volumes:
@@ -270,8 +270,8 @@ drupal_6_docker_compose_template() {
   cat <<EOF
 httpd:
   extends:
-    file: user.yml
-    service: user
+    file: host.yml
+    service: httpd
   image: fenomen/httpd:2.2
   hostname: httpd
   ports:
@@ -300,8 +300,8 @@ mysqlddata:
     - /mysqld
 php:
   extends:
-    file: user.yml
-    service: user
+    file: host.yml
+    service: php
   image: fenomen/php:5.2
   hostname: php
   volumes:
@@ -376,13 +376,19 @@ drupal_6_path() {
   echo "${DRUPAL_6_PATH}"
 }
 
-user_docker_compose_template() {
+host_docker_compose_template() {
   local USER_ID="$(id -u)"
   local GROUP_ID="$(id -g)"
 
   cat <<EOF
-user:
+httpd:
   environment:
+    - USER_ID=${USER_ID}
+    - GROUP_ID=${GROUP_ID}
+php:
+  environment:
+    - PHP_INI_BLACKFIRE_SERVER_ID=
+    - PHP_INI_BLACKFIRE_SERVER_TOKEN=
     - USER_ID=${USER_ID}
     - GROUP_ID=${GROUP_ID}
 EOF
@@ -394,16 +400,16 @@ if [ -n "${DRUPAL_ROOT}" ]; then
   read -p "drupal-compose: docker-compose.yml file already exists, would you like to override it? [Y/n]: " ANSWER
 
   if [ "${ANSWER}" == "n" ]; then
-    if [ ! -f "${DRUPAL_ROOT}/user.yml" ]; then
-      read -p "drupal-compose: user.yml file is missing, would you like to create it? [Y/n]: " ANSWER
+    if [ ! -f "${DRUPAL_ROOT}/host.yml" ]; then
+      read -p "drupal-compose: host.yml file is missing, would you like to create it? [Y/n]: " ANSWER
 
       if [ "${ANSWER}" == "n" ]; then
         exit
       fi
 
-      echo -n "$(user_docker_compose_template)" > "${DRUPAL_ROOT}/user.yml"
+      echo -n "$(host_docker_compose_template)" > "${DRUPAL_ROOT}/host.yml"
 
-      echo "drupal-compose: user.yml file has been created. Please add it to VCS ignore list, since this file is host specific."
+      echo "drupal-compose: host.yml file has been created. Please don't add it to VCS, since this file is specific the host where it was generated."
     fi
 
     exit
@@ -440,6 +446,6 @@ fi
 
 echo "drupal-compose: docker-compose.yml file has been created. Don't forget to add it to VCS alongside with Drupal."
 
-echo -n "$(user_docker_compose_template)" > "${DRUPAL_ROOT}/user.yml"
+echo -n "$(host_docker_compose_template)" > "${DRUPAL_ROOT}/host.yml"
 
-echo "drupal-compose: user.yml file has been created. Please add it to VCS ignore list, since this file is host specific."
+echo "drupal-compose: host.yml file has been created. Please don't add it to VCS, since this file is specific the host where it was generated."
