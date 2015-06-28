@@ -60,7 +60,7 @@ httpd:
   extends:
     file: host.yml
     service: httpd
-  image: fenomen/httpd:2.4
+  image: viljaste/httpd:2.4
   hostname: httpd
   ports:
     - "80"
@@ -72,17 +72,17 @@ httpd:
   environment:
     - VHOST=${PROJECT_NAME}
 httpdata:
-  image: fenomen/data:latest
+  image: viljaste/data:latest
   hostname: httpdata
   volumes:
     - .:/httpd/data
 mysqld:
-  image: fenomen/mysqld:latest
+  image: viljaste/mysqld:latest
   hostname: mysqld
   volumes_from:
     - mysqlddata
 mysqlddata:
-  image: fenomen/data:latest
+  image: viljaste/data:latest
   hostname: mysqlddata
   volumes:
     - /mysqld
@@ -90,7 +90,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: fenomen/php:5.4
+  image: viljaste/php:5.4
   hostname: php
   volumes:
     - ~/.ssh:/root/.ssh
@@ -103,7 +103,7 @@ php:
   environment:
     - DRUPAL_VERSION=6
 mailcatcher:
-  image: fenomen/mailcatcher:latest
+  image: viljaste/mailcatcher:latest
   hostname: mailcatcher
   ports:
     - "80"
@@ -111,7 +111,7 @@ mailcatcher:
   environment:
     - VHOST=${PROJECT_NAME}
 phpmyadmin:
-  image: fenomen/phpmyadmin:latest
+  image: viljaste/phpmyadmin:latest
   hostname: phpmyadmin
   ports:
     - "80"
@@ -121,7 +121,7 @@ phpmyadmin:
   environment:
     - VHOST=${PROJECT_NAME}
 adminer:
-  image: fenomen/adminer:latest
+  image: viljaste/adminer:latest
   hostname: adminer
   ports:
     - "80"
@@ -131,10 +131,10 @@ adminer:
   environment:
     - VHOST=${PROJECT_NAME}
 memcached:
-  image: fenomen/memcached:latest
+  image: viljaste/memcached:latest
   hostname: memcached
 memcachephp:
-  image: fenomen/memcachephp:latest
+  image: viljaste/memcachephp:latest
   hostname: memcachephp
   ports:
     - "80"
@@ -172,7 +172,7 @@ httpd:
   extends:
     file: host.yml
     service: httpd
-  image: fenomen/httpd:2.4
+  image: viljaste/httpd:2.4
   hostname: httpd
   ports:
     - "80"
@@ -184,17 +184,17 @@ httpd:
   environment:
     - VHOST=${PROJECT_NAME}
 httpdata:
-  image: fenomen/data:latest
+  image: viljaste/data:latest
   hostname: httpdata
   volumes:
     - .:/httpd/data
 mysqld:
-  image: fenomen/mysqld:latest
+  image: viljaste/mysqld:latest
   hostname: mysqld
   volumes_from:
     - mysqlddata
 mysqlddata:
-  image: fenomen/data:latest
+  image: viljaste/data:latest
   hostname: mysqlddata
   volumes:
     - /mysqld
@@ -202,7 +202,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: fenomen/php:5.3
+  image: viljaste/php:5.3
   hostname: php
   volumes:
     - ~/.ssh:/root/.ssh
@@ -215,7 +215,7 @@ php:
   environment:
     - DRUPAL_VERSION=7
 mailcatcher:
-  image: fenomen/mailcatcher:latest
+  image: viljaste/mailcatcher:latest
   hostname: mailcatcher
   ports:
     - "80"
@@ -223,7 +223,7 @@ mailcatcher:
   environment:
     - VHOST=${PROJECT_NAME}
 phpmyadmin:
-  image: fenomen/phpmyadmin:latest
+  image: viljaste/phpmyadmin:latest
   hostname: phpmyadmin
   ports:
     - "80"
@@ -233,7 +233,7 @@ phpmyadmin:
   environment:
     - VHOST=${PROJECT_NAME}
 adminer:
-  image: fenomen/adminer:latest
+  image: viljaste/adminer:latest
   hostname: adminer
   ports:
     - "80"
@@ -243,10 +243,10 @@ adminer:
   environment:
     - VHOST=${PROJECT_NAME}
 memcached:
-  image: fenomen/memcached:latest
+  image: viljaste/memcached:latest
   hostname: memcached
 memcachephp:
-  image: fenomen/memcachephp:latest
+  image: viljaste/memcachephp:latest
   hostname: memcachephp
   ports:
     - "80"
@@ -284,7 +284,7 @@ httpd:
   extends:
     file: host.yml
     service: httpd
-  image: fenomen/httpd:2.2
+  image: viljaste/httpd:2.2
   hostname: httpd
   ports:
     - "80"
@@ -296,17 +296,17 @@ httpd:
   environment:
     - VHOST=${PROJECT_NAME}
 httpdata:
-  image: fenomen/data:latest
+  image: viljaste/data:latest
   hostname: httpdata
   volumes:
     - .:/httpd/data
 mysqld:
-  image: fenomen/mysqld:latest
+  image: viljaste/mysqld:latest
   hostname: mysqld
   volumes_from:
     - mysqlddata
 mysqlddata:
-  image: fenomen/data:latest
+  image: viljaste/data:latest
   hostname: mysqlddata
   volumes:
     - /mysqld
@@ -314,7 +314,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: fenomen/php:5.2
+  image: viljaste/php:5.2
   hostname: php
   volumes:
     - ~/.ssh:/root/.ssh
@@ -327,7 +327,7 @@ php:
   environment:
     - DRUPAL_VERSION=6
 mailcatcher:
-  image: fenomen/mailcatcher:latest
+  image: viljaste/mailcatcher:latest
   hostname: mailcatcher
   ports:
     - "80"
@@ -335,7 +335,7 @@ mailcatcher:
   environment:
     - VHOST=${PROJECT_NAME}
 phpmyadmin:
-  image: fenomen/phpmyadmin:latest
+  image: viljaste/phpmyadmin:latest
   hostname: phpmyadmin
   ports:
     - "80"
@@ -345,7 +345,7 @@ phpmyadmin:
   environment:
     - VHOST=${PROJECT_NAME}
 adminer:
-  image: fenomen/adminer:latest
+  image: viljaste/adminer:latest
   hostname: adminer
   ports:
     - "80"
@@ -355,10 +355,10 @@ adminer:
   environment:
     - VHOST=${PROJECT_NAME}
 memcached:
-  image: fenomen/memcached:latest
+  image: viljaste/memcached:latest
   hostname: memcached
 memcachephp:
-  image: fenomen/memcachephp:latest
+  image: viljaste/memcachephp:latest
   hostname: memcachephp
   ports:
     - "80"
