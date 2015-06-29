@@ -93,7 +93,7 @@ php:
   image: viljaste/php:5.4
   hostname: php
   volumes:
-    - ~/.ssh:/root/.ssh
+    - ~/.ssh:/home/container/.ssh
   volumes_from:
     - httpdata
   links:
@@ -205,7 +205,7 @@ php:
   image: viljaste/php:5.3
   hostname: php
   volumes:
-    - ~/.ssh:/root/.ssh
+    - ~/.ssh:/home/container/.ssh
   volumes_from:
     - httpdata
   links:
@@ -317,7 +317,7 @@ php:
   image: viljaste/php:5.2
   hostname: php
   volumes:
-    - ~/.ssh:/root/.ssh
+    - ~/.ssh:/home/container/.ssh
   volumes_from:
     - httpdata
   links:
