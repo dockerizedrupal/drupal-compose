@@ -1,6 +1,6 @@
 # Drupal Compose
 
-Simple shell script that generates general Docker Compose file for your Drupal 6, 7 and 8 projects.
+Simple shell script that generates general purpose Docker Compose file for your Drupal 6, 7 and 8 projects.
 
 ## License
 
