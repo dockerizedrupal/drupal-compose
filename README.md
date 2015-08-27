@@ -12,7 +12,7 @@ Generates general purpose docker-compose.yml automatically for your Drupal 6, 7 
 ## Install
 
     TMP="$(mktemp -d)" \
-      && git clone https://github.com/dockerizedrupal/crush.git "${TMP}" \
+      && git clone https://github.com/dockerizedrupal/drupal-compose.git "${TMP}" \
       && sudo cp "${TMP}/drupal-compose.sh" /usr/local/bin/drupal-compose \
       && sudo chmod +x /usr/local/bin/drupal-compose
       
