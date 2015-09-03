@@ -4,7 +4,7 @@ WORKING_DIR="$(pwd)"
 
 help() {
   cat << EOF
-Version: 1.0.2
+Version: 1.0.3
 
 Usage: drupal-compose
 
