@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
+VERSION="1.0.4"
+
 WORKING_DIR="$(pwd)"
 
 help() {
   cat << EOF
-Version: 1.0.3
+Version: ${VERSION}
 
 Usage: drupal-compose
 
@@ -66,6 +68,7 @@ drupal_8_docker_compose_template() {
   local PROJECT_NAME="${1}"
 
   cat <<EOF
+# Configuration generated with Drupal Compose version ${VERSION}
 apache:
   extends:
     file: host.yml
@@ -178,6 +181,7 @@ drupal_7_docker_compose_template() {
   local PROJECT_NAME="${1}"
 
   cat <<EOF
+# Configuration generated with Drupal Compose version ${VERSION}
 apache:
   extends:
     file: host.yml
@@ -290,6 +294,7 @@ drupal_6_docker_compose_template() {
   local PROJECT_NAME="${1}"
 
   cat <<EOF
+# Configuration generated with Drupal Compose version ${VERSION}
 apache:
   extends:
     file: host.yml
@@ -403,6 +408,7 @@ host_docker_compose_template() {
   local GROUP_ID="$(id -g)"
 
   cat <<EOF
+# Configuration generated with Drupal Compose version ${VERSION}
 apache:
   environment:
     - USER_ID=${USER_ID}
