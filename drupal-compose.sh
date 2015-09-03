@@ -4,6 +4,8 @@ WORKING_DIR="$(pwd)"
 
 help() {
   cat << EOF
+Version: 1.0.2
+
 Usage: drupal-compose
 
 Options:
@@ -13,8 +15,16 @@ EOF
   exit 1
 }
 
+version() {
+  help
+}
+
 if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
   help
+fi
+
+if [ "${1}" == "-v" ] || [ "${1}" == "--version" ]; then
+  version
 fi
 
 unknown_command() {
