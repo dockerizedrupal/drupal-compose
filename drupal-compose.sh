@@ -56,54 +56,54 @@ drupal_8_docker_compose_template() {
   local PROJECT_NAME="${1}"
 
   cat <<EOF
-httpd:
+apache:
   extends:
     file: host.yml
-    service: httpd
-  image: dockerizedrupal/httpd:2.4
-  hostname: httpd
+    service: apache
+  image: dockerizedrupal/apache-2.4:1.0.6
+  hostname: apache
   ports:
     - "80"
     - "443"
   volumes_from:
-    - httpdata
+    - apache-data
   links:
     - php
   environment:
     - VHOST=${PROJECT_NAME}
-httpdata:
-  image: dockerizedrupal/data:latest
-  hostname: httpdata
+apache-data:
+  image: dockerizedrupal/data:1.0.2
+  hostname: apache-data
   volumes:
-    - .:/httpd/data
-mysqld:
-  image: dockerizedrupal/mysqld:latest
-  hostname: mysqld
+    - .:/apache/data
+mysql:
+  image: dockerizedrupal/mysql:1.0.3
+  hostname: mysql
   volumes_from:
-    - mysqlddata
-mysqlddata:
-  image: dockerizedrupal/data:latest
-  hostname: mysqlddata
+    - mysql-data
+mysql-data:
+  image: dockerizedrupal/data:1.0.2
+  hostname: mysql-data
   volumes:
-    - /mysqld
+    - /mysql
 php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php:5.4
+  image: dockerizedrupal/php-5.4:1.0.2
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
   volumes_from:
-    - httpdata
+    - apache-data
   links:
-    - mysqld
+    - mysql
     - mailcatcher:smtp
     - memcached
   environment:
     - DRUPAL_VERSION=6
 mailcatcher:
-  image: dockerizedrupal/mailcatcher:latest
+  image: dockerizedrupal/mailcatcher:1.0.1
   hostname: mailcatcher
   ports:
     - "80"
@@ -111,30 +111,30 @@ mailcatcher:
   environment:
     - VHOST=${PROJECT_NAME}
 phpmyadmin:
-  image: dockerizedrupal/phpmyadmin:latest
+  image: dockerizedrupal/phpmyadmin:1.0.2
   hostname: phpmyadmin
   ports:
     - "80"
     - "443"
   links:
-    - mysqld
+    - mysql
   environment:
     - VHOST=${PROJECT_NAME}
 adminer:
-  image: dockerizedrupal/adminer:latest
+  image: dockerizedrupal/adminer:1.0.2
   hostname: adminer
   ports:
     - "80"
     - "443"
   links:
-    - mysqld
+    - mysql
   environment:
     - VHOST=${PROJECT_NAME}
 memcached:
-  image: dockerizedrupal/memcached:latest
+  image: dockerizedrupal/memcached:1.0.1
   hostname: memcached
 memcachephp:
-  image: dockerizedrupal/memcachephp:latest
+  image: dockerizedrupal/memcachephp:1.0.1
   hostname: memcachephp
   ports:
     - "80"
@@ -168,54 +168,54 @@ drupal_7_docker_compose_template() {
   local PROJECT_NAME="${1}"
 
   cat <<EOF
-httpd:
+apache:
   extends:
     file: host.yml
-    service: httpd
-  image: dockerizedrupal/httpd:2.4
-  hostname: httpd
+    service: apache
+  image: dockerizedrupal/apache-2.4:1.0.6
+  hostname: apache
   ports:
     - "80"
     - "443"
   volumes_from:
-    - httpdata
+    - apache-data
   links:
     - php
   environment:
     - VHOST=${PROJECT_NAME}
-httpdata:
-  image: dockerizedrupal/data:latest
-  hostname: httpdata
+apache-data:
+  image: dockerizedrupal/data:1.0.2
+  hostname: apache-data
   volumes:
-    - .:/httpd/data
-mysqld:
-  image: dockerizedrupal/mysqld:latest
-  hostname: mysqld
+    - .:/apache/data
+mysql:
+  image: dockerizedrupal/mysql:1.0.3
+  hostname: mysql
   volumes_from:
-    - mysqlddata
-mysqlddata:
-  image: dockerizedrupal/data:latest
-  hostname: mysqlddata
+    - mysql-data
+mysql-data:
+  image: dockerizedrupal/data:1.0.2
+  hostname: mysql-data
   volumes:
-    - /mysqld
+    - /mysql
 php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php:5.3
+  image: dockerizedrupal/php-5.3:1.0.2
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
   volumes_from:
-    - httpdata
+    - apache-data
   links:
-    - mysqld
+    - mysql
     - mailcatcher:smtp
     - memcached
   environment:
     - DRUPAL_VERSION=7
 mailcatcher:
-  image: dockerizedrupal/mailcatcher:latest
+  image: dockerizedrupal/mailcatcher:1.0.1
   hostname: mailcatcher
   ports:
     - "80"
@@ -223,30 +223,30 @@ mailcatcher:
   environment:
     - VHOST=${PROJECT_NAME}
 phpmyadmin:
-  image: dockerizedrupal/phpmyadmin:latest
+  image: dockerizedrupal/phpmyadmin:1.0.2
   hostname: phpmyadmin
   ports:
     - "80"
     - "443"
   links:
-    - mysqld
+    - mysql
   environment:
     - VHOST=${PROJECT_NAME}
 adminer:
-  image: dockerizedrupal/adminer:latest
+  image: dockerizedrupal/adminer:1.0.2
   hostname: adminer
   ports:
     - "80"
     - "443"
   links:
-    - mysqld
+    - mysql
   environment:
     - VHOST=${PROJECT_NAME}
 memcached:
-  image: dockerizedrupal/memcached:latest
+  image: dockerizedrupal/memcached:1.0.1
   hostname: memcached
 memcachephp:
-  image: dockerizedrupal/memcachephp:latest
+  image: dockerizedrupal/memcachephp:1.0.1
   hostname: memcachephp
   ports:
     - "80"
@@ -280,54 +280,54 @@ drupal_6_docker_compose_template() {
   local PROJECT_NAME="${1}"
 
   cat <<EOF
-httpd:
+apache:
   extends:
     file: host.yml
-    service: httpd
-  image: dockerizedrupal/httpd:2.2
-  hostname: httpd
+    service: apache
+  image: dockerizedrupal/apache-2.2:1.0.3
+  hostname: apache
   ports:
     - "80"
     - "443"
   volumes_from:
-    - httpdata
+    - apache-data
   links:
     - php
   environment:
     - VHOST=${PROJECT_NAME}
-httpdata:
-  image: dockerizedrupal/data:latest
-  hostname: httpdata
+apache-data:
+  image: dockerizedrupal/data:1.0.2
+  hostname: apache-data
   volumes:
-    - .:/httpd/data
-mysqld:
-  image: dockerizedrupal/mysqld:latest
-  hostname: mysqld
+    - .:/apache/data
+mysql:
+  image: dockerizedrupal/mysql:1.0.3
+  hostname: mysql
   volumes_from:
-    - mysqlddata
-mysqlddata:
-  image: dockerizedrupal/data:latest
-  hostname: mysqlddata
+    - mysql-data
+mysql-data:
+  image: dockerizedrupal/data:1.0.2
+  hostname: mysql-data
   volumes:
-    - /mysqld
+    - /mysql
 php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php:5.2
+  image: dockerizedrupal/php-5.2:1.0.1
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
   volumes_from:
-    - httpdata
+    - apache-data
   links:
-    - mysqld
+    - mysql
     - mailcatcher:smtp
     - memcached
   environment:
     - DRUPAL_VERSION=6
 mailcatcher:
-  image: dockerizedrupal/mailcatcher:latest
+  image: dockerizedrupal/mailcatcher:1.0.1
   hostname: mailcatcher
   ports:
     - "80"
@@ -335,30 +335,30 @@ mailcatcher:
   environment:
     - VHOST=${PROJECT_NAME}
 phpmyadmin:
-  image: dockerizedrupal/phpmyadmin:latest
+  image: dockerizedrupal/phpmyadmin:1.0.2
   hostname: phpmyadmin
   ports:
     - "80"
     - "443"
   links:
-    - mysqld
+    - mysql
   environment:
     - VHOST=${PROJECT_NAME}
 adminer:
-  image: dockerizedrupal/adminer:latest
+  image: dockerizedrupal/adminer:1.0.2
   hostname: adminer
   ports:
     - "80"
     - "443"
   links:
-    - mysqld
+    - mysql
   environment:
     - VHOST=${PROJECT_NAME}
 memcached:
-  image: dockerizedrupal/memcached:latest
+  image: dockerizedrupal/memcached:1.0.1
   hostname: memcached
 memcachephp:
-  image: dockerizedrupal/memcachephp:latest
+  image: dockerizedrupal/memcachephp:1.0.1
   hostname: memcachephp
   ports:
     - "80"
@@ -393,7 +393,7 @@ host_docker_compose_template() {
   local GROUP_ID="$(id -g)"
 
   cat <<EOF
-httpd:
+apache:
   environment:
     - USER_ID=${USER_ID}
     - GROUP_ID=${GROUP_ID}
