@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.0.4"
+VERSION="1.0.5"
 
 WORKING_DIR="$(pwd)"
 
@@ -103,7 +103,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php-5.4:1.0.2
+  image: dockerizedrupal/php-5.5:1.0.4
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
@@ -216,7 +216,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php-5.3:1.0.2
+  image: dockerizedrupal/php-5.3:1.0.5
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
@@ -329,7 +329,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php-5.2:1.0.1
+  image: dockerizedrupal/php-5.2:1.0.2
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
