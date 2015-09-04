@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.0.5"
+VERSION="1.0.6"
 
 WORKING_DIR="$(pwd)"
 
@@ -12,6 +12,8 @@ Usage: drupal-compose
 
 Options:
   -f, --file FILE  Specify an alternate compose file (default: docker-compose.yml)
+  -v, --version     Show version number
+  -h, --help        Show help
 EOF
 
   exit 1

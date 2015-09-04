@@ -7,14 +7,16 @@ Generates general purpose [docker-compose.yml](https://docs.docker.com/compose/y
     Usage: drupal-compose
     
     Options:
-      -f, --file FILE  Specify an alternate compose file (default: docker-compose.yml)
-  
+      -f, --file FILE   Specify an alternate compose file (default: docker-compose.yml)
+      -v, --version     Show version number
+      -h, --help        Show help
+
 ## Install
 
     TMP="$(mktemp -d)" \
       && git clone https://github.com/dockerizedrupal/drupal-compose.git "${TMP}" \
       && cd "${TMP}" \
-      && git checkout 1.0.5 \
+      && git checkout 1.0.6 \
       && sudo cp "${TMP}/drupal-compose.sh" /usr/local/bin/drupal-compose \
       && sudo chmod +x /usr/local/bin/drupal-compose \
       && cd -
