@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.0.6"
+VERSION="1.0.7"
 
 WORKING_DIR="$(pwd)"
 
@@ -85,7 +85,8 @@ apache:
   links:
     - php
   environment:
-    - VHOST=${PROJECT_NAME}
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=apache
 apache-data:
   image: dockerizedrupal/data:1.0.2
   hostname: apache-data
@@ -124,7 +125,8 @@ mailcatcher:
     - "80"
     - "443"
   environment:
-    - VHOST=${PROJECT_NAME}
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=mailcatcher
 phpmyadmin:
   image: dockerizedrupal/phpmyadmin:1.0.2
   hostname: phpmyadmin
@@ -134,7 +136,8 @@ phpmyadmin:
   links:
     - mysql
   environment:
-    - VHOST=${PROJECT_NAME}
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=phpmyadmin
 adminer:
   image: dockerizedrupal/adminer:1.0.2
   hostname: adminer
@@ -144,7 +147,8 @@ adminer:
   links:
     - mysql
   environment:
-    - VHOST=${PROJECT_NAME}
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=adminer
 memcached:
   image: dockerizedrupal/memcached:1.0.1
   hostname: memcached
@@ -157,7 +161,8 @@ memcachephp:
   links:
     - memcached
   environment:
-    - VHOST=${PROJECT_NAME}
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=memcachedphp
 EOF
 }
 
@@ -198,7 +203,8 @@ apache:
   links:
     - php
   environment:
-    - VHOST=${PROJECT_NAME}
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=apache
 apache-data:
   image: dockerizedrupal/data:1.0.2
   hostname: apache-data
@@ -237,7 +243,8 @@ mailcatcher:
     - "80"
     - "443"
   environment:
-    - VHOST=${PROJECT_NAME}
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=mailcatcher
 phpmyadmin:
   image: dockerizedrupal/phpmyadmin:1.0.2
   hostname: phpmyadmin
@@ -247,7 +254,8 @@ phpmyadmin:
   links:
     - mysql
   environment:
-    - VHOST=${PROJECT_NAME}
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=phpmyadmin
 adminer:
   image: dockerizedrupal/adminer:1.0.2
   hostname: adminer
@@ -257,7 +265,8 @@ adminer:
   links:
     - mysql
   environment:
-    - VHOST=${PROJECT_NAME}
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=adminer
 memcached:
   image: dockerizedrupal/memcached:1.0.1
   hostname: memcached
@@ -270,7 +279,8 @@ memcachephp:
   links:
     - memcached
   environment:
-    - VHOST=${PROJECT_NAME}
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=memcachephp
 EOF
 }
 
@@ -311,7 +321,8 @@ apache:
   links:
     - php
   environment:
-    - VHOST=${PROJECT_NAME}
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=apache
 apache-data:
   image: dockerizedrupal/data:1.0.2
   hostname: apache-data
@@ -350,7 +361,8 @@ mailcatcher:
     - "80"
     - "443"
   environment:
-    - VHOST=${PROJECT_NAME}
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=mailcatcher
 phpmyadmin:
   image: dockerizedrupal/phpmyadmin:1.0.2
   hostname: phpmyadmin
@@ -360,7 +372,8 @@ phpmyadmin:
   links:
     - mysql
   environment:
-    - VHOST=${PROJECT_NAME}
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=phpmyadmin
 adminer:
   image: dockerizedrupal/adminer:1.0.2
   hostname: adminer
@@ -370,7 +383,8 @@ adminer:
   links:
     - mysql
   environment:
-    - VHOST=${PROJECT_NAME}
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=adminer
 memcached:
   image: dockerizedrupal/memcached:1.0.1
   hostname: memcached
@@ -383,7 +397,8 @@ memcachephp:
   links:
     - memcached
   environment:
-    - VHOST=${PROJECT_NAME}
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=memcachephp
 EOF
 }
 
