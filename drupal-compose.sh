@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.0.8"
+VERSION="1.0.9"
 
 WORKING_DIR="$(pwd)"
 
@@ -94,10 +94,6 @@ apache-data:
   hostname: apache-data
   volumes:
     - .:/apache/data
-  environment:
-    - VHOST_PROJECT_NAME=${PROJECT_NAME}
-    - VHOST_SERVICE_NAME=apache-data
-    - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-data/master/VERSION.md
 mysql:
   image: dockerizedrupal/mysql:1.0.4
   hostname: mysql
@@ -112,10 +108,6 @@ mysql-data:
   hostname: mysql-data
   volumes:
     - /mysql
-  environment:
-    - VHOST_PROJECT_NAME=${PROJECT_NAME}
-    - VHOST_SERVICE_NAME=mysql-data
-    - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-data/master/VERSION.md
 php:
   extends:
     file: host.yml
@@ -237,10 +229,6 @@ apache-data:
   hostname: apache-data
   volumes:
     - .:/apache/data
-  environment:
-    - VHOST_PROJECT_NAME=${PROJECT_NAME}
-    - VHOST_SERVICE_NAME=apache-data
-    - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-data/master/VERSION.md
 mysql:
   image: dockerizedrupal/mysql:1.0.4
   hostname: mysql
@@ -255,10 +243,6 @@ mysql-data:
   hostname: mysql-data
   volumes:
     - /mysql
-  environment:
-    - VHOST_PROJECT_NAME=${PROJECT_NAME}
-    - VHOST_SERVICE_NAME=mysql-data
-    - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-data/master/VERSION.md
 php:
   extends:
     file: host.yml
@@ -380,10 +364,6 @@ apache-data:
   hostname: apache-data
   volumes:
     - .:/apache/data
-  environment:
-    - VHOST_PROJECT_NAME=${PROJECT_NAME}
-    - VHOST_SERVICE_NAME=apache-data
-    - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-data/master/VERSION.md
 mysql:
   image: dockerizedrupal/mysql:1.0.4
   hostname: mysql
@@ -398,10 +378,6 @@ mysql-data:
   hostname: mysql-data
   volumes:
     - /mysql
-  environment:
-    - VHOST_PROJECT_NAME=${PROJECT_NAME}
-    - VHOST_SERVICE_NAME=mysql-data
-    - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-data/master/VERSION.md
 php:
   extends:
     file: host.yml
