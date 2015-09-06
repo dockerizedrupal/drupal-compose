@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.0.9"
+VERSION="1.0.10"
 
 WORKING_DIR="$(pwd)"
 
@@ -87,8 +87,9 @@ apache:
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=apache
+    - VHOST_SERVICE_VERSION=https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.4/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-apache-2.2
     - VHOST_PRIMARY_SERVICE=Yes
-    - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.4/master/VERSION.md
 apache-data:
   image: dockerizedrupal/data:1.0.3
   hostname: apache-data
@@ -103,6 +104,7 @@ mysql:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=mysql
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-mysql/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-mysql
 mysql-data:
   image: dockerizedrupal/data:1.0.3
   hostname: mysql-data
@@ -127,6 +129,7 @@ php:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=php
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.5/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-php-5.5
 mailcatcher:
   image: dockerizedrupal/mailcatcher:1.0.2
   hostname: mailcatcher
@@ -137,6 +140,7 @@ mailcatcher:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=mailcatcher
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-mailcatcher/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-mailcatcher
 phpmyadmin:
   image: dockerizedrupal/phpmyadmin:1.0.3
   hostname: phpmyadmin
@@ -149,6 +153,7 @@ phpmyadmin:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=phpmyadmin
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-phpmyadmin/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-phpmyadmin
 adminer:
   image: dockerizedrupal/adminer:1.0.4
   hostname: adminer
@@ -161,6 +166,7 @@ adminer:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=adminer
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-adminer/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-adminer
 memcached:
   image: dockerizedrupal/memcached:1.0.2
   hostname: memcached
@@ -168,6 +174,7 @@ memcached:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=memcached
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-memcached/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-memcached
 memcachephp:
   image: dockerizedrupal/memcachephp:1.0.2
   hostname: memcachephp
@@ -180,6 +187,7 @@ memcachephp:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=memcachedphp
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-memcachephp/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-memcachephp
 EOF
 }
 
@@ -222,8 +230,9 @@ apache:
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=apache
-    - VHOST_PRIMARY_SERVICE=Yes
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.4/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-apache-2.4
+    - VHOST_PRIMARY_SERVICE=Yes
 apache-data:
   image: dockerizedrupal/data:1.0.3
   hostname: apache-data
@@ -238,6 +247,7 @@ mysql:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=mysql
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-mysql/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-mysql
 mysql-data:
   image: dockerizedrupal/data:1.0.3
   hostname: mysql-data
@@ -262,6 +272,7 @@ php:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=php
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.3/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-php-5.3
 mailcatcher:
   image: dockerizedrupal/mailcatcher:1.0.2
   hostname: mailcatcher
@@ -272,6 +283,7 @@ mailcatcher:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=mailcatcher
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-mailcatcher/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-mailcatcher
 phpmyadmin:
   image: dockerizedrupal/phpmyadmin:1.0.3
   hostname: phpmyadmin
@@ -284,6 +296,7 @@ phpmyadmin:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=phpmyadmin
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-phpmyadmin/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-phpmyadmin
 adminer:
   image: dockerizedrupal/adminer:1.0.4
   hostname: adminer
@@ -296,6 +309,7 @@ adminer:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=adminer
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-adminer/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-adminer
 memcached:
   image: dockerizedrupal/memcached:1.0.2
   hostname: memcached
@@ -303,6 +317,7 @@ memcached:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=memcached
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-memcached/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-memcached
 memcachephp:
   image: dockerizedrupal/memcachephp:1.0.2
   hostname: memcachephp
@@ -315,6 +330,7 @@ memcachephp:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=memcachephp
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-memcachephp/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-memcachephp
 EOF
 }
 
@@ -357,8 +373,9 @@ apache:
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=apache
-    - VHOST_PRIMARY_SERVICE=Yes
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.2/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-apache-2.2
+    - VHOST_PRIMARY_SERVICE=Yes
 apache-data:
   image: dockerizedrupal/data:1.0.3
   hostname: apache-data
@@ -373,6 +390,7 @@ mysql:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=mysql
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-mysql/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-mysql
 mysql-data:
   image: dockerizedrupal/data:1.0.3
   hostname: mysql-data
@@ -397,6 +415,7 @@ php:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=php
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.2/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-php-5.2
 mailcatcher:
   image: dockerizedrupal/mailcatcher:1.0.2
   hostname: mailcatcher
@@ -407,6 +426,7 @@ mailcatcher:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=mailcatcher
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-mailcatcher/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-mailcatcher
 phpmyadmin:
   image: dockerizedrupal/phpmyadmin:1.0.3
   hostname: phpmyadmin
@@ -419,6 +439,7 @@ phpmyadmin:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=phpmyadmin
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-phpmyadmin/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-phpmyadmin
 adminer:
   image: dockerizedrupal/adminer:1.0.4
   hostname: adminer
@@ -431,6 +452,7 @@ adminer:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=adminer
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-adminer/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-adminer
 memcached:
   image: dockerizedrupal/memcached:1.0.2
   hostname: memcached
@@ -438,6 +460,7 @@ memcached:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=memcached
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-memcached/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-memcached
 memcachephp:
   image: dockerizedrupal/memcachephp:1.0.2
   hostname: memcachephp
@@ -450,6 +473,7 @@ memcachephp:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=memcachephp
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-memcachephp/master/VERSION.md
+    - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-memcachephp
 EOF
 }
 
