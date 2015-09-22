@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.0.10"
+VERSION="1.0.11"
 
 WORKING_DIR="$(pwd)"
 
@@ -75,7 +75,7 @@ apache:
   extends:
     file: host.yml
     service: apache
-  image: dockerizedrupal/apache-2.4:1.0.9
+  image: dockerizedrupal/apache-2.4:1.0.15
   hostname: apache
   ports:
     - "80"
@@ -96,7 +96,7 @@ apache-data:
   volumes:
     - .:/apache/data
 mysql:
-  image: dockerizedrupal/mysql:1.0.4
+  image: dockerizedrupal/mysql:1.0.9
   hostname: mysql
   volumes_from:
     - mysql-data
@@ -114,7 +114,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php-5.5:1.0.5
+  image: dockerizedrupal/php-5.5:1.0.11
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
@@ -131,7 +131,7 @@ php:
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.5/master/VERSION.md
     - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-php-5.5
 mailcatcher:
-  image: dockerizedrupal/mailcatcher:1.0.2
+  image: dockerizedrupal/mailcatcher:1.0.5
   hostname: mailcatcher
   ports:
     - "80"
@@ -142,7 +142,7 @@ mailcatcher:
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-mailcatcher/master/VERSION.md
     - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-mailcatcher
 phpmyadmin:
-  image: dockerizedrupal/phpmyadmin:1.0.3
+  image: dockerizedrupal/phpmyadmin:1.0.8
   hostname: phpmyadmin
   ports:
     - "80"
@@ -155,7 +155,7 @@ phpmyadmin:
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-phpmyadmin/master/VERSION.md
     - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-phpmyadmin
 adminer:
-  image: dockerizedrupal/adminer:1.0.4
+  image: dockerizedrupal/adminer:1.0.12
   hostname: adminer
   ports:
     - "80"
@@ -168,7 +168,7 @@ adminer:
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-adminer/master/VERSION.md
     - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-adminer
 memcached:
-  image: dockerizedrupal/memcached:1.0.2
+  image: dockerizedrupal/memcached:1.0.5
   hostname: memcached
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
@@ -176,7 +176,7 @@ memcached:
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-memcached/master/VERSION.md
     - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-memcached
 memcachephp:
-  image: dockerizedrupal/memcachephp:1.0.2
+  image: dockerizedrupal/memcachephp:1.0.7
   hostname: memcachephp
   ports:
     - "80"
@@ -218,7 +218,7 @@ apache:
   extends:
     file: host.yml
     service: apache
-  image: dockerizedrupal/apache-2.4:1.0.9
+  image: dockerizedrupal/apache-2.4:1.0.15
   hostname: apache
   ports:
     - "80"
@@ -239,7 +239,7 @@ apache-data:
   volumes:
     - .:/apache/data
 mysql:
-  image: dockerizedrupal/mysql:1.0.4
+  image: dockerizedrupal/mysql:1.0.9
   hostname: mysql
   volumes_from:
     - mysql-data
@@ -257,7 +257,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php-5.3:1.0.6
+  image: dockerizedrupal/php-5.3:1.0.11
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
@@ -274,7 +274,7 @@ php:
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.3/master/VERSION.md
     - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-php-5.3
 mailcatcher:
-  image: dockerizedrupal/mailcatcher:1.0.2
+  image: dockerizedrupal/mailcatcher:1.0.5
   hostname: mailcatcher
   ports:
     - "80"
@@ -285,7 +285,7 @@ mailcatcher:
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-mailcatcher/master/VERSION.md
     - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-mailcatcher
 phpmyadmin:
-  image: dockerizedrupal/phpmyadmin:1.0.3
+  image: dockerizedrupal/phpmyadmin:1.0.8
   hostname: phpmyadmin
   ports:
     - "80"
@@ -298,7 +298,7 @@ phpmyadmin:
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-phpmyadmin/master/VERSION.md
     - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-phpmyadmin
 adminer:
-  image: dockerizedrupal/adminer:1.0.4
+  image: dockerizedrupal/adminer:1.0.12
   hostname: adminer
   ports:
     - "80"
@@ -311,7 +311,7 @@ adminer:
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-adminer/master/VERSION.md
     - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-adminer
 memcached:
-  image: dockerizedrupal/memcached:1.0.2
+  image: dockerizedrupal/memcached:1.0.5
   hostname: memcached
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
@@ -319,7 +319,7 @@ memcached:
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-memcached/master/VERSION.md
     - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-memcached
 memcachephp:
-  image: dockerizedrupal/memcachephp:1.0.2
+  image: dockerizedrupal/memcachephp:1.0.7
   hostname: memcachephp
   ports:
     - "80"
@@ -361,7 +361,7 @@ apache:
   extends:
     file: host.yml
     service: apache
-  image: dockerizedrupal/apache-2.2:1.0.5
+  image: dockerizedrupal/apache-2.2:1.0.10
   hostname: apache
   ports:
     - "80"
@@ -382,7 +382,7 @@ apache-data:
   volumes:
     - .:/apache/data
 mysql:
-  image: dockerizedrupal/mysql:1.0.4
+  image: dockerizedrupal/mysql:1.0.9
   hostname: mysql
   volumes_from:
     - mysql-data
@@ -400,7 +400,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php-5.2:1.0.3
+  image: dockerizedrupal/php-5.2:1.0.8
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
@@ -417,7 +417,7 @@ php:
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.2/master/VERSION.md
     - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-php-5.2
 mailcatcher:
-  image: dockerizedrupal/mailcatcher:1.0.2
+  image: dockerizedrupal/mailcatcher:1.0.5
   hostname: mailcatcher
   ports:
     - "80"
@@ -428,7 +428,7 @@ mailcatcher:
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-mailcatcher/master/VERSION.md
     - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-mailcatcher
 phpmyadmin:
-  image: dockerizedrupal/phpmyadmin:1.0.3
+  image: dockerizedrupal/phpmyadmin:1.0.8
   hostname: phpmyadmin
   ports:
     - "80"
@@ -441,7 +441,7 @@ phpmyadmin:
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-phpmyadmin/master/VERSION.md
     - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-phpmyadmin
 adminer:
-  image: dockerizedrupal/adminer:1.0.4
+  image: dockerizedrupal/adminer:1.0.12
   hostname: adminer
   ports:
     - "80"
@@ -454,7 +454,7 @@ adminer:
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-adminer/master/VERSION.md
     - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-adminer
 memcached:
-  image: dockerizedrupal/memcached:1.0.2
+  image: dockerizedrupal/memcached:1.0.5
   hostname: memcached
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
@@ -462,7 +462,7 @@ memcached:
     - VHOST_VERSION_FILE=https://raw.githubusercontent.com/dockerizedrupal/docker-memcached/master/VERSION.md
     - VHOST_SOURCE_URL=https://github.com/dockerizedrupal/docker-memcached
 memcachephp:
-  image: dockerizedrupal/memcachephp:1.0.2
+  image: dockerizedrupal/memcachephp:1.0.7
   hostname: memcachephp
   ports:
     - "80"
