@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.1.0"
+VERSION="1.1.1"
 
 WORKING_DIR="$(pwd)"
 
@@ -75,7 +75,7 @@ apache:
   extends:
     file: host.yml
     service: apache
-  image: dockerizedrupal/apache-2.4:1.1.0
+  image: dockerizedrupal/apache-2.4:1.1.1
   hostname: apache
   ports:
     - "80"
@@ -142,7 +142,7 @@ mailcatcher:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-mailcatcher/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/mailcatcher/
 phpmyadmin:
-  image: dockerizedrupal/phpmyadmin:1.1.0
+  image: dockerizedrupal/phpmyadmin:1.1.1
   hostname: phpmyadmin
   ports:
     - "80"
@@ -155,7 +155,7 @@ phpmyadmin:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-phpmyadmin/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/phpmyadmin/
 adminer:
-  image: dockerizedrupal/adminer:1.1.0
+  image: dockerizedrupal/adminer:1.1.1
   hostname: adminer
   ports:
     - "80"
@@ -176,7 +176,7 @@ memcached:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-memcached/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/memcached/
 memcachephp:
-  image: dockerizedrupal/memcachephp:1.1.0
+  image: dockerizedrupal/memcachephp:1.1.1
   hostname: memcachephp
   ports:
     - "80"
@@ -218,7 +218,7 @@ apache:
   extends:
     file: host.yml
     service: apache
-  image: dockerizedrupal/apache-2.4:1.1.0
+  image: dockerizedrupal/apache-2.4:1.1.1
   hostname: apache
   ports:
     - "80"
@@ -285,7 +285,7 @@ mailcatcher:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-mailcatcher/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/mailcatcher/
 phpmyadmin:
-  image: dockerizedrupal/phpmyadmin:1.1.0
+  image: dockerizedrupal/phpmyadmin:1.1.1
   hostname: phpmyadmin
   ports:
     - "80"
@@ -298,7 +298,7 @@ phpmyadmin:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-phpmyadmin/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/phpmyadmin/
 adminer:
-  image: dockerizedrupal/adminer:1.1.0
+  image: dockerizedrupal/adminer:1.1.1
   hostname: adminer
   ports:
     - "80"
@@ -319,7 +319,7 @@ memcached:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-memcached/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/memcached/
 memcachephp:
-  image: dockerizedrupal/memcachephp:1.1.0
+  image: dockerizedrupal/memcachephp:1.1.1
   hostname: memcachephp
   ports:
     - "80"
@@ -361,7 +361,7 @@ apache:
   extends:
     file: host.yml
     service: apache
-  image: dockerizedrupal/apache-2.2:1.1.0
+  image: dockerizedrupal/apache-2.2:1.1.1
   hostname: apache
   ports:
     - "80"
@@ -428,7 +428,7 @@ mailcatcher:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-mailcatcher/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/mailcatcher/
 phpmyadmin:
-  image: dockerizedrupal/phpmyadmin:1.1.0
+  image: dockerizedrupal/phpmyadmin:1.1.1
   hostname: phpmyadmin
   ports:
     - "80"
@@ -441,7 +441,7 @@ phpmyadmin:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-phpmyadmin/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/phpmyadmin/
 adminer:
-  image: dockerizedrupal/adminer:1.1.0
+  image: dockerizedrupal/adminer:1.1.1
   hostname: adminer
   ports:
     - "80"
@@ -462,7 +462,7 @@ memcached:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-memcached/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/memcached/
 memcachephp:
-  image: dockerizedrupal/memcachephp:1.1.0
+  image: dockerizedrupal/memcachephp:1.1.1
   hostname: memcachephp
   ports:
     - "80"
