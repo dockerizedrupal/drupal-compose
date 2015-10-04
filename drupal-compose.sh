@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.1.2"
+VERSION="1.1.3"
 
 WORKING_DIR="$(pwd)"
 
@@ -75,7 +75,7 @@ apache:
   extends:
     file: host.yml
     service: apache
-  image: dockerizedrupal/apache-2.4:1.1.1
+  image: dockerizedrupal/apache-2.4:1.1.2
   hostname: apache
   ports:
     - "80"
@@ -114,7 +114,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php-5.6:1.1.0
+  image: dockerizedrupal/php-5.6:1.1.1
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
@@ -199,7 +199,7 @@ apache:
   extends:
     file: host.yml
     service: apache
-  image: dockerizedrupal/apache-2.4:1.1.1
+  image: dockerizedrupal/apache-2.4:1.1.2
   hostname: apache
   ports:
     - "80"
@@ -238,7 +238,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php-5.5:1.1.0
+  image: dockerizedrupal/php-5.5:1.1.1
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
@@ -342,7 +342,7 @@ apache:
   extends:
     file: host.yml
     service: apache
-  image: dockerizedrupal/apache-2.4:1.1.1
+  image: dockerizedrupal/apache-2.4:1.1.2
   hostname: apache
   ports:
     - "80"
@@ -381,7 +381,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php-5.3:1.1.0
+  image: dockerizedrupal/php-5.3:1.1.1
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
@@ -485,7 +485,7 @@ apache:
   extends:
     file: host.yml
     service: apache
-  image: dockerizedrupal/apache-2.2:1.1.1
+  image: dockerizedrupal/apache-2.2:1.1.2
   hostname: apache
   ports:
     - "80"
@@ -524,7 +524,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php-5.2:1.1.0
+  image: dockerizedrupal/php-5.2:1.1.1
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
