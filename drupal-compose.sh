@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.1.3"
+VERSION="1.1.4"
 
 WORKING_DIR="$(pwd)"
 
@@ -249,7 +249,7 @@ php:
     - mailcatcher:smtp
     - memcached
   environment:
-    - DRUPAL_VERSION=6
+    - DRUPAL_VERSION=8
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=php
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.5/master/VERSION.md
