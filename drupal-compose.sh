@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.1.6"
+VERSION="1.1.7"
 
 WORKING_DIR="$(pwd)"
 
@@ -77,9 +77,6 @@ apache:
     service: apache
   image: dockerizedrupal/apache-2.4:1.1.2
   hostname: apache
-  ports:
-    - "80"
-    - "443"
   volumes_from:
     - apache-data
   links:
@@ -132,9 +129,6 @@ php:
 mailcatcher:
   image: dockerizedrupal/mailcatcher:1.1.0
   hostname: mailcatcher
-  ports:
-    - "80"
-    - "443"
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=mailcatcher
@@ -143,9 +137,6 @@ mailcatcher:
 phpmyadmin:
   image: dockerizedrupal/phpmyadmin:1.1.1
   hostname: phpmyadmin
-  ports:
-    - "80"
-    - "443"
   links:
     - mysql
   environment:
@@ -156,9 +147,6 @@ phpmyadmin:
 adminer:
   image: dockerizedrupal/adminer:1.1.1
   hostname: adminer
-  ports:
-    - "80"
-    - "443"
   links:
     - mysql
   environment:
@@ -177,9 +165,6 @@ memcached:
 memcachephp:
   image: dockerizedrupal/memcachephp:1.1.1
   hostname: memcachephp
-  ports:
-    - "80"
-    - "443"
   links:
     - memcached
   environment:
@@ -201,9 +186,6 @@ apache:
     service: apache
   image: dockerizedrupal/apache-2.4:1.1.2
   hostname: apache
-  ports:
-    - "80"
-    - "443"
   volumes_from:
     - apache-data
   links:
@@ -257,9 +239,6 @@ php:
 mailcatcher:
   image: dockerizedrupal/mailcatcher:1.1.0
   hostname: mailcatcher
-  ports:
-    - "80"
-    - "443"
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=mailcatcher
@@ -268,9 +247,6 @@ mailcatcher:
 phpmyadmin:
   image: dockerizedrupal/phpmyadmin:1.1.1
   hostname: phpmyadmin
-  ports:
-    - "80"
-    - "443"
   links:
     - mysql
   environment:
@@ -281,9 +257,6 @@ phpmyadmin:
 adminer:
   image: dockerizedrupal/adminer:1.1.1
   hostname: adminer
-  ports:
-    - "80"
-    - "443"
   links:
     - mysql
   environment:
@@ -302,9 +275,6 @@ memcached:
 memcachephp:
   image: dockerizedrupal/memcachephp:1.1.1
   hostname: memcachephp
-  ports:
-    - "80"
-    - "443"
   links:
     - memcached
   environment:
@@ -344,9 +314,6 @@ apache:
     service: apache
   image: dockerizedrupal/apache-2.4:1.1.2
   hostname: apache
-  ports:
-    - "80"
-    - "443"
   volumes_from:
     - apache-data
   links:
@@ -400,9 +367,6 @@ php:
 mailcatcher:
   image: dockerizedrupal/mailcatcher:1.1.0
   hostname: mailcatcher
-  ports:
-    - "80"
-    - "443"
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=mailcatcher
@@ -411,9 +375,6 @@ mailcatcher:
 phpmyadmin:
   image: dockerizedrupal/phpmyadmin:1.1.1
   hostname: phpmyadmin
-  ports:
-    - "80"
-    - "443"
   links:
     - mysql
   environment:
@@ -424,9 +385,6 @@ phpmyadmin:
 adminer:
   image: dockerizedrupal/adminer:1.1.1
   hostname: adminer
-  ports:
-    - "80"
-    - "443"
   links:
     - mysql
   environment:
@@ -445,9 +403,6 @@ memcached:
 memcachephp:
   image: dockerizedrupal/memcachephp:1.1.1
   hostname: memcachephp
-  ports:
-    - "80"
-    - "443"
   links:
     - memcached
   environment:
@@ -487,9 +442,6 @@ apache:
     service: apache
   image: dockerizedrupal/apache-2.2:1.1.2
   hostname: apache
-  ports:
-    - "80"
-    - "443"
   volumes_from:
     - apache-data
   links:
@@ -543,9 +495,6 @@ php:
 mailcatcher:
   image: dockerizedrupal/mailcatcher:1.1.0
   hostname: mailcatcher
-  ports:
-    - "80"
-    - "443"
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=mailcatcher
@@ -554,9 +503,6 @@ mailcatcher:
 phpmyadmin:
   image: dockerizedrupal/phpmyadmin:1.1.1
   hostname: phpmyadmin
-  ports:
-    - "80"
-    - "443"
   links:
     - mysql
   environment:
@@ -567,9 +513,6 @@ phpmyadmin:
 adminer:
   image: dockerizedrupal/adminer:1.1.1
   hostname: adminer
-  ports:
-    - "80"
-    - "443"
   links:
     - mysql
   environment:
@@ -588,9 +531,6 @@ memcached:
 memcachephp:
   image: dockerizedrupal/memcachephp:1.1.1
   hostname: memcachephp
-  ports:
-    - "80"
-    - "443"
   links:
     - memcached
   environment:
