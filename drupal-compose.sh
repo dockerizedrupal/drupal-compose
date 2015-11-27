@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.1.8"
+VERSION="1.2.0"
 
 WORKING_DIR="$(pwd)"
 
@@ -88,8 +88,9 @@ apache:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.4/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/apache-2.4/
 apache-data:
-  image: dockerizedrupal/data:1.1.0
+  image: dockerizedrupal/apache-2.4:1.1.2
   hostname: apache-data
+  entrypoint: ["/bin/echo", "Data-only container for Apache."]
   volumes:
     - .:/apache/data
 mysql:
@@ -103,8 +104,9 @@ mysql:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-mysql/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/mysql/
 mysql-data:
-  image: dockerizedrupal/data:1.1.0
+  image: dockerizedrupal/mysql:1.1.0
   hostname: mysql-data
+  entrypoint: ["/bin/echo", "Data-only container for MySQL."]
   volumes:
     - /mysql
 php:
@@ -197,8 +199,9 @@ apache:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.4/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/apache-2.4/
 apache-data:
-  image: dockerizedrupal/data:1.1.0
+  image: dockerizedrupal/apache-2.4:1.1.2
   hostname: apache-data
+  entrypoint: ["/bin/echo", "Data-only container for Apache."]
   volumes:
     - .:/apache/data
 mysql:
@@ -212,8 +215,9 @@ mysql:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-mysql/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/mysql/
 mysql-data:
-  image: dockerizedrupal/data:1.1.0
+  image: dockerizedrupal/mysql:1.1.0
   hostname: mysql-data
+  entrypoint: ["/bin/echo", "Data-only container for MySQL."]
   volumes:
     - /mysql
 php:
@@ -325,8 +329,9 @@ apache:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.4/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/apache-2.4/
 apache-data:
-  image: dockerizedrupal/data:1.1.0
+  image: dockerizedrupal/apache-2.4:1.1.2
   hostname: apache-data
+  entrypoint: ["/bin/echo", "Data-only container for Apache."]
   volumes:
     - .:/apache/data
 mysql:
@@ -340,8 +345,9 @@ mysql:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-mysql/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/mysql/
 mysql-data:
-  image: dockerizedrupal/data:1.1.0
+  image: dockerizedrupal/mysql:1.1.0
   hostname: mysql-data
+  entrypoint: ["/bin/echo", "Data-only container for MySQL."]
   volumes:
     - /mysql
 php:
@@ -453,8 +459,9 @@ apache:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.2/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/apache-2.2/
 apache-data:
-  image: dockerizedrupal/data:1.1.0
+  image: dockerizedrupal/apache-2.2:1.1.2
   hostname: apache-data
+  entrypoint: ["/bin/echo", "Data-only container for Apache."]
   volumes:
     - .:/apache/data
 mysql:
@@ -468,8 +475,9 @@ mysql:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-mysql/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/mysql/
 mysql-data:
-  image: dockerizedrupal/data:1.1.0
+  image: dockerizedrupal/mysql:1.1.0
   hostname: mysql-data
+  entrypoint: ["/bin/echo", "Data-only container for MySQL."]
   volumes:
     - /mysql
 php:

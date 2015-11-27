@@ -18,7 +18,7 @@ This project is part of the [Dockerized Drupal](https://dockerizedrupal.com/) in
     TMP="$(mktemp -d)" \
       && git clone https://github.com/dockerizedrupal/drupal-compose.git "${TMP}" \
       && cd "${TMP}" \
-      && git checkout 1.1.8 \
+      && git checkout 1.2.0 \
       && sudo cp "${TMP}/drupal-compose.sh" /usr/local/bin/drupal-compose \
       && sudo chmod +x /usr/local/bin/drupal-compose \
       && cd -
