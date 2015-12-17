@@ -354,7 +354,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php-5.3:1.2.2
+  image: dockerizedrupal/php-5.4:1.2.0
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
@@ -368,8 +368,8 @@ php:
     - DRUPAL_VERSION=7
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=php
-    - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.3/master/VERSION.md
-    - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/php-5.3/
+    - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.4/master/VERSION.md
+    - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/php-5.4/
 mailcatcher:
   image: dockerizedrupal/mailcatcher:1.1.0
   hostname: mailcatcher
