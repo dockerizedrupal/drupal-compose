@@ -1,8 +1,17 @@
 #!/usr/bin/env bash
 
-VERSION="1.2.3"
+VERSION="1.2.4"
 
 WORKING_DIR="$(pwd)"
+
+APACHE_22_TAG="1.2.0"
+APACHE_24_TAG="1.2.0"
+
+PHP_52_TAG="1.2.3"
+PHP_53_TAG="1.2.5"
+PHP_54_TAG="1.2.3"
+PHP_55_TAG="1.2.5"
+PHP_56_TAG="1.2.4"
 
 help() {
   cat << EOF
@@ -29,16 +38,6 @@ fi
 
 if [ "${1}" == "-v" ] || [ "${1}" == "--version" ]; then
   version
-fi
-
-unknown_command() {
-  echo "drupal-compose: Unknown command. See 'drupal-compose --help'"
-
-  exit 1
-}
-
-if [ "${#}" -gt 2 ]; then
-  unknown_command
 fi
 
 DOCKER_COMPOSE_FILE="docker-compose.yml"
@@ -113,7 +112,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php-5.6:1.2.4
+  image: dockerizedrupal/php-5.6:${PHP_56_TAG}
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
@@ -224,7 +223,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php-5.5:1.2.5
+  image: dockerizedrupal/php-5.5:${PHP_55_TAG}
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
@@ -354,7 +353,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php-5.4:1.2.3
+  image: dockerizedrupal/php-5.4:${PHP_54_TAG}
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
@@ -484,7 +483,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php-5.2:1.2.3
+  image: dockerizedrupal/php-5.2:${PHP_52_TAG}
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
@@ -586,86 +585,219 @@ EOF
 
 DRUPAL_ROOT="$(docker_compose_file_path)"
 
-if [ -n "${DRUPAL_ROOT}" ]; then
-  read -p "drupal-compose: ${DOCKER_COMPOSE_FILE} file already exists, would you like to override it? [Y/n]: " ANSWER
+case "${1}" in
+  service)
+    case "${2}" in
+      php)
+        case "${3}" in
+          set)
+            case "${4}" in
+              version)
+                case "${5}" in
+                  5.2)
+                    sed -i "s/dockerizedrupal\/php.*/dockerizedrupal\/php-5.2:${PHP_52_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.2:${APACHE_22_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.2\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
 
-  if [ "${ANSWER}" == "n" ]; then
-    if [ ! -f "${DRUPAL_ROOT}/host.yml" ]; then
-      read -p "drupal-compose: host.yml file is missing, would you like to create it? [Y/n]: " ANSWER
+                    echo "drupal-compose: PHP version changed to 5.2."
+                  ;;
+                  5.3)
+                    sed -i "s/dockerizedrupal\/php.*/dockerizedrupal\/php-5.3:${PHP_53_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.3\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+
+                    echo "drupal-compose: PHP version changed to 5.3."
+                  ;;
+                  5.4)
+                    sed -i "s/dockerizedrupal\/php.*/dockerizedrupal\/php-5.4:${PHP_54_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.4\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+
+                    echo "drupal-compose: PHP version changed to 5.4."
+                  ;;
+                  5.5)
+                    sed -i "s/dockerizedrupal\/php.*/dockerizedrupal\/php-5.5:${PHP_55_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.5\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+
+                    echo "drupal-compose: PHP version changed to 5.5."
+                  ;;
+                  5.6)
+                    sed -i "s/dockerizedrupal\/php.*/dockerizedrupal\/php-5.6:${PHP_56_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.6\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+
+                    echo "drupal-compose: PHP version changed to 5.6."
+                  ;;
+                  -h|--help)
+                    cat << EOF
+Version: ${VERSION}
+
+Usage: drupal-compose service php set version <VERSION>
+
+Supported versions:
+  5.2
+  5.3
+  5.4
+  5.5
+  5.6
+EOF
+
+                    exit 1
+                  ;;
+                  *)
+                    echo "drupal-compose: Unknown command. See 'drupal-compose service php set version --help'"
+
+                    exit 1
+                  ;;
+                esac
+              ;;
+              -h|--help)
+                cat << EOF
+Version: ${VERSION}
+
+Usage: drupal-compose service php set <KEY> <VALUE>
+
+Supported keys:
+  version
+EOF
+
+                exit 1
+              ;;
+              *)
+                echo "drupal-compose: Unknown command. See 'drupal-compose service php set --help'"
+
+                exit 1
+              ;;
+            esac
+          ;;
+          -h|--help)
+            cat << EOF
+Version: ${VERSION}
+
+Usage: drupal-compose service php <ACTION>
+
+Supported actions:
+  set
+EOF
+
+            exit 1
+          ;;
+          *)
+            echo "drupal-compose: Unknown command. See 'drupal-compose service php --help'"
+
+            exit 1
+          ;;
+        esac
+      ;;
+      -h|--help)
+        cat << EOF
+Version: ${VERSION}
+
+Usage: drupal-compose service <SERVICE>
+
+Supported services:
+  php
+EOF
+
+        exit 1
+      ;;
+      *)
+        echo "drupal-compose: Unknown command. See 'drupal-compose service --help'"
+
+        exit 1
+      ;;
+    esac
+  ;;
+  *)
+    if [ "${#}" -gt 2 ]; then
+      echo "drupal-compose: Unknown command. See 'drupal-compose --help'"
+
+      exit 1
+    fi
+
+    if [ -n "${DRUPAL_ROOT}" ]; then
+      read -p "drupal-compose: ${DOCKER_COMPOSE_FILE} file already exists, would you like to override it? [Y/n]: " ANSWER
 
       if [ "${ANSWER}" == "n" ]; then
+        if [ ! -f "${DRUPAL_ROOT}/host.yml" ]; then
+          read -p "drupal-compose: host.yml file is missing, would you like to create it? [Y/n]: " ANSWER
+
+          if [ "${ANSWER}" == "n" ]; then
+            exit
+          fi
+
+          echo -n "$(host_docker_compose_template)" > "${DRUPAL_ROOT}/host.yml"
+
+          echo "drupal-compose: host.yml file has been created. Please don't add it to VCS, since this file is specific to the host where it was generated."
+        fi
+
         exit
       fi
+    fi
+
+    DRUPAL_ROOT="$(drupal_8_path)"
+
+    if [ -n "${DRUPAL_ROOT}" ]; then
+      read -p "drupal-compose: Enter project name: " PROJECT_NAME
+
+      echo -n "$(drupal_8_docker_compose_template ${PROJECT_NAME})" > "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+
+      echo "drupal-compose: ${DOCKER_COMPOSE_FILE} file has been created. Don't forget to add it to VCS alongside with Drupal."
 
       echo -n "$(host_docker_compose_template)" > "${DRUPAL_ROOT}/host.yml"
 
       echo "drupal-compose: host.yml file has been created. Please don't add it to VCS, since this file is specific to the host where it was generated."
+
+      exit
     fi
 
-    exit
-  fi
-fi
+    DRUPAL_ROOT="$(drupal_7_path)"
 
-DRUPAL_ROOT="$(drupal_8_path)"
+    if [ -n "${DRUPAL_ROOT}" ]; then
+      read -p "drupal-compose: Enter project name: " PROJECT_NAME
 
-if [ -n "${DRUPAL_ROOT}" ]; then
-  read -p "drupal-compose: Enter project name: " PROJECT_NAME
+      echo -n "$(drupal_7_docker_compose_template ${PROJECT_NAME})" > "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
 
-  echo -n "$(drupal_8_docker_compose_template ${PROJECT_NAME})" > "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+      echo "drupal-compose: ${DOCKER_COMPOSE_FILE} file has been created. Don't forget to add it to VCS alongside with Drupal."
 
-  echo "drupal-compose: ${DOCKER_COMPOSE_FILE} file has been created. Don't forget to add it to VCS alongside with Drupal."
+      echo -n "$(host_docker_compose_template)" > "${DRUPAL_ROOT}/host.yml"
 
-  echo -n "$(host_docker_compose_template)" > "${DRUPAL_ROOT}/host.yml"
+      echo "drupal-compose: host.yml file has been created. Please don't add it to VCS, since this file is specific to the host where it was generated."
 
-  echo "drupal-compose: host.yml file has been created. Please don't add it to VCS, since this file is specific to the host where it was generated."
+      exit
+    fi
 
-  exit
-fi
+    DRUPAL_ROOT="$(drupal_6_path)"
 
-DRUPAL_ROOT="$(drupal_7_path)"
+    if [ -n "${DRUPAL_ROOT}" ]; then
+      read -p "drupal-compose: Enter project name: " PROJECT_NAME
 
-if [ -n "${DRUPAL_ROOT}" ]; then
-  read -p "drupal-compose: Enter project name: " PROJECT_NAME
+      echo -n "$(drupal_6_docker_compose_template ${PROJECT_NAME})" > "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
 
-  echo -n "$(drupal_7_docker_compose_template ${PROJECT_NAME})" > "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+      echo "drupal-compose: ${DOCKER_COMPOSE_FILE} file has been created. Don't forget to add it to VCS alongside with Drupal."
 
-  echo "drupal-compose: ${DOCKER_COMPOSE_FILE} file has been created. Don't forget to add it to VCS alongside with Drupal."
+      echo -n "$(host_docker_compose_template)" > "${DRUPAL_ROOT}/host.yml"
 
-  echo -n "$(host_docker_compose_template)" > "${DRUPAL_ROOT}/host.yml"
+      echo "drupal-compose: host.yml file has been created. Please don't add it to VCS, since this file is specific to the host where it was generated."
 
-  echo "drupal-compose: host.yml file has been created. Please don't add it to VCS, since this file is specific to the host where it was generated."
+      exit
+    fi
 
-  exit
-fi
+    read -p "drupal-compose: Drupal installation path could not be found, would you like to create general purpose ${DOCKER_COMPOSE_FILE} file for your application anyways? [Y/n]: " ANSWER
 
-DRUPAL_ROOT="$(drupal_6_path)"
+    if [ "${ANSWER}" == "n" ]; then
+      exit
+    fi
 
-if [ -n "${DRUPAL_ROOT}" ]; then
-  read -p "drupal-compose: Enter project name: " PROJECT_NAME
+    read -p "drupal-compose: Enter project name: " PROJECT_NAME
 
-  echo -n "$(drupal_6_docker_compose_template ${PROJECT_NAME})" > "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+    echo -n "$(general_docker_compose_template ${PROJECT_NAME})" > "${WORKING_DIR}/${DOCKER_COMPOSE_FILE}"
 
-  echo "drupal-compose: ${DOCKER_COMPOSE_FILE} file has been created. Don't forget to add it to VCS alongside with Drupal."
+    echo "drupal-compose: ${DOCKER_COMPOSE_FILE} file has been created. Don't forget to add it to VCS alongside with Drupal."
 
-  echo -n "$(host_docker_compose_template)" > "${DRUPAL_ROOT}/host.yml"
+    echo -n "$(host_docker_compose_template)" > "${WORKING_DIR}/host.yml"
 
-  echo "drupal-compose: host.yml file has been created. Please don't add it to VCS, since this file is specific to the host where it was generated."
-
-  exit
-fi
-
-read -p "drupal-compose: Drupal installation path could not be found, would you like to create general purpose ${DOCKER_COMPOSE_FILE} file for your application anyways? [Y/n]: " ANSWER
-
-if [ "${ANSWER}" == "n" ]; then
-  exit
-fi
-
-read -p "drupal-compose: Enter project name: " PROJECT_NAME
-
-echo -n "$(general_docker_compose_template ${PROJECT_NAME})" > "${WORKING_DIR}/${DOCKER_COMPOSE_FILE}"
-
-echo "drupal-compose: ${DOCKER_COMPOSE_FILE} file has been created. Don't forget to add it to VCS alongside with Drupal."
-
-echo -n "$(host_docker_compose_template)" > "${WORKING_DIR}/host.yml"
-
-echo "drupal-compose: host.yml file has been created. Please don't add it to VCS, since this file is specific to the host where it was generated."
+    echo "drupal-compose: host.yml file has been created. Please don't add it to VCS, since this file is specific to the host where it was generated."
+  ;;
+esac

@@ -1,5 +1,5 @@
-var current_version = '1.2.2';
-var new_version = '1.2.3';
+var current_version = '1.2.3';
+var new_version = '1.2.4';
 
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-replace');
@@ -78,6 +78,25 @@ module.exports = function(grunt) {
             expand: true,
             src: [
               'drupal-compose.sh'
+            ]
+          }
+        ]
+      },
+      task5: {
+        options: {
+          patterns: [
+            {
+              match: 'VERSION = "' + current_version + '"',
+              replacement: 'VERSION = "' + new_version + '"'
+            }
+          ],
+          usePrefix: false
+        },
+        files: [
+          {
+            expand: true,
+            src: [
+              'Vagrantfile'
             ]
           }
         ]
