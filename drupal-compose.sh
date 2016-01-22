@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-VERSION="1.2.4"
+VERSION="1.2.5"
 
 WORKING_DIR="$(pwd)"
 
-APACHE_22_TAG="1.2.0"
-APACHE_24_TAG="1.2.0"
+APACHE_22_TAG="1.2.2"
+APACHE_24_TAG="1.2.2"
 
 PHP_52_TAG="1.2.3"
 PHP_53_TAG="1.2.5"
