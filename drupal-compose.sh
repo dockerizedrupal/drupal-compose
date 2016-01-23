@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.2.5"
+VERSION="1.2.6"
 
 WORKING_DIR="$(pwd)"
 
@@ -74,7 +74,7 @@ apache:
   extends:
     file: host.yml
     service: apache
-  image: dockerizedrupal/apache-2.4:1.2.0
+  image: dockerizedrupal/apache-2.4:${APACHE_24_TAG}
   hostname: apache
   volumes_from:
     - apache-data
@@ -87,7 +87,7 @@ apache:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.4/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/apache-2.4/
 apache-data:
-  image: dockerizedrupal/apache-2.4:1.2.0
+  image: dockerizedrupal/apache-2.4:${APACHE_24_TAG}
   hostname: apache-data
   entrypoint: ["/bin/echo", "Data-only container for Apache."]
   volumes:
@@ -185,7 +185,7 @@ apache:
   extends:
     file: host.yml
     service: apache
-  image: dockerizedrupal/apache-2.4:1.2.0
+  image: dockerizedrupal/apache-2.4:${APACHE_24_TAG}
   hostname: apache
   volumes_from:
     - apache-data
@@ -198,7 +198,7 @@ apache:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.4/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/apache-2.4/
 apache-data:
-  image: dockerizedrupal/apache-2.4:1.2.0
+  image: dockerizedrupal/apache-2.4:${APACHE_24_TAG}
   hostname: apache-data
   entrypoint: ["/bin/echo", "Data-only container for Apache."]
   volumes:
@@ -315,7 +315,7 @@ apache:
   extends:
     file: host.yml
     service: apache
-  image: dockerizedrupal/apache-2.4:1.2.0
+  image: dockerizedrupal/apache-2.4:${APACHE_24_TAG}
   hostname: apache
   volumes_from:
     - apache-data
@@ -328,7 +328,7 @@ apache:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.4/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/apache-2.4/
 apache-data:
-  image: dockerizedrupal/apache-2.4:1.2.0
+  image: dockerizedrupal/apache-2.4:${APACHE_24_TAG}
   hostname: apache-data
   entrypoint: ["/bin/echo", "Data-only container for Apache."]
   volumes:
@@ -445,7 +445,7 @@ apache:
   extends:
     file: host.yml
     service: apache
-  image: dockerizedrupal/apache-2.2:1.2.0
+  image: dockerizedrupal/apache-2.2:${APACHE_22_TAG}
   hostname: apache
   volumes_from:
     - apache-data
@@ -458,7 +458,7 @@ apache:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.2/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/apache-2.2/
 apache-data:
-  image: dockerizedrupal/apache-2.2:1.2.0
+  image: dockerizedrupal/apache-2.2:${APACHE_22_TAG}
   hostname: apache-data
   entrypoint: ["/bin/echo", "Data-only container for Apache."]
   volumes:
