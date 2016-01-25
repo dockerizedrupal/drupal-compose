@@ -4,14 +4,14 @@ VERSION="1.2.6"
 
 WORKING_DIR="$(pwd)"
 
-APACHE_22_TAG="1.2.2"
-APACHE_24_TAG="1.2.2"
+APACHE_22_TAG="$(wget https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.2/master/VERSION.md -q -O -)"
+APACHE_24_TAG="$(wget https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.4/master/VERSION.md -q -O -)"
 
-PHP_52_TAG="1.2.3"
-PHP_53_TAG="1.2.5"
-PHP_54_TAG="1.2.3"
-PHP_55_TAG="1.2.5"
-PHP_56_TAG="1.2.4"
+PHP_52_TAG="$(wget https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.2/master/VERSION.md -q -O -)"
+PHP_53_TAG="$(wget https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.3/master/VERSION.md -q -O -)"
+PHP_54_TAG="$(wget https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.4/master/VERSION.md -q -O -)"
+PHP_55_TAG="$(wget https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.5/master/VERSION.md -q -O -)"
+PHP_56_TAG="$(wget https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.6/master/VERSION.md -q -O -)"
 
 help() {
   cat << EOF
