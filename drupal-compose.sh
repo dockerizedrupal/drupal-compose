@@ -13,6 +13,13 @@ PHP_54_TAG="$(wget https://raw.githubusercontent.com/dockerizedrupal/docker-php-
 PHP_55_TAG="$(wget https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.5/master/VERSION.md -q -O -)"
 PHP_56_TAG="$(wget https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.6/master/VERSION.md -q -O -)"
 
+MYSQL_TAG="$(wget https://raw.githubusercontent.com/dockerizedrupal/docker-mysql/master/VERSION.md -q -O -)"
+MAILCATCHER_TAG="$(wget https://raw.githubusercontent.com/dockerizedrupal/docker-mailcatcher/master/VERSION.md -q -O -)"
+PMA_TAG="$(wget https://raw.githubusercontent.com/dockerizedrupal/docker-phpmyadmin/master/VERSION.md -q -O -)"
+ADMINER_TAG="$(wget https://raw.githubusercontent.com/dockerizedrupal/docker-adminer/master/VERSION.md -q -O -)"
+MEMCACHE_TAG="$(wget https://raw.githubusercontent.com/dockerizedrupal/docker-memcachephp/master/VERSION.md -q -O -)"
+MEMCACHE_PHP_TAG="$(wget https://raw.githubusercontent.com/dockerizedrupal/docker-memcached/master/VERSION.md -q -O -)"
+
 help() {
   cat << EOF
 Version: ${VERSION}
@@ -93,7 +100,7 @@ apache-data:
   volumes:
     - .:/apache/data
 mysql:
-  image: dockerizedrupal/mysql:1.2.1
+  image: dockerizedrupal/mysql:${MYSQL_TAG}
   hostname: mysql
   volumes_from:
     - mysql-data
@@ -103,7 +110,7 @@ mysql:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-mysql/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/mysql/
 mysql-data:
-  image: dockerizedrupal/mysql:1.2.1
+  image: dockerizedrupal/mysql:${MYSQL_TAG}
   hostname: mysql-data
   entrypoint: ["/bin/echo", "Data-only container for MySQL."]
   volumes:
@@ -128,7 +135,7 @@ php:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.6/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/php-5.6/
 mailcatcher:
-  image: dockerizedrupal/mailcatcher:1.1.0
+  image: dockerizedrupal/mailcatcher:${MAILCATCHER_TAG}
   hostname: mailcatcher
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
@@ -136,7 +143,7 @@ mailcatcher:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-mailcatcher/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/mailcatcher/
 phpmyadmin:
-  image: dockerizedrupal/phpmyadmin:1.1.1
+  image: dockerizedrupal/phpmyadmin:${PMA_TAG}
   hostname: phpmyadmin
   links:
     - mysql
@@ -146,7 +153,7 @@ phpmyadmin:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-phpmyadmin/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/phpmyadmin/
 adminer:
-  image: dockerizedrupal/adminer:1.1.1
+  image: dockerizedrupal/adminer:${ADMINER_TAG}
   hostname: adminer
   links:
     - mysql
@@ -156,7 +163,7 @@ adminer:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-adminer/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/adminer/
 memcached:
-  image: dockerizedrupal/memcached:1.1.0
+  image: dockerizedrupal/memcached:${MEMCACHE_TAG}
   hostname: memcached
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
@@ -164,7 +171,7 @@ memcached:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-memcached/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/memcached/
 memcachephp:
-  image: dockerizedrupal/memcachephp:1.1.1
+  image: dockerizedrupal/memcachephp:${MEMCACHE_PHP_TAG}
   hostname: memcachephp
   links:
     - memcached
@@ -204,7 +211,7 @@ apache-data:
   volumes:
     - .:/apache/data
 mysql:
-  image: dockerizedrupal/mysql:1.2.1
+  image: dockerizedrupal/mysql:${MYSQL_TAG}
   hostname: mysql
   volumes_from:
     - mysql-data
@@ -214,7 +221,7 @@ mysql:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-mysql/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/mysql/
 mysql-data:
-  image: dockerizedrupal/mysql:1.2.1
+  image: dockerizedrupal/mysql:${MYSQL_TAG}
   hostname: mysql-data
   entrypoint: ["/bin/echo", "Data-only container for MySQL."]
   volumes:
@@ -240,7 +247,7 @@ php:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.5/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/php-5.5/
 mailcatcher:
-  image: dockerizedrupal/mailcatcher:1.1.0
+  image: dockerizedrupal/mailcatcher:${MAILCATCHER_TAG}
   hostname: mailcatcher
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
@@ -248,7 +255,7 @@ mailcatcher:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-mailcatcher/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/mailcatcher/
 phpmyadmin:
-  image: dockerizedrupal/phpmyadmin:1.1.1
+  image: dockerizedrupal/phpmyadmin:${PMA_TAG}
   hostname: phpmyadmin
   links:
     - mysql
@@ -258,7 +265,7 @@ phpmyadmin:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-phpmyadmin/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/phpmyadmin/
 adminer:
-  image: dockerizedrupal/adminer:1.1.1
+  image: dockerizedrupal/adminer:${ADMINER_TAG}
   hostname: adminer
   links:
     - mysql
@@ -268,7 +275,7 @@ adminer:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-adminer/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/adminer/
 memcached:
-  image: dockerizedrupal/memcached:1.1.0
+  image: dockerizedrupal/memcached:${MEMCACHE_TAG}
   hostname: memcached
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
@@ -276,7 +283,7 @@ memcached:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-memcached/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/memcached/
 memcachephp:
-  image: dockerizedrupal/memcachephp:1.1.1
+  image: dockerizedrupal/memcachephp:${MEMCACHE_PHP_TAG}
   hostname: memcachephp
   links:
     - memcached
@@ -334,7 +341,7 @@ apache-data:
   volumes:
     - .:/apache/data
 mysql:
-  image: dockerizedrupal/mysql:1.2.1
+  image: dockerizedrupal/mysql:${MYSQL_TAG}
   hostname: mysql
   volumes_from:
     - mysql-data
@@ -344,7 +351,7 @@ mysql:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-mysql/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/mysql/
 mysql-data:
-  image: dockerizedrupal/mysql:1.2.1
+  image: dockerizedrupal/mysql:${MYSQL_TAG}
   hostname: mysql-data
   entrypoint: ["/bin/echo", "Data-only container for MySQL."]
   volumes:
@@ -370,7 +377,7 @@ php:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.4/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/php-5.4/
 mailcatcher:
-  image: dockerizedrupal/mailcatcher:1.1.0
+  image: dockerizedrupal/mailcatcher:${MAILCATCHER_TAG}
   hostname: mailcatcher
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
@@ -378,7 +385,7 @@ mailcatcher:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-mailcatcher/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/mailcatcher/
 phpmyadmin:
-  image: dockerizedrupal/phpmyadmin:1.1.1
+  image: dockerizedrupal/phpmyadmin:${PMA_TAG}
   hostname: phpmyadmin
   links:
     - mysql
@@ -388,7 +395,7 @@ phpmyadmin:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-phpmyadmin/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/phpmyadmin/
 adminer:
-  image: dockerizedrupal/adminer:1.1.1
+  image: dockerizedrupal/adminer:${ADMINER_TAG}
   hostname: adminer
   links:
     - mysql
@@ -398,7 +405,7 @@ adminer:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-adminer/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/adminer/
 memcached:
-  image: dockerizedrupal/memcached:1.1.0
+  image: dockerizedrupal/memcached:${MEMCACHE_TAG}
   hostname: memcached
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
@@ -406,7 +413,7 @@ memcached:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-memcached/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/memcached/
 memcachephp:
-  image: dockerizedrupal/memcachephp:1.1.1
+  image: dockerizedrupal/memcachephp:${MEMCACHE_PHP_TAG}
   hostname: memcachephp
   links:
     - memcached
@@ -464,7 +471,7 @@ apache-data:
   volumes:
     - .:/apache/data
 mysql:
-  image: dockerizedrupal/mysql:1.2.1
+  image: dockerizedrupal/mysql:${MYSQL_TAG}
   hostname: mysql
   volumes_from:
     - mysql-data
@@ -474,7 +481,7 @@ mysql:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-mysql/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/mysql/
 mysql-data:
-  image: dockerizedrupal/mysql:1.2.1
+  image: dockerizedrupal/mysql:${MYSQL_TAG}
   hostname: mysql-data
   entrypoint: ["/bin/echo", "Data-only container for MySQL."]
   volumes:
@@ -500,7 +507,7 @@ php:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.2/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/php-5.2/
 mailcatcher:
-  image: dockerizedrupal/mailcatcher:1.1.0
+  image: dockerizedrupal/mailcatcher:${MAILCATCHER_TAG}
   hostname: mailcatcher
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
@@ -508,7 +515,7 @@ mailcatcher:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-mailcatcher/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/mailcatcher/
 phpmyadmin:
-  image: dockerizedrupal/phpmyadmin:1.1.1
+  image: dockerizedrupal/phpmyadmin:${PMA_TAG}
   hostname: phpmyadmin
   links:
     - mysql
@@ -518,7 +525,7 @@ phpmyadmin:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-phpmyadmin/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/phpmyadmin/
 adminer:
-  image: dockerizedrupal/adminer:1.1.1
+  image: dockerizedrupal/adminer:${ADMINER_TAG}
   hostname: adminer
   links:
     - mysql
@@ -528,7 +535,7 @@ adminer:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-adminer/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/adminer/
 memcached:
-  image: dockerizedrupal/memcached:1.1.0
+  image: dockerizedrupal/memcached:${MEMCACHE_TAG}
   hostname: memcached
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
@@ -536,7 +543,7 @@ memcached:
     - VHOST_VERSION_FILE_URL=https://raw.githubusercontent.com/dockerizedrupal/docker-memcached/master/VERSION.md
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/memcached/
 memcachephp:
-  image: dockerizedrupal/memcachephp:1.1.1
+  image: dockerizedrupal/memcachephp:${MEMCACHE_PHP_TAG}
   hostname: memcachephp
   links:
     - memcached
