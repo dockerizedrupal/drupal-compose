@@ -1,8 +1,35 @@
 #!/usr/bin/env bash
 
-VERSION="1.3.0"
+VERSION="1.3.1"
 
 WORKING_DIR="$(pwd)"
+
+help() {
+  cat << EOF
+Version: ${VERSION}
+
+Usage: drupal-compose
+
+Options:
+  -f, --file FILE  Specify an alternate compose file (default: docker-compose.yml)
+  -v, --version     Show version number
+  -h, --help        Show help
+EOF
+
+  exit 1
+}
+
+version() {
+  help
+}
+
+if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
+  help
+fi
+
+if [ "${1}" == "-v" ] || [ "${1}" == "--version" ]; then
+  version
+fi
 
 APACHE_22_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.2/master/VERSION.md"
 APACHE_22_TAG="$(wget ${APACHE_22_VERSION_FILE_URL} -q -O -)"
@@ -119,33 +146,6 @@ if [ -z "${MEMCACHEPHP_TAG}" ]; then
   MEMCACHEPHP_TAG="1.1.1"
 
   echo "drupal-compose: Couldn't retrieve the latest memcache.php image version. Falling back to last known stable version: ${MEMCACHEPHP_TAG}."
-fi
-
-help() {
-  cat << EOF
-Version: ${VERSION}
-
-Usage: drupal-compose
-
-Options:
-  -f, --file FILE  Specify an alternate compose file (default: docker-compose.yml)
-  -v, --version     Show version number
-  -h, --help        Show help
-EOF
-
-  exit 1
-}
-
-version() {
-  help
-}
-
-if [ "${1}" == "-h" ] || [ "${1}" == "--help" ]; then
-  help
-fi
-
-if [ "${1}" == "-v" ] || [ "${1}" == "--version" ]; then
-  version
 fi
 
 DOCKER_COMPOSE_FILE="docker-compose.yml"
