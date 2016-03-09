@@ -18,10 +18,22 @@ Generates general purpose [docker-compose.yml](https://docs.docker.com/compose/y
     TMP="$(mktemp -d)" \
       && git clone https://github.com/dockerizedrupal/drupal-compose.git "${TMP}" \
       && cd "${TMP}" \
-      && git checkout 1.2.6 \
+      && git checkout 1.3.0 \
       && sudo cp "${TMP}/drupal-compose.sh" /usr/local/bin/drupal-compose \
       && sudo chmod +x /usr/local/bin/drupal-compose \
       && cd -
+
+## Switching to a different PHP version
+
+    drupal-compose service php set version <VERSION>
+
+### Supported versions
+
+    5.2
+    5.3
+    5.4
+    5.5
+    5.6
 
 ## License
 

@@ -1,4 +1,4 @@
-VERSION = "1.2.6"
+VERSION = "1.3.0"
 
 require 'yaml'
 
@@ -13,7 +13,7 @@ MEMORY_SIZE = 512
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
 
-  config.vm.hostname = "php"
+  config.vm.hostname = "drupal-compose"
 
   config.vm.provider "virtualbox" do |v|
     name = "dockerizedrupal-drupal-compose-" + VERSION
