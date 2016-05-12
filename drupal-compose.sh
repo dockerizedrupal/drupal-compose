@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.3.1"
+VERSION="1.3.2"
 
 WORKING_DIR="$(pwd)"
 
@@ -53,7 +53,7 @@ PHP_52_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_52_TAG="$(wget ${PHP_52_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_52_TAG}" ]; then
-  PHP_52_TAG="1.2.3"
+  PHP_52_TAG="1.2.5"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.2 image version. Falling back to last known stable version: ${PHP_52_TAG}."
 fi
@@ -62,7 +62,7 @@ PHP_53_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_53_TAG="$(wget ${PHP_53_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_53_TAG}" ]; then
-  PHP_53_TAG="1.2.5"
+  PHP_53_TAG="1.2.9"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.3 image version. Falling back to last known stable version: ${PHP_53_TAG}."
 fi
@@ -71,7 +71,7 @@ PHP_54_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_54_TAG="$(wget ${PHP_54_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_54_TAG}" ]; then
-  PHP_54_TAG="1.2.3"
+  PHP_54_TAG="1.2.7"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.4 image version. Falling back to last known stable version: ${PHP_54_TAG}."
 fi
@@ -80,7 +80,7 @@ PHP_55_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_55_TAG="$(wget ${PHP_55_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_55_TAG}" ]; then
-  PHP_55_TAG="1.2.5"
+  PHP_55_TAG="1.2.9"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.5 image version. Falling back to last known stable version: ${PHP_55_TAG}."
 fi
@@ -89,7 +89,7 @@ PHP_56_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_56_TAG="$(wget ${PHP_56_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_56_TAG}" ]; then
-  PHP_56_TAG="1.2.4"
+  PHP_56_TAG="1.2.7"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.6 image version. Falling back to last known stable version: ${PHP_56_TAG}."
 fi
@@ -107,7 +107,7 @@ MAILCATCHER_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/
 MAILCATCHER_TAG="$(wget ${MAILCATCHER_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${MAILCATCHER_TAG}" ]; then
-  MAILCATCHER_TAG="1.1.0"
+  MAILCATCHER_TAG="1.1.1"
 
   echo "drupal-compose: Couldn't retrieve the latest MySQL image version. Falling back to last known stable version: ${MAILCATCHER_TAG}."
 fi
