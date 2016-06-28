@@ -703,35 +703,35 @@ case "${1}" in
               version)
                 case "${5}" in
                   5.2)
-                    sed -i "s/dockerizedrupal\/php.*/dockerizedrupal\/php-5.2:${PHP_52_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*/dockerizedrupal\/php-5.2:${PHP_52_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
                     sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.2:${APACHE_22_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
                     sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.2\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
 
                     echo "drupal-compose: PHP version changed to 5.2."
                   ;;
                   5.3)
-                    sed -i "s/dockerizedrupal\/php.*/dockerizedrupal\/php-5.3:${PHP_53_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*/dockerizedrupal\/php-5.3:${PHP_53_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
                     sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
                     sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.3\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
 
                     echo "drupal-compose: PHP version changed to 5.3."
                   ;;
                   5.4)
-                    sed -i "s/dockerizedrupal\/php.*/dockerizedrupal\/php-5.4:${PHP_54_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*/dockerizedrupal\/php-5.4:${PHP_54_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
                     sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
                     sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.4\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
 
                     echo "drupal-compose: PHP version changed to 5.4."
                   ;;
                   5.5)
-                    sed -i "s/dockerizedrupal\/php.*/dockerizedrupal\/php-5.5:${PHP_55_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*/dockerizedrupal\/php-5.5:${PHP_55_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
                     sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
                     sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.5\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
 
                     echo "drupal-compose: PHP version changed to 5.5."
                   ;;
                   5.6)
-                    sed -i "s/dockerizedrupal\/php.*/dockerizedrupal\/php-5.6:${PHP_56_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*/dockerizedrupal\/php-5.6:${PHP_56_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
                     sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
                     sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.6\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
 
