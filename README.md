@@ -34,6 +34,7 @@ Generates general purpose [docker-compose.yml](https://docs.docker.com/compose/y
     5.4
     5.5
     5.6
+    7.0
 
 ## License
 
