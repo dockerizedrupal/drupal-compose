@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.3.3"
+VERSION="1.4.0"
 
 WORKING_DIR="$(pwd)"
 
@@ -92,6 +92,15 @@ if [ -z "${PHP_56_TAG}" ]; then
   PHP_56_TAG="1.2.7"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.6 image version. Falling back to last known stable version: ${PHP_56_TAG}."
+fi
+
+PHP_70_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-php-7.0/master/VERSION.md"
+PHP_70_TAG="$(wget ${PHP_70_VERSION_FILE_URL} -q -O -)"
+
+if [ -z "${PHP_70_TAG}" ]; then
+  PHP_70_TAG="1.0.0"
+
+  echo "drupal-compose: Couldn't retrieve the latest PHP 7.0 image version. Falling back to last known stable version: ${PHP_70_TAG}."
 fi
 
 MYSQL_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-mysql/master/VERSION.md"
@@ -737,6 +746,13 @@ case "${1}" in
 
                     echo "drupal-compose: PHP version changed to 5.6."
                   ;;
+                  7.0)
+                    sed -i "s/dockerizedrupal\/php-.*/dockerizedrupal\/php-5.6:${PHP_70_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.6\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+
+                    echo "drupal-compose: PHP version changed to 7.0."
+                  ;;
                   -h|--help)
                     cat << EOF
 Version: ${VERSION}
@@ -749,6 +765,7 @@ Supported versions:
   5.4
   5.5
   5.6
+  7.0
 EOF
 
                     exit 1
