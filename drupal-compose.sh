@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.4.0"
+VERSION="1.4.1"
 
 WORKING_DIR="$(pwd)"
 
@@ -98,7 +98,7 @@ PHP_70_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_70_TAG="$(wget ${PHP_70_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_70_TAG}" ]; then
-  PHP_70_TAG="1.0.0"
+  PHP_70_TAG="1.1.0"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 7.0 image version. Falling back to last known stable version: ${PHP_70_TAG}."
 fi

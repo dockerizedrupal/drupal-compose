@@ -18,7 +18,7 @@ Generates general purpose [docker-compose.yml](https://docs.docker.com/compose/y
     TMP="$(mktemp -d)" \
       && git clone https://github.com/dockerizedrupal/drupal-compose.git "${TMP}" \
       && cd "${TMP}" \
-      && git checkout 1.4.0 \
+      && git checkout 1.4.1 \
       && sudo cp "${TMP}/drupal-compose.sh" /usr/local/bin/drupal-compose \
       && sudo chmod +x /usr/local/bin/drupal-compose \
       && cd -
