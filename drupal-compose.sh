@@ -747,9 +747,9 @@ case "${1}" in
                     echo "drupal-compose: PHP version changed to 5.6."
                   ;;
                   7.0)
-                    sed -i "s/dockerizedrupal\/php-.*/dockerizedrupal\/php-5.6:${PHP_70_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*/dockerizedrupal\/php-7.0:${PHP_70_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
                     sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
-                    sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.6\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-7.0\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
 
                     echo "drupal-compose: PHP version changed to 7.0."
                   ;;
