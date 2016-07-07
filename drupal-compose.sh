@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.4.2"
+VERSION="1.4.3"
 
 WORKING_DIR="$(pwd)"
 
@@ -35,7 +35,7 @@ APACHE_22_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/do
 APACHE_22_TAG="$(wget ${APACHE_22_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${APACHE_22_TAG}" ]; then
-  APACHE_22_TAG="1.2.2"
+  APACHE_22_TAG="1.2.3"
 
   echo "drupal-compose: Couldn't retrieve the latest Apache 2.2 image version. Falling back to last known stable version: ${APACHE_22_TAG}."
 fi
@@ -44,7 +44,7 @@ APACHE_24_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/do
 APACHE_24_TAG="$(wget ${APACHE_24_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${APACHE_24_TAG}" ]; then
-  APACHE_24_TAG="1.2.2"
+  APACHE_24_TAG="1.2.4"
 
   echo "drupal-compose: Couldn't retrieve the latest Apache 2.4 image version. Falling back to last known stable version: ${APACHE_24_TAG}."
 fi
@@ -53,7 +53,7 @@ PHP_52_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_52_TAG="$(wget ${PHP_52_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_52_TAG}" ]; then
-  PHP_52_TAG="1.2.5"
+  PHP_52_TAG="1.2.7"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.2 image version. Falling back to last known stable version: ${PHP_52_TAG}."
 fi
@@ -62,7 +62,7 @@ PHP_53_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_53_TAG="$(wget ${PHP_53_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_53_TAG}" ]; then
-  PHP_53_TAG="1.2.9"
+  PHP_53_TAG="1.2.11"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.3 image version. Falling back to last known stable version: ${PHP_53_TAG}."
 fi
@@ -71,7 +71,7 @@ PHP_54_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_54_TAG="$(wget ${PHP_54_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_54_TAG}" ]; then
-  PHP_54_TAG="1.2.7"
+  PHP_54_TAG="1.2.9"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.4 image version. Falling back to last known stable version: ${PHP_54_TAG}."
 fi
@@ -80,7 +80,7 @@ PHP_55_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_55_TAG="$(wget ${PHP_55_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_55_TAG}" ]; then
-  PHP_55_TAG="1.2.9"
+  PHP_55_TAG="1.2.11"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.5 image version. Falling back to last known stable version: ${PHP_55_TAG}."
 fi
@@ -89,7 +89,7 @@ PHP_56_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_56_TAG="$(wget ${PHP_56_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_56_TAG}" ]; then
-  PHP_56_TAG="1.2.7"
+  PHP_56_TAG="1.2.9"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.6 image version. Falling back to last known stable version: ${PHP_56_TAG}."
 fi
@@ -98,7 +98,7 @@ PHP_70_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_70_TAG="$(wget ${PHP_70_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_70_TAG}" ]; then
-  PHP_70_TAG="1.1.0"
+  PHP_70_TAG="1.1.2"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 7.0 image version. Falling back to last known stable version: ${PHP_70_TAG}."
 fi
@@ -229,7 +229,7 @@ php:
   extends:
     file: host.yml
     service: php
-  image: dockerizedrupal/php-5.6:${PHP_56_TAG}
+  image: dockerizedrupal/php-7.0:${PHP_70_TAG}
   hostname: php
   volumes:
     - ~/.ssh:/home/container/.ssh
@@ -242,8 +242,8 @@ php:
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=php
-    - VHOST_VERSION_FILE_URL=${PHP_56_VERSION_FILE_URL}
-    - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/php-5.6/
+    - VHOST_VERSION_FILE_URL=${PHP_70_VERSION_FILE_URL}
+    - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/php-7.0/
 mailcatcher:
   image: dockerizedrupal/mailcatcher:${MAILCATCHER_TAG}
   hostname: mailcatcher
@@ -314,6 +314,7 @@ apache:
     - VHOST_SERVICE_NAME=apache
     - VHOST_VERSION_FILE_URL=${APACHE_24_VERSION_FILE_URL}
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/apache-2.4/
+    - NO_GZIP=On
 apache-data:
   image: dockerizedrupal/apache-2.4:${APACHE_24_TAG}
   hostname: apache-data
