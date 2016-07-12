@@ -15,13 +15,7 @@ Generates general purpose [docker-compose.yml](https://docs.docker.com/compose/y
 
 ## Install
 
-    TMP="$(mktemp -d)" \
-      && git clone https://github.com/dockerizedrupal/drupal-compose.git "${TMP}" \
-      && cd "${TMP}" \
-      && git checkout 1.4.4 \
-      && sudo cp "${TMP}/drupal-compose.sh" /usr/local/bin/drupal-compose \
-      && sudo chmod +x /usr/local/bin/drupal-compose \
-      && cd -
+    curl -sSL https://raw.githubusercontent.com/dockerizedrupal/drupal-compose/master/install.sh | sudo sh
 
 ## Switching to a different PHP version
 
