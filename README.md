@@ -1,5 +1,3 @@
-> **Notice:** *This project is part of the [Dockerized Drupal](https://dockerizedrupal.com/) initiative.*
-
 # Drupal Compose
 
 Generates general purpose [docker-compose.yml](https://docs.docker.com/compose/yml/) file automatically for your Drupal 6, 7 and 8 projects.

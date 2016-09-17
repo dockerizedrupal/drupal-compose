@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="1.4.4"
+VERSION="2.0.0"
 
 WORKING_DIR="$(pwd)"
 
@@ -35,7 +35,7 @@ APACHE_22_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/do
 APACHE_22_TAG="$(wget ${APACHE_22_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${APACHE_22_TAG}" ]; then
-  APACHE_22_TAG="1.2.3"
+  APACHE_22_TAG="2.0.0"
 
   echo "drupal-compose: Couldn't retrieve the latest Apache 2.2 image version. Falling back to last known stable version: ${APACHE_22_TAG}."
 fi
@@ -44,7 +44,7 @@ APACHE_24_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/do
 APACHE_24_TAG="$(wget ${APACHE_24_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${APACHE_24_TAG}" ]; then
-  APACHE_24_TAG="1.2.4"
+  APACHE_24_TAG="2.0.0"
 
   echo "drupal-compose: Couldn't retrieve the latest Apache 2.4 image version. Falling back to last known stable version: ${APACHE_24_TAG}."
 fi
@@ -53,7 +53,7 @@ PHP_52_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_52_TAG="$(wget ${PHP_52_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_52_TAG}" ]; then
-  PHP_52_TAG="1.2.7"
+  PHP_52_TAG="2.0.0"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.2 image version. Falling back to last known stable version: ${PHP_52_TAG}."
 fi
@@ -62,7 +62,7 @@ PHP_53_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_53_TAG="$(wget ${PHP_53_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_53_TAG}" ]; then
-  PHP_53_TAG="1.2.11"
+  PHP_53_TAG="2.0.0"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.3 image version. Falling back to last known stable version: ${PHP_53_TAG}."
 fi
@@ -71,7 +71,7 @@ PHP_54_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_54_TAG="$(wget ${PHP_54_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_54_TAG}" ]; then
-  PHP_54_TAG="1.2.9"
+  PHP_54_TAG="2.0.0"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.4 image version. Falling back to last known stable version: ${PHP_54_TAG}."
 fi
@@ -80,7 +80,7 @@ PHP_55_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_55_TAG="$(wget ${PHP_55_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_55_TAG}" ]; then
-  PHP_55_TAG="1.2.11"
+  PHP_55_TAG="2.0.0"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.5 image version. Falling back to last known stable version: ${PHP_55_TAG}."
 fi
@@ -89,7 +89,7 @@ PHP_56_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_56_TAG="$(wget ${PHP_56_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_56_TAG}" ]; then
-  PHP_56_TAG="1.2.9"
+  PHP_56_TAG="2.0.0"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.6 image version. Falling back to last known stable version: ${PHP_56_TAG}."
 fi
@@ -98,7 +98,7 @@ PHP_70_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docke
 PHP_70_TAG="$(wget ${PHP_70_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_70_TAG}" ]; then
-  PHP_70_TAG="1.1.3"
+  PHP_70_TAG="2.0.0"
 
   echo "drupal-compose: Couldn't retrieve the latest PHP 7.0 image version. Falling back to last known stable version: ${PHP_70_TAG}."
 fi
@@ -107,7 +107,7 @@ MYSQL_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker
 MYSQL_TAG="$(wget ${MYSQL_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${MYSQL_TAG}" ]; then
-  MYSQL_TAG="1.2.2"
+  MYSQL_TAG="2.0.0"
 
   echo "drupal-compose: Couldn't retrieve the latest MySQL image version. Falling back to last known stable version: ${MYSQL_TAG}."
 fi
@@ -116,7 +116,7 @@ MAILCATCHER_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/
 MAILCATCHER_TAG="$(wget ${MAILCATCHER_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${MAILCATCHER_TAG}" ]; then
-  MAILCATCHER_TAG="1.1.1"
+  MAILCATCHER_TAG="2.0.0"
 
   echo "drupal-compose: Couldn't retrieve the latest MySQL image version. Falling back to last known stable version: ${MAILCATCHER_TAG}."
 fi
@@ -125,7 +125,7 @@ PHPMYADMIN_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/d
 PHPMYADMIN_TAG="$(wget ${PHPMYADMIN_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHPMYADMIN_TAG}" ]; then
-  PHPMYADMIN_TAG="1.1.1"
+  PHPMYADMIN_TAG="2.0.0"
 
   echo "drupal-compose: Couldn't retrieve the latest PhpMyAdmin image version. Falling back to last known stable version: ${PHPMYADMIN_TAG}."
 fi
@@ -134,7 +134,7 @@ ADMINER_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/dock
 ADMINER_TAG="$(wget ${ADMINER_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${ADMINER_TAG}" ]; then
-  ADMINER_TAG="1.1.1"
+  ADMINER_TAG="2.0.0"
 
   echo "drupal-compose: Couldn't retrieve the latest Adminer image version. Falling back to last known stable version: ${ADMINER_TAG}."
 fi
@@ -143,7 +143,7 @@ MEMCACHED_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/do
 MEMCACHED_TAG="$(wget ${MEMCACHED_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${MEMCACHED_TAG}" ]; then
-  MEMCACHED_TAG="1.1.0"
+  MEMCACHED_TAG="2.0.0"
 
   echo "drupal-compose: Couldn't retrieve the latest Memcached image version. Falling back to last known stable version: ${MEMCACHED_TAG}."
 fi
@@ -152,7 +152,7 @@ MEMCACHEPHP_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/
 MEMCACHEPHP_TAG="$(wget ${MEMCACHEPHP_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${MEMCACHEPHP_TAG}" ]; then
-  MEMCACHEPHP_TAG="1.1.1"
+  MEMCACHEPHP_TAG="2.0.0"
 
   echo "drupal-compose: Couldn't retrieve the latest memcache.php image version. Falling back to last known stable version: ${MEMCACHEPHP_TAG}."
 fi
