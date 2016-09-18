@@ -8,12 +8,16 @@ help() {
   cat << EOF
 Version: ${VERSION}
 
-Usage: drupal-compose
+Usage: drupal-compose [COMMAND]
 
 Options:
-  -f, --file FILE  Specify an alternate compose file (default: docker-compose.yml)
-  -v, --version     Show version number
-  -h, --help        Show help
+  -f, --file FILE    Specify an alternate compose file (default: docker-compose.yml)
+  -v, --version      Show version number
+  -h, --help         Show help
+
+Supported commands:
+  service    Manage services
+
 EOF
 
   exit 1
@@ -31,7 +35,7 @@ if [ "${1}" == "-v" ] || [ "${1}" == "--version" ]; then
   version
 fi
 
-APACHE_22_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.2/master/VERSION.md"
+APACHE_22_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/apache-2.2-for-docker/master/VERSION.md"
 APACHE_22_TAG="$(wget ${APACHE_22_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${APACHE_22_TAG}" ]; then
@@ -40,7 +44,7 @@ if [ -z "${APACHE_22_TAG}" ]; then
   echo "drupal-compose: Couldn't retrieve the latest Apache 2.2 image version. Falling back to last known stable version: ${APACHE_22_TAG}."
 fi
 
-APACHE_24_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-apache-2.4/master/VERSION.md"
+APACHE_24_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/apache-2.4-for-docker/master/VERSION.md"
 APACHE_24_TAG="$(wget ${APACHE_24_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${APACHE_24_TAG}" ]; then
@@ -49,7 +53,7 @@ if [ -z "${APACHE_24_TAG}" ]; then
   echo "drupal-compose: Couldn't retrieve the latest Apache 2.4 image version. Falling back to last known stable version: ${APACHE_24_TAG}."
 fi
 
-PHP_52_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.2/master/VERSION.md"
+PHP_52_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/php-5.2-for-docker/master/VERSION.md"
 PHP_52_TAG="$(wget ${PHP_52_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_52_TAG}" ]; then
@@ -58,7 +62,7 @@ if [ -z "${PHP_52_TAG}" ]; then
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.2 image version. Falling back to last known stable version: ${PHP_52_TAG}."
 fi
 
-PHP_53_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.3/master/VERSION.md"
+PHP_53_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/php-5.3-for-docker/master/VERSION.md"
 PHP_53_TAG="$(wget ${PHP_53_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_53_TAG}" ]; then
@@ -67,7 +71,7 @@ if [ -z "${PHP_53_TAG}" ]; then
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.3 image version. Falling back to last known stable version: ${PHP_53_TAG}."
 fi
 
-PHP_54_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.4/master/VERSION.md"
+PHP_54_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/php-5.4-for-docker/master/VERSION.md"
 PHP_54_TAG="$(wget ${PHP_54_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_54_TAG}" ]; then
@@ -76,7 +80,7 @@ if [ -z "${PHP_54_TAG}" ]; then
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.4 image version. Falling back to last known stable version: ${PHP_54_TAG}."
 fi
 
-PHP_55_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.5/master/VERSION.md"
+PHP_55_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/php-5.5-for-docker/master/VERSION.md"
 PHP_55_TAG="$(wget ${PHP_55_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_55_TAG}" ]; then
@@ -85,7 +89,7 @@ if [ -z "${PHP_55_TAG}" ]; then
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.5 image version. Falling back to last known stable version: ${PHP_55_TAG}."
 fi
 
-PHP_56_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-php-5.6/master/VERSION.md"
+PHP_56_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/php-5.6-for-docker/master/VERSION.md"
 PHP_56_TAG="$(wget ${PHP_56_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_56_TAG}" ]; then
@@ -94,7 +98,7 @@ if [ -z "${PHP_56_TAG}" ]; then
   echo "drupal-compose: Couldn't retrieve the latest PHP 5.6 image version. Falling back to last known stable version: ${PHP_56_TAG}."
 fi
 
-PHP_70_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-php-7.0/master/VERSION.md"
+PHP_70_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/php-7.0-for-docker/master/VERSION.md"
 PHP_70_TAG="$(wget ${PHP_70_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHP_70_TAG}" ]; then
@@ -103,7 +107,7 @@ if [ -z "${PHP_70_TAG}" ]; then
   echo "drupal-compose: Couldn't retrieve the latest PHP 7.0 image version. Falling back to last known stable version: ${PHP_70_TAG}."
 fi
 
-MYSQL_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-mysql/master/VERSION.md"
+MYSQL_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/mysql-for-docker/master/VERSION.md"
 MYSQL_TAG="$(wget ${MYSQL_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${MYSQL_TAG}" ]; then
@@ -112,7 +116,7 @@ if [ -z "${MYSQL_TAG}" ]; then
   echo "drupal-compose: Couldn't retrieve the latest MySQL image version. Falling back to last known stable version: ${MYSQL_TAG}."
 fi
 
-MAILCATCHER_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-mailcatcher/master/VERSION.md"
+MAILCATCHER_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/mailcatcher-for-docker/master/VERSION.md"
 MAILCATCHER_TAG="$(wget ${MAILCATCHER_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${MAILCATCHER_TAG}" ]; then
@@ -121,7 +125,7 @@ if [ -z "${MAILCATCHER_TAG}" ]; then
   echo "drupal-compose: Couldn't retrieve the latest MySQL image version. Falling back to last known stable version: ${MAILCATCHER_TAG}."
 fi
 
-PHPMYADMIN_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-phpmyadmin/master/VERSION.md"
+PHPMYADMIN_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/phpmyadmin-for-docker/master/VERSION.md"
 PHPMYADMIN_TAG="$(wget ${PHPMYADMIN_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${PHPMYADMIN_TAG}" ]; then
@@ -130,7 +134,7 @@ if [ -z "${PHPMYADMIN_TAG}" ]; then
   echo "drupal-compose: Couldn't retrieve the latest PhpMyAdmin image version. Falling back to last known stable version: ${PHPMYADMIN_TAG}."
 fi
 
-ADMINER_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-adminer/master/VERSION.md"
+ADMINER_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/adminer-for-docker/master/VERSION.md"
 ADMINER_TAG="$(wget ${ADMINER_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${ADMINER_TAG}" ]; then
@@ -139,7 +143,7 @@ if [ -z "${ADMINER_TAG}" ]; then
   echo "drupal-compose: Couldn't retrieve the latest Adminer image version. Falling back to last known stable version: ${ADMINER_TAG}."
 fi
 
-MEMCACHED_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-memcached/master/VERSION.md"
+MEMCACHED_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/memcached-for-docker/master/VERSION.md"
 MEMCACHED_TAG="$(wget ${MEMCACHED_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${MEMCACHED_TAG}" ]; then
@@ -148,7 +152,7 @@ if [ -z "${MEMCACHED_TAG}" ]; then
   echo "drupal-compose: Couldn't retrieve the latest Memcached image version. Falling back to last known stable version: ${MEMCACHED_TAG}."
 fi
 
-MEMCACHEPHP_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/docker-memcachephp/master/VERSION.md"
+MEMCACHEPHP_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/memcachephp-for-docker/master/VERSION.md"
 MEMCACHEPHP_TAG="$(wget ${MEMCACHEPHP_VERSION_FILE_URL} -q -O -)"
 
 if [ -z "${MEMCACHEPHP_TAG}" ]; then
@@ -713,44 +717,62 @@ case "${1}" in
               version)
                 case "${5}" in
                   5.2)
-                    sed -i "s/dockerizedrupal\/php-.*/dockerizedrupal\/php-5.2:${PHP_52_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
-                    sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.2:${APACHE_22_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
-                    sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.2\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*:.*/dockerizedrupal\/php-5.2:${PHP_52_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/apache-.*:.*/dockerizedrupal\/apache-2.2:${APACHE_22_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*-for-docker/dockerizedrupal\/php-5.2-for-docker/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/raw\.githubusercontent\.com\/dockerizedrupal\/apache-.*-for-docker\/master\/VERSION.md/https:\/\/raw\.githubusercontent\.com\/dockerizedrupal\/apache-2.2-for-docker\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/php-.*\//https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/php-5.2\//g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/apache-.*\//https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/apache-2.2\//g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
 
                     echo "drupal-compose: PHP version changed to 5.2."
                   ;;
                   5.3)
-                    sed -i "s/dockerizedrupal\/php-.*/dockerizedrupal\/php-5.3:${PHP_53_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
-                    sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
-                    sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.3\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*:.*/dockerizedrupal\/php-5.3:${PHP_53_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/apache-.*:.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*-for-docker/dockerizedrupal\/php-5.3-for-docker/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/raw\.githubusercontent\.com\/dockerizedrupal\/apache-.*-for-docker\/master\/VERSION.md/https:\/\/raw\.githubusercontent\.com\/dockerizedrupal\/apache-2.4-for-docker\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/php-.*\//https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/php-5.3\//g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/apache-.*\//https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/apache-2.4\//g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
 
                     echo "drupal-compose: PHP version changed to 5.3."
                   ;;
                   5.4)
-                    sed -i "s/dockerizedrupal\/php-.*/dockerizedrupal\/php-5.4:${PHP_54_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
-                    sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
-                    sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.4\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*:.*/dockerizedrupal\/php-5.4:${PHP_54_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/apache-.*:.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*-for-docker/dockerizedrupal\/php-5.4-for-docker/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/raw\.githubusercontent\.com\/dockerizedrupal\/apache-.*-for-docker\/master\/VERSION.md/https:\/\/raw\.githubusercontent\.com\/dockerizedrupal\/apache-2.4-for-docker\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/php-.*\//https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/php-5.4\//g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/apache-.*\//https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/apache-2.4\//g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
 
                     echo "drupal-compose: PHP version changed to 5.4."
                   ;;
                   5.5)
-                    sed -i "s/dockerizedrupal\/php-.*/dockerizedrupal\/php-5.5:${PHP_55_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
-                    sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
-                    sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.5\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*:.*/dockerizedrupal\/php-5.5:${PHP_55_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/apache-.*:.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*-for-docker/dockerizedrupal\/php-5.5-for-docker/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/raw\.githubusercontent\.com\/dockerizedrupal\/apache-.*-for-docker\/master\/VERSION.md/https:\/\/raw\.githubusercontent\.com\/dockerizedrupal\/apache-2.4-for-docker\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/php-.*\//https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/php-5.5\//g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/apache-.*\//https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/apache-2.4\//g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
 
                     echo "drupal-compose: PHP version changed to 5.5."
                   ;;
                   5.6)
-                    sed -i "s/dockerizedrupal\/php-.*/dockerizedrupal\/php-5.6:${PHP_56_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
-                    sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
-                    sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-5.6\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*:.*/dockerizedrupal\/php-5.6:${PHP_56_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/apache-.*:.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*-for-docker/dockerizedrupal\/php-5.6-for-docker/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/raw\.githubusercontent\.com\/dockerizedrupal\/apache-.*-for-docker\/master\/VERSION.md/https:\/\/raw\.githubusercontent\.com\/dockerizedrupal\/apache-2.4-for-docker\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/php-.*\//https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/php-5.6\//g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/apache-.*\//https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/apache-2.4\//g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
 
                     echo "drupal-compose: PHP version changed to 5.6."
                   ;;
                   7.0)
-                    sed -i "s/dockerizedrupal\/php-.*/dockerizedrupal\/php-7.0:${PHP_70_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
-                    sed -i "s/dockerizedrupal\/apache.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
-                    sed -i "s/dockerizedrupal\/docker-php-.*/dockerizedrupal\/docker-php-7.0\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*:.*/dockerizedrupal\/php-7.0:${PHP_70_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/apache-.*:.*/dockerizedrupal\/apache-2.4:${APACHE_24_TAG}/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/dockerizedrupal\/php-.*-for-docker/dockerizedrupal\/php-7.0-for-docker/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/raw\.githubusercontent\.com\/dockerizedrupal\/apache-.*-for-docker\/master\/VERSION.md/https:\/\/raw\.githubusercontent\.com\/dockerizedrupal\/apache-2.4-for-docker\/master\/VERSION.md/g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/php-.*\//https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/php-7.0\//g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
+                    sed -i "s/https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/apache-.*\//https:\/\/hub\.docker\.com\/r\/dockerizedrupal\/apache-2.4\//g" "${DRUPAL_ROOT}/${DOCKER_COMPOSE_FILE}"
 
                     echo "drupal-compose: PHP version changed to 7.0."
                   ;;
@@ -784,6 +806,9 @@ Version: ${VERSION}
 
 Usage: drupal-compose service php set <KEY> <VALUE>
 
+Options:
+  -h, --help    Show help
+
 Supported keys:
   version
 EOF
@@ -803,6 +828,9 @@ Version: ${VERSION}
 
 Usage: drupal-compose service php <ACTION>
 
+Options:
+  -h, --help    Show help
+
 Supported actions:
   set
 EOF
@@ -821,6 +849,9 @@ EOF
 Version: ${VERSION}
 
 Usage: drupal-compose service <SERVICE>
+
+Options:
+  -h, --help    Show help
 
 Supported services:
   php
