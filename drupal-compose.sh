@@ -161,6 +161,15 @@ if [ -z "${MEMCACHEPHP_TAG}" ]; then
   echo "drupal-compose: Couldn't retrieve the latest memcache.php image version. Falling back to last known stable version: ${MEMCACHEPHP_TAG}."
 fi
 
+REDIS_VERSION_FILE_URL="https://raw.githubusercontent.com/dockerizedrupal/redis-for-docker/master/VERSION.md"
+REDIS_TAG="$(wget ${REDIS_VERSION_FILE_URL} -q -O -)"
+
+if [ -z "${REDIS_TAG}" ]; then
+  REDIS_TAG="2.0.0"
+
+  echo "drupal-compose: Couldn't retrieve the latest Redis image version. Falling back to last known stable version: ${REDIS_TAG}."
+fi
+
 DOCKER_COMPOSE_FILE="docker-compose.yml"
 
 if [ "${1}" == "-f" ] || [ "${1}" == "--file" ]; then
@@ -197,6 +206,9 @@ apache:
     service: apache
   image: dockerizedrupal/apache-2.4:${APACHE_24_TAG}
   hostname: apache
+  ports:
+    - "80"
+    - "443"
   volumes_from:
     - apache-data
   links:
@@ -216,6 +228,8 @@ apache-data:
 mysql:
   image: dockerizedrupal/mysql:${MYSQL_TAG}
   hostname: mysql
+  ports:
+    - "3310:3306"
   volumes_from:
     - mysql-data
   environment:
@@ -243,6 +257,7 @@ php:
     - mysql
     - mailcatcher:smtp
     - memcached
+    - redis
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=php
@@ -279,6 +294,9 @@ adminer:
 memcached:
   image: dockerizedrupal/memcached:${MEMCACHED_TAG}
   hostname: memcached
+  ports:
+    - "11211:11211"
+    - "11211:11211/udp"
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=memcached
@@ -294,6 +312,17 @@ memcachephp:
     - VHOST_SERVICE_NAME=memcachedphp
     - VHOST_VERSION_FILE_URL=${MEMCACHEPHP_VERSION_FILE_URL}
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/memcachephp/
+redis:
+  image: dockerizedrupal/redis:${REDIS_TAG}
+  hostname: redis
+  ports:
+    - "6379:6379"
+  environment:
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=redis
+    - VHOST_VERSION_FILE_URL=${REDIS_VERSION_FILE_URL}
+    - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/redis/
+
 EOF
 }
 
@@ -308,6 +337,9 @@ apache:
     service: apache
   image: dockerizedrupal/apache-2.4:${APACHE_24_TAG}
   hostname: apache
+  ports:
+    - "80"
+    - "443"
   volumes_from:
     - apache-data
   links:
@@ -328,6 +360,8 @@ apache-data:
 mysql:
   image: dockerizedrupal/mysql:${MYSQL_TAG}
   hostname: mysql
+  ports:
+    - "3310:3306"
   volumes_from:
     - mysql-data
   environment:
@@ -355,6 +389,7 @@ php:
     - mysql
     - mailcatcher:smtp
     - memcached
+    - redis
   environment:
     - DRUPAL_VERSION=8
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
@@ -392,6 +427,9 @@ adminer:
 memcached:
   image: dockerizedrupal/memcached:${MEMCACHED_TAG}
   hostname: memcached
+  ports:
+    - "11211:11211"
+    - "11211:11211/udp"
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=memcached
@@ -407,6 +445,17 @@ memcachephp:
     - VHOST_SERVICE_NAME=memcachedphp
     - VHOST_VERSION_FILE_URL=${MEMCACHEPHP_VERSION_FILE_URL}
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/memcachephp/
+redis:
+  image: dockerizedrupal/redis:${REDIS_TAG}
+  hostname: redis
+  ports:
+    - "6379:6379"
+  environment:
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=redis
+    - VHOST_VERSION_FILE_URL=${REDIS_VERSION_FILE_URL}
+    - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/redis/
+
 EOF
 }
 
@@ -439,6 +488,9 @@ apache:
     service: apache
   image: dockerizedrupal/apache-2.4:${APACHE_24_TAG}
   hostname: apache
+  ports:
+    - "80"
+    - "443"
   volumes_from:
     - apache-data
   links:
@@ -458,6 +510,8 @@ apache-data:
 mysql:
   image: dockerizedrupal/mysql:${MYSQL_TAG}
   hostname: mysql
+  ports:
+    - "3310:3306"
   volumes_from:
     - mysql-data
   environment:
@@ -485,6 +539,7 @@ php:
     - mysql
     - mailcatcher:smtp
     - memcached
+    - redis
   environment:
     - DRUPAL_VERSION=7
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
@@ -522,6 +577,9 @@ adminer:
 memcached:
   image: dockerizedrupal/memcached:${MEMCACHED_TAG}
   hostname: memcached
+  ports:
+    - "11211:11211"
+    - "11211:11211/udp"
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=memcached
@@ -537,6 +595,17 @@ memcachephp:
     - VHOST_SERVICE_NAME=memcachephp
     - VHOST_VERSION_FILE_URL=${MEMCACHEPHP_VERSION_FILE_URL}
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/memcachephp/
+redis:
+  image: dockerizedrupal/redis:${REDIS_TAG}
+  hostname: redis
+  ports:
+    - "6379:6379"
+  environment:
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=redis
+    - VHOST_VERSION_FILE_URL=${REDIS_VERSION_FILE_URL}
+    - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/redis/
+
 EOF
 }
 
@@ -569,6 +638,9 @@ apache:
     service: apache
   image: dockerizedrupal/apache-2.2:${APACHE_22_TAG}
   hostname: apache
+  ports:
+    - "80"
+    - "443"
   volumes_from:
     - apache-data
   links:
@@ -588,6 +660,8 @@ apache-data:
 mysql:
   image: dockerizedrupal/mysql:${MYSQL_TAG}
   hostname: mysql
+  ports:
+    - "3310:3306"
   volumes_from:
     - mysql-data
   environment:
@@ -615,6 +689,7 @@ php:
     - mysql
     - mailcatcher:smtp
     - memcached
+    - redis
   environment:
     - DRUPAL_VERSION=6
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
@@ -652,6 +727,9 @@ adminer:
 memcached:
   image: dockerizedrupal/memcached:${MEMCACHED_TAG}
   hostname: memcached
+  ports:
+    - "11211:11211"
+    - "11211:11211/udp"
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=memcached
@@ -667,6 +745,17 @@ memcachephp:
     - VHOST_SERVICE_NAME=memcachephp
     - VHOST_VERSION_FILE_URL=${MEMCACHEPHP_VERSION_FILE_URL}
     - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/memcachephp/
+redis:
+  image: dockerizedrupal/redis:${REDIS_TAG}
+  hostname: redis
+  ports:
+    - "6379:6379"
+  environment:
+    - VHOST_PROJECT_NAME=${PROJECT_NAME}
+    - VHOST_SERVICE_NAME=redis
+    - VHOST_VERSION_FILE_URL=${REDIS_VERSION_FILE_URL}
+    - VHOST_REPOSITORY_URL=https://hub.docker.com/r/dockerizedrupal/redis/
+
 EOF
 }
 
@@ -702,6 +791,7 @@ php:
   environment:
     - USER_ID=${USER_ID}
     - GROUP_ID=${GROUP_ID}
+
 EOF
 }
 
