@@ -29,25 +29,6 @@ module.exports = function(grunt) {
         options: {
           patterns: [
             {
-              match: 'git checkout ' + current_version,
-              replacement: 'git checkout ' + new_version
-            }
-          ],
-          usePrefix: false
-        },
-        files: [
-          {
-            expand: true,
-            src: [
-              'README.md'
-            ]
-          }
-        ]
-      },
-      task3: {
-        options: {
-          patterns: [
-            {
               match: '"version": "' + current_version + '"',
               replacement: '"version": "' + new_version + '"'
             }
@@ -63,7 +44,7 @@ module.exports = function(grunt) {
           }
         ]
       },
-      task4: {
+      task3: {
         options: {
           patterns: [
             {
@@ -82,7 +63,7 @@ module.exports = function(grunt) {
           }
         ]
       },
-      task5: {
+      task4: {
         options: {
           patterns: [
             {
