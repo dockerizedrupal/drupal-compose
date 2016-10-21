@@ -15,7 +15,7 @@ do_install() {
 
   tar xzf "${ARCHIVE}" -C "${TMP}"
 
-  cp "${TMP}/drupal-compose-${TAG}/drupal-compose.sh" > /usr/local/bin/drupal-compose
+  cp "${TMP}/drupal-compose-${TAG}/drupal-compose.sh" /usr/local/bin/drupal-compose
 
   chmod +x /usr/local/bin/drupal-compose
 }
