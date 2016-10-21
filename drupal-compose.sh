@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VERSION="2.0.0"
+VERSION="2.0.1"
 
 WORKING_DIR="$(pwd)"
 
@@ -229,7 +229,7 @@ mysql:
   image: dockerizedrupal/mysql:${MYSQL_TAG}
   hostname: mysql
   ports:
-    - "3310:3306"
+    - "3306"
   volumes_from:
     - mysql-data
   environment:
@@ -295,8 +295,8 @@ memcached:
   image: dockerizedrupal/memcached:${MEMCACHED_TAG}
   hostname: memcached
   ports:
-    - "11211:11211"
-    - "11211:11211/udp"
+    - "11211"
+    - "11211/udp"
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=memcached
@@ -316,7 +316,7 @@ redis:
   image: dockerizedrupal/redis:${REDIS_TAG}
   hostname: redis
   ports:
-    - "6379:6379"
+    - "6379"
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=redis
@@ -361,7 +361,7 @@ mysql:
   image: dockerizedrupal/mysql:${MYSQL_TAG}
   hostname: mysql
   ports:
-    - "3310:3306"
+    - "3306"
   volumes_from:
     - mysql-data
   environment:
@@ -428,8 +428,8 @@ memcached:
   image: dockerizedrupal/memcached:${MEMCACHED_TAG}
   hostname: memcached
   ports:
-    - "11211:11211"
-    - "11211:11211/udp"
+    - "11211"
+    - "11211/udp"
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=memcached
@@ -449,7 +449,7 @@ redis:
   image: dockerizedrupal/redis:${REDIS_TAG}
   hostname: redis
   ports:
-    - "6379:6379"
+    - "6379"
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=redis
@@ -511,7 +511,7 @@ mysql:
   image: dockerizedrupal/mysql:${MYSQL_TAG}
   hostname: mysql
   ports:
-    - "3310:3306"
+    - "3306"
   volumes_from:
     - mysql-data
   environment:
@@ -578,8 +578,8 @@ memcached:
   image: dockerizedrupal/memcached:${MEMCACHED_TAG}
   hostname: memcached
   ports:
-    - "11211:11211"
-    - "11211:11211/udp"
+    - "11211"
+    - "11211/udp"
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=memcached
@@ -599,7 +599,7 @@ redis:
   image: dockerizedrupal/redis:${REDIS_TAG}
   hostname: redis
   ports:
-    - "6379:6379"
+    - "6379"
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=redis
@@ -661,7 +661,7 @@ mysql:
   image: dockerizedrupal/mysql:${MYSQL_TAG}
   hostname: mysql
   ports:
-    - "3310:3306"
+    - "3306"
   volumes_from:
     - mysql-data
   environment:
@@ -728,8 +728,8 @@ memcached:
   image: dockerizedrupal/memcached:${MEMCACHED_TAG}
   hostname: memcached
   ports:
-    - "11211:11211"
-    - "11211:11211/udp"
+    - "11211"
+    - "11211/udp"
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=memcached
@@ -749,7 +749,7 @@ redis:
   image: dockerizedrupal/redis:${REDIS_TAG}
   hostname: redis
   ports:
-    - "6379:6379"
+    - "6379"
   environment:
     - VHOST_PROJECT_NAME=${PROJECT_NAME}
     - VHOST_SERVICE_NAME=redis

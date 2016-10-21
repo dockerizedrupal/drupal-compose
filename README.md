@@ -11,7 +11,7 @@ Generates general purpose [docker-compose.yml](https://docs.docker.com/compose/y
       -v, --version     Show version number
       -h, --help        Show help
 
-## Install
+## Install / Update
 
     curl -sSL https://raw.githubusercontent.com/dockerizedrupal/drupal-compose/master/install.sh | sudo sh
 
